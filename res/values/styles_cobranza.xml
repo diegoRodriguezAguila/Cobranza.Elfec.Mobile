@@ -21,6 +21,14 @@
         <item name="android:textSize">18sp</item>
     </style>
     
+     <!-- EditText -->
+     <style name="EditText.Cobranza" parent="android:Widget.EditText">
+	  <item name="android:background">@drawable/cobranza_edit_text_holo_dark</item>
+	  <item name="android:textColor">@android:color/black</item>
+	  <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
+	  <item name="android:minHeight">40dip</item>
+  </style>
+    
      <!-- Alert Dialog Pro -->
      <style name="Theme.FlavoredMaterialLight" parent="Theme.AlertDialogPro.Material.Light">
         <item name="colorPrimary">@color/cobranza_color</item>
@@ -62,7 +70,13 @@
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_cobranza</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_cobranza</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Cobranza</item>
+        <item name="android:titleTextStyle">@style/actionbar_title_style</item>
     </style>
+    
+    <style name="actionbar_title_style" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+	    <item name="android:textColor">@android:color/white</item>
+	    <item name="fontPath">fonts/segoe_ui_light.ttf</item>
+	</style>
 
     <style name="ActionBar.Transparent.Cobranza" parent="@android:style/Widget.Holo.ActionBar">
         <item name="android:background">@drawable/ab_transparent_cobranza</item>
@@ -101,6 +115,8 @@
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Cobranza</item>
     </style>
     
+    <!-- Controls style -->
+    
   <style name="AutoCompleteTextViewCobranza" parent="android:Widget.Holo.AutoCompleteTextView">
       <item name="android:dropDownSelector">@drawable/cobranza_list_selector_holo_dark</item>
 	    <item name="android:background">@drawable/cobranza_edit_text_holo_dark</item>
@@ -108,13 +124,17 @@
 
   <style name="ButtonCobranza" parent="android:Widget.Holo.Button">
 	  <item name="android:background">@drawable/cobranza_btn_default_holo_dark</item>
+	  <item name="android:minHeight">40dip</item>
+	  <item name="android:paddingBottom">2dp</item>
+	  <item name="android:paddingTop">0dp</item>
+	  <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
   </style>
 
   <style name="ImageButtonCobranza" parent="android:Widget.Holo.ImageButton">
 	  <item name="android:background">@drawable/cobranza_btn_default_holo_dark</item>
   </style>
 
-  <style name="SpinnerCobranza" parent="android:Widget.Holo.Spinner">
+  <style name="SpinnerCobranza" parent="android:Widget.Holo.Light.Spinner">
       <item name="android:background">@drawable/cobranza_spinner_background_holo_dark</item>
       <item name="android:dropDownSelector">@drawable/cobranza_list_selector_holo_dark</item>
   </style>

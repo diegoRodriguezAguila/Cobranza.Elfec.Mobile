@@ -3,8 +3,8 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="Cobranza" parent="android:Theme.Holo">
-
+  <style name="Cobranza" parent="android:Theme.Holo.Light.DarkActionBar">
+	<item name="windowActionBar">false</item> 
     <!-- Alert Dialog Pro -->
     <item name="colorPrimary">@color/cobranza_color</item>
     <item name="colorPrimaryDark">@color/cobranza_color_pressed</item>
@@ -21,12 +21,13 @@
     <item name="android:actionModeBackground">@drawable/cab_background_top_cobranza</item>
     <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_cobranza</item>
     <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Cobranza</item>
+    
     <!-- End Actionbar -->
       
     <item name="android:windowIsTranslucent">true</item>
     <item name="android:windowContentOverlay">@null</item>
     <item name="android:windowBackground">@color/background_soft_gray</item>
-    <item name="android:editTextBackground">@drawable/cobranza_edit_text_holo_dark</item>
+    <item name="android:editTextStyle">@style/EditText.Cobranza</item>
 
     <item name="android:textColorHighlight">#992574a9</item>
     <item name="android:textSelectHandleLeft">@drawable/cobranza_text_select_handle_left</item>

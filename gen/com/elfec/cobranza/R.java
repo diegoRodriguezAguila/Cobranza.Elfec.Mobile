@@ -1526,19 +1526,19 @@ containing a value of this type.
         public static final int abc_config_showMenuShortcutsWhenKeyboardPresent=0x7f070003;
     }
     public static final class color {
-        public static final int abc_background_cache_hint_selector_material_dark=0x7f08003c;
-        public static final int abc_background_cache_hint_selector_material_light=0x7f08003d;
+        public static final int abc_background_cache_hint_selector_material_dark=0x7f08003d;
+        public static final int abc_background_cache_hint_selector_material_light=0x7f08003e;
         public static final int abc_input_method_navigation_guard=0x7f080003;
-        public static final int abc_primary_text_disable_only_material_dark=0x7f08003e;
-        public static final int abc_primary_text_disable_only_material_light=0x7f08003f;
-        public static final int abc_primary_text_material_dark=0x7f080040;
-        public static final int abc_primary_text_material_light=0x7f080041;
-        public static final int abc_search_url_text=0x7f080042;
+        public static final int abc_primary_text_disable_only_material_dark=0x7f08003f;
+        public static final int abc_primary_text_disable_only_material_light=0x7f080040;
+        public static final int abc_primary_text_material_dark=0x7f080041;
+        public static final int abc_primary_text_material_light=0x7f080042;
+        public static final int abc_search_url_text=0x7f080043;
         public static final int abc_search_url_text_normal=0x7f080000;
         public static final int abc_search_url_text_pressed=0x7f080002;
         public static final int abc_search_url_text_selected=0x7f080001;
-        public static final int abc_secondary_text_material_dark=0x7f080043;
-        public static final int abc_secondary_text_material_light=0x7f080044;
+        public static final int abc_secondary_text_material_dark=0x7f080044;
+        public static final int abc_secondary_text_material_light=0x7f080045;
         public static final int accent_material_dark=0x7f08000f;
         public static final int accent_material_light=0x7f08000e;
         public static final int adp_mtrl_btn_disabled_light=0x7f080035;
@@ -1606,6 +1606,7 @@ containing a value of this type.
         public static final int secondary_text_disabled_material_light=0x7f080029;
         public static final int switch_thumb_normal_material_dark=0x7f080012;
         public static final int switch_thumb_normal_material_light=0x7f080013;
+        public static final int text_blue_color=0x7f08003c;
         public static final int text_gray_color=0x7f08003b;
     }
     public static final class dimen {
@@ -1946,23 +1947,25 @@ containing a value of this type.
         public static final int list_focused_cobranza=0x7f0200b1;
         public static final int list_pressed_cobranza=0x7f0200b2;
         public static final int menu_dropdown_panel_cobranza=0x7f0200b3;
-        public static final int progress_bg_cobranza=0x7f0200b4;
-        public static final int progress_horizontal_cobranza=0x7f0200b5;
-        public static final int progress_primary_cobranza=0x7f0200b6;
-        public static final int progress_secondary_cobranza=0x7f0200b7;
-        public static final int selectable_background_cobranza=0x7f0200b8;
-        public static final int spinner_ab_default_cobranza=0x7f0200b9;
-        public static final int spinner_ab_disabled_cobranza=0x7f0200ba;
-        public static final int spinner_ab_focused_cobranza=0x7f0200bb;
-        public static final int spinner_ab_pressed_cobranza=0x7f0200bc;
-        public static final int spinner_background_ab_cobranza=0x7f0200bd;
-        public static final int tab_indicator_ab_cobranza=0x7f0200be;
-        public static final int tab_selected_cobranza=0x7f0200bf;
-        public static final int tab_selected_focused_cobranza=0x7f0200c0;
-        public static final int tab_selected_pressed_cobranza=0x7f0200c1;
-        public static final int tab_unselected_cobranza=0x7f0200c2;
-        public static final int tab_unselected_focused_cobranza=0x7f0200c3;
-        public static final int tab_unselected_pressed_cobranza=0x7f0200c4;
+        public static final int password=0x7f0200b4;
+        public static final int progress_bg_cobranza=0x7f0200b5;
+        public static final int progress_horizontal_cobranza=0x7f0200b6;
+        public static final int progress_primary_cobranza=0x7f0200b7;
+        public static final int progress_secondary_cobranza=0x7f0200b8;
+        public static final int selectable_background_cobranza=0x7f0200b9;
+        public static final int spinner_ab_default_cobranza=0x7f0200ba;
+        public static final int spinner_ab_disabled_cobranza=0x7f0200bb;
+        public static final int spinner_ab_focused_cobranza=0x7f0200bc;
+        public static final int spinner_ab_pressed_cobranza=0x7f0200bd;
+        public static final int spinner_background_ab_cobranza=0x7f0200be;
+        public static final int tab_indicator_ab_cobranza=0x7f0200bf;
+        public static final int tab_selected_cobranza=0x7f0200c0;
+        public static final int tab_selected_focused_cobranza=0x7f0200c1;
+        public static final int tab_selected_pressed_cobranza=0x7f0200c2;
+        public static final int tab_unselected_cobranza=0x7f0200c3;
+        public static final int tab_unselected_focused_cobranza=0x7f0200c4;
+        public static final int tab_unselected_pressed_cobranza=0x7f0200c5;
+        public static final int user=0x7f0200c6;
     }
     public static final class id {
         public static final int action_bar=0x7f060047;
@@ -1978,7 +1981,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f060044;
         public static final int action_mode_bar_stub=0x7f060043;
         public static final int action_mode_close_button=0x7f060036;
-        public static final int action_settings=0x7f060056;
+        public static final int action_settings=0x7f06005e;
         public static final int activity_chooser_view_content=0x7f060037;
         public static final int adp_alertTitle=0x7f060024;
         public static final int adp_button1=0x7f06002d;
@@ -2017,10 +2020,12 @@ containing a value of this type.
         public static final int adp_topPanel=0x7f060020;
         public static final int always=0x7f06000d;
         public static final int beginning=0x7f060012;
-        public static final int body=0x7f060055;
+        public static final int body=0x7f06005d;
+        public static final int btn_login=0x7f06005b;
         public static final int calligraphy_tag_id=0x7f06001e;
         public static final int checkbox=0x7f06003f;
         public static final int collapseActionView=0x7f06000f;
+        public static final int croutonview=0x7f06005c;
         public static final int decor_content_parent=0x7f060045;
         public static final int default_activity_button=0x7f06003a;
         public static final int dialog=0x7f060010;
@@ -2041,6 +2046,8 @@ containing a value of this type.
         public static final int never=0x7f06000b;
         public static final int none=0x7f060004;
         public static final int normal=0x7f060001;
+        public static final int password_icon=0x7f060059;
+        public static final int password_layout=0x7f060056;
         public static final int progress_circular=0x7f06001c;
         public static final int progress_horizontal=0x7f06001d;
         public static final int radio=0x7f060041;
@@ -2062,8 +2069,12 @@ containing a value of this type.
         public static final int submit_area=0x7f060052;
         public static final int tabMode=0x7f060003;
         public static final int title=0x7f06003d;
+        public static final int txt_password=0x7f06005a;
+        public static final int txt_username=0x7f060058;
         public static final int up=0x7f060016;
         public static final int useLogo=0x7f060005;
+        public static final int user_icon=0x7f060057;
+        public static final int user_layout=0x7f060055;
         public static final int withText=0x7f06000e;
         public static final int wrap_content=0x7f060000;
     }
@@ -2190,21 +2201,25 @@ containing a value of this type.
         /**  Content description for the Toolbar icon used to collapse an expanded action mode. [CHAR LIMIT=NONE] 
          */
         public static final int abc_toolbar_collapse_description=0x7f0b0004;
-        public static final int action_settings=0x7f0b0012;
+        public static final int action_settings=0x7f0b0011;
         public static final int app_name=0x7f0b0010;
-        public static final int hello_world=0x7f0b0011;
+        /**  Login 
+         */
+        public static final int btn_login=0x7f0b0012;
+        public static final int hint_password=0x7f0b0014;
+        public static final int hint_user=0x7f0b0013;
     }
     public static final class style {
         /**  Action bar 
          */
-        public static final int ActionBar_Solid_Cobranza=0x7f0c0116;
-        public static final int ActionBar_Transparent_Cobranza=0x7f0c0117;
-        public static final int ActionBarTabStyle_Cobranza=0x7f0c011a;
-        public static final int ActionButton_CloseMode_Cobranza=0x7f0c011d;
-        public static final int AdpMessageTextAppearance=0x7f0c0115;
-        public static final int AdpNormalButtonStyle=0x7f0c0113;
-        public static final int AdpPositiveButtonStyle=0x7f0c0114;
-        public static final int AdpTitleStyle=0x7f0c0112;
+        public static final int ActionBar_Solid_Cobranza=0x7f0c0117;
+        public static final int ActionBar_Transparent_Cobranza=0x7f0c0119;
+        public static final int ActionBarTabStyle_Cobranza=0x7f0c011c;
+        public static final int ActionButton_CloseMode_Cobranza=0x7f0c011f;
+        public static final int AdpMessageTextAppearance=0x7f0c0116;
+        public static final int AdpNormalButtonStyle=0x7f0c0114;
+        public static final int AdpPositiveButtonStyle=0x7f0c0115;
+        public static final int AdpTitleStyle=0x7f0c0113;
         /**  Base style for AlertDialogPro 
          */
         public static final int AlertDialogPro=0x7f0c00ef;
@@ -2245,7 +2260,9 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0c010c;
-        public static final int AutoCompleteTextViewCobranza=0x7f0c011f;
+        /**  Controls style 
+         */
+        public static final int AutoCompleteTextViewCobranza=0x7f0c0121;
         public static final int Base_TextAppearance_AppCompat=0x7f0c0098;
         public static final int Base_TextAppearance_AppCompat_Body1=0x7f0c00a3;
         public static final int Base_TextAppearance_AppCompat_Body2=0x7f0c00a2;
@@ -2398,8 +2415,8 @@ containing a value of this type.
     
          */
         public static final int Base_Widget_AppCompat_Toolbar_Button_Navigation=0x7f0c0090;
-        public static final int ButtonCobranza=0x7f0c0120;
-        public static final int Cobranza=0x7f0c0128;
+        public static final int ButtonCobranza=0x7f0c0122;
+        public static final int Cobranza=0x7f0c012a;
         /**  Base style for title of AlertDialogPro 
          */
         public static final int DialogWindowTitle_AlertDialogPro=0x7f0c00f0;
@@ -2407,16 +2424,19 @@ containing a value of this type.
          */
         public static final int DialogWindowTitle_AlertDialogPro_Material=0x7f0c0105;
         public static final int DialogWindowTitle_AlertDialogPro_Material_Light=0x7f0c0106;
-        public static final int DropDownListView_Cobranza=0x7f0c0119;
-        public static final int DropDownNav_Cobranza=0x7f0c011b;
-        public static final int ImageButtonCobranza=0x7f0c0121;
+        public static final int DropDownListView_Cobranza=0x7f0c011b;
+        public static final int DropDownNav_Cobranza=0x7f0c011d;
+        /**  EditText 
+         */
+        public static final int EditText_Cobranza=0x7f0c0111;
+        public static final int ImageButtonCobranza=0x7f0c0123;
         public static final int Platform_AppCompat=0x7f0c00c9;
         public static final int Platform_AppCompat_Dialog=0x7f0c00cb;
         public static final int Platform_AppCompat_Light=0x7f0c00ca;
         public static final int Platform_AppCompat_Light_Dialog=0x7f0c00cc;
-        public static final int PopupMenu_Cobranza=0x7f0c0118;
-        public static final int ProgressBar_Cobranza=0x7f0c011c;
-        public static final int ProgressBarCobranza=0x7f0c0125;
+        public static final int PopupMenu_Cobranza=0x7f0c011a;
+        public static final int ProgressBar_Cobranza=0x7f0c011e;
+        public static final int ProgressBarCobranza=0x7f0c0127;
         public static final int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem=0x7f0c00b4;
         public static final int RtlOverlay_Widget_AppCompat_ActionButton_CloseMode=0x7f0c00b5;
         public static final int RtlOverlay_Widget_AppCompat_ActionButton_Overflow=0x7f0c00b6;
@@ -2429,10 +2449,10 @@ containing a value of this type.
         public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Query=0x7f0c00b0;
         public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Text=0x7f0c00b3;
         public static final int RtlOverlay_Widget_AppCompat_SearchView_MagIcon=0x7f0c00ae;
-        public static final int SeekBarCobranza=0x7f0c0126;
-        public static final int SpinnerCobranza=0x7f0c0122;
-        public static final int TabCobranza=0x7f0c0123;
-        public static final int TabTextCobranza=0x7f0c0124;
+        public static final int SeekBarCobranza=0x7f0c0128;
+        public static final int SpinnerCobranza=0x7f0c0124;
+        public static final int TabCobranza=0x7f0c0125;
+        public static final int TabTextCobranza=0x7f0c0126;
         /**  Base text appearance for AlertDialogPro 
          */
         public static final int TextAppearance_AlertDialogPro=0x7f0c00eb;
@@ -2528,10 +2548,10 @@ containing a value of this type.
         public static final int Theme_AppCompat_NoActionBar=0x7f0c00bd;
         /**  this style is only referenced in a Light.DarkActionBar based theme 
          */
-        public static final int Theme_Cobranza_Widget=0x7f0c011e;
+        public static final int Theme_Cobranza_Widget=0x7f0c0120;
         /**  Alert Dialog Pro 
          */
-        public static final int Theme_FlavoredMaterialLight=0x7f0c0111;
+        public static final int Theme_FlavoredMaterialLight=0x7f0c0112;
         public static final int ThemeOverlay_AppCompat=0x7f0c00c4;
         /**  Theme overlay that replaces the normal control color, which by default is the same as the
          secondary text color, with the primary text color. 
@@ -2550,7 +2570,7 @@ containing a value of this type.
          the value of colorAccent, colorPrimary and its variants. 
          */
         public static final int ThemeOverlay_AppCompat_Light=0x7f0c00c5;
-        public static final int ToggleCobranza=0x7f0c0127;
+        public static final int ToggleCobranza=0x7f0c0129;
         /**  Base style for widget of AlertDialogPro 
          */
         public static final int Widget_AlertDialogPro=0x7f0c00ed;
@@ -2626,6 +2646,7 @@ containing a value of this type.
          */
         public static final int Widget_AppCompat_Toolbar=0x7f0c0034;
         public static final int Widget_AppCompat_Toolbar_Button_Navigation=0x7f0c0035;
+        public static final int actionbar_title_style=0x7f0c0118;
     }
     public static final class styleable {
         /**  ============================================ 

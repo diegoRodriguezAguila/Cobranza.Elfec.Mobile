@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Elfec Cobranza Movil</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Elfec Cobranza Móvil</string>
     <string name="action_settings">Settings</string>
+    
+    <!-- Login -->
+    <string name="btn_login">Ingresar</string>
+    <string name="hint_user">Usuario</string>
+    <string name="hint_password">●●●●●●●●</string>
+    
 
 </resources>

@@ -6,4 +6,5 @@
     <color name="light_text_color_pressed">#007EB0</color>
     <color name="background_soft_gray">#E7E8EA</color>
     <color name="text_gray_color">#757575</color>
+    <color name="text_blue_color">#133D5D</color>
 </resources>
