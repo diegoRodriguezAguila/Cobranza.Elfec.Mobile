@@ -4,6 +4,7 @@ import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.elfec.cobranza.model.enums.DeviceStatus;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
@@ -20,23 +21,17 @@ public class DeviceRemoteDataAccess {
 	 * @param password
 	 * @param IMEI
 	 * @return 0 estado de dispositivo inactivo, 1 activo y válido par autilizar
+	 * @throws SQLException 
+	 * @throws ConnectException 
 	 */
-	public static short requestDeviceStatus(String username, String password, String IMEI)
+	public static DeviceStatus requestDeviceStatus(String username, String password, String IMEI) throws ConnectException, SQLException
 	{
-		ResultSet rs;
-		try {
-			rs = OracleDatabaseConnector.instance(username, password).
+		ResultSet rs = OracleDatabaseConnector.instance(username, password).
 					executeSelect("SELECT * FROM MOVILES.IMEI_APP WHERE IMEI="+IMEI+" AND APLICACION='Cobranza Movil'");
-			while(rs.next())
-			{
-				return rs.getShort("ESTADO");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ConnectException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while(rs.next())
+		{
+			return DeviceStatus.get(rs.getShort("ESTADO"));
 		}
-		return 0;
+		return DeviceStatus.UNABLED;
 	}
 }

@@ -30,7 +30,7 @@ public class LoginPresenter {
 				public void run() {
 					Looper.prepare();
 					view.showWaiting();
-					List<Exception> validationErrors = ElfecUserManager.validateUser(view.getUsername(), view.getPassword());
+					List<Exception> validationErrors = ElfecUserManager.validateUser(view.getUsername(), view.getPassword(), view.getIMEI());
 					view.hideWaiting();
 					if(validationErrors.size()==0)
 						view.goToMainMenu();

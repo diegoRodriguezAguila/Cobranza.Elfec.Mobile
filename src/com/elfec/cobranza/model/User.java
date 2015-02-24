@@ -6,6 +6,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
+import com.elfec.cobranza.model.enums.UserStatus;
 
 /**
  * Se guardan los usuarios localmente
@@ -64,12 +65,12 @@ public class User extends Model{
 		this.syncDate = syncDate;
 	}
 
-	public short getStatus() {
-		return status;
+	public UserStatus getStatus() {
+		return UserStatus.get(status);
 	}
 
-	public void setStatus(short status) {
-		this.status = status;
+	public void setStatus(UserStatus status) {
+		this.status = status.toShort();
 	}
 	
 	//#endregion
