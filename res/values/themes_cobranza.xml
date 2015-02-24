@@ -24,6 +24,7 @@
     
     <!-- End Actionbar -->
       
+    <item name="android:textViewStyle">@style/TextView.Cobranza</item>  
     <item name="android:windowIsTranslucent">true</item>
     <item name="android:windowContentOverlay">@null</item>
     <item name="android:windowBackground">@color/background_soft_gray</item>

@@ -8,6 +8,13 @@
     <string name="btn_login">Ingresar</string>
     <string name="hint_user">Usuario</string>
     <string name="hint_password">●●●●●●●●</string>
+    <string name="errors_in_fields">Los campos tienen errores, reviselos para poder continuar</string>
+    <string name="msg_login_waiting">Se está validando la información de usuario proporcionada, espere por favor&#8230;</string>
+    <string name="title_login_errors">ERROR DE INGRESO AL SISTEMA</string>
     
-
+	<!-- Dialog Buttons -->
+    <string name="btn_ok">Aceptar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_yes">Si</string>
+    <string name="btn_no">No</string>
 </resources>

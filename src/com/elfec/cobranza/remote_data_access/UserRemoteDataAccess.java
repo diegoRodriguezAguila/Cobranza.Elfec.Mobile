@@ -1,5 +1,6 @@
 package com.elfec.cobranza.remote_data_access;
 
+import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -20,19 +21,18 @@ public class UserRemoteDataAccess {
 	 * @param username
 	 * @param password
 	 * @return
+	 * @throws SQLException 
+	 * @throws ConnectException 
 	 */
-	public static User requestUser(String username, String password)
+	public static User requestUser(String username, String password) throws ConnectException, SQLException
 	{
 		ResultSet rs;
-		try {
-			rs = OracleDatabaseConnector.instance(username, password).
-					executeSelect("SELECT * FROM MOVILES.USUARIO_APP WHERE USUARIO='"+username+"' AND APLICACION='Cobranza Movil'");
-			while(rs.next())
-			{
-				return new User(username,password, DateTime.now(), rs.getShort("ESTADO"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		OracleDatabaseConnector.disposeInstance();
+		rs = OracleDatabaseConnector.instance(username, password).
+				executeSelect("SELECT * FROM MOVILES.USUARIO_APP WHERE USUARIO='"+username+"' AND APLICACION='Cobranza Movil'");
+		while(rs.next())
+		{
+			return new User(username,password, DateTime.now(), rs.getShort("ESTADO"));
 		}
 		return null;
 	}

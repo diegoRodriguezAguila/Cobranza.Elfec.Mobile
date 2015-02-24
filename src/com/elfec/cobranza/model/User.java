@@ -28,9 +28,7 @@ public class User extends Model{
 	
 	public User() {
 		super();
-	}
-	
-	
+	}	
 	
 	public User(String username, String encryptedPassword, DateTime syncDate, short status) {
 		super();
@@ -39,8 +37,42 @@ public class User extends Model{
 		this.syncDate = syncDate;
 		this.status = status;
 	}
+	
+	//#region Getters y Setters
+	
+	public String getUsername() {
+		return username;
+	}
 
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
+	public String getEncryptedPassword() {
+		return encryptedPassword;
+	}
+
+	public void setEncryptedPassword(String encryptedPassword) {
+		this.encryptedPassword = encryptedPassword;
+	}
+
+	public DateTime getSyncDate() {
+		return syncDate;
+	}
+
+	public void setSyncDate(DateTime syncDate) {
+		this.syncDate = syncDate;
+	}
+
+	public short getStatus() {
+		return status;
+	}
+
+	public void setStatus(short status) {
+		this.status = status;
+	}
+	
+	//#endregion
 
 	/**
 	 * Accede a la base de datos y obtiene el usuario que corresponde al nombre de usuario provisto

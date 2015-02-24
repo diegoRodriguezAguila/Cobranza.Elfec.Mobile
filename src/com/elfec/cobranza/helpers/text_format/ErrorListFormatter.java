@@ -17,14 +17,33 @@ public class ErrorListFormatter {
 	 * @param errors
 	 * @return
 	 */
-	public Spanned fotmatHTMLFromErrors(List<Exception> errors)
+	public static Spanned fotmatHTMLFromErrors(List<Exception> errors)
 	{
-		StringBuilder str = new StringBuilder("<font color='#006086'><b>");
+		StringBuilder str = new StringBuilder("<font>");
 		int size = errors.size();
 		if(size==1)
-			return Html.fromHtml(str.append(errors.get(0).getMessage()).append("</b></font>").toString());
+			return Html.fromHtml(str.append(errors.get(0).getMessage()).append("</font>").toString());
 		for (int i = 0; i < size; i++) {
 			str.append("● ").append(errors.get(i).getMessage());
+			str.append((i<size-1?"<br/>":""));
+		}
+		str.append("</b></font>");
+		return Html.fromHtml(str.toString());
+	}
+	
+	/**
+	 * Formatea una lista de errores una lista de errores (en cadena) en html
+	 * @param errors
+	 * @return
+	 */
+	public static Spanned fotmatHTMLFromErrorStrings(List<String> errors)
+	{
+		StringBuilder str = new StringBuilder("<font>");
+		int size = errors.size();
+		if(size==1)
+			return Html.fromHtml(str.append(errors.get(0)).append("</font>").toString());
+		for (int i = 0; i < size; i++) {
+			str.append("● ").append(errors.get(i));
 			str.append((i<size-1?"<br/>":""));
 		}
 		str.append("</b></font>");
