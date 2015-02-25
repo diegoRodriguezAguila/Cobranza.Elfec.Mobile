@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
@@ -43,9 +42,13 @@ public class Login extends Activity implements ILoginView {
 		txtUsername = (EditText) findViewById(R.id.txt_username);
 		txtPassword = (EditText) findViewById(R.id.txt_password);
 		OracleDatabaseConnector.initializeContext(this);
+		getActionBar().setTitle(R.string.title_activity_login);
 		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
 				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
 		setOnFocusChangedListeners();
+		//TEST PRUPOUSES
+		txtUsername.setText("drodriguezd");
+		txtPassword.setText("elfec2015");
 	}
 
 	@Override
@@ -55,17 +58,6 @@ public class Login extends Activity implements ILoginView {
 		return true;
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 	
 	@Override
     protected void attachBaseContext(Context newBase) {
@@ -128,7 +120,12 @@ public class Login extends Activity implements ILoginView {
 
 	@Override
 	public void clearPassword() {
-		txtPassword.setText(null);
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				txtPassword.setText(null);
+			}
+		});
 	}
 
 	@Override
@@ -187,11 +184,11 @@ public class Login extends Activity implements ILoginView {
 	}
 
 	@Override
-	public void goToMainMenu() {
+	public void goToLoadData() {
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				Intent i = new Intent(Login.this, Login.class);
+				Intent i = new Intent(Login.this, DataFlow.class);
 				startActivity(i);
 				overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 			}

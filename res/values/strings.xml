@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Elfec Cobranza Móvil</string>
+    <string name="app_name">Elfec Cobranza</string>
+    <string name="app_full_name">Elfec Cobranza Móvil</string>
     <string name="action_settings">Settings</string>
-    
+
     <!-- Login -->
+    <string name="title_activity_login">Ingreso al sistema</string>
     <string name="btn_login">Ingresar</string>
     <string name="hint_user">Usuario</string>
     <string name="hint_password">●●●●●●●●</string>
     <string name="errors_in_fields">Los campos tienen errores, reviselos para poder continuar</string>
     <string name="msg_login_waiting">Se está validando la información de usuario proporcionada, espere por favor&#8230;</string>
     <string name="title_login_errors">ERROR DE INGRESO AL SISTEMA</string>
+
+    <!-- Data Flow -->
+    <string name="title_activity_data_flow">Inicio</string>
+    <string name="btn_main_menu">Menu principal</string>
+    <string name="lbl_main_menu_info">Presione menu principal para ingresar a las opciones de cobranza</string>
+    <string name="btn_download_data">Cargar datos</string>
+    <string name="btn_upload_data">Descargar datos</string>
     
-	<!-- Dialog Buttons -->
+    <!-- Dialog Buttons -->
     <string name="btn_ok">Aceptar</string>
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>
+
+    <!-- Samples -->
+    <string name="sample_welcome_user">Bienvenido <b>drodriguezd</b>!</string>
+    <string name="sample_date">25 Mar 2015</string>
+    <string name="sample_device_imei">331235343553633</string>
+
 </resources>

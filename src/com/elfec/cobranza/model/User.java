@@ -6,6 +6,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
+import com.elfec.cobranza.helpers.security.AES;
 import com.elfec.cobranza.model.enums.UserStatus;
 
 /**
@@ -31,11 +32,10 @@ public class User extends Model{
 		super();
 	}	
 	
-	public User(String username, String encryptedPassword, DateTime syncDate, short status) {
+	public User(String username, String encryptedPassword, short status) {
 		super();
 		this.username = username;
 		this.encryptedPassword = encryptedPassword;
-		this.syncDate = syncDate;
 		this.status = status;
 	}
 	
@@ -84,5 +84,43 @@ public class User extends Model{
 	    return new Select()
 	        .from(User.class).where("Username=?", username)
 	        .executeSingle();
+	}
+	
+	/**
+	 * Sincroniza a un usuario, encripta su password, lo guarda localmente y le asigna
+	 * una fecha de sincronización
+	 * @param password (el password sin encriptar)
+	 * @return el usuario sincronizado
+	 */
+	public User synchronizeUser(String password)
+	{
+		syncDate = DateTime.now();
+		encryptedPassword = AES.encrypt(generateUserKey(), password);
+		save();
+		return this;
+	}
+	
+	/**
+	 * Verifica si es que el password proporcionado coincide con el del usuario
+	 * @param testPassword
+	 * @return
+	 */
+	public boolean passwordMatch(String testPassword)
+	{
+		return encryptedPassword.equals(AES.encrypt(generateUserKey(), testPassword));
+	}
+	
+	/**
+	 * Genera la clave correspondiente a este usuario, utiliza la fecha
+	 * de sincronización y el nombre de usuario para crearla, así que esta ya deberían estar asignados
+	 * @return
+	 */
+	private final String generateUserKey()
+	{
+		StringBuilder str = new StringBuilder();
+		str.append(syncDate.getMillis()).insert(5, ((char)((int)str.charAt(5))*14));
+		str.append(syncDate.getMillis()).insert(6, ((char)((int)str.charAt(1))*9));
+		str.append(syncDate.getMillis()).insert(3, username.charAt(0));
+		return str.toString();
 	}
 }

@@ -4,8 +4,6 @@ import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
@@ -32,7 +30,7 @@ public class UserRemoteDataAccess {
 				executeSelect("SELECT * FROM MOVILES.USUARIO_APP WHERE USUARIO='"+username+"' AND APLICACION='Cobranza Movil'");
 		while(rs.next())
 		{
-			return new User(username,password, DateTime.now(), rs.getShort("ESTADO"));
+			return new User(username,password, rs.getShort("ESTADO"));
 		}
 		return null;
 	}

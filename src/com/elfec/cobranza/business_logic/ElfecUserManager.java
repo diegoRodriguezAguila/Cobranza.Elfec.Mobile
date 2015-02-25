@@ -2,12 +2,12 @@ package com.elfec.cobranza.business_logic;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
+import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.enums.DeviceStatus;
 import com.elfec.cobranza.model.enums.UserStatus;
+import com.elfec.cobranza.model.exceptions.InvalidPasswordException;
 import com.elfec.cobranza.model.exceptions.UnabledDeviceException;
 import com.elfec.cobranza.model.exceptions.UnactiveUserException;
 import com.elfec.cobranza.remote_data_access.DeviceRemoteDataAccess;
@@ -25,26 +25,33 @@ public class ElfecUserManager {
 	 * @param username
 	 * @param password
 	 * @param IMEI
-	 * @return
+	 * @return El resultado de la validación, que incluye al usuario obtenido y la lista de errores
 	 */
-	public static List<Exception> validateUser(String username, String password, String IMEI)
+	public static DataAccessResult<User> validateUser(String username, String password, String IMEI)
 	{
-		List<Exception> errors = new ArrayList<Exception>();
+		DataAccessResult<User> result = new DataAccessResult<User>();
 		User localUser = User.findByUserName(username);
 		if(localUser==null)
 		{
 			try {
 				User remoteUser = UserRemoteDataAccess.requestUser(username, password);
-				if(remoteUser.getStatus()!=UserStatus.ACTIVE)
-					errors.add(new UnactiveUserException(username));
+				if(remoteUser==null || remoteUser.getStatus()!=UserStatus.ACTIVE)
+					result.addError(new UnactiveUserException(username));
 				if(DeviceRemoteDataAccess.requestDeviceStatus(username, password, IMEI)==DeviceStatus.UNABLED)
-					errors.add(new UnabledDeviceException());
+					result.addError(new UnabledDeviceException());
+				result.setResult(remoteUser.synchronizeUser(password));
 			} catch (ConnectException e) {
-				errors.add(e);
+				result.addError(e);
 			} catch (SQLException e) {
-				errors.add(e);
+				result.addError(e);
 			}
 		}
-		return errors;
+		else
+		{
+			if(!localUser.passwordMatch(password))
+				result.addError(new InvalidPasswordException());
+			result.setResult(localUser);
+		}
+		return result;
 	}
 }

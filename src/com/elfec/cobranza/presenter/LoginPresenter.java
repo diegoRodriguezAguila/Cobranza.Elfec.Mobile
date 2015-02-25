@@ -6,6 +6,9 @@ import android.os.Looper;
 
 import com.elfec.cobranza.business_logic.ElfecUserManager;
 import com.elfec.cobranza.business_logic.FieldValidator;
+import com.elfec.cobranza.business_logic.SessionManager;
+import com.elfec.cobranza.model.DataAccessResult;
+import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.presenter.views.ILoginView;
 
 public class LoginPresenter {
@@ -30,23 +33,27 @@ public class LoginPresenter {
 				public void run() {
 					Looper.prepare();
 					view.showWaiting();
-					List<Exception> validationErrors = ElfecUserManager.validateUser(view.getUsername(), view.getPassword(), view.getIMEI());
+					DataAccessResult<User> result = ElfecUserManager.validateUser(view.getUsername(), view.getPassword(), view.getIMEI());
 					view.hideWaiting();
-					if(validationErrors.size()==0)
-						view.goToMainMenu();
-					else view.showLoginErrors(validationErrors);
+					view.clearPassword();
+					if(!result.hasErrors())
+					{
+						view.goToLoadData();
+						SessionManager.startSession(result.getResult());
+					}
+					else 
+					{
+						view.showLoginErrors(result.getErrors());
+					}
 					Looper.loop();
 				}
 			});
 			thread.start();
 		}
-		else
-		{
-			view.notifyErrorsInFields();
-		}
+		else view.notifyErrorsInFields();
 	}
-	
-    /**
+
+	/**
 	 * Valida el campo del nombre de usuario, si hay errores se le mostraran al usuario
 	 */
 	public boolean validateUsernameField()

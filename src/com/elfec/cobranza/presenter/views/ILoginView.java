@@ -63,7 +63,7 @@ public interface ILoginView {
 	/**
 	 * Cambia la vista actual al menú principal
 	 */
-	public void goToMainMenu();
+	public void goToLoadData();
 	/**
 	 * Muestra los errores ocurridos durante el intento de login
 	 * @param validationErrors
