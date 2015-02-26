@@ -1,4 +1,4 @@
-package com.elfec.cobranza;
+package com.elfec.cobranza.view;
 
 import android.app.Activity;
 import android.os.Bundle;

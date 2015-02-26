@@ -42,16 +42,15 @@
             android:label="@string/title_activity_data_flow" >
         </activity>
         <activity
-            android:name=".ZoneListActivity"
+            android:name=".view.ZoneListActivity"
             android:label="@string/title_zone_list" >
         </activity>
-        <activity
-            android:name=".ZoneDetailActivity"
+        <activity android:name=".view.ZoneDetailActivity"
             android:label="@string/title_zone_detail"
-            android:parentActivityName=".ZoneListActivity" >
+            android:parentActivityName="com.elfec.cobranza.view.ZoneListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.elfec.cobranza.ZoneListActivity" />
+                android:value="com.elfec.cobranza.view.ZoneListActivity" />
         </activity>
     </application>
 

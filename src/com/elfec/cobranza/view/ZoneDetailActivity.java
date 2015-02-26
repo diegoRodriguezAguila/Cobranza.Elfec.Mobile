@@ -1,10 +1,11 @@
-package com.elfec.cobranza;
+package com.elfec.cobranza.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
-
 import android.view.MenuItem;
+
+import com.elfec.cobranza.R;
 
 /**
  * An activity representing a single Zone detail screen. This activity is only

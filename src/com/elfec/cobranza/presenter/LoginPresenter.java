@@ -7,6 +7,7 @@ import android.os.Looper;
 import com.elfec.cobranza.business_logic.ElfecUserManager;
 import com.elfec.cobranza.business_logic.FieldValidator;
 import com.elfec.cobranza.business_logic.SessionManager;
+import com.elfec.cobranza.business_logic.ZonesManager;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.presenter.views.ILoginView;
@@ -28,31 +29,51 @@ public class LoginPresenter {
 		boolean passwordIsValid = validatePasswordField();
 		if(usernameIsValid && passwordIsValid)
 		{
-			Thread thread = new Thread(new Runnable() {				
-				@Override
-				public void run() {
-					Looper.prepare();
-					view.showWaiting();
-					DataAccessResult<User> result = ElfecUserManager.validateUser(view.getUsername(), view.getPassword(), view.getIMEI());
-					view.hideWaiting();
-					view.clearPassword();
-					if(!result.hasErrors())
-					{
-						view.goToLoadData();
-						SessionManager.startSession(result.getResult());
-					}
-					else 
-					{
-						view.showLoginErrors(result.getErrors());
-					}
-					Looper.loop();
-				}
-			});
-			thread.start();
+			startThreadedUserValidation();
 		}
 		else view.notifyErrorsInFields();
 	}
 
+	/**
+	 * Realiza las validaciones respectivas para poder logear al usuario, todo en un hilo
+	 */
+	private void startThreadedUserValidation() {
+		Thread thread = new Thread(new Runnable() {				
+			@Override
+			public void run() {
+				Looper.prepare();
+				view.showWaiting();
+				String password = view.getPassword();
+				DataAccessResult<User> result = ElfecUserManager.validateUser(view.getUsername(), password, view.getIMEI());
+				result = importUserZones(password, result);
+				view.hideWaiting();
+				view.clearPassword();
+				if(!result.hasErrors())
+				{
+					view.goToLoadData();
+					SessionManager.startSession(result.getResult());
+				}
+				view.showLoginErrors(result.getErrors());
+				Looper.loop();
+			}
+		});
+		thread.start();
+	}
+
+	/**
+	 * Llama a los métodos necesarios para importar las zonas del usuario si es que es necesario hacerlo
+	 * @param password
+	 * @param result
+	 * @return
+	 */
+	private DataAccessResult<User> importUserZones(String password,
+			DataAccessResult<User> result) {
+		if(!result.hasErrors() && result.isRemoteDataAccess())
+		{
+			result = ZonesManager.importUserZones(result.getResult(), password);
+		}
+		return result;
+	}
 	/**
 	 * Valida el campo del nombre de usuario, si hay errores se le mostraran al usuario
 	 */

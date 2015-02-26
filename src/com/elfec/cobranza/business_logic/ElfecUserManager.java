@@ -34,28 +34,53 @@ public class ElfecUserManager {
 		User localUser = User.findByUserName(username);
 		if(localUser==null)
 		{
-			try {
-				User remoteUser = UserRemoteDataAccess.requestUser(username, password);
-				if(remoteUser==null || remoteUser.getStatus()!=UserStatus.ACTIVE)
-					result.addError(new UnactiveUserException(username));
-				validateCashDeskNumber(username, password, result, remoteUser);
-				if(DeviceRemoteDataAccess.requestDeviceStatus(username, password, IMEI)==DeviceStatus.UNABLED)
-					result.addError(new UnabledDeviceException());
-				if(!result.hasErrors())
-					result.setResult(remoteUser.synchronizeUser(password));
-			} catch (ConnectException e) {
-				result.addError(e);
-			} catch (SQLException e) {
-				result.addError(e);
-			}
+			validateRemoteUser(username, password, IMEI, result);
 		}
 		else
 		{
-			if(!localUser.passwordMatch(password))
-				result.addError(new InvalidPasswordException());
-			result.setResult(localUser);
+			validateLocalUser(password, result, localUser);
 		}
 		return result;
+	}
+
+	/**
+	 * Realiza las validaciones del usuario a nivel remoto
+	 * @param username
+	 * @param password
+	 * @param IMEI
+	 * @param result
+	 */
+	private static void validateRemoteUser(String username, String password,
+			String IMEI, DataAccessResult<User> result) {
+		result.setRemoteDataAccess(true);
+		try {
+			User remoteUser = UserRemoteDataAccess.requestUser(username, password);
+			if(remoteUser==null || remoteUser.getStatus()!=UserStatus.ACTIVE)
+				result.addError(new UnactiveUserException(username));
+			validateCashDeskNumber(username, password, result, remoteUser);
+			if(DeviceRemoteDataAccess.requestDeviceStatus(username, password, IMEI)==DeviceStatus.UNABLED)
+				result.addError(new UnabledDeviceException());
+			if(!result.hasErrors())
+				result.setResult(remoteUser.synchronizeUser(password));
+		} catch (ConnectException e) {
+			result.addError(e);
+		} catch (SQLException e) {
+			result.addError(e);
+		}
+	}
+
+	/**
+	 * Realiza las validaciones del usuario a nivel local
+	 * @param password
+	 * @param result
+	 * @param localUser
+	 */
+	private static void validateLocalUser(String password,
+			DataAccessResult<User> result, User localUser) {
+		result.setRemoteDataAccess(false);
+		if(!localUser.passwordMatch(password))
+			result.addError(new InvalidPasswordException());
+		result.setResult(localUser);
 	}
 
 	/**

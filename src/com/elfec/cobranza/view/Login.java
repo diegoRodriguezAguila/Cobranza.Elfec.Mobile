@@ -201,11 +201,14 @@ public class Login extends Activity implements ILoginView {
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(Login.this);
-				builder.setTitle(R.string.title_login_errors)
-				.setMessage(ErrorListFormatter.fotmatHTMLFromErrors(validationErrors))
-				.setPositiveButton(R.string.btn_ok, null)
-				.show();
+				if(validationErrors.size()>0)
+				{
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(Login.this);
+					builder.setTitle(R.string.title_login_errors)
+					.setMessage(ErrorListFormatter.fotmatHTMLFromErrors(validationErrors))
+					.setPositiveButton(R.string.btn_ok, null)
+					.show();
+				}
 			}
 		});
 	}

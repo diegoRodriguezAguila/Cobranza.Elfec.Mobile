@@ -13,11 +13,30 @@ import java.util.List;
  */
 public class DataAccessResult<TResult> {
 	private TResult result;
+	private boolean isRemoteDataAccess;
 	private List<Exception> listOfErrors;
 	
 	public DataAccessResult() {
 		listOfErrors = new ArrayList<Exception>();
 	}
+	
+	public DataAccessResult(boolean isRemoteDataAccess) {
+		this.isRemoteDataAccess = isRemoteDataAccess;
+		listOfErrors = new ArrayList<Exception>();
+	}
+	
+	public DataAccessResult(TResult result)
+	{
+		this.result = result;
+		listOfErrors = new ArrayList<Exception>();
+	}
+	
+	public DataAccessResult(boolean isRemoteDataAccess, TResult result) {
+		this.isRemoteDataAccess = isRemoteDataAccess;
+		this.result = result;
+		listOfErrors = new ArrayList<Exception>();
+	}
+	
 	/**
 	 * Obtiene la lista de errores del resultado de un servicio web
 	 * @return Lista de errores del WS
@@ -62,5 +81,17 @@ public class DataAccessResult<TResult> {
 	public boolean hasErrors()
 	{
 		return listOfErrors.size() > 0;
+	}
+
+	/**
+	 * Inidica si el resultado es de un acceso a datos remoto o no
+	 * @return
+	 */
+	public boolean isRemoteDataAccess() {
+		return isRemoteDataAccess;
+	}
+
+	public void setRemoteDataAccess(boolean isRemoteDataAccess) {
+		this.isRemoteDataAccess = isRemoteDataAccess;
 	}
 }
