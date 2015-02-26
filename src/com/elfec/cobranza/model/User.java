@@ -1,5 +1,7 @@
 package com.elfec.cobranza.model;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import com.activeandroid.Model;
@@ -25,7 +27,7 @@ public class User extends Model{
 	@Column(name = "cashierId", notNull=true)
 	private int cashierId;
 	
-	@Column(name = "cashDeskNumber", notNull=true)
+	@Column(name = "CashDeskNumber", notNull=true)
 	private int cashDeskNumber;
 	
 	@Column(name = "SyncDate")
@@ -131,6 +133,15 @@ public class User extends Model{
 	public boolean passwordMatch(String testPassword)
 	{
 		return encryptedPassword.equals(AES.encrypt(generateUserKey(), testPassword));
+	}
+	
+	/**
+	 * Obtiene las zonas del usuario
+	 * @return lista de zonas del usuario
+	 */
+	public List<Zone> getAssignedZones()
+	{
+		return getMany(Zone.class, "User");
 	}
 	
 	/**

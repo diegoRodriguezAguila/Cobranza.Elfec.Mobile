@@ -28,7 +28,7 @@ public class UserRemoteDataAccess {
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
 				executeSelect("SELECT USUARIO, ESTADO, IDEMPLEADO"
 						+ " FROM MOVILES.USUARIO_APP MU, ERP_ELFEC.SEG_USER SU "
-						+ "WHERE MU.USUARIO=SU.LASTNAME AND MU.USUARIO='"+username+"' AND MU.APLICACION='Cobranza Movil'");
+						+ "WHERE upper(MU.USUARIO)=upper(SU.LASTNAME) AND MU.USUARIO=upper('"+username+"') AND MU.APLICACION='Cobranza Movil'");
 		while(rs.next())
 		{
 			return new User(username, password, rs.getInt("IDEMPLEADO"), rs.getShort("ESTADO"));
