@@ -24,8 +24,11 @@ public class User extends Model{
 	@Column(name = "EncryptedPassword", notNull=true)
 	private String encryptedPassword;
 	
-	@Column(name = "cashierId", notNull=true)
+	@Column(name = "CashierId", notNull=true)
 	private int cashierId;
+	
+	@Column(name = "AssignationNumber", notNull=true)
+	private int assignationNumber;
 	
 	@Column(name = "CashDeskNumber", notNull=true)
 	private int cashDeskNumber;
@@ -40,11 +43,14 @@ public class User extends Model{
 		super();
 	}	
 	
-	public User(String username, String encryptedPassword, int cashierId, short status) {
+	public User(String username, String encryptedPassword, int cashierId,
+			int assignationNumber,
+			short status) {
 		super();
 		this.username = username;
 		this.encryptedPassword = encryptedPassword;
 		this.cashierId = cashierId;
+		this.assignationNumber = assignationNumber;
 		this.status = status;
 	}
 	
@@ -74,6 +80,14 @@ public class User extends Model{
 		this.cashierId = cashierId;
 	}
 	
+	public int getAssignationNumber() {
+		return assignationNumber;
+	}
+
+	public void setAssignationNumber(int assignationNumber) {
+		this.assignationNumber = assignationNumber;
+	}
+
 	public int getCashDeskNumber() {
 		return cashDeskNumber;
 	}

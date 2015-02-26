@@ -31,7 +31,7 @@ public class UserRemoteDataAccess {
 						+ "WHERE upper(MU.USUARIO)=upper(SU.LASTNAME) AND MU.USUARIO=upper('"+username+"') AND MU.APLICACION='Cobranza Movil'");
 		while(rs.next())
 		{
-			return new User(username, password, rs.getInt("IDEMPLEADO"), rs.getShort("ESTADO"));
+			return new User(username, password, rs.getInt("IDEMPLEADO"), rs.getInt("NO"), rs.getShort("ESTADO"));
 		}
 		return null;
 	}

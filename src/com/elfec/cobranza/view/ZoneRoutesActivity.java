@@ -1,6 +1,8 @@
 package com.elfec.cobranza.view;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,17 +15,14 @@ import com.elfec.cobranza.R;
  * side-by-side with a list of items in a {@link ZoneListActivity}.
  * <p>
  * This activity is mostly just a 'shell' activity containing nothing more than
- * a {@link ZoneDetailFragment}.
+ * a {@link ZoneRoutesFragment}.
  */
-public class ZoneDetailActivity extends Activity {
+public class ZoneRoutesActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_zone_detail);
-
-		// Show the Up button in the action bar.
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		setContentView(R.layout.activity_zone_routes);
 
 		// savedInstanceState is non-null when there is fragment state
 		// saved from previous configurations of this activity
@@ -38,13 +37,24 @@ public class ZoneDetailActivity extends Activity {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(ZoneDetailFragment.ARG_ITEM_ID, getIntent()
-					.getStringExtra(ZoneDetailFragment.ARG_ITEM_ID));
-			ZoneDetailFragment fragment = new ZoneDetailFragment();
+			arguments.putInt(ZoneRoutesFragment.ARG_ITEM_ID, getIntent()
+					.getIntExtra(ZoneRoutesFragment.ARG_ITEM_ID, -1));
+			ZoneRoutesFragment fragment = new ZoneRoutesFragment();
 			fragment.setArguments(arguments);
 			getFragmentManager().beginTransaction()
 					.add(R.id.zone_detail_container, fragment).commit();
 		}
+	}
+	
+	@Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+	
+	@Override
+	public void onBackPressed() {
+	    finish();//go back to the previous Activity
+	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 	}
 
 	@Override

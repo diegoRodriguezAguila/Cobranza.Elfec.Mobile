@@ -5,12 +5,15 @@ import org.joda.time.DateTime;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.presenter.DataFlowPresenter;
 import com.elfec.cobranza.presenter.views.IDataFlowView;
 
@@ -49,7 +52,14 @@ public class DataFlow extends Activity implements IDataFlowView {
 	public void onResume()
 	{
 		super.onResume();
-		((TextView) findViewById(R.id.txt_date)).setText(DateTime.now().toString("dd MMM yyyy"));
+		((TextView) findViewById(R.id.txt_date)).setText(TextFormater.capitalize(DateTime.now().toString("dd MMM yyyy")));
+	}
+	
+	public void btnDownloadDataClick(View view)
+	{
+		Intent i = new Intent(DataFlow.this, ZoneListActivity.class);
+		startActivity(i);
+		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 	}
 	
 	//#region Interface Methods

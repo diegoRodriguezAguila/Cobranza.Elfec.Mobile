@@ -3,6 +3,6 @@
     android:id="@+id/zone_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.elfec.cobranza.view.ZoneDetailActivity"
+    tools:context="com.elfec.cobranza.view.ZoneRoutesActivity"
     tools:ignore="MergeRootFrame" />
 

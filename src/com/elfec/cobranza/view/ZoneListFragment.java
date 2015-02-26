@@ -1,24 +1,30 @@
 package com.elfec.cobranza.view;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.elfec.cobranza.R;
 import com.elfec.cobranza.dummy.DummyContent;
+import com.elfec.cobranza.model.Zone;
+import com.elfec.cobranza.presenter.ZoneListPresenter;
+import com.elfec.cobranza.presenter.views.IZoneListView;
+import com.elfec.cobranza.view.adapters.ZoneAdapter;
 
 /**
  * A list fragment representing a list of Routes. This fragment also supports
  * tablet devices by allowing list items to be given an 'activated' state upon
  * selection. This helps indicate which item is currently being viewed in a
- * {@link ZoneDetailFragment}.
+ * {@link ZoneRoutesFragment}.
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ZoneListFragment extends ListFragment {
+public class ZoneListFragment extends ListFragment implements IZoneListView{
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -46,7 +52,7 @@ public class ZoneListFragment extends ListFragment {
 		/**
 		 * Callback for when an item has been selected.
 		 */
-		public void onItemSelected(String id);
+		public void onItemSelected(int id);
 	}
 
 	/**
@@ -55,9 +61,11 @@ public class ZoneListFragment extends ListFragment {
 	 */
 	private static Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
-		public void onItemSelected(String id) {
+		public void onItemSelected(int id) {
 		}
 	};
+	
+	private ZoneListPresenter presenter;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -71,9 +79,12 @@ public class ZoneListFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 
 		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+		
+		/*setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));
+				android.R.id.text1, DummyContent.ITEMS));*/
+		presenter = new ZoneListPresenter(this);
+		presenter.loadUserAssignedZones();
 	}
 
 	@Override
@@ -149,4 +160,18 @@ public class ZoneListFragment extends ListFragment {
 
 		mActivatedPosition = position;
 	}
+	
+	//#region Interface Methods
+
+	@Override
+	public void setZones(final List<Zone> zones) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				setListAdapter(new ZoneAdapter(getActivity(), R.layout.zone_list_item, zones));
+			}
+		});
+	}
+	
+	//#endregion
 }

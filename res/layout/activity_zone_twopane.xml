@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/zone_list"
-        android:name="com.elfec.cobranza.view.ZoneListFragmentgment"
+        android:name="com.elfec.cobranza.view.ZoneListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

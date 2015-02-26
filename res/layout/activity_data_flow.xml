@@ -44,6 +44,7 @@
 	        android:drawableStart="@drawable/cashier"
 	        android:gravity="center_vertical"
 	        android:textAppearance="@style/TextAppearance.CustomFont.Light" 
+	        android:textIsSelectable="true"
 	        android:textSize="20sp" />
 	    <TextView
 	        android:id="@+id/txt_device_imei"
@@ -53,6 +54,7 @@
 	        android:drawableLeft="@drawable/device_imei"
 	        android:drawableStart="@drawable/device_imei"
 	        android:gravity="center_vertical"
+	        android:textIsSelectable="true"
 	        android:textAppearance="@style/TextAppearance.CustomFont.Semilight" 
 	        android:textSize="16sp" />
 
@@ -102,6 +104,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
             android:drawableTop="@drawable/import_from_server"
+            android:onClick="btnDownloadDataClick"
             android:text="@string/btn_download_data" />
 
         <Button
