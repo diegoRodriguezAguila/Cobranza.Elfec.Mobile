@@ -105,7 +105,7 @@ public class Login extends Activity implements ILoginView {
 
 	@Override
 	public String getUsername() {
-		return txtUsername.getText().toString().toLowerCase(Locale.getDefault());
+		return txtUsername.getText().toString().toUpperCase(Locale.getDefault());
 	}
 
 	@Override
@@ -189,6 +189,7 @@ public class Login extends Activity implements ILoginView {
 			@Override
 			public void run() {
 				Intent i = new Intent(Login.this, DataFlow.class);
+				i.putExtra("IMEI", getIMEI());
 				startActivity(i);
 				overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 			}

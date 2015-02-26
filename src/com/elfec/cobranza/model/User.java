@@ -17,25 +17,32 @@ import com.elfec.cobranza.model.enums.UserStatus;
 @Table(name = "Users")
 public class User extends Model{
 	@Column(name = "Username", notNull=true)
-	public String username;
+	private String username;
 	
 	@Column(name = "EncryptedPassword", notNull=true)
-	public String encryptedPassword;
+	private String encryptedPassword;
+	
+	@Column(name = "cashierId", notNull=true)
+	private int cashierId;
+	
+	@Column(name = "cashDeskNumber", notNull=true)
+	private int cashDeskNumber;
 	
 	@Column(name = "SyncDate")
-	public DateTime syncDate;
+	private DateTime syncDate;
 	
 	@Column(name = "Status", notNull=true)
-	public short status;
+	private short status;
 	
 	public User() {
 		super();
 	}	
 	
-	public User(String username, String encryptedPassword, short status) {
+	public User(String username, String encryptedPassword, int cashierId, short status) {
 		super();
 		this.username = username;
 		this.encryptedPassword = encryptedPassword;
+		this.cashierId = cashierId;
 		this.status = status;
 	}
 	
@@ -55,6 +62,22 @@ public class User extends Model{
 
 	public void setEncryptedPassword(String encryptedPassword) {
 		this.encryptedPassword = encryptedPassword;
+	}
+
+	public int getCashierId() {
+		return cashierId;
+	}
+
+	public void setCashierId(int cashierId) {
+		this.cashierId = cashierId;
+	}
+	
+	public int getCashDeskNumber() {
+		return cashDeskNumber;
+	}
+
+	public void setCashDeskNumber(int cashDeskNumber) {
+		this.cashDeskNumber = cashDeskNumber;
 	}
 
 	public DateTime getSyncDate() {

@@ -1,20 +1,30 @@
 package com.elfec.cobranza.view;
 
+import org.joda.time.DateTime;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.presenter.DataFlowPresenter;
 import com.elfec.cobranza.presenter.views.IDataFlowView;
 
 public class DataFlow extends Activity implements IDataFlowView {
 
+	private DataFlowPresenter presenter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_data_flow);
+		presenter = new DataFlowPresenter(this);
+		((TextView) findViewById(R.id.txt_device_imei)).setText(getIntent().getExtras().getString("IMEI"));
+		presenter.setFields();
 	}
 
 	@Override
@@ -34,4 +44,25 @@ public class DataFlow extends Activity implements IDataFlowView {
 	    finish();//go back to the previous Activity
 	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		((TextView) findViewById(R.id.txt_date)).setText(DateTime.now().toString("dd MMM yyyy"));
+	}
+	
+	//#region Interface Methods
+
+	@Override
+	public void setCurrentUser(String username) {
+		((TextView) findViewById(R.id.txt_username_welcome)).setText(Html.fromHtml("Bienvenido <b>"+username+"</b>!"));
+	}
+
+	@Override
+	public void setCashdeskNumber(int cashdeskNumber) {
+		((TextView) findViewById(R.id.txt_cashdesk_number)).setText(""+cashdeskNumber);
+	}
+	
+	//#endregion
 }

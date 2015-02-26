@@ -10,6 +10,7 @@ import com.elfec.cobranza.model.enums.UserStatus;
 import com.elfec.cobranza.model.exceptions.InvalidPasswordException;
 import com.elfec.cobranza.model.exceptions.UnabledDeviceException;
 import com.elfec.cobranza.model.exceptions.UnactiveUserException;
+import com.elfec.cobranza.model.exceptions.UnassignedCashDeskException;
 import com.elfec.cobranza.remote_data_access.DeviceRemoteDataAccess;
 import com.elfec.cobranza.remote_data_access.UserRemoteDataAccess;
 
@@ -37,9 +38,11 @@ public class ElfecUserManager {
 				User remoteUser = UserRemoteDataAccess.requestUser(username, password);
 				if(remoteUser==null || remoteUser.getStatus()!=UserStatus.ACTIVE)
 					result.addError(new UnactiveUserException(username));
+				validateCashDeskNumber(username, password, result, remoteUser);
 				if(DeviceRemoteDataAccess.requestDeviceStatus(username, password, IMEI)==DeviceStatus.UNABLED)
 					result.addError(new UnabledDeviceException());
-				result.setResult(remoteUser.synchronizeUser(password));
+				if(!result.hasErrors())
+					result.setResult(remoteUser.synchronizeUser(password));
 			} catch (ConnectException e) {
 				result.addError(e);
 			} catch (SQLException e) {
@@ -53,5 +56,26 @@ public class ElfecUserManager {
 			result.setResult(localUser);
 		}
 		return result;
+	}
+
+	/**
+	 * Valida que el usuario tenga una caja asignada
+	 * @param username
+	 * @param password
+	 * @param result
+	 * @param remoteUser
+	 * @throws ConnectException
+	 * @throws SQLException
+	 */
+	private static void validateCashDeskNumber(String username,
+			String password, DataAccessResult<User> result, User remoteUser)
+			throws ConnectException, SQLException {
+		if(remoteUser!=null)
+		{
+			int cashDeskNumber = UserRemoteDataAccess.requestUserCashDeskNumber(username, password, remoteUser.getCashierId());
+			if(cashDeskNumber==-1)
+				result.addError(new UnassignedCashDeskException(username));
+			else remoteUser.setCashDeskNumber(cashDeskNumber);
+		}
 	}
 }

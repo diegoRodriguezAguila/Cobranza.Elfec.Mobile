@@ -19,7 +19,7 @@
         android:layout_alignParentLeft="true" 
         android:layout_alignParentStart="true" >
 	    <TextView
-	        android:id="@+id/title_login"
+	        android:id="@+id/txt_username_welcome"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/sample_welcome_user"
@@ -36,6 +36,16 @@
 	        android:textAppearance="@style/TextAppearance.CustomFont.Semilight" 
 	        android:textSize="16sp" />
 	    <TextView
+	        android:id="@+id/txt_cashdesk_number"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/sample_cashdesk_number"
+	        android:drawableLeft="@drawable/cashier"
+	        android:drawableStart="@drawable/cashier"
+	        android:gravity="center_vertical"
+	        android:textAppearance="@style/TextAppearance.CustomFont.Light" 
+	        android:textSize="20sp" />
+	    <TextView
 	        android:id="@+id/txt_device_imei"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -45,6 +55,7 @@
 	        android:gravity="center_vertical"
 	        android:textAppearance="@style/TextAppearance.CustomFont.Semilight" 
 	        android:textSize="16sp" />
+
 	</LinearLayout>
     <Button
         android:id="@+id/btn_main_menu"

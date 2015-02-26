@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 public class PreferencesManager {
 
 	private final String LOGGED_USERNAME = "loggedUsername";
+	private final String LOGGED_CASHDESK_NUMBER = "loggedCashdeskNumber";
 	
 	private SharedPreferences preferences;
 	
@@ -61,6 +62,25 @@ public class PreferencesManager {
 	public PreferencesManager setLoggedUsername(String loggedUsername)
 	{
 		preferences.edit().putString(LOGGED_USERNAME, loggedUsername).commit();
+		return this;
+	}
+	
+	/**
+	 * Obtiene el numero de caja del usuario logeado actual
+	 * @return -1 si es que ninguno se ha logeado, o si no se asignó el valor
+	 */
+	public int getLoggedCashdeskNumber()
+	{
+		return preferences.getInt(LOGGED_CASHDESK_NUMBER, -1);
+	}
+	
+	/**
+	 * Asigna el numero de caja del usuario logeado actual, sobreescribe cualquier usuario que haya sido logeado antes
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setLoggedCashdeskNumber(int loggedCashdeskNumber)
+	{
+		preferences.edit().putInt(LOGGED_CASHDESK_NUMBER, loggedCashdeskNumber).commit();
 		return this;
 	}
 	

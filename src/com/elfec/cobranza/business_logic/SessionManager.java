@@ -17,6 +17,7 @@ public class SessionManager {
 	public static void startSession(User user)
 	{
 		PreferencesManager.instance().setLoggedUsername(user.getUsername());
+		PreferencesManager.instance().setLoggedCashdeskNumber(user.getCashDeskNumber());
 	}
 	
 	/**
@@ -25,6 +26,7 @@ public class SessionManager {
 	public static void finishSession()
 	{
 		PreferencesManager.instance().setLoggedUsername(null);
+		PreferencesManager.instance().setLoggedCashdeskNumber(-1);
 	}
 	
 	/**
@@ -34,6 +36,15 @@ public class SessionManager {
 	public static String getLoggedInUsername()
 	{
 		return PreferencesManager.instance().getLoggedUsername();
+	}
+	
+	/**
+	 * Obtiene el numero de caja del usuario logeado actual
+	 * @return -1 si es que ningun usuario inició sesión
+	 */
+	public static int getLoggedCashdeskNumber()
+	{
+		return PreferencesManager.instance().getLoggedCashdeskNumber();
 	}
 	
 	/**
