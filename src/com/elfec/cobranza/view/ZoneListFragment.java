@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.elfec.cobranza.R;
-import com.elfec.cobranza.dummy.DummyContent;
 import com.elfec.cobranza.model.Zone;
 import com.elfec.cobranza.presenter.ZoneListPresenter;
 import com.elfec.cobranza.presenter.views.IZoneListView;
@@ -80,9 +79,6 @@ public class ZoneListFragment extends ListFragment implements IZoneListView{
 
 		// TODO: replace with a real list adapter.
 		
-		/*setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));*/
 		presenter = new ZoneListPresenter(this);
 		presenter.loadUserAssignedZones();
 	}
@@ -127,7 +123,7 @@ public class ZoneListFragment extends ListFragment implements IZoneListView{
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		mCallbacks.onItemSelected(presenter.getZoneRemoteId(position));
 	}
 
 	@Override

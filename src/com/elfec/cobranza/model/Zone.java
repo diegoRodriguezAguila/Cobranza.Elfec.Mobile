@@ -5,6 +5,7 @@ import java.util.List;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 /**
  * Almacena las zonas 
  * @author drodriguez
@@ -63,6 +64,17 @@ public class Zone extends Model {
 
 	//#endregion
 
+	/**
+	 * Accede a la base de datos y obtiene la zona con su id remoto 
+	 * @param zoneRemoteId el id de la zona en oracle
+	 * @return La zona que corresponde a ese Id, null si no existe
+	 * **/
+	public static Zone findByRemoteId(int zoneRemoteId) {
+	    return new Select()
+	        .from(Zone.class).where("ZoneRemoteId=?", zoneRemoteId)
+	        .executeSingle();
+	}
+	
 	/**
 	 * Obtiene las rutas de la zona
 	 * @return lista de rutas de la zona

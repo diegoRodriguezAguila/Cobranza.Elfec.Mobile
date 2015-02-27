@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.model.Zone;
 
 
@@ -45,8 +46,8 @@ public class ZoneAdapter extends ArrayAdapter<Zone> {
 		if(convertView==null)
 			convertView = inflater.inflate(resource, null);
 		Zone zone = getItem(position);
-		((TextView)convertView.findViewById(R.id.txt_zone_id)).setText(zone.getZoneRemoteId());
-		((TextView)convertView.findViewById(R.id.txt_zone_desc)).setText(zone.getDescription());
+		((TextView)convertView.findViewById(R.id.txt_zone_id)).setText(""+zone.getZoneRemoteId());
+		((TextView)convertView.findViewById(R.id.txt_zone_desc)).setText(TextFormater.capitalize(zone.getDescription()));
 		return convertView;
 	}
 }

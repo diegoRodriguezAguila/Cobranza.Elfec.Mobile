@@ -47,7 +47,7 @@ public class Login extends Activity implements ILoginView {
 				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
 		setOnFocusChangedListeners();
 		//TEST PRUPOUSES
-		txtUsername.setText("ominasiento");
+		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");
 	}
 

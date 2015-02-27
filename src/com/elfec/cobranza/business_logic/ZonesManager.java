@@ -45,6 +45,7 @@ public class ZonesManager {
 		} catch (ConnectException e) {
 			result.addError(e);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			result.addError(e);
 		}
 		finally{

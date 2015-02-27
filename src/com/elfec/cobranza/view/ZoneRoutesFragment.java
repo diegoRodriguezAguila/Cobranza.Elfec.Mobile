@@ -1,31 +1,30 @@
 package com.elfec.cobranza.view;
 
+import java.util.List;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.elfec.cobranza.R;
-import com.elfec.cobranza.dummy.DummyContent;
+import com.elfec.cobranza.model.Route;
+import com.elfec.cobranza.presenter.ZoneRoutesPresenter;
+import com.elfec.cobranza.presenter.views.IZoneRoutesView;
 
 /**
  * A fragment representing a single Zone detail screen. This fragment is either
  * contained in a {@link ZoneListActivity} in two-pane mode (on tablets) or a
  * {@link ZoneRoutesActivity} on handsets.
  */
-public class ZoneRoutesFragment extends Fragment{
+public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 	/**
 	 * The fragment argument representing the item ID that this fragment
 	 * represents.
 	 */
 	public static final String ARG_ITEM_ID = "item_id";
 
-	/**
-	 * The dummy content this fragment is presenting.
-	 */
-	private DummyContent.DummyItem mItem;
+	private ZoneRoutesPresenter presenter;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -42,8 +41,8 @@ public class ZoneRoutesFragment extends Fragment{
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getInt(
-					ARG_ITEM_ID));
+			presenter = new ZoneRoutesPresenter(this);
+			presenter.loadZoneRoutes(getArguments().getInt(ARG_ITEM_ID));
 		}
 	}
 
@@ -52,14 +51,14 @@ public class ZoneRoutesFragment extends Fragment{
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_zone_routes,
 				container, false);
-
-		// Show the dummy content as text in a TextView.
-		if (mItem != null) {
-			((TextView) rootView.findViewById(R.id.zone_detail))
-					.setText(mItem.content);
-		}
-
 		return rootView;
 	}
+
+	//#region Interface Methods
+	@Override
+	public void setZoneRoutes(List<Route> zoneRoutes) {
+		
+	}
+	//#endregion
 	
 }

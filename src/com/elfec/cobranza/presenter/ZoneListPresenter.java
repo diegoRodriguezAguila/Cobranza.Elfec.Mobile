@@ -10,6 +10,7 @@ import com.elfec.cobranza.presenter.views.IZoneListView;
 public class ZoneListPresenter {
 
 	private IZoneListView view;
+	private Zone[] directAccessZones;
 
 	public ZoneListPresenter(IZoneListView view) {
 		this.view = view;
@@ -23,12 +24,23 @@ public class ZoneListPresenter {
 		Thread thread = new Thread(new Runnable() {			
 			@Override
 			public void run() {	
-				User usr = User.findByUserName(SessionManager.getLoggedInUsername());
-				List<Zone> zones = usr.getAssignedZones();
+				List<Zone> zones =  User.findByUserName(SessionManager.getLoggedInUsername()).getAssignedZones();
+				directAccessZones = new Zone[zones.size()];
+				directAccessZones = zones.toArray(directAccessZones);
 				view.setZones(zones);
 			}
 		});
 		thread.start();
+	}
+	
+	/**
+	 * Obtiene el id remoto de la zona en la posición especificada
+	 * @param position
+	 * @return
+	 */
+	public int getZoneRemoteId(int position)
+	{
+		return directAccessZones[position].getZoneRemoteId();
 	}
 	
 }

@@ -35,7 +35,7 @@ public class ZoneRemoteDataAccess {
 						+ "WHERE UZ.IDZONA=Z.IDZONA AND NO="+ownerUser.getAssignationNumber()+" AND Z.IDZONA>=5000 AND Z.IDZONA<7000");
 		while(rs.next())
 		{
-			zones.add(new Zone(ownerUser, rs.getInt("IDZONA"),rs.getString("DESCRPICION")));
+			zones.add(new Zone(ownerUser, rs.getInt("IDZONA"),rs.getString("DESCRIPCION")));
 		}
 		return zones;
 	}
