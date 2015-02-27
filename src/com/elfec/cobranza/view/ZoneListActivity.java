@@ -80,6 +80,7 @@ public class ZoneListActivity extends Activity implements
 			ZoneRoutesFragment fragment = new ZoneRoutesFragment();
 			fragment.setArguments(arguments);
 			getFragmentManager().beginTransaction()
+			.setCustomAnimations(R.anim.slide_left_in_fragment, R.anim.slide_left_out_fragment)
 					.replace(R.id.zone_detail_container, fragment).commit();
 
 		} else {

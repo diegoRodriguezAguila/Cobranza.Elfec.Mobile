@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.presenter.ZoneRoutesPresenter;
 import com.elfec.cobranza.presenter.views.IZoneRoutesView;
+import com.elfec.cobranza.view.adapters.RouteAdapter;
 
 /**
  * A fragment representing a single Zone detail screen. This fragment is either
@@ -56,8 +59,14 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 
 	//#region Interface Methods
 	@Override
-	public void setZoneRoutes(List<Route> zoneRoutes) {
-		
+	public void setZoneRoutes(final List<Route> zoneRoutes) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				((ListView)getView().findViewById(R.id.listview_zone_routes))
+				.setAdapter(new RouteAdapter(getActivity(), R.layout.route_list_item, zoneRoutes));
+			}
+		});
 	}
 	//#endregion
 	

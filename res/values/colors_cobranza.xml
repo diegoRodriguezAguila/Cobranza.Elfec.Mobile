@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="cobranza_color">#2574a9</color>
+    <color name="cobranza_color_highlight">#2487C1</color>
     <color name="cobranza_color_pressed">#145881</color>
     <color name="light_text_color">#2196F3</color>
     <color name="light_text_color_pressed">#007EB0</color>

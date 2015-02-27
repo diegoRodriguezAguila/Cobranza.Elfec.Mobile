@@ -26,6 +26,8 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public class Login extends Activity implements ILoginView {
 
+	private static final String IMEI = "IMEI";
+
 	private LoginPresenter presenter;
 	
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
@@ -189,7 +191,7 @@ public class Login extends Activity implements ILoginView {
 			@Override
 			public void run() {
 				Intent i = new Intent(Login.this, DataFlow.class);
-				i.putExtra("IMEI", getIMEI());
+				i.putExtra(IMEI, getIMEI());
 				startActivity(i);
 				overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 			}

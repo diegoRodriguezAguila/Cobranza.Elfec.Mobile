@@ -20,8 +20,11 @@ public class TextFormater {
 		String[] words=line.split(" ");
 		for(String word:words)
 		{
-			if(word.length()>0)
-			result.append(Character.toUpperCase(word.charAt(0))+word.substring(1).toLowerCase(Locale.getDefault())+" ");
+			if(word.length()>3)
+				result.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1).toLowerCase(Locale.getDefault()));
+			else result.append(word);
+			if(word!=words[words.length-1])
+				result.append(" ");
 		}
 		return result.toString();
 	}

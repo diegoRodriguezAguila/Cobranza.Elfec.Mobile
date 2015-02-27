@@ -32,7 +32,8 @@ public class ZoneRemoteDataAccess {
 		ResultSet rs = OracleDatabaseConnector.instance(ownerUser.getUsername(), password).
 				executeSelect("SELECT Z.IDZONA, DESCRIPCION "
 						+ "FROM ERP_ELFEC.SEG_USER_ZONAS UZ, ERP_ELFEC.ZONAS Z "
-						+ "WHERE UZ.IDZONA=Z.IDZONA AND NO="+ownerUser.getAssignationNumber()+" AND Z.IDZONA>=5000 AND Z.IDZONA<7000");
+						+ "WHERE UZ.IDZONA=Z.IDZONA AND NO="+ownerUser.getAssignationNumber()
+						+" AND Z.IDZONA BETWEEN 5000 AND 6999 AND Z.IDZONA<>5012");
 		while(rs.next())
 		{
 			zones.add(new Zone(ownerUser, rs.getInt("IDZONA"),rs.getString("DESCRIPCION")));

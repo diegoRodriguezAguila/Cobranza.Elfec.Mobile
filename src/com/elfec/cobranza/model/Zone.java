@@ -23,6 +23,8 @@ public class Zone extends Model {
 	@Column(name = "Description")
 	private String description;
 	
+	private List<Route> zoneRoutes;
+	
 	
 	public Zone() {
 		super();
@@ -81,6 +83,8 @@ public class Zone extends Model {
 	 */
 	public List<Route> getZoneRoutes()
 	{
-		return getMany(Route.class, "Zone");	
+		if(zoneRoutes==null)
+			zoneRoutes = getMany(Route.class, "Zone");	
+		return zoneRoutes;
 	}
 }

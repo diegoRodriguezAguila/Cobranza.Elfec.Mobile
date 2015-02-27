@@ -19,6 +19,7 @@ import com.elfec.cobranza.presenter.views.IDataFlowView;
 
 public class DataFlow extends Activity implements IDataFlowView {
 
+	private static final String IMEI = "IMEI";
 	private DataFlowPresenter presenter;
 	
 	@Override
@@ -26,7 +27,7 @@ public class DataFlow extends Activity implements IDataFlowView {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_data_flow);
 		presenter = new DataFlowPresenter(this);
-		((TextView) findViewById(R.id.txt_device_imei)).setText(getIntent().getExtras().getString("IMEI"));
+		((TextView) findViewById(R.id.txt_device_imei)).setText(getIntent().getExtras().getString(IMEI));
 		presenter.setFields();
 	}
 
