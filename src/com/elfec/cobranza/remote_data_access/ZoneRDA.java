@@ -15,7 +15,7 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
  * @author drodriguez
  *
  */
-public class ZoneRemoteDataAccess {
+public class ZoneRDA {
 
 	/**
 	 *  Obtiene todas las zonas de un usuario que correspondan a su IDEMPLEADO

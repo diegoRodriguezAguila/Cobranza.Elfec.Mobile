@@ -11,8 +11,8 @@ import com.elfec.cobranza.model.exceptions.InvalidPasswordException;
 import com.elfec.cobranza.model.exceptions.UnabledDeviceException;
 import com.elfec.cobranza.model.exceptions.UnactiveUserException;
 import com.elfec.cobranza.model.exceptions.UnassignedCashDeskException;
-import com.elfec.cobranza.remote_data_access.DeviceRemoteDataAccess;
-import com.elfec.cobranza.remote_data_access.UserRemoteDataAccess;
+import com.elfec.cobranza.remote_data_access.DeviceRDA;
+import com.elfec.cobranza.remote_data_access.UserRDA;
 
 /**
  * Se encarga de las operaciones de lógica de negocio sobre el usuario
@@ -54,11 +54,11 @@ public class ElfecUserManager {
 			String IMEI, DataAccessResult<User> result) {
 		result.setRemoteDataAccess(true);
 		try {
-			User remoteUser = UserRemoteDataAccess.requestUser(username, password);
+			User remoteUser = UserRDA.requestUser(username, password);
 			if(remoteUser==null || remoteUser.getStatus()!=UserStatus.ACTIVE)
 				result.addError(new UnactiveUserException(username));
 			validateCashDeskNumber(username, password, result, remoteUser);
-			if(DeviceRemoteDataAccess.requestDeviceStatus(username, password, IMEI)==DeviceStatus.UNABLED)
+			if(DeviceRDA.requestDeviceStatus(username, password, IMEI)==DeviceStatus.UNABLED)
 				result.addError(new UnabledDeviceException());
 			if(!result.hasErrors())
 				result.setResult(remoteUser.synchronizeUser(password));
@@ -98,7 +98,7 @@ public class ElfecUserManager {
 			throws ConnectException, SQLException {
 		if(remoteUser!=null)
 		{
-			int cashDeskNumber = UserRemoteDataAccess.requestUserCashDeskNumber(username, password, remoteUser.getCashierId());
+			int cashDeskNumber = UserRDA.requestUserCashDeskNumber(username, password, remoteUser.getCashierId());
 			if(cashDeskNumber==-1)
 				result.addError(new UnassignedCashDeskException(username));
 			else remoteUser.setCashDeskNumber(cashDeskNumber);

@@ -23,13 +23,19 @@ public class User extends Model{
 	
 	@Column(name = "EncryptedPassword", notNull=true)
 	private String encryptedPassword;
-	
+	/**
+	 * IDEMPLEADO en SEG_USER
+	 */
 	@Column(name = "CashierId", notNull=true)
 	private int cashierId;
-	
+	/**
+	 * NO en SEG_USER
+	 */
 	@Column(name = "AssignationNumber", notNull=true)
 	private int assignationNumber;
-	
+	/**
+	 * Número de caja
+	 */
 	@Column(name = "CashDeskNumber", notNull=true)
 	private int cashDeskNumber;
 	

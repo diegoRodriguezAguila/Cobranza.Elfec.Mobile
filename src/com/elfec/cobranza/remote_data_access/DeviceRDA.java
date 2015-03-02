@@ -12,7 +12,7 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
  * @author drodriguez
  *
  */
-public class DeviceRemoteDataAccess {
+public class DeviceRDA {
 	
 	/**
 	 * Obtiene remotamente el estado de un dispositivo, si es que no existe en la tabla de IMEI_APP, se

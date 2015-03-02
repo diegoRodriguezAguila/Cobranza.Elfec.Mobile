@@ -12,7 +12,7 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
  * @author drodriguez
  *
  */
-public class UserRemoteDataAccess {
+public class UserRDA {
 
 	/**
 	 * Obtiene remotamente el usuario especificado, se requiere password y nombre de usuario para la conexión

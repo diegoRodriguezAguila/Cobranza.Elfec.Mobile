@@ -9,8 +9,8 @@ import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
-import com.elfec.cobranza.remote_data_access.RouteRemoteDataAccess;
-import com.elfec.cobranza.remote_data_access.ZoneRemoteDataAccess;
+import com.elfec.cobranza.remote_data_access.RouteRDA;
+import com.elfec.cobranza.remote_data_access.ZoneRDA;
 
 /**
  * Se encarga de las operaciones de lógica de negocio de zonas 
@@ -30,11 +30,11 @@ public class ZonesManager {
 		DataAccessResult<User> result = new DataAccessResult<User>(true, user);
 		ActiveAndroid.beginTransaction();
 		try {
-			List<Zone> userZones = ZoneRemoteDataAccess.requestUserZones(user, password);
+			List<Zone> userZones = ZoneRDA.requestUserZones(user, password);
 			List<Route> zoneRoutes;
 			for(Zone zone : userZones)
 			{
-				zoneRoutes = RouteRemoteDataAccess.requestZoneRoutes(zone, user.getUsername(), password);
+				zoneRoutes = RouteRDA.requestZoneRoutes(zone, user.getUsername(), password);
 				zone.save();
 				for(Route route : zoneRoutes)
 				{

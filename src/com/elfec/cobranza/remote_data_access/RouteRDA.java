@@ -15,7 +15,7 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
  * @author drodriguez
  *
  */
-public class RouteRemoteDataAccess {
+public class RouteRDA {
 
 	/**
 	 * 
