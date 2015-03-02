@@ -77,6 +77,7 @@ public class ZoneListActivity extends Activity implements
 			// fragment transaction.
 			Bundle arguments = new Bundle();
 			arguments.putInt(ZoneRoutesFragment.ARG_ITEM_ID, id);
+			arguments.putBoolean(ZoneRoutesFragment.IS_TWO_PANE, mTwoPane);
 			ZoneRoutesFragment fragment = new ZoneRoutesFragment();
 			fragment.setArguments(arguments);
 			getFragmentManager().beginTransaction()
@@ -88,6 +89,7 @@ public class ZoneListActivity extends Activity implements
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, ZoneRoutesActivity.class);
 			detailIntent.putExtra(ZoneRoutesFragment.ARG_ITEM_ID, id);
+			detailIntent.putExtra(ZoneRoutesFragment.IS_TWO_PANE, mTwoPane);
 			startActivity(detailIntent);
 			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 		}

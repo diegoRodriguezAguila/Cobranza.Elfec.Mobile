@@ -6,8 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_top_margin"
-    tools:context="com.elfec.cobranza.view.DataFlow"
-    tools:ignore="ButtonStyle" >
+    tools:context="com.elfec.cobranza.view.DataFlow" >
 
     <RelativeLayout 
         android:id="@+id/layout_routes_header"
@@ -29,15 +28,23 @@
 	        android:layout_centerVertical="true"
 	        android:textAppearance="@style/TextAppearance.CustomFont.Light" 
 	        android:textSize="22sp" />
-	    <CheckBox
-	        android:id="@+id/txt_date"
+	    <Button
+	        android:id="@+id/btn_select_all_routes"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/sample_date"
+	        android:text="@string/btn_select_all_routes"
 	        android:button="@drawable/calendar"
 	        android:layout_alignParentRight="true"
         	android:layout_alignParentEnd="true"
         	android:layout_centerVertical="true"
+        	android:paddingLeft="8dp"
+        	android:paddingStart="8dp"
+        	android:paddingRight="8dp"
+        	android:paddingEnd="8dp" 
+        	android:paddingTop="4dp"
+        	android:paddingBottom="4dp"
+        	android:drawableLeft="@drawable/list_select_all"
+        	android:drawableStart="@drawable/list_select_all"
 	        android:textAppearance="@style/TextAppearance.CustomFont.Semilight" 
 	        android:textSize="16sp" />	    
 	</RelativeLayout>
@@ -53,10 +60,12 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:choiceMode="multipleChoice"
         android:layout_below="@+id/layout_routes_header" />
 	    
     <Button
-        android:id="@+id/btn_download_data"
+        android:id="@+id/btn_download_routes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

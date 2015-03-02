@@ -42,6 +42,7 @@
     <string name="title_zone_routes">Zonas y rutas</string>
     <string name="title_zone_detail">Rutas</string>
     <string name="btn_download_routes">Cargar rutas</string>
-    <string name="chk_select_all_routes">Todas las rutas</string>
+    <string name="btn_select_all_routes">Seleccionar todas</string>
+    <string name="btn_unselect_all_routes">Desmarcar todas</string>
 
 </resources>

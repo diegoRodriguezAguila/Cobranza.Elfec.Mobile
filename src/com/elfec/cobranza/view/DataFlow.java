@@ -19,7 +19,7 @@ import com.elfec.cobranza.presenter.views.IDataFlowView;
 
 public class DataFlow extends Activity implements IDataFlowView {
 
-	private static final String IMEI = "IMEI";
+	public static final String IMEI = "IMEI";
 	private DataFlowPresenter presenter;
 	
 	@Override
