@@ -144,11 +144,6 @@ public class CoopReceipt extends Model {
 	@Column(name = "TotalAmount")
 	private BigDecimal totalAmount;		
 	/**
-	 * COBRANZA.FLITERAL(TOTALIMP) LITERAL en Oracle
-	 */
-	@Column(name = "Literal")
-	private String literal;	
-	/**
 	 * ESTADO en Oracle
 	 */
 	@Column(name = "Status")
@@ -163,7 +158,7 @@ public class CoopReceipt extends Model {
 	 * NRO_AUT_IMPRESION
 	 */
 	@Column(name = "AuthorizationNumber")
-	private int authorizationNumber;
+	private String authorizationNumber;
 	/**
 	 * FECHA_VTO_AUT
 	 */
@@ -174,6 +169,31 @@ public class CoopReceipt extends Model {
 	 */
 	@Column(name = "ControlCode")
 	private String controlCode;
+	
+	//ATRIBUTOS OBTENIDOS CON FUNCIONES
+	/**
+	 * COBRANZA.FLITERAL(TOTALIMP) LITERAL en Oracle
+	 */
+	@Column(name = "Literal")
+	private String literal;	
+	/**
+	 * DIRECCION sacada de funcion MOVILES.FCOBRA_OBTENER_DIRECCION
+	 */
+	@Column(name = "ClientAddress")
+	private String clientAddress;
+	
+	/**
+	 * MEDIDOR sacada de funcion MOVILES.FCOBRA_OBTENER_MEDIDOR
+	 */
+	@Column(name = "MeterNumber")
+	private String meterNumber;
+	
+	/**
+	 * DESC_AUT_IMPRESION sacada de funcion MOVILES.FCOBRA_OBTENER_DESC_AUT
+	 */
+	@Column(name = "AuthorizationDescription")
+	private String authorizationDescription;
+	
 	
 	//#region Getters y Setters
 	
@@ -346,10 +366,10 @@ public class CoopReceipt extends Model {
 	public void setBatchId(int batchId) {
 		this.batchId = batchId;
 	}
-	public int getAuthorizationNumber() {
+	public String getAuthorizationNumber() {
 		return authorizationNumber;
 	}
-	public void setAuthorizationNumber(int authorizationNumber) {
+	public void setAuthorizationNumber(String authorizationNumber) {
 		this.authorizationNumber = authorizationNumber;
 	}
 	public DateTime getAuthExpirationDate() {
@@ -369,6 +389,24 @@ public class CoopReceipt extends Model {
 	}
 	public void setLiteral(String literal) {
 		this.literal = literal;
+	}
+	public String getClientAddress() {
+		return clientAddress;
+	}
+	public void setClientAddress(String clientAddress) {
+		this.clientAddress = clientAddress;
+	}
+	public String getMeterNumber() {
+		return meterNumber;
+	}
+	public void setMeterNumber(String meterNumber) {
+		this.meterNumber = meterNumber;
+	}
+	public String getAuthorizationDescription() {
+		return authorizationDescription;
+	}
+	public void setAuthorizationDescription(String authorizationDescription) {
+		this.authorizationDescription = authorizationDescription;
 	}
 	
 	//#endregion
