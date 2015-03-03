@@ -109,6 +109,38 @@ public class SupplyStatus extends Model {
 	@Column(name = "DeltaOutstandingConsume")
 	private int deltaOutstandingConsume;
 	
+	public SupplyStatus() {
+		super();
+	}
+	
+	
+	
+	public SupplyStatus(DateTime date, int batchId, int supplyId, int meterId,
+			int conceptId, int subconceptId, int reading,
+			int transactionNumber, int lastReading, DateTime lastReadingDate,
+			int consume, int routeId, int receiptId, int simReceiptId,
+			int billedConsume, int deltaOutstandingConsume) {
+		super();
+		this.date = date;
+		this.batchId = batchId;
+		this.supplyId = supplyId;
+		this.meterId = meterId;
+		this.conceptId = conceptId;
+		this.subconceptId = subconceptId;
+		this.reading = reading;
+		this.transactionNumber = transactionNumber;
+		this.lastReading = lastReading;
+		this.lastReadingDate = lastReadingDate;
+		this.consume = consume;
+		this.routeId = routeId;
+		this.receiptId = receiptId;
+		this.simReceiptId = simReceiptId;
+		this.billedConsume = billedConsume;
+		this.deltaOutstandingConsume = deltaOutstandingConsume;
+	}
+
+
+
 	//#region Getters y Setters
 	
 	

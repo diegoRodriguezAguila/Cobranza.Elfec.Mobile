@@ -28,7 +28,6 @@ public class ZoneRDA {
 	public static List<Zone> requestUserZones(User ownerUser, String password) throws ConnectException, SQLException
 	{
 		List<Zone> zones = new ArrayList<Zone>();
-		OracleDatabaseConnector.disposeInstance();
 		ResultSet rs = OracleDatabaseConnector.instance(ownerUser.getUsername(), password).
 				executeSelect("SELECT Z.IDZONA, DESCRIPCION "
 						+ "FROM ERP_ELFEC.SEG_USER_ZONAS UZ, ERP_ELFEC.ZONAS Z "

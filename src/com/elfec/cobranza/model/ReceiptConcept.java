@@ -65,7 +65,7 @@ public class ReceiptConcept extends Model{
 	 * ANIO en Oracle
 	 */
 	@Column(name = "Year")
-	private int Year;
+	private int year;
 	/**
 	 * NROPER en Oracle
 	 */
@@ -99,8 +99,42 @@ public class ReceiptConcept extends Model{
 	@Column(name = "ReceiptId")
 	private int receiptId;
 	
+	public ReceiptConcept() {
+		super();
+	}
+	
+	
+	
 	//#region Getters y Setters
 	
+	public ReceiptConcept(int enterpriseId, int branchOfficeId,
+			String receiptType, int receiptGroup, String receiptLetter,
+			int receiptNumber, int meterId, int conceptId, int subconceptId,
+			BigDecimal amount, int year, int periodNumber, int lastReading,
+			int currentReading, String description, String categoryId,
+			int receiptId) {
+		super();
+		this.enterpriseId = enterpriseId;
+		this.branchOfficeId = branchOfficeId;
+		this.receiptType = receiptType;
+		this.receiptGroup = receiptGroup;
+		this.receiptLetter = receiptLetter;
+		this.receiptNumber = receiptNumber;
+		this.meterId = meterId;
+		this.conceptId = conceptId;
+		this.subconceptId = subconceptId;
+		this.amount = amount;
+		this.year = year;
+		this.periodNumber = periodNumber;
+		this.lastReading = lastReading;
+		this.currentReading = currentReading;
+		this.description = description;
+		this.categoryId = categoryId;
+		this.receiptId = receiptId;
+	}
+
+
+
 	public int getEnterpriseId() {
 		return enterpriseId;
 	}
@@ -162,10 +196,10 @@ public class ReceiptConcept extends Model{
 		this.amount = amount;
 	}
 	public int getYear() {
-		return Year;
+		return year;
 	}
 	public void setYear(int year) {
-		Year = year;
+		this.year = year;
 	}
 	public int getPeriodNumber() {
 		return periodNumber;

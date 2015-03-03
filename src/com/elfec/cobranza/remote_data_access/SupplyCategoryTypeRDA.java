@@ -27,7 +27,6 @@ public class SupplyCategoryTypeRDA {
 	public static List<SupplyCategoryType> requestSupplyCategoryTypes(String username, String password) throws ConnectException, SQLException
 	{
 		List<SupplyCategoryType> supplyCategoryTypes = new ArrayList<SupplyCategoryType>();
-		OracleDatabaseConnector.disposeInstance();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
 				executeSelect("SELECT * FROM ERP_ELFEC.TIPOS_CATEG_SUM");
 		while(rs.next())

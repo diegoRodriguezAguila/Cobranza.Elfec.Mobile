@@ -87,7 +87,7 @@ public class CoopReceipt extends Model {
 	 * ANIO en Oracle
 	 */
 	@Column(name = "Year")
-	private int Year;
+	private int year;
 	/**
 	 * NROPER en Oracle
 	 */
@@ -177,24 +177,74 @@ public class CoopReceipt extends Model {
 	@Column(name = "Literal")
 	private String literal;	
 	/**
-	 * DIRECCION sacada de funcion MOVILES.FCOBRA_OBTENER_DIRECCION
+	 * DIRECCION sacada de funcion MOVILES.FCOBRA_OBTENER_DIRECCION(IDSUMINISTRO)
 	 */
 	@Column(name = "ClientAddress")
 	private String clientAddress;
 	
 	/**
-	 * MEDIDOR sacada de funcion MOVILES.FCOBRA_OBTENER_MEDIDOR
+	 * MEDIDOR sacada de funcion MOVILES.FCOBRA_OBTENER_MEDIDOR(IDCBTE)
 	 */
 	@Column(name = "MeterNumber")
 	private String meterNumber;
 	
 	/**
-	 * DESC_AUT_IMPRESION sacada de funcion MOVILES.FCOBRA_OBTENER_DESC_AUT
+	 * DESC_AUT_IMPRESION sacada de funcion MOVILES.FCOBRA_OBTENER_DESC_AUT(NRO_AUT_IMPRESION)
 	 */
 	@Column(name = "AuthorizationDescription")
 	private String authorizationDescription;
 	
+	public CoopReceipt() {
+		super();
+	}
 	
+	public CoopReceipt(int receiptId, int supplyId, int clientId,
+			int enterpriseId, int branchOfficeId, String receiptType,
+			int receiptGroup, String receiptLetter, int receiptNumber,
+			DateTime issueDate, DateTime origExpirationDate,
+			DateTime expirationDate, DateTime startDate, DateTime endDate,
+			int year, int periodNumber, int supplyNumber, int routeId,
+			String name, int iVAId, String nIT, String supplyAddress,
+			String categoryId, BigDecimal serviceAmount,
+			BigDecimal serviceBalance, BigDecimal totalAmount, String status,
+			int batchId, String authorizationNumber,
+			DateTime authExpirationDate, String controlCode) {
+		super();
+		this.receiptId = receiptId;
+		this.supplyId = supplyId;
+		this.clientId = clientId;
+		this.enterpriseId = enterpriseId;
+		this.branchOfficeId = branchOfficeId;
+		this.receiptType = receiptType;
+		this.receiptGroup = receiptGroup;
+		this.receiptLetter = receiptLetter;
+		this.receiptNumber = receiptNumber;
+		this.issueDate = issueDate;
+		this.origExpirationDate = origExpirationDate;
+		this.expirationDate = expirationDate;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.year = year;
+		this.periodNumber = periodNumber;
+		this.supplyNumber = supplyNumber;
+		this.routeId = routeId;
+		this.name = name;
+		IVAId = iVAId;
+		NIT = nIT;
+		this.supplyAddress = supplyAddress;
+		this.categoryId = categoryId;
+		this.serviceAmount = serviceAmount;
+		this.serviceBalance = serviceBalance;
+		this.totalAmount = totalAmount;
+		this.status = status;
+		this.batchId = batchId;
+		this.authorizationNumber = authorizationNumber;
+		this.authExpirationDate = authExpirationDate;
+		this.controlCode = controlCode;
+	}
+
+
+
 	//#region Getters y Setters
 	
 	public int getReceiptId() {
@@ -283,10 +333,10 @@ public class CoopReceipt extends Model {
 	}
 	
 	public int getYear() {
-		return Year;
+		return year;
 	}
 	public void setYear(int year) {
-		Year = year;
+		this.year = year;
 	}
 	public int getPeriodNumber() {
 		return periodNumber;

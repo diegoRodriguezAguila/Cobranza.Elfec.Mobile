@@ -29,7 +29,6 @@ public class RouteRDA {
 	public static List<Route> requestZoneRoutes(Zone zone, String username, String password) throws ConnectException, SQLException
 	{
 		List<Route> routes = new ArrayList<Route>();
-		OracleDatabaseConnector.disposeInstance();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
 				executeSelect("SELECT IDRUTA, DESCRIPCION FROM ERP_ELFEC.RUTAS WHERE IDZONA="+zone.getZoneRemoteId());
 		while(rs.next())

@@ -13,6 +13,7 @@ import com.elfec.cobranza.model.exceptions.UnactiveUserException;
 import com.elfec.cobranza.model.exceptions.UnassignedCashDeskException;
 import com.elfec.cobranza.remote_data_access.DeviceRDA;
 import com.elfec.cobranza.remote_data_access.UserRDA;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
  * Se encarga de las operaciones de lógica de negocio sobre el usuario
@@ -34,6 +35,7 @@ public class ElfecUserManager {
 		User localUser = User.findByUserName(username);
 		if(localUser==null)
 		{
+			OracleDatabaseConnector.disposeInstance();
 			validateRemoteUser(username, password, IMEI, result);
 		}
 		else

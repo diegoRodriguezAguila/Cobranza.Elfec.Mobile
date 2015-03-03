@@ -24,7 +24,6 @@ public class UserRDA {
 	 */
 	public static User requestUser(String username, String password) throws ConnectException, SQLException
 	{
-		OracleDatabaseConnector.disposeInstance();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
 				executeSelect("SELECT USUARIO, ESTADO, NO, IDEMPLEADO "
 							+ "FROM MOVILES.USUARIO_APP MU, ERP_ELFEC.SEG_USER SU "
