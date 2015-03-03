@@ -74,6 +74,28 @@ public class Category extends Model {
 	@Column(name = "BillingDemand")
 	private short billingDemand;
 	
+	public Category() {
+		super();
+	}
+	
+	public Category(String categoryId, int serviceTypeId, String description,
+			int categoryTypeId, String IVAsControl, short statusId,
+			String classification, String meterTypeControl,
+			String classification2, BigDecimal loadFactor, short billingDemand) {
+		super();
+		this.categoryId = categoryId;
+		this.serviceTypeId = serviceTypeId;
+		this.description = description;
+		this.categoryTypeId = categoryTypeId;
+		this.IVAsControl = IVAsControl;
+		this.statusId = statusId;
+		this.classification = classification;
+		this.meterTypeControl = meterTypeControl;
+		this.classification2 = classification2;
+		this.loadFactor = loadFactor;
+		this.billingDemand = billingDemand;
+	}
+
 	//#region Getters y Setters
 	public String getCategoryId() {
 		return categoryId;

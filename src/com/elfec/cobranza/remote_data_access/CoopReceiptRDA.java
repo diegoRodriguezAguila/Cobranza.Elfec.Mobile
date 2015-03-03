@@ -8,11 +8,13 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.elfec.cobranza.helpers.text_format.RouteListToSQL;
 import com.elfec.cobranza.model.CoopReceipt;
+import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
- * Provee una capa de acceso remoto a la base de datos oracle para operaciones relacionadas con CBTES_COOP
+ * Provee una capa de acceso remoto a la base de datos oracle para operaciones relacionadas con <B>CBTES_COOP</B>
  * @author drodriguez
  *
  */
@@ -53,6 +55,20 @@ public class CoopReceiptRDA {
 			coopReceipts.add(receipt);
 		}
 		return coopReceipts;
+	}
+	
+	/**
+	 * Obtiene los CBTES_COOP de Oracle
+	 * @param username
+	 * @param password
+	 * @param routes la lista de rutas
+	 * @return
+	 * @throws ConnectException
+	 * @throws SQLException
+	 */
+	public static List<CoopReceipt> requestCoopReceipts(String username, String password, List<Route> routes) throws ConnectException, SQLException
+	{
+		return requestCoopReceipts(username, password, RouteListToSQL.convertToSQL(routes));
 	}
 	
 	/**

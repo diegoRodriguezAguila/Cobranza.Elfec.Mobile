@@ -30,7 +30,6 @@ public class Concept {
 	 */
 	@Column(name = "Description")
 	private String description;
-	
 	/**
 	 * CODCONCEPTO en Oracle
 	 * Codigo del concepto
@@ -50,7 +49,7 @@ public class Concept {
 	@Column(name = "IVAServiceType")
 	private int IVAserviceType;
 	/**
-	 * EXLUIR_IVA en Oracle
+	 * EXCLUIR_IVA en Oracle
 	 * Indica si excluye el iva para el concepto, 1 Si 0 No
 	 */
 	@Column(name = "ExcludeIVA")
@@ -80,6 +79,29 @@ public class Concept {
 	@Column(name = "IncludeUnits")
 	private short includeUnits;
 	
+	public Concept() {
+		super();
+	}
+	
+	public Concept(int conceptId, int subconceptId, int serviceTypeId,
+			String description, String conceptCode, int groupId,
+			int iVAserviceType, int excludeIVA, int iVAColumn, short printArea,
+			short partType, short includeUnits) {
+		super();
+		this.conceptId = conceptId;
+		this.subconceptId = subconceptId;
+		this.serviceTypeId = serviceTypeId;
+		this.description = description;
+		this.conceptCode = conceptCode;
+		this.groupId = groupId;
+		IVAserviceType = iVAserviceType;
+		this.excludeIVA = excludeIVA;
+		IVAColumn = iVAColumn;
+		this.printArea = printArea;
+		this.partType = partType;
+		this.includeUnits = includeUnits;
+	}
+
 	//#region Getters y Setters
 	public int getConceptId() {
 		return conceptId;

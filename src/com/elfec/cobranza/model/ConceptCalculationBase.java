@@ -26,6 +26,20 @@ public class ConceptCalculationBase extends Model {
 	@Column(name = "SubconceptId")
 	private int subconceptId;
 	
+	public ConceptCalculationBase() {
+		super();
+	}
+	
+	public ConceptCalculationBase(int claculationBaseId, int conceptId,
+			int subconceptId) {
+		super();
+		this.claculationBaseId = claculationBaseId;
+		this.conceptId = conceptId;
+		this.subconceptId = subconceptId;
+	}
+
+
+
 	//#region Getters y Setters
 	public int getClaculationBaseId() {
 		return claculationBaseId;

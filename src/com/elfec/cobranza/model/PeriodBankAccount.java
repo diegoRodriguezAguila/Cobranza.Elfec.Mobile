@@ -59,6 +59,25 @@ public class PeriodBankAccount extends Model {
 	@Column(name = "EnterpriseId")
 	private int enterpriseId;
 	
+	public PeriodBankAccount() {
+		super();
+	}
+	
+	public PeriodBankAccount(int bankId, int bankAccountId, int periodNumber,
+			int cashierId, DateTime openingDateTime, DateTime closingDateTime,
+			short statusId, int zoneId, int enterpriseId) {
+		super();
+		this.bankId = bankId;
+		this.bankAccountId = bankAccountId;
+		this.periodNumber = periodNumber;
+		this.cashierId = cashierId;
+		this.openingDateTime = openingDateTime;
+		this.closingDateTime = closingDateTime;
+		this.statusId = statusId;
+		this.zoneId = zoneId;
+		this.enterpriseId = enterpriseId;
+	}
+
 	//#region Getters y Setters
 	public int getBankId() {
 		return bankId;

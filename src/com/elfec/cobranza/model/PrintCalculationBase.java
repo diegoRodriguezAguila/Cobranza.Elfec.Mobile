@@ -27,6 +27,18 @@ public class PrintCalculationBase extends Model {
 	@Column(name = "Description")
 	private String description;
 	
+	public PrintCalculationBase() {
+		super();
+	}
+	
+	public PrintCalculationBase(int claculationBaseId, short printOrder,
+			String description) {
+		super();
+		this.claculationBaseId = claculationBaseId;
+		this.printOrder = printOrder;
+		this.description = description;
+	}
+
 	//#region Getters y Setters
 	public int getClaculationBaseId() {
 		return claculationBaseId;
