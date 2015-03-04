@@ -106,6 +106,7 @@ public class OracleDatabaseConnector {
 	 */
 	public ResultSet executeSelect(String selectQuery) throws SQLException
 	{
+		stmt = conn.createStatement();
 		return stmt.executeQuery(selectQuery);
 	}
 	

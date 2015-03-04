@@ -4,7 +4,7 @@ import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.elfec.cobranza.business_logic.OnceRequiredDataImporter.ImportSource;
+import com.elfec.cobranza.business_logic.DataImporter.ImportSource;
 import com.elfec.cobranza.model.BankAccount;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.PeriodBankAccount;
@@ -25,7 +25,7 @@ public class BankAccountManager {
 	 */
 	public static DataAccessResult<Boolean> importBankAccounts(final String username, final String password, final int cashdeskNumber)
 	{
-		return OnceRequiredDataImporter.importData(new ImportSource<BankAccount>() {
+		return DataImporter.importOnceRequiredData(new ImportSource<BankAccount>() {
 			@Override
 			public List<BankAccount> requestData() throws ConnectException, SQLException {
 				return BankAccountRDA.requestBankAccounts(username, password, cashdeskNumber);
@@ -42,7 +42,7 @@ public class BankAccountManager {
 	 */
 	public static DataAccessResult<Boolean> importPeriodBankAccounts(final String username, final String password, final int cashdeskNumber)
 	{
-		return OnceRequiredDataImporter.importData(new ImportSource<PeriodBankAccount>() {
+		return DataImporter.importOnceRequiredData(new ImportSource<PeriodBankAccount>() {
 			@Override
 			public List<PeriodBankAccount> requestData() throws ConnectException, SQLException {
 				return BankAccountRDA.requestPeriodBankAccounts(username, password, cashdeskNumber);

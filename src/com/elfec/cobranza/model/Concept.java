@@ -50,7 +50,7 @@ public class Concept extends Model {
 	@Column(name = "IVAServiceType")
 	private int IVAserviceType;
 	/**
-	 * EXCLUIR_IVA en Oracle
+	 * EXCLUIR_LIVA en Oracle
 	 * Indica si excluye el iva para el concepto, 1 Si 0 No
 	 */
 	@Column(name = "ExcludeIVA")

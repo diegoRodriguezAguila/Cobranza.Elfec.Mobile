@@ -58,7 +58,7 @@ public class BankAccountRDA {
 	{
 		List<PeriodBankAccount> periodBankAccounts = new ArrayList<PeriodBankAccount>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-					executeSelect("SELECT * FROM ERP_ELFEC.BAN_CTAS_PER WHERE IDBAN_CTA="+cashdeskNumber+" AND FECHA>=trunc(SYSDATE))");
+					executeSelect("SELECT * FROM ERP_ELFEC.BAN_CTAS_PER WHERE IDBAN_CTA="+cashdeskNumber+" AND FECHA>=trunc(SYSDATE)");
 		while(rs.next())
 		{
 			periodBankAccounts.add(new PeriodBankAccount(rs.getInt("IDBANCO"), rs.getInt("IDBAN_CTA"), rs.getInt("NROPERIODO"), 

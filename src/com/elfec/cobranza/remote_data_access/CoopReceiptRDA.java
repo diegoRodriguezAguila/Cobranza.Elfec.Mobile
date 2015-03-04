@@ -44,7 +44,7 @@ public class CoopReceiptRDA {
 					rs.getString("LETRA_CBTE"), rs.getInt("NROCBTE"), new DateTime(rs.getDate("FECHA_EMISION")), 
 					new DateTime(rs.getDate("FECHA_VTO_ORIGINAL")), new DateTime(rs.getDate("FECHA_VTO")), 
 					new DateTime(rs.getDate("FECHA_INICIO")), new DateTime(rs.getDate("FECHA_FIN")), rs.getInt("ANIO"), 
-					rs.getInt("NROPER"), rs.getInt("NROSUM"), rs.getInt("IDRUTA"), rs.getString("NOMBRE"), rs.getInt("IDIVA"), 
+					rs.getInt("NROPER"), rs.getString("NROSUM"), rs.getInt("IDRUTA"), rs.getString("NOMBRE"), rs.getInt("IDIVA"), 
 					rs.getString("CUIT"), rs.getString("DOMICILIO_SUM"),  rs.getString("IDCATEGORIA"), rs.getBigDecimal("SRV_IMPORTE"), 
 					rs.getBigDecimal("SRV_SALDO"), rs.getBigDecimal("TOTALIMP"), rs.getString("ESTADO"), rs.getInt("IDLOTE") ,
 					rs.getString("NRO_AUT_IMPRESION"), new DateTime(rs.getDate("FECHA_VTO_AUT")), rs.getString("COD_CONTROL"));
@@ -55,6 +55,7 @@ public class CoopReceiptRDA {
 			requestCoopReceiptAuthDesc(username, password, receipt);
 			coopReceipts.add(receipt);
 		}
+		rs.close();
 		return coopReceipts;
 	}
 	
@@ -93,6 +94,7 @@ public class CoopReceiptRDA {
 		{
 			receipt.setLiteral(rs.getString("LITERAL"));
 		}
+		rs.close();
 		return receipt;
 	}
 	/**
@@ -112,6 +114,7 @@ public class CoopReceiptRDA {
 		{
 			receipt.setClientAddress(rs.getString("DIRECCION"));
 		}
+		rs.close();
 		return receipt;
 	}
 	
@@ -132,6 +135,7 @@ public class CoopReceiptRDA {
 		{
 			receipt.setMeterNumber(rs.getString("MEDIDOR"));
 		}
+		rs.close();
 		return receipt;
 	}
 	
@@ -152,6 +156,7 @@ public class CoopReceiptRDA {
 		{
 			receipt.setMeterNumber(rs.getString("DESC_AUT_IMPRESION"));
 		}
+		rs.close();
 		return receipt;
 	}
 }

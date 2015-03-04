@@ -4,7 +4,7 @@ import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.elfec.cobranza.business_logic.OnceRequiredDataImporter.ImportSource;
+import com.elfec.cobranza.business_logic.DataImporter.ImportSource;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.SupplyCategoryType;
 import com.elfec.cobranza.remote_data_access.SupplyCategoryTypeRDA;
@@ -24,7 +24,7 @@ public class SupplyCategoryTypeManager {
 	 */
 	public static DataAccessResult<Boolean> importSupplyCategoryTypes(final String username, final String password)
 	{
-		return OnceRequiredDataImporter.importData(new ImportSource<SupplyCategoryType>() {
+		return DataImporter.importOnceRequiredData(new ImportSource<SupplyCategoryType>() {
 			@Override
 			public List<SupplyCategoryType> requestData() throws ConnectException, SQLException {
 				return SupplyCategoryTypeRDA.requestSupplyCategoryTypes(username, password);

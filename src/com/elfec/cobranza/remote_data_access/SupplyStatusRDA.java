@@ -8,9 +8,6 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
-import com.elfec.cobranza.helpers.text_format.ObjectListToSQL.AttributePicker;
-import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.SupplyStatus;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
@@ -24,16 +21,16 @@ public class SupplyStatusRDA {
 	 * Obtiene los SUMIN_ESTADOS de oracle
 	 * @param username
 	 * @param password
-	 * @param routes la lista de rutas en formato (12334,1234)
+	 * @param coopReceiptIds la lista de ids de los comprobantes en formato (12334,1234)
 	 * @return Lista de SUMIN_ESTADOS
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */
-	public static List<SupplyStatus> requestSupplyStatuses(String username, String password, String routes) throws ConnectException, SQLException
+	public static List<SupplyStatus> requestSupplyStatuses(String username, String password, String coopReceiptIds) throws ConnectException, SQLException
 	{
 		List<SupplyStatus> supplyStatuses = new ArrayList<SupplyStatus>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT * FROM ERP_ELFEC.SUMIN_ESTADOS WHERE IDRUTA IN "+routes);
+				executeSelect("SELECT * FROM ERP_ELFEC.SUMIN_ESTADOS WHERE IDCBTE IN "+coopReceiptIds);
 		while(rs.next())
 		{
 			supplyStatuses.add(new SupplyStatus(new DateTime(rs.getDate("FECHA")), rs.getInt("IDLOTE"), rs.getInt("IDSUMINISTRO"), rs.getInt("IDMEDIDOR"), 
@@ -42,23 +39,5 @@ public class SupplyStatusRDA {
 					rs.getInt("IDCBTE_SIM"), rs.getInt("CONS_FACTURACION"), rs.getInt("DELTA_PEND_COMPEN")));
 		}
 		return supplyStatuses;
-	}
-	
-	/**
-	 * Obtiene los SUMIN_ESTADOS de oracle
-	 * @param username
-	 * @param password
-	 * @param routes la lista de rutas
-	 * @return Lista de SUMIN_ESTADOS
-	 * @throws ConnectException
-	 * @throws SQLException
-	 */
-	public static List<SupplyStatus> requestSupplyStatuses(String username, String password, List<Route> routes) throws ConnectException, SQLException
-	{
-		return requestSupplyStatuses(username, password, ObjectListToSQL.convertToSQL(routes, new AttributePicker<Route>() {
-			@Override
-			public String pickString(Route route) {
-				return ""+route.getRouteRemoteId();
-			}}));
 	}
 }

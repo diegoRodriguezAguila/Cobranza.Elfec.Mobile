@@ -4,7 +4,7 @@ import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.elfec.cobranza.business_logic.OnceRequiredDataImporter.ImportSource;
+import com.elfec.cobranza.business_logic.DataImporter.ImportSource;
 import com.elfec.cobranza.model.ConceptCalculationBase;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.PrintCalculationBase;
@@ -25,7 +25,7 @@ public class CalculationBaseManager {
 	 */
 	public static DataAccessResult<Boolean> importConceptCalculationBases(final String username, final String password)
 	{
-		return OnceRequiredDataImporter.importData(new ImportSource<ConceptCalculationBase>() {
+		return DataImporter.importOnceRequiredData(new ImportSource<ConceptCalculationBase>() {
 			@Override
 			public List<ConceptCalculationBase> requestData() throws ConnectException, SQLException {
 				return CalculationBaseRDA.requestConceptCalculationBases(username, password);
@@ -41,7 +41,7 @@ public class CalculationBaseManager {
 	 */
 	public static DataAccessResult<Boolean> importPrintCalculationBases(final String username, final String password)
 	{
-		return OnceRequiredDataImporter.importData(new ImportSource<PrintCalculationBase>() {
+		return DataImporter.importOnceRequiredData(new ImportSource<PrintCalculationBase>() {
 			@Override
 			public List<PrintCalculationBase> requestData() throws ConnectException, SQLException {
 				return CalculationBaseRDA.requestPrintCalculationBases(username, password);

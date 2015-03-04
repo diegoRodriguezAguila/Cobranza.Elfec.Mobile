@@ -177,14 +177,14 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 
 	@Override
 	public void showWaiting() {
-		waitingDialog = new ProgressDialogPro(getActivity(), R.style.Theme_FlavoredMaterialLight);
-		waitingDialog.setMessage(getResources().getString(R.string.msg_login_waiting));
-		waitingDialog.setTitle(R.string.title_waiting);
-		waitingDialog.setCancelable(false);
-		waitingDialog.setCanceledOnTouchOutside(false);
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
+				waitingDialog = new ProgressDialogPro(getActivity(), R.style.Theme_FlavoredMaterialLight);
+				waitingDialog.setMessage(getResources().getString(R.string.msg_login_waiting));
+				waitingDialog.setTitle(R.string.title_waiting);
+				waitingDialog.setCancelable(false);
+				waitingDialog.setCanceledOnTouchOutside(false);
 				waitingDialog.show();
 			}
 		});
@@ -219,8 +219,8 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 			public void run() {
 				if(errors.size()>0)
 				{
-					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(ZoneRoutesFragment.this.getActivity());
-					builder.setTitle(R.string.title_login_errors)
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
+					builder.setTitle(R.string.title_download_errors)
 					.setMessage(ErrorListFormatter.fotmatHTMLFromErrors(errors))
 					.setPositiveButton(R.string.btn_ok, null)
 					.show();
@@ -234,8 +234,8 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				Crouton.clearCroutonsForActivity(ZoneRoutesFragment.this.getActivity());
-				Crouton.makeText(ZoneRoutesFragment.this.getActivity(), R.string.msg_routes_downloaded_successfully, croutonStyle).show();
+				Crouton.clearCroutonsForActivity(getActivity());
+				Crouton.makeText(getActivity(), R.string.msg_routes_downloaded_successfully, croutonStyle).show();
 			}
 		});
 	}

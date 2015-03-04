@@ -11,6 +11,7 @@ import com.elfec.cobranza.business_logic.ZonesManager;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.presenter.views.ILoginView;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 public class LoginPresenter {
 
@@ -52,6 +53,7 @@ public class LoginPresenter {
 				{
 					view.goToLoadData();
 					SessionManager.startSession(result.getResult());
+					OracleDatabaseConnector.disposeInstance();
 				}
 				view.showLoginErrors(result.getErrors());
 				Looper.loop();

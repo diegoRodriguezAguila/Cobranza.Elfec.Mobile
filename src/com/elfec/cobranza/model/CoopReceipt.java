@@ -97,7 +97,7 @@ public class CoopReceipt extends Model {
 	 * NROSUM en Oracle
 	 */
 	@Column(name = "SupplyNumber")
-	private int supplyNumber;
+	private String supplyNumber;
 	/**
 	 * IDRUTA en Oracle
 	 */
@@ -203,7 +203,7 @@ public class CoopReceipt extends Model {
 			int receiptGroup, String receiptLetter, int receiptNumber,
 			DateTime issueDate, DateTime origExpirationDate,
 			DateTime expirationDate, DateTime startDate, DateTime endDate,
-			int year, int periodNumber, int supplyNumber, int routeId,
+			int year, int periodNumber, String supplyNumber, int routeId,
 			String name, int iVAId, String nIT, String supplyAddress,
 			String categoryId, BigDecimal serviceAmount,
 			BigDecimal serviceBalance, BigDecimal totalAmount, String status,
@@ -344,10 +344,10 @@ public class CoopReceipt extends Model {
 	public void setPeriodNumber(int periodNumber) {
 		this.periodNumber = periodNumber;
 	}
-	public int getSupplyNumber() {
+	public String getSupplyNumber() {
 		return supplyNumber;
 	}
-	public void setSupplyNumber(int supplyNumber) {
+	public void setSupplyNumber(String supplyNumber) {
 		this.supplyNumber = supplyNumber;
 	}
 	public int getRouteId() {
