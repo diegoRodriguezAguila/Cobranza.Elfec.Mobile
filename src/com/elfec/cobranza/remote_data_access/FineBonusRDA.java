@@ -6,10 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
-import com.elfec.cobranza.helpers.text_format.ObjectListToSQL.AttributePicker;
 import com.elfec.cobranza.model.FineBonus;
-import com.elfec.cobranza.model.ReceiptConcept;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
@@ -48,23 +45,5 @@ public class FineBonusRDA {
 					rs.getString("DESCRIPCION"), rs.getBigDecimal("IMPORTE"), rs.getShort("IMPRESION_AREA")));
 		}
 		return fineBonuses;
-	}
-	
-	/**
-	 * Obtiene las BONIF_MULTAS de oracle
-	 * @param username
-	 * @param password
-	 * @param receiptConcepts una lista de CBTES_CPTOS (ReceiptConcept)
-	 * @return Lista de CATEGORIAS
-	 * @throws ConnectException
-	 * @throws SQLException
-	 */
-	public static List<FineBonus> requestFineBonuses(String username, String password, List<ReceiptConcept> receiptConcepts) throws ConnectException, SQLException
-	{
-		return requestFineBonuses(username, password, ObjectListToSQL.convertToSQL(receiptConcepts, new AttributePicker<ReceiptConcept>() {
-			@Override
-			public String pickString(ReceiptConcept receiptCpt) {
-				return ""+receiptCpt.getReceiptId();
-			}}));
 	}
 }

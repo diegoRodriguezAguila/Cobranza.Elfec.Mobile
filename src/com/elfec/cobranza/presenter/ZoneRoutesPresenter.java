@@ -8,6 +8,7 @@ import com.elfec.cobranza.business_logic.CalculationBaseManager;
 import com.elfec.cobranza.business_logic.CategoryManager;
 import com.elfec.cobranza.business_logic.ConceptManager;
 import com.elfec.cobranza.business_logic.CoopReceiptManager;
+import com.elfec.cobranza.business_logic.ReceiptConceptManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.SupplyCategoryTypeManager;
 import com.elfec.cobranza.business_logic.SupplyStatusManager;
@@ -78,6 +79,13 @@ public class ZoneRoutesPresenter {
 				result = SupplyStatusManager.importSupplyStatuses(username, password, coopReceiptIdsString);
 				view.showImportErrors(receiptsResult.getErrors());
 				
+				view.updateWaitingMessage(R.string.msg_downloading_receipt_concepts);
+				result = ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
+				view.showImportErrors(receiptsResult.getErrors());
+				
+				view.updateWaitingMessage(R.string.msg_downloading_fine_bonusess);
+				result = ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
+				view.showImportErrors(receiptsResult.getErrors());
 				
 				
 				/*view.updateWaitingMessage(R.string.msg_downloading_supply_status);

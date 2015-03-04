@@ -6,10 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
-import com.elfec.cobranza.helpers.text_format.ObjectListToSQL.AttributePicker;
 import com.elfec.cobranza.model.ReceiptConcept;
-import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
@@ -23,16 +20,16 @@ public class ReceiptConceptRDA {
 	 * Obtiene los CBTES_CPTOS de Oracle
 	 * @param username
 	 * @param password
-	 * @param routes la lista de rutas en formato (12334,1234)
+	 * @param coopReceiptIds la lista de IDCBTE en formato (12334,1234)
 	 * @return
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */
-	public static List<ReceiptConcept> requestReceiptConcepts(String username, String password, String routes) throws ConnectException, SQLException
+	public static List<ReceiptConcept> requestReceiptConcepts(String username, String password, String coopReceiptIds) throws ConnectException, SQLException
 	{
 		List<ReceiptConcept> receiptConcepts = new ArrayList<ReceiptConcept>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT * FROM ERP_ELFEC.SUMIN_ESTADOS WHERE IDRUTA IN "+routes);
+				executeSelect("SELECT * FROM ERP_ELFEC.SUMIN_ESTADOS WHERE IDCBTE IN "+coopReceiptIds);
 		while(rs.next())
 		{
 			receiptConcepts.add(new ReceiptConcept(rs.getInt("IDEMPRESA"), rs.getInt("IDSUCURSAL"), rs.getString("TIPO_CBTE"), 
@@ -42,22 +39,5 @@ public class ReceiptConceptRDA {
 		}
 		return receiptConcepts;
 	}
-	
-	/**
-	 * Obtiene los CBTES_CPTOS de Oracle
-	 * @param username
-	 * @param password
-	 * @param routes la lista de rutas
-	 * @return
-	 * @throws ConnectException
-	 * @throws SQLException
-	 */
-	public static List<ReceiptConcept> requestReceiptConcepts(String username, String password, List<Route> routes) throws ConnectException, SQLException
-	{
-		return requestReceiptConcepts(username, password, ObjectListToSQL.convertToSQL(routes, new AttributePicker<Route>() {
-			@Override
-			public String pickString(Route route) {
-				return ""+route.getRouteRemoteId();
-			}}));
-	}
+
 }
