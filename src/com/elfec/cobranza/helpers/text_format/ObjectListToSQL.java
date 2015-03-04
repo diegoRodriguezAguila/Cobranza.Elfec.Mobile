@@ -13,7 +13,7 @@ public class ObjectListToSQL {
 	/**
 	 * Convierte la lista de objetos a la cadena utilizable en una consulta IN
 	 * @param objectList
-	 * @param picker
+	 * @param picker se encarga de elegir con que atributo de la clase se llenara la lista IN
 	 * @return
 	 */
 	public static <T> String convertToSQL(List<T> objectList, AttributePicker<T> picker)

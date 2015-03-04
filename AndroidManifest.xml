@@ -20,10 +20,10 @@
         android:theme="@style/Cobranza" >
         <meta-data
             android:name="AA_DB_NAME"
-            android:value="Cobranza.db" />
+            android:value="CobranzaDesarrollo.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="4" />
+            android:value="1" />
         <meta-data
             android:name="AA_SERIALIZERS"
             android:value="com.elfec.cobranza.model.serializers.JodaDateTimeSerializer" />

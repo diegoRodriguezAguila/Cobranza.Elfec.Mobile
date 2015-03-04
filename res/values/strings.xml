@@ -44,5 +44,15 @@
     <string name="btn_download_routes">Cargar rutas</string>
     <string name="btn_select_all_routes">Seleccionar todas</string>
     <string name="btn_unselect_all_routes">Desmarcar todas</string>
+    <string name="msg_routes_downloaded_successfully">Rutas cargadas exitosamente!</string>
+    <string name="title_waiting">CARGANDO DATOS</string>
+    <string name="msg_waiting">Inicializando la carga de datos&#8230;</string>
+    <string name="msg_downloading_supply_category_types">Cargando tipos de categorias de suministros (TIPOS_CATEG_SUM)&#8230;</string>
+    <string name="msg_downloading_cpt_calculation_bases">Cargando conceptos de bases de calculo (GBASES_CALC_CPTOS)&#8230;</string>
+    <string name="msg_downloading_prnt_calculation_bases">Cargando impresión de bases de calculo (GBASES_CALC_IMP)&#8230;</string>
+    <string name="msg_downloading_categories">Cargando categorias (CATEGORIAS)&#8230;</string>
+    <string name="msg_downloading_concepts">Cargando conceptos (CONCEPTOS)&#8230;</string>
+    <string name="msg_downloading_bank_accounts">Cargando cuentas de banco (BAN_CTAS)&#8230;</string>
+    <string name="msg_downloading_period_bank_accounts">Cargando periodos de cuentas de banco (BAN_CTAS_PER)&#8230;</string>
 
 </resources>

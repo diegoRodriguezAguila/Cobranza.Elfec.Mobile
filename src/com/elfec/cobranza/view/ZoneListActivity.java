@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
  * An activity representing a list of Routes. This activity has different
@@ -36,7 +37,7 @@ public class ZoneListActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_zone_list);
-
+		OracleDatabaseConnector.initializeContext(this);
 		if (findViewById(R.id.zone_detail_container) != null) {
 			// The detail container view will be present only in the
 			// large-screen layouts (res/values-large and

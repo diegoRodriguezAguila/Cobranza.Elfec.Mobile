@@ -73,7 +73,6 @@
      	android:layout_alignParentEnd="true"
      	android:gravity="center"
         android:drawableTop="@drawable/import_from_server"
-        android:onClick="btnDownloadDataClick"
         android:text="@string/btn_download_routes" />
 
 </RelativeLayout>

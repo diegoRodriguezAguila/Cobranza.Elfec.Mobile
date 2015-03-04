@@ -1,10 +1,12 @@
 package com.elfec.cobranza.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,11 +17,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alertdialogpro.AlertDialogPro;
+import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.helpers.text_format.ErrorListFormatter;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.presenter.ZoneRoutesPresenter;
 import com.elfec.cobranza.presenter.views.IZoneRoutesView;
 import com.elfec.cobranza.view.adapters.RouteAdapter;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 /**
  * A fragment representing a single Zone detail screen. This fragment is either
@@ -37,6 +44,8 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 	 */
 	public static final String IS_TWO_PANE ="is_two_pane";
 
+	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
+	
 	private ZoneRoutesPresenter presenter;
 	private boolean isTwoPane;
 	
@@ -45,6 +54,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 	private ListView listViewZoneRoutes;
 	private Button btnSelectAllRoutes;
 	private Button btnDownloadRoutes;
+	private ProgressDialogPro waitingDialog;
 	private Handler mHandler;
 	
 
@@ -68,6 +78,8 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		if(getArguments().containsKey(IS_TWO_PANE))
 			isTwoPane = getArguments().getBoolean(IS_TWO_PANE);
 		this.mHandler = new Handler();
+		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
+				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
 	}
 
 	@Override
@@ -108,7 +120,16 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		btnDownloadRoutes.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				// TODO Cargar datos
+				List<Route> selectedRoutes = new ArrayList<Route>();
+				SparseBooleanArray sparseBooleanArray = listViewZoneRoutes.getCheckedItemPositions();
+				int size = listViewZoneRoutes.getAdapter().getCount();
+				for (int i = 0; i < size; i++) {
+					if(sparseBooleanArray.get(i))
+					{
+						selectedRoutes.add((Route)listViewZoneRoutes.getItemAtPosition(i));
+					}
+				}
+				presenter.importRoutesData(selectedRoutes);
 			}
 		});
 		return rootView;
@@ -143,6 +164,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 	}
 
 	//#region Interface Methods
+	
 	@Override
 	public void setZoneRoutes(final List<Route> zoneRoutes) {
 		getActivity().runOnUiThread(new Runnable() {			
@@ -152,6 +174,71 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 			}
 		});
 	}
-	//#endregion
+
+	@Override
+	public void showWaiting() {
+		waitingDialog = new ProgressDialogPro(getActivity(), R.style.Theme_FlavoredMaterialLight);
+		waitingDialog.setMessage(getResources().getString(R.string.msg_login_waiting));
+		waitingDialog.setTitle(R.string.title_waiting);
+		waitingDialog.setCancelable(false);
+		waitingDialog.setCanceledOnTouchOutside(false);
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				waitingDialog.show();
+			}
+		});
+	}
+
+	@Override
+	public void updateWaitingMessage(final int messageResource) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(waitingDialog!=null)
+					waitingDialog.setMessage(getResources().getString(messageResource));
+			}
+		});
+	}
+
+	@Override
+	public void hideWaiting() {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(waitingDialog!=null)
+					waitingDialog.dismiss();
+			}
+		});
+	}
+
+	@Override
+	public void showImportErrors(final List<Exception> errors) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(errors.size()>0)
+				{
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(ZoneRoutesFragment.this.getActivity());
+					builder.setTitle(R.string.title_login_errors)
+					.setMessage(ErrorListFormatter.fotmatHTMLFromErrors(errors))
+					.setPositiveButton(R.string.btn_ok, null)
+					.show();
+				}
+			}
+		});
+	}
+
+	@Override
+	public void successfullyImportation() {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				Crouton.clearCroutonsForActivity(ZoneRoutesFragment.this.getActivity());
+				Crouton.makeText(ZoneRoutesFragment.this.getActivity(), R.string.msg_routes_downloaded_successfully, croutonStyle).show();
+			}
+		});
+	}
 	
+	//#endregion
 }

@@ -169,7 +169,7 @@ public class User extends Model{
 	 * de sincronización y el nombre de usuario para crearla, así que esta ya deberían estar asignados
 	 * @return
 	 */
-	private final String generateUserKey()
+	public final String generateUserKey()
 	{
 		StringBuilder str = new StringBuilder();
 		str.append(syncDate.getMillis()).insert(5, ((char)((int)str.charAt(5))*14));

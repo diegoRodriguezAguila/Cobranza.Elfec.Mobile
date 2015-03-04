@@ -16,4 +16,26 @@ public interface IZoneRoutesView {
 	 * @param zoneRoutes
 	 */
 	public void setZoneRoutes(List<Route> zoneRoutes);
+	/**
+	 * Indica al usuario que debe esperar
+	 */
+	public void showWaiting();
+	/**
+	 * Actualiza el mensaje de espera
+	 * @param message
+	 */
+	public void updateWaitingMessage(int messageResource);
+	/**
+	 * Oculta el mensaje de espera
+	 */
+	public void hideWaiting();
+	/**
+	 * Muestra los errores en la importación
+	 * @param errors
+	 */
+	public void showImportErrors(List<Exception> errors);
+	/**
+	 * Indica al usuario que la importación fué exitosa
+	 */
+	public void successfullyImportation();
 }
