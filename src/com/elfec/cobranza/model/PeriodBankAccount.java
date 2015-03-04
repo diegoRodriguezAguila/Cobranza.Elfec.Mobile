@@ -29,12 +29,12 @@ public class PeriodBankAccount extends Model {
 	@Column(name = "PeriodNumber", notNull=true)
 	private int periodNumber;	
 	/**
-	 * NROPERIODO en Oracle
+	 * IDCAJERO en Oracle
 	 */
 	@Column(name = "CashierId")
 	private int cashierId;	
 	/**
-	 * NROPERIODO y HORA_APERTURA en Oracle
+	 * FECHA y HORA_APERTURA en Oracle
 	 */
 	@Column(name = "OpeningDateTime")
 	private DateTime openingDateTime;

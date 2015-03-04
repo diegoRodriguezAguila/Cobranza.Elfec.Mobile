@@ -28,12 +28,12 @@ public class BankAccount extends Model{
 	 * NROCUENTA en Oracle
 	 */
 	@Column(name = "AccountNumber")
-	private int accountNumber;	
+	private String accountNumber;	
 	/**
 	 * TIPO_CTA en Oracle
 	 */
 	@Column(name = "AccountType")
-	private int accountType;	
+	private String accountType;	
 	/**
 	 * SALDO en Oracle
 	 */
@@ -115,6 +115,40 @@ public class BankAccount extends Model{
 	@Column(name = "CardId")
 	private int cardId;
 	
+	public BankAccount() {
+		super();
+	}
+	
+	public BankAccount(int bankId, int bankAccountId, String accountNumber,
+			String accountType, BigDecimal balance, DateTime balanceDate,
+			int costCenterId, String description, short givesChange,
+			short givesCashAdvance, int enterpriseId, int branchOfficeId,
+			int zoneId, int cashDeskTypeId, int cashDeskNumber,
+			int crCostCenterId, int crAccountancyAccount, int dbCostCenterId,
+			int dbAccountancyAccount, int cardId) {
+		super();
+		this.bankId = bankId;
+		this.bankAccountId = bankAccountId;
+		this.accountNumber = accountNumber;
+		this.accountType = accountType;
+		this.balance = balance;
+		this.balanceDate = balanceDate;
+		this.costCenterId = costCenterId;
+		this.description = description;
+		this.givesChange = givesChange;
+		this.givesCashAdvance = givesCashAdvance;
+		this.enterpriseId = enterpriseId;
+		this.branchOfficeId = branchOfficeId;
+		this.zoneId = zoneId;
+		this.cashDeskTypeId = cashDeskTypeId;
+		this.cashDeskNumber = cashDeskNumber;
+		this.crCostCenterId = crCostCenterId;
+		this.crAccountancyAccount = crAccountancyAccount;
+		this.dbCostCenterId = dbCostCenterId;
+		this.dbAccountancyAccount = dbAccountancyAccount;
+		this.cardId = cardId;
+	}
+
 	//#region Getters y Setters
 	public int getBankId() {
 		return bankId;
@@ -128,16 +162,16 @@ public class BankAccount extends Model{
 	public void setBankAccountId(int bankAccountId) {
 		this.bankAccountId = bankAccountId;
 	}
-	public int getAccountNumber() {
+	public String getAccountNumber() {
 		return accountNumber;
 	}
-	public void setAccountNumber(int accountNumber) {
+	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-	public int getAccountType() {
+	public String getAccountType() {
 		return accountType;
 	}
-	public void setAccountType(int accountType) {
+	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
 	public BigDecimal getBalance() {

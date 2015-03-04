@@ -8,7 +8,8 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import com.elfec.cobranza.helpers.text_format.RouteListToSQL;
+import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
+import com.elfec.cobranza.helpers.text_format.ObjectListToSQL.AttributePicker;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.SupplyStatus;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
@@ -54,6 +55,10 @@ public class SupplyStatusRDA {
 	 */
 	public static List<SupplyStatus> requestSupplyStatuses(String username, String password, List<Route> routes) throws ConnectException, SQLException
 	{
-		return requestSupplyStatuses(username, password, RouteListToSQL.convertToSQL(routes));
+		return requestSupplyStatuses(username, password, ObjectListToSQL.convertToSQL(routes, new AttributePicker<Route>() {
+			@Override
+			public String pickString(Route route) {
+				return ""+route.getRouteRemoteId();
+			}}));
 	}
 }

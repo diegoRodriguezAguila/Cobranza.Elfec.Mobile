@@ -3,8 +3,13 @@ package com.elfec.cobranza.remote_data_access;
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.elfec.cobranza.model.enums.DeviceStatus;
+import org.joda.time.DateTime;
+
+import com.elfec.cobranza.model.BankAccount;
+import com.elfec.cobranza.model.PeriodBankAccount;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
@@ -15,23 +20,51 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 public class BankAccountRDA {
 
 	/**
-	 * Obtiene remotamente el estado de un dispositivo, si es que no existe en la tabla de IMEI_APP, se
-	 * retorna cero como estado no disponible
+	 * Obtiene remotamente las BAN_CTAS
 	 * @param username
 	 * @param password
-	 * @param IMEI
-	 * @return 0 estado de dispositivo inactivo, 1 activo y válido par autilizar
+	 * @param cashdeskNumber
+	 * @return Lista de BAN_CTAS
 	 * @throws SQLException 
 	 * @throws ConnectException 
 	 */
-	public static DeviceStatus requestDeviceStatus(String username, String password, String IMEI) throws ConnectException, SQLException
+	public static List<BankAccount> requestBankAccounts(String username, String password, int cashdeskNumber) throws ConnectException, SQLException
 	{
+		List<BankAccount> bankAccounts = new ArrayList<BankAccount>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-					executeSelect("SELECT * FROM MOVILES.IMEI_APP WHERE IMEI="+IMEI+" AND APLICACION='Cobranza Movil'");
+					executeSelect("SELECT * FROM ERP_ELFEC.BAN_CTAS WHERE IDBAN_CTA="+cashdeskNumber);
 		while(rs.next())
 		{
-			return DeviceStatus.get(rs.getShort("ESTADO"));
+			bankAccounts.add(new BankAccount(rs.getInt("IDBANCO"), rs.getInt("IDBAN_CTA"), rs.getString("NROCUENTA"), 
+					rs.getString("TIPO_CTA"), rs.getBigDecimal("SALDO"), new DateTime(rs.getDate("SALDO_FECHA")), 
+					rs.getInt("IDCENTRO_COSTO"), rs.getString("DESCRIPCION"), rs.getShort("DA_VUELTO"), rs.getShort("DA_ANTICIPO"), 
+					rs.getInt("IDEMPRESA"), rs.getInt("IDSUCURSAL"), rs.getInt("IDZONA"), rs.getInt("IDTIPO_CAJA"), 
+					rs.getInt("NROCAJA_EXT"), rs.getInt("IDCENTRO_COSTO_CR"), rs.getInt("IDCTA_CONTAB_CR"), 
+					rs.getInt("IDCENTRO_COSTO_DB"), rs.getInt("IDCTA_CONTAB_DB"), rs.getInt("IDTARJETA")));
 		}
-		return DeviceStatus.UNABLED;
+		return bankAccounts;
+	}
+	
+	/**
+	 * Obtiene remotamente las BAN_CTAS_PER
+	 * @param username
+	 * @param password
+	 * @param cashdeskNumber
+	 * @return Lista de BAN_CTAS_PER
+	 * @throws SQLException 
+	 * @throws ConnectException 
+	 */
+	public static List<PeriodBankAccount> requestPeriodBankAccounts(String username, String password, int cashdeskNumber) throws ConnectException, SQLException
+	{
+		List<PeriodBankAccount> periodBankAccounts = new ArrayList<PeriodBankAccount>();
+		ResultSet rs = OracleDatabaseConnector.instance(username, password).
+					executeSelect("SELECT * FROM ERP_ELFEC.BAN_CTAS_PER WHERE IDBAN_CTA="+cashdeskNumber+" AND FECHA>=trunc(SYSDATE))");
+		while(rs.next())
+		{
+			periodBankAccounts.add(new PeriodBankAccount(rs.getInt("IDBANCO"), rs.getInt("IDBAN_CTA"), rs.getInt("NROPERIODO"), 
+					rs.getInt("IDCAJERO"), new DateTime(rs.getDate("HORA_APERTURA")), new DateTime(rs.getDate("HORA_CIERRE")), 
+					rs.getShort("IDSTATUS"), rs.getInt("IDZONA"), rs.getInt("IDEMPRESA")));
+		}
+		return periodBankAccounts;
 	}
 }
