@@ -30,7 +30,7 @@ public class SupplyStatusRDA {
 	{
 		List<SupplyStatus> supplyStatuses = new ArrayList<SupplyStatus>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT * FROM ERP_ELFEC.SUMIN_ESTADOS WHERE IDCBTE IN "+coopReceiptIds);
+				executeSelect("SELECT  /*+CHOOSE*/  * FROM ERP_ELFEC.SUMIN_ESTADOS WHERE IDCBTE IN "+coopReceiptIds);
 		while(rs.next())
 		{
 			supplyStatuses.add(new SupplyStatus(new DateTime(rs.getDate("FECHA")), rs.getInt("IDLOTE"), rs.getInt("IDSUMINISTRO"), rs.getInt("IDMEDIDOR"), 
@@ -38,6 +38,7 @@ public class SupplyStatusRDA {
 					rs.getInt("LECTURA_ANT"), new DateTime(rs.getDate("FECHA_ANT")), rs.getInt("CONSUMO"), rs.getInt("IDRUTA"), rs.getInt("IDCBTE"), 
 					rs.getInt("IDCBTE_SIM"), rs.getInt("CONS_FACTURACION"), rs.getInt("DELTA_PEND_COMPEN")));
 		}
+		rs.close();
 		return supplyStatuses;
 	}
 }

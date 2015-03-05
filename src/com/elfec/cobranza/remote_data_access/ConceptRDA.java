@@ -35,6 +35,7 @@ public class ConceptRDA {
 					rs.getInt("EXCLUIR_LIVA"), rs.getInt("IVA_COLUMNA"), rs.getShort("IMPRESION_AREA"), rs.getShort("TIPO_PART"), 
 					rs.getShort("INCLUYA_UNIDADES")));
 		}
+		rs.close();
 		return concepts;
 	}
 }

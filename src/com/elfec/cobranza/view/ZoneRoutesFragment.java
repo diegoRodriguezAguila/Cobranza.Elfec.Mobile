@@ -180,6 +180,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
+				getActivity().getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 				waitingDialog = new ProgressDialogPro(getActivity(), R.style.Theme_FlavoredMaterialLight);
 				waitingDialog.setMessage(getResources().getString(R.string.msg_login_waiting));
 				waitingDialog.setTitle(R.string.title_waiting);
@@ -206,6 +207,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
+				getActivity().getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 				if(waitingDialog!=null)
 					waitingDialog.dismiss();
 			}

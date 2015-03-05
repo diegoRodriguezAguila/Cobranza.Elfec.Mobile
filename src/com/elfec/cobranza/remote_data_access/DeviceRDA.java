@@ -32,6 +32,7 @@ public class DeviceRDA {
 		{
 			return DeviceStatus.get(rs.getShort("ESTADO"));
 		}
+		rs.close();
 		return DeviceStatus.UNABLED;
 	}
 }

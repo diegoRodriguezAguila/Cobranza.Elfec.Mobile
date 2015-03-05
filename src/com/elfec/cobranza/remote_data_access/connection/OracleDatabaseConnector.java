@@ -99,13 +99,35 @@ public class OracleDatabaseConnector {
 	}
 	
 	/**
+	 * Obtiene una clase con la que se realizan las consultas independiente a la actual de la instancia,
+	 * se debe cerrar manualmente
+	 * @return
+	 * @throws SQLException 
+	 */
+	public Statement getNewQuerier() throws SQLException
+	{
+		return conn.createStatement();
+	}
+	
+	/**
+	 * Cierra la consutla actual
+	 * @throws SQLException
+	 */
+	public void closeQuerier() throws SQLException
+	{
+		if(stmt!=null)
+			stmt.close();
+	}
+	
+	/**
 	 * Ejecuta una consulta de tipo select
 	 * @param selectQuery
 	 * @return
 	 * @throws SQLException 
 	 */
 	public ResultSet executeSelect(String selectQuery) throws SQLException
-	{
+	{		
+		closeQuerier();
 		stmt = conn.createStatement();
 		return stmt.executeQuery(selectQuery);
 	}

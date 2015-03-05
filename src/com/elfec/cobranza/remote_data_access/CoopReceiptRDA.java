@@ -3,6 +3,7 @@ package com.elfec.cobranza.remote_data_access;
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +35,17 @@ public class CoopReceiptRDA {
 	{
 		List<CoopReceipt> coopReceipts = new ArrayList<CoopReceipt>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT * FROM ERP_ELFEC.CBTES_COOP WHERE IDEMPRESA=1 AND TIPO_CBTE='FC' "
+				executeSelect("SELECT /*+CHOOSE*/  IDCBTE, IDSUMINISTRO, IDCLIENTE, IDEMPRESA, IDSUCURSAL, TIPO_CBTE, "
+						+ "GRUPO_CBTE, LETRA_CBTE, NROCBTE, FECHA_EMISION, FECHA_VTO_ORIGINAL, FECHA_VTO, FECHA_INICIO, "
+						+ "FECHA_FIN, ANIO, NROPER, NROSUM, IDRUTA, NOMBRE, IDIVA, CUIT, DOMICILIO_SUM, IDCATEGORIA, "
+						+ "SRV_IMPORTE, SRV_SALDO, TOTALIMP, ESTADO, IDLOTE, NRO_AUT_IMPRESION, FECHA_VTO_AUT, COD_CONTROL, "
+						+ "COBRANZA.FLITERAL(TOTALIMP) AS LITERAL, "
+						+ "MOVILES.FCOBRA_OBTENER_DIRECCION(IDSUMINISTRO) AS DIRECCION, "
+						+ "MOVILES.FCOBRA_OBTENER_MEDIDOR(IDCBTE) AS MEDIDOR, "
+						+ "MOVILES.FCOBRA_OBTENER_DESC_AUT(NRO_AUT_IMPRESION) AS DESC_AUT_IMPRESION "
+						+ "FROM ERP_ELFEC.CBTES_COOP WHERE IDEMPRESA=1 AND TIPO_CBTE='FC' "
 						+ "AND LETRA_CBTE='Y' AND SRV_SALDO>0 AND ESTADO='A' "
-						+ "AND IDRUTA IN "+routes);
+						+ "AND IDSUMINISTRO IN (SELECT/*+CHOOSE*/ IDSUMINISTRO FROM ERP_ELFEC.SUMINISTROS WHERE IDRUTA IN "+routes+")");
 		while(rs.next())
 		{
 			CoopReceipt receipt = new CoopReceipt(rs.getInt("IDCBTE"), rs.getInt("IDSUMINISTRO"), rs.getInt("IDCLIENTE"), 
@@ -48,11 +57,10 @@ public class CoopReceiptRDA {
 					rs.getString("CUIT"), rs.getString("DOMICILIO_SUM"),  rs.getString("IDCATEGORIA"), rs.getBigDecimal("SRV_IMPORTE"), 
 					rs.getBigDecimal("SRV_SALDO"), rs.getBigDecimal("TOTALIMP"), rs.getString("ESTADO"), rs.getInt("IDLOTE") ,
 					rs.getString("NRO_AUT_IMPRESION"), new DateTime(rs.getDate("FECHA_VTO_AUT")), rs.getString("COD_CONTROL"));
-			
-			requestCoopReceiptLiteral(username, password, receipt);
-			requestCoopReceiptClientAddress(username, password, receipt);
-			requestCoopReceiptMeterNumber(username, password, receipt);
-			requestCoopReceiptAuthDesc(username, password, receipt);
+			receipt.setLiteral(rs.getString("LITERAL"));
+			receipt.setClientAddress(rs.getString("DIRECCION"));
+			receipt.setMeterNumber(rs.getString("MEDIDOR"));
+			receipt.setMeterNumber(rs.getString("DESC_AUT_IMPRESION"));
 			coopReceipts.add(receipt);
 		}
 		rs.close();
@@ -88,13 +96,14 @@ public class CoopReceiptRDA {
 	 */
 	public static CoopReceipt requestCoopReceiptLiteral(String username, String password, CoopReceipt receipt) throws ConnectException, SQLException
 	{
-		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT COBRANZA.FLITERAL("+receipt.getTotalAmount()+") AS LITERAL FROM DUAL");
+		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
+		ResultSet rs = stmt.executeQuery("SELECT COBRANZA.FLITERAL("+receipt.getTotalAmount()+") AS LITERAL FROM DUAL");
 		while(rs.next())
 		{
 			receipt.setLiteral(rs.getString("LITERAL"));
 		}
 		rs.close();
+		stmt.close();
 		return receipt;
 	}
 	/**
@@ -108,13 +117,14 @@ public class CoopReceiptRDA {
 	 */
 	public static CoopReceipt requestCoopReceiptClientAddress(String username, String password, CoopReceipt receipt) throws ConnectException, SQLException
 	{
-		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT MOVILES.FCOBRA_OBTENER_DIRECCION("+receipt.getSupplyId()+") AS DIRECCION FROM DUAL");
+		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
+		ResultSet rs = stmt.executeQuery("SELECT MOVILES.FCOBRA_OBTENER_DIRECCION("+receipt.getSupplyId()+") AS DIRECCION FROM DUAL");
 		while(rs.next())
 		{
 			receipt.setClientAddress(rs.getString("DIRECCION"));
 		}
 		rs.close();
+		stmt.close();
 		return receipt;
 	}
 	
@@ -129,13 +139,14 @@ public class CoopReceiptRDA {
 	 */
 	public static CoopReceipt requestCoopReceiptMeterNumber(String username, String password, CoopReceipt receipt) throws ConnectException, SQLException
 	{
-		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT MOVILES.FCOBRA_OBTENER_MEDIDOR("+receipt.getReceiptId()+") AS MEDIDOR FROM DUAL");
+		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
+		ResultSet rs =  stmt.executeQuery("SELECT MOVILES.FCOBRA_OBTENER_MEDIDOR("+receipt.getReceiptId()+") AS MEDIDOR FROM DUAL");
 		while(rs.next())
 		{
 			receipt.setMeterNumber(rs.getString("MEDIDOR"));
 		}
 		rs.close();
+		stmt.close();
 		return receipt;
 	}
 	
@@ -150,13 +161,14 @@ public class CoopReceiptRDA {
 	 */
 	public static CoopReceipt requestCoopReceiptAuthDesc(String username, String password, CoopReceipt receipt) throws ConnectException, SQLException
 	{
-		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT MOVILES.FCOBRA_OBTENER_DESC_AUT("+receipt.getAuthorizationNumber()+") AS DESC_AUT_IMPRESION FROM DUAL");
+		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
+		ResultSet rs =  stmt.executeQuery("SELECT MOVILES.FCOBRA_OBTENER_DESC_AUT("+receipt.getAuthorizationNumber()+") AS DESC_AUT_IMPRESION FROM DUAL");
 		while(rs.next())
 		{
 			receipt.setMeterNumber(rs.getString("DESC_AUT_IMPRESION"));
 		}
 		rs.close();
+		stmt.close();
 		return receipt;
 	}
 }

@@ -33,6 +33,7 @@ public class UserRDA {
 		{
 			return new User(username, password, rs.getInt("IDEMPLEADO"), rs.getInt("NO"), rs.getShort("ESTADO"));
 		}
+		rs.close();
 		return null;
 	}
 	
@@ -50,12 +51,13 @@ public class UserRDA {
 	{
 		OracleDatabaseConnector.disposeInstance();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT CAJA FROM COBRANZA.CAJERO_CAJA "
+				executeSelect("SELECT  /*+CHOOSE*/  CAJA FROM COBRANZA.CAJERO_CAJA "
 						+ "WHERE CAJERO="+cashierId+" AND PERFIL='OFFLINE' AND ESTADO=1");
 		while(rs.next())
 		{
 			return rs.getInt("CAJA");
 		}
+		rs.close();
 		return -1;
 	}
 }

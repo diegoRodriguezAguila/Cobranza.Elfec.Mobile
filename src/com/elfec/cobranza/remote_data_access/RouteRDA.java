@@ -35,6 +35,7 @@ public class RouteRDA {
 		{
 			routes.add(new Route(zone, rs.getInt("IDRUTA"),rs.getString("DESCRIPCION")));
 		}
+		rs.close();
 		return routes;
 	}
 }

@@ -27,13 +27,14 @@ public class CategoryRDA {
 	{
 		List<Category> categories = new ArrayList<Category>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT * FROM ERP_ELFEC.CATEGORIAS");
+				executeSelect("SELECT  * FROM ERP_ELFEC.CATEGORIAS");
 		while(rs.next())
 		{
 			categories.add(new Category(rs.getString("IDCATEGORIA"), rs.getInt("IDTIPO_SRV"), rs.getString("DESCRIPCION"), 
 					rs.getInt("IDTIPO_CATEG"), rs.getString("CTROL_IVAS"), rs.getShort("IDSTATUS"), rs.getString("CLASIF"), 
 					rs.getString("CTROL_TMEDID"), rs.getString("CLASIF2"), rs.getBigDecimal("FACTOR_CARGA"), rs.getShort("FACTURAR_DEM")));
 		}
+		rs.close();
 		return categories;
 	}
 }

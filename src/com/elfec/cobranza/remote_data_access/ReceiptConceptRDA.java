@@ -29,7 +29,7 @@ public class ReceiptConceptRDA {
 	{
 		List<ReceiptConcept> receiptConcepts = new ArrayList<ReceiptConcept>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT * FROM ERP_ELFEC.SUMIN_ESTADOS WHERE IDCBTE IN "+coopReceiptIds);
+				executeSelect("SELECT  /*+CHOOSE*/  * FROM ERP_ELFEC.CBTES_CPTOS WHERE IDCBTE IN "+coopReceiptIds);
 		while(rs.next())
 		{
 			receiptConcepts.add(new ReceiptConcept(rs.getInt("IDEMPRESA"), rs.getInt("IDSUCURSAL"), rs.getString("TIPO_CBTE"), 
@@ -37,6 +37,7 @@ public class ReceiptConceptRDA {
 					rs.getInt("IDCONCEPTO"), rs.getInt("IDSUBCONCEPTO"), rs.getBigDecimal("IMPORTE"), rs.getInt("ANIO"), rs.getInt("NROPER"), 
 					rs.getInt("LECTURA_ANTERIOR"), rs.getInt("LECTURA_ACTUAL"), rs.getString("DESCRIPCION"), rs.getString("IDCATEGORIA"), rs.getInt("IDCBTE")));
 		}
+		rs.close();
 		return receiptConcepts;
 	}
 

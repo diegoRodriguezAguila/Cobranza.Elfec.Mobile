@@ -33,6 +33,7 @@ public class CalculationBaseRDA {
 		{
 			conceptCalculationBases.add(new ConceptCalculationBase(rs.getInt("IDBASE_CALCULO"), rs.getInt("IDCONCEPTO"), rs.getInt("IDSUBCONCEPTO")));
 		}
+		rs.close();
 		return conceptCalculationBases;
 	}
 	
@@ -53,6 +54,7 @@ public class CalculationBaseRDA {
 		{
 			printCalculationBase.add(new PrintCalculationBase(rs.getInt("IDBASE_CALCULO"), rs.getShort("ORDEN_IMPRESION"), rs.getString("DESCRIPCION")));
 		}
+		rs.close();
 		return printCalculationBase;
 	}
 }

@@ -42,6 +42,7 @@ public class BankAccountRDA {
 					rs.getInt("NROCAJA_EXT"), rs.getInt("IDCENTRO_COSTO_CR"), rs.getInt("IDCTA_CONTAB_CR"), 
 					rs.getInt("IDCENTRO_COSTO_DB"), rs.getInt("IDCTA_CONTAB_DB"), rs.getInt("IDTARJETA")));
 		}
+		rs.close();
 		return bankAccounts;
 	}
 	
@@ -65,6 +66,7 @@ public class BankAccountRDA {
 					rs.getInt("IDCAJERO"), new DateTime(rs.getDate("HORA_APERTURA")), new DateTime(rs.getDate("HORA_CIERRE")), 
 					rs.getShort("IDSTATUS"), rs.getInt("IDZONA"), rs.getInt("IDEMPRESA")));
 		}
+		rs.close();
 		return periodBankAccounts;
 	}
 }

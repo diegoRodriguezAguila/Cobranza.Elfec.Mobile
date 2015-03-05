@@ -34,6 +34,7 @@ public class SupplyCategoryTypeRDA {
 			supplyCategoryTypes.add(new SupplyCategoryType(rs.getInt("IDTIPO_CATEG"), rs.getInt("IDTIPO_SRV"), 
 					rs.getString("DESCRIPCION"), rs.getString("DESC_CORTA")));
 		}
+		rs.close();
 		return supplyCategoryTypes;
 	}
 }

@@ -37,6 +37,7 @@ public class ZoneRDA {
 		{
 			zones.add(new Zone(ownerUser, rs.getInt("IDZONA"),rs.getString("DESCRIPCION")));
 		}
+		rs.close();
 		return zones;
 	}
 	

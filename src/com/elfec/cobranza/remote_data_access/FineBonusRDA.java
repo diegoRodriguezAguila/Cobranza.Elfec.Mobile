@@ -28,7 +28,7 @@ public class FineBonusRDA {
 	{
 		List<FineBonus> fineBonuses = new ArrayList<FineBonus>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("  SELECT A.IDCBTE, A.IDCONCEPTO, "
+				executeSelect("SELECT A.IDCBTE, A.IDCONCEPTO, "
 						+ "trim(A.DESCRIPCION)||' '|| substr (bm.descripcion_legal, 1,instr(bm.descripcion_legal,'/')+2) descripcion, "
 						+ "A.IMPORTE, B.IMPRESION_AREA "
 						+ "FROM  (select * from erp_elfec.cbtes_CPTOS where  IDCBTE in "+receiptIds+" "
@@ -44,6 +44,7 @@ public class FineBonusRDA {
 			fineBonuses.add(new FineBonus(rs.getInt("IDCBTE"), rs.getInt("IDCONCEPTO"), 
 					rs.getString("DESCRIPCION"), rs.getBigDecimal("IMPORTE"), rs.getShort("IMPRESION_AREA")));
 		}
+		rs.close();
 		return fineBonuses;
 	}
 }
