@@ -12,6 +12,7 @@ import com.elfec.cobranza.business_logic.ReceiptConceptManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.SupplyCategoryTypeManager;
 import com.elfec.cobranza.business_logic.SupplyStatusManager;
+import com.elfec.cobranza.helpers.PreferencesManager;
 import com.elfec.cobranza.helpers.security.AES;
 import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
 import com.elfec.cobranza.helpers.text_format.ObjectListToSQL.AttributePicker;
@@ -20,6 +21,8 @@ import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
+import com.elfec.cobranza.model.interfaces.ImportCaller;
+import com.elfec.cobranza.model.interfaces.OnceRequiredDataImportCaller;
 import com.elfec.cobranza.presenter.views.IZoneRoutesView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
@@ -62,80 +65,19 @@ public class ZoneRoutesPresenter {
 			@Override
 			public void run() {	
 				view.showWaiting();
-				initializeDataImport(selectedRoutes);
-				
-				DataAccessResult<Boolean> result = importOnceRequiredData();
-				
-				view.updateWaitingMessage(R.string.msg_downloading_coop_receipts);
-				DataAccessResult<List<CoopReceipt>> receiptsResult = CoopReceiptManager.importCoopReceipts(username, password, selectedRoutesString);
-				coopReceiptIdsString = ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDCBTE", new AttributePicker<CoopReceipt>(){
-					@Override
-					public String pickString(CoopReceipt object) {
-						return ""+object.getReceiptId();
-					}});
-				view.showImportErrors(receiptsResult.getErrors());
-				
-				view.updateWaitingMessage(R.string.msg_downloading_supply_status);
-				result = SupplyStatusManager.importSupplyStatuses(username, password, coopReceiptIdsString);
-				view.showImportErrors(receiptsResult.getErrors());
-				
-				view.updateWaitingMessage(R.string.msg_downloading_receipt_concepts);
-				result = ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
-				view.showImportErrors(receiptsResult.getErrors());
-				
-				view.updateWaitingMessage(R.string.msg_downloading_fine_bonusess);
-				result = ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
-				view.showImportErrors(receiptsResult.getErrors());
-				
-				
-				/*view.updateWaitingMessage(R.string.msg_downloading_supply_status);
-				result = SupplyStatusManager.importSupplyStatuses(username, password, selectedRoutesString);
-				view.showImportErrors(result.getErrors());*/
+				initializeDataImport(selectedRoutes);				
+				DataAccessResult<?> result = new DataAccessResult<Boolean>();
+				result = importAllOnceRequiredData(result);				
+				result = importRoutesData(result);		
+				OracleDatabaseConnector.disposeInstance();
 				view.hideWaiting();
 				if(!result.hasErrors())
 				{
 					view.successfullyImportation();
-					OracleDatabaseConnector.disposeInstance();
 				}
-				view.showImportErrors(result.getErrors());
 			}
 		});
 		thread.start();
-	}
-	
-	/**
-	 * Importa la información que solo se requiere una vez
-	 * @return
-	 */
-	private DataAccessResult<Boolean> importOnceRequiredData() {
-		view.updateWaitingMessage(R.string.msg_downloading_supply_category_types);
-		DataAccessResult<Boolean> result = SupplyCategoryTypeManager.importSupplyCategoryTypes(username, password);
-		view.showImportErrors(result.getErrors());
-		
-		view.updateWaitingMessage(R.string.msg_downloading_cpt_calculation_bases);
-		result = CalculationBaseManager.importConceptCalculationBases(username, password);
-		view.showImportErrors(result.getErrors());
-		
-		view.updateWaitingMessage(R.string.msg_downloading_prnt_calculation_bases);
-		result = CalculationBaseManager.importPrintCalculationBases(username, password);
-		view.showImportErrors(result.getErrors());
-		
-		view.updateWaitingMessage(R.string.msg_downloading_categories);
-		result = CategoryManager.importCategories(username, password);
-		view.showImportErrors(result.getErrors());
-		
-		view.updateWaitingMessage(R.string.msg_downloading_concepts);
-		result = ConceptManager.importConcepts(username, password);
-		view.showImportErrors(result.getErrors());
-		
-		view.updateWaitingMessage(R.string.msg_downloading_bank_accounts);
-		result = BankAccountManager.importBankAccounts(username, password, cashdeskNumber);
-		view.showImportErrors(result.getErrors());
-		
-		view.updateWaitingMessage(R.string.msg_downloading_period_bank_accounts);
-		result = BankAccountManager.importPeriodBankAccounts(username, password, cashdeskNumber);
-		view.showImportErrors(result.getErrors());
-		return result;
 	}
 	
 	/**
@@ -152,5 +94,179 @@ public class ZoneRoutesPresenter {
 		cashdeskNumber = SessionManager.getLoggedCashdeskNumber();
 		User user = User.findByUserName(username);
 		password = AES.decrypt(user.generateUserKey(), user.getEncryptedPassword());
+	}
+	
+	/**
+	 * Importa la información que solo se requiere una vez
+	 * @return
+	 */
+	private DataAccessResult<?> importAllOnceRequiredData(DataAccessResult<?> result) {
+		if(!PreferencesManager.instance().isAllOnceReqDataImported())
+		{
+			result = importData(result, R.string.msg_downloading_supply_category_types, new OnceRequiredDataImportCaller(){
+				@Override
+				public DataAccessResult<?> callImport() {
+					return SupplyCategoryTypeManager.importSupplyCategoryTypes(username, password);
+				}
+				@Override
+				public boolean isAlreadyImported() {
+					return PreferencesManager.instance().isSupplyCategoryTypesImported();
+				}
+				@Override
+				public void setImportationResult(boolean successfullyImport) {
+					PreferencesManager.instance().setSupplyCategoryTypesImported(successfullyImport);
+				}});
+			result = importData(result, R.string.msg_downloading_cpt_calculation_bases, new OnceRequiredDataImportCaller() {			
+				@Override
+				public DataAccessResult<?> callImport() {
+					return CalculationBaseManager.importConceptCalculationBases(username, password);
+				}			
+				@Override
+				public boolean isAlreadyImported() {
+					return PreferencesManager.instance().isConceptCalculationBasesImported();
+				}
+				@Override
+				public void setImportationResult(boolean successfullyImport) {
+					PreferencesManager.instance().setConceptCalculationBasesImported(successfullyImport);
+				}
+			});
+			result = importData(result, R.string.msg_downloading_prnt_calculation_bases, new OnceRequiredDataImportCaller() {			
+				@Override
+				public DataAccessResult<?> callImport() {
+					return CalculationBaseManager.importPrintCalculationBases(username, password);
+				}			
+				@Override
+				public boolean isAlreadyImported() {
+					return PreferencesManager.instance().isPrintCalculationBasesImported();
+				}
+				@Override
+				public void setImportationResult(boolean successfullyImport) {
+					PreferencesManager.instance().setPrintCalculationBasesImported(successfullyImport);
+				}
+			});
+			result = importData(result, R.string.msg_downloading_categories, new OnceRequiredDataImportCaller() {			
+				@Override
+				public DataAccessResult<?> callImport() {
+					return CategoryManager.importCategories(username, password);
+				}			
+				@Override
+				public boolean isAlreadyImported() {
+					return PreferencesManager.instance().isCategoriesImported();
+				}
+				@Override
+				public void setImportationResult(boolean successfullyImport) {
+					PreferencesManager.instance().setCategoriesImported(successfullyImport);
+				}
+			});
+			result = importData(result, R.string.msg_downloading_concepts, new OnceRequiredDataImportCaller() {			
+				@Override
+				public DataAccessResult<?> callImport() {
+					return ConceptManager.importConcepts(username, password);
+				}			
+				@Override
+				public boolean isAlreadyImported() {
+					return PreferencesManager.instance().isConceptsImported();
+				}
+				@Override
+				public void setImportationResult(boolean successfullyImport) {
+					PreferencesManager.instance().setConceptsImported(successfullyImport);
+				}
+			});
+			result = importData(result, R.string.msg_downloading_bank_accounts, new OnceRequiredDataImportCaller() {			
+				@Override
+				public DataAccessResult<?> callImport() {
+					return BankAccountManager.importBankAccounts(username, password, cashdeskNumber);
+				}			
+				@Override
+				public boolean isAlreadyImported() {
+					return PreferencesManager.instance().isBankAccountsImported();
+				}
+				@Override
+				public void setImportationResult(boolean successfullyImport) {
+					PreferencesManager.instance().setBankAccountsImported(successfullyImport);
+				}
+			});
+			result = importData(result, R.string.msg_downloading_period_bank_accounts, new OnceRequiredDataImportCaller() {			
+				@Override
+				public DataAccessResult<?> callImport() {
+					return BankAccountManager.importPeriodBankAccounts(username, password, cashdeskNumber);
+				}			
+				@Override
+				public boolean isAlreadyImported() {
+					return PreferencesManager.instance().isPeriodBankAccountsImported();
+				}
+				@Override
+				public void setImportationResult(boolean successfullyImport) {
+					PreferencesManager.instance().setPeriodBankAccountsImported(successfullyImport);
+				}
+			});
+			PreferencesManager.instance().setAllOnceReqDataImported(!result.hasErrors());
+		}
+		return result;
+	}
+	
+	/**
+	 * Importa toda la información de la ruta actual
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private DataAccessResult<?> importRoutesData(DataAccessResult<?> result) {
+		DataAccessResult<List<CoopReceipt>> receiptsResult = (DataAccessResult<List<CoopReceipt>>) importData(result, R.string.msg_downloading_coop_receipts, new ImportCaller() {			
+			@Override
+			public DataAccessResult<?> callImport() {
+				return CoopReceiptManager.importCoopReceipts(username, password, selectedRoutesString);
+			}
+		});
+		coopReceiptIdsString = ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDCBTE", new AttributePicker<CoopReceipt>(){
+			@Override
+			public String pickString(CoopReceipt object) {
+				return ""+object.getReceiptId();
+			}});
+		result = importData(receiptsResult, R.string.msg_downloading_supply_status, new ImportCaller() {
+			
+			@Override
+			public DataAccessResult<?> callImport() {
+				return SupplyStatusManager.importSupplyStatuses(username, password, coopReceiptIdsString);
+			}
+		});
+		result = importData(result, R.string.msg_downloading_receipt_concepts, new ImportCaller() {			
+			@Override
+			public DataAccessResult<?> callImport() {
+				return ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
+			}
+		});
+		result = importData(result, R.string.msg_downloading_fine_bonusess, new ImportCaller() {			
+			@Override
+			public DataAccessResult<?> callImport() {
+				return ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
+			}
+		});
+		return result;
+	}
+	
+	/**
+	 * Llama a los métodos para realizar una importación y también actualiza el mensaje de espera 
+	 * y muestra los errores en caso de haber sucedido
+	 * @param lastResult
+	 * @param loadingMessageResId
+	 * @param caller
+	 * @return
+	 */
+	private DataAccessResult<?> importData(DataAccessResult<?> lastResult, int loadingMessageResId, ImportCaller caller )
+	{
+		boolean alreadyImported = false;
+		boolean isOnceReqData = (caller instanceof OnceRequiredDataImportCaller);
+		if(isOnceReqData)
+			alreadyImported = ((OnceRequiredDataImportCaller)caller).isAlreadyImported();
+		if(!lastResult.hasErrors() && !alreadyImported)
+		{
+			view.updateWaitingMessage(loadingMessageResId);
+			DataAccessResult<?> result = caller.callImport();
+			view.showImportErrors(result.getErrors());
+			if(isOnceReqData)
+				((OnceRequiredDataImportCaller)caller).setImportationResult(!result.hasErrors());
+			return result;
+		}
+		return lastResult;
 	}
 }
