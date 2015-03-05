@@ -17,6 +17,7 @@
         android:includeFontPadding="false"
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
+        android:duplicateParentState="true"
         android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
         android:textSize="16sp"
         android:text="@string/sample_route_id"/>

@@ -42,7 +42,7 @@ public class ObjectListToSQL {
 		int totalSize = objectList.size();
 		int count = totalSize/IN_LIMIT;
 		int startLimit, endLimit;
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i <= count; i++) {
 			startLimit = (i*IN_LIMIT);
 			endLimit = ((i+1)*IN_LIMIT);
 			endLimit = Math.min(endLimit, totalSize);

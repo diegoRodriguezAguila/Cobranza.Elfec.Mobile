@@ -45,6 +45,7 @@
     <string name="btn_select_all_routes">Seleccionar todas</string>
     <string name="btn_unselect_all_routes">Desmarcar todas</string>
     <string name="msg_routes_downloaded_successfully">Rutas cargadas exitosamente!</string>
+    <string name="msg_no_routes_selected">Porfavor seleccione por lo menos una ruta para realizar la carga de datos</string>
     <string name="title_waiting">CARGANDO DATOS</string>
     <string name="title_download_errors">ERROR EN LA CARGA DE DATOS</string>
     <string name="msg_waiting">Inicializando la carga de datos&#8230;</string>

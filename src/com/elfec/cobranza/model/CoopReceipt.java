@@ -1,11 +1,13 @@
 package com.elfec.cobranza.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.joda.time.DateTime;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.query.Select;
 /**
  * Almacena los CBTES_COOP
  * @author drodriguez
@@ -243,7 +245,10 @@ public class CoopReceipt extends Model {
 		this.controlCode = controlCode;
 	}
 
-
+	public static List<CoopReceipt> findRouteReceipts(int routeId)
+	{
+		return new Select().from(CoopReceipt.class).where("RouteId=?",routeId).execute();
+	}
 
 	//#region Getters y Setters
 	

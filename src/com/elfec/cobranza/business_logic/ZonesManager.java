@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.activeandroid.ActiveAndroid;
+import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
@@ -52,5 +53,23 @@ public class ZonesManager {
 			ActiveAndroid.endTransaction();
 		}
 		return result;
+	}
+	
+	/**
+	 * Asigna el valor de ya cargadas a las rutas requeridas
+	 * @param zoneRoutes
+	 */
+	public static void setZoneRoutesLoaded(List<Route> zoneRoutes)
+	{
+		List<CoopReceipt> routeReceipts;
+		for(Route route : zoneRoutes)
+		{
+			routeReceipts = CoopReceipt.findRouteReceipts(route.getRouteRemoteId());
+			if(routeReceipts.size()>0)
+			{
+				route.setLoaded(true);
+				route.save();
+			}
+		}
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,8 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 	private ProgressDialogPro waitingDialog;
 	private Handler mHandler;
 	
+	private long lastClickTime = 0;
+	
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -100,7 +103,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 					areAllItemsSelected = false;
 					setButtonSelectAllName();
 				}
-				if(listViewZoneRoutes.getCheckedItemCount()==listViewZoneRoutes.getAdapter().getCount())
+				if(listViewZoneRoutes.getCheckedItemCount()==((RouteAdapter)listViewZoneRoutes.getAdapter()).getEnabledItemsCount())
 				{
 					areAllItemsSelected = true;
 					setButtonSelectAllName();
@@ -120,16 +123,21 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		btnDownloadRoutes.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				List<Route> selectedRoutes = new ArrayList<Route>();
-				SparseBooleanArray sparseBooleanArray = listViewZoneRoutes.getCheckedItemPositions();
-				int size = listViewZoneRoutes.getAdapter().getCount();
-				for (int i = 0; i < size; i++) {
-					if(sparseBooleanArray.get(i))
-					{
-						selectedRoutes.add((Route)listViewZoneRoutes.getItemAtPosition(i));
+				if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+					List<Route> selectedRoutes = new ArrayList<Route>();
+					SparseBooleanArray sparseBooleanArray = listViewZoneRoutes.getCheckedItemPositions();
+					int size = listViewZoneRoutes.getAdapter().getCount();
+					for (int i = 0; i < size; i++) {
+						if(sparseBooleanArray.get(i))
+						{
+							selectedRoutes.add((Route)listViewZoneRoutes.getItemAtPosition(i));
+						}
 					}
+					if(selectedRoutes.size()>0)
+						presenter.importRoutesData(selectedRoutes);
+					else warnUserNotSelectedRoutes();
 				}
-				presenter.importRoutesData(selectedRoutes);
+		        lastClickTime = SystemClock.elapsedRealtime();
 			}
 		});
 		return rootView;
@@ -155,7 +163,8 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                        	listViewZoneRoutes.setItemChecked(pos, select);  
+                        	if(listViewZoneRoutes.getAdapter().isEnabled(pos))
+                        		listViewZoneRoutes.setItemChecked(pos, select);  
                         }
                     });
                 }
@@ -163,6 +172,12 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
         }).start();     
 	}
 
+	public void warnUserNotSelectedRoutes()
+	{
+		Crouton.clearCroutonsForActivity(getActivity());
+		Crouton.makeText(getActivity(), R.string.msg_no_routes_selected, croutonStyle).show();
+	}
+	
 	//#region Interface Methods
 	
 	@Override
@@ -236,6 +251,8 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
+				areAllItemsSelected = false;
+				setButtonSelectAllName();
 				Crouton.clearCroutonsForActivity(getActivity());
 				Crouton.makeText(getActivity(), R.string.msg_routes_downloaded_successfully, croutonStyle).show();
 			}

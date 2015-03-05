@@ -31,6 +31,22 @@ public class RouteAdapter extends ArrayAdapter<Route> {
 	public int getCount() {
 		return routes.size();
 	}
+	
+	public int getEnabledItemsCount()
+	{
+		int count = 0;
+		int size = getCount();
+		for (int i = 0; i < size; i++) {
+			if(isEnabled(i))
+				count++;
+		}
+		return count;
+	}
+	
+	@Override
+	public boolean isEnabled(int position) {
+	    return !getItem(position).isLoaded();
+	}
 
 	@Override
 	public Route getItem(int position) {
@@ -47,8 +63,9 @@ public class RouteAdapter extends ArrayAdapter<Route> {
 		if(convertView==null)
 			convertView = inflater.inflate(resource, null);
 		Route route = getItem(position);
+		convertView.setEnabled(!route.isLoaded());
 		((TextView)convertView.findViewById(R.id.txt_route_id)).setText(""+route.getRouteRemoteId());
-		((TextView)convertView.findViewById(R.id.txt_route_desc)).setText(TextFormater.capitalize(route.getDescription()));
+		((TextView)convertView.findViewById(R.id.txt_route_desc)).setText(TextFormater.capitalize(route.getDescription())+(route.isLoaded()?" (cargado)":""));
 		return convertView;
 	}
 }

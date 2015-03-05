@@ -28,16 +28,19 @@ public class FineBonusRDA {
 	{
 		List<FineBonus> fineBonuses = new ArrayList<FineBonus>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT A.IDCBTE, A.IDCONCEPTO, "
+				executeSelect("SELECT /*+CHOOSE*/  A.IDCBTE, A.IDCONCEPTO, "
 						+ "trim(A.DESCRIPCION)||' '|| substr (bm.descripcion_legal, 1,instr(bm.descripcion_legal,'/')+2) descripcion, "
 						+ "A.IMPORTE, B.IMPRESION_AREA "
-						+ "FROM  (select * from erp_elfec.cbtes_CPTOS where  IDCBTE in "+receiptIds+" "
-						+ "AND (IDEMPRESA = 1) AND (IDSUCURSAL = 10) AND (TIPO_CBTE = 'FC') AND (LETRA_CBTE = 'Y') "
+						+ "FROM  (select * from erp_elfec.cbtes_CPTOS where  IDCBTE in "+receiptIds
+						+ " AND (IDEMPRESA = 1) AND (IDSUCURSAL = 10) AND (TIPO_CBTE = 'FC') AND (LETRA_CBTE = 'Y') "
 						+ "AND IMPORTE<>0 AND IDCONCEPTO BETWEEN 10600 AND 10699) A, "
-						+ "(select * from ERP_ELFEC.CONCEPTOS where IMPRESION_AREA=4) B, "
-						+ "ERP_ELFEC.BONIF_MULTAS_IT bo, ERP_ELFEC.BONIF_MULTAS bm "
-						+ "WHERE A.IDCONCEPTO = B.IDCONCEPTO AND A.IDSUBCONCEPTO = B.IDSUBCONCEPTO "
-						+ "AND A.IDCBTE = BO.IDCBTE AND A.IDCONCEPTO = BO.IDCONCEPTO "
+						+ "(select idconcepto,idsubconcepto,impresion_area from ERP_ELFEC.CONCEPTOS where IMPRESION_AREA=4) B, "
+						+ "(select /*+CHOOSE*/ idcbte,idconcepto, idsubconcepto,IDBONIF_MULTA from ERP_ELFEC.BONIF_MULTAS_IT where idcbte in "+receiptIds+") bo,"
+						+ " ERP_ELFEC.BONIF_MULTAS bm "
+						+ "WHERE A.IDCONCEPTO = B.IDCONCEPTO "
+						+ "AND A.IDSUBCONCEPTO = B.IDSUBCONCEPTO "
+						+ "AND A.IDCBTE = BO.IDCBTE "
+						+ "AND A.IDCONCEPTO = BO.IDCONCEPTO "
 						+ "AND BO.IDBONIF_MULTA = bm.IDBONIF_MULTA");
 		while(rs.next())
 		{

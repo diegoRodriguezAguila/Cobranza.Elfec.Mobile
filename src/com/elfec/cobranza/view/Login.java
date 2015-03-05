@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
@@ -21,11 +22,11 @@ import com.elfec.cobranza.helpers.text_format.ErrorListFormatter;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
-
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public class Login extends Activity implements ILoginView {
 
+	private long lastClickTime = 0;
 	private LoginPresenter presenter;
 	
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
@@ -66,7 +67,10 @@ public class Login extends Activity implements ILoginView {
 	
 	public void btnLoginClick(View view)
 	{
-		presenter.login();
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+			presenter.login();
+		}
+        lastClickTime = SystemClock.elapsedRealtime();
 	}
 	
 	 /**

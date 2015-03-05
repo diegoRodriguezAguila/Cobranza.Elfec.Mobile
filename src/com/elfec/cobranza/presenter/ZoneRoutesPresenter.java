@@ -12,6 +12,7 @@ import com.elfec.cobranza.business_logic.ReceiptConceptManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.SupplyCategoryTypeManager;
 import com.elfec.cobranza.business_logic.SupplyStatusManager;
+import com.elfec.cobranza.business_logic.ZonesManager;
 import com.elfec.cobranza.helpers.PreferencesManager;
 import com.elfec.cobranza.helpers.security.AES;
 import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
@@ -34,6 +35,7 @@ public class ZoneRoutesPresenter {
 	private String username;
 	private String password;
 	private int cashdeskNumber;
+	private int zoneRemoteId;
 
 	public ZoneRoutesPresenter(IZoneRoutesView view) {
 		this.view = view;
@@ -48,6 +50,7 @@ public class ZoneRoutesPresenter {
 		Thread thread = new Thread(new Runnable() {			
 			@Override
 			public void run() {	
+				ZoneRoutesPresenter.this.zoneRemoteId = zoneRemoteId;
 				List<Route> zoneRoutes = Zone.findByRemoteId(zoneRemoteId).getZoneRoutes();
 				view.setZoneRoutes(zoneRoutes);
 			}
@@ -70,11 +73,15 @@ public class ZoneRoutesPresenter {
 				result = importAllOnceRequiredData(result);				
 				result = importRoutesData(result);		
 				OracleDatabaseConnector.disposeInstance();
-				view.hideWaiting();
-				if(!result.hasErrors())
+				boolean hasErrors = result.hasErrors();
+				if(!hasErrors)	
 				{
-					view.successfullyImportation();
+					ZonesManager.setZoneRoutesLoaded(selectedRoutes);
+					loadZoneRoutes(zoneRemoteId);
 				}
+				view.hideWaiting();
+				if(!hasErrors)	
+					view.successfullyImportation();
 			}
 		});
 		thread.start();
@@ -217,6 +224,8 @@ public class ZoneRoutesPresenter {
 				return CoopReceiptManager.importCoopReceipts(username, password, selectedRoutesString);
 			}
 		});
+		if(receiptsResult.getResult().size()==0)
+			receiptsResult.addError(new Exception("La(s) ruta(s) seleccionada(s) no tiene(n) ninguna factura disponible!"));//TODO crear propia excepcion
 		coopReceiptIdsString = ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDCBTE", new AttributePicker<CoopReceipt>(){
 			@Override
 			public String pickString(CoopReceipt object) {

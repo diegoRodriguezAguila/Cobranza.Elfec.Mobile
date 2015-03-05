@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Html;
 import android.view.Menu;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.elfec.cobranza.presenter.views.IDataFlowView;
 public class DataFlow extends Activity implements IDataFlowView {
 
 	public static final String IMEI = "IMEI";
+	private long lastClickTime = 0;
 	private DataFlowPresenter presenter;
 	
 	@Override
@@ -58,9 +60,12 @@ public class DataFlow extends Activity implements IDataFlowView {
 	
 	public void btnDownloadDataClick(View view)
 	{
-		Intent i = new Intent(DataFlow.this, ZoneListActivity.class);
-		startActivity(i);
-		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+			Intent i = new Intent(DataFlow.this, ZoneListActivity.class);
+			startActivity(i);
+			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+		}
+        lastClickTime = SystemClock.elapsedRealtime();
 	}
 	
 	//#region Interface Methods

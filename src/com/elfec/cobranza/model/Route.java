@@ -18,6 +18,9 @@ public class Route extends Model {
 	
 	@Column(name = "Description")
 	private String description;
+	
+	@Column(name = "IsLoaded")
+	private boolean isLoaded;
 
 	public Route() {
 		super();
@@ -28,6 +31,7 @@ public class Route extends Model {
 		this.zone = zone;
 		this.routeRemoteId = routeRemoteId;
 		this.description = description;
+		this.isLoaded = false;
 	}
 
 	//#region Getters y Setters
@@ -53,6 +57,14 @@ public class Route extends Model {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean isLoaded() {
+		return isLoaded;
+	}
+
+	public void setLoaded(boolean isLoaded) {
+		this.isLoaded = isLoaded;
 	}
 	
 	//#endregion
