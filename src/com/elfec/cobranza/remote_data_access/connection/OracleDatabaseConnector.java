@@ -137,6 +137,14 @@ public class OracleDatabaseConnector {
 	 */
 	public static void disposeInstance()
 	{
+		try {
+			if(dbConnectorInstance!=null)
+			{
+				if(!dbConnectorInstance.conn.isClosed())
+					dbConnectorInstance.conn.close();
+			}
+		} catch (SQLException e) {
+		}
 		dbConnectorInstance = null;
 		System.gc();
 	}
@@ -146,6 +154,14 @@ public class OracleDatabaseConnector {
 	 */
 	public static void dispose()
 	{
+		try {
+			if(dbConnectorInstance!=null)
+			{
+				if(!dbConnectorInstance.conn.isClosed())
+					dbConnectorInstance.conn.close();
+			}
+		} catch (SQLException e) {
+		}
 		dbConnectorInstance = null;
 		context = null;
 		System.gc();

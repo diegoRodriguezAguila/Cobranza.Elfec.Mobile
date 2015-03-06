@@ -3,6 +3,7 @@ package com.elfec.cobranza.remote_data_access;
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class SupplyStatusRDA {
 	public static List<SupplyStatus> requestSupplyStatuses(String username, String password, String coopReceiptIds) throws ConnectException, SQLException
 	{
 		List<SupplyStatus> supplyStatuses = new ArrayList<SupplyStatus>();
-		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT  /*+CHOOSE*/  * FROM ERP_ELFEC.SUMIN_ESTADOS WHERE IDCBTE IN "+coopReceiptIds);
+		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
+		ResultSet rs = stmt.executeQuery("SELECT  /*+CHOOSE*/  * FROM ERP_ELFEC.SUMIN_ESTADOS WHERE IDCBTE IN "+coopReceiptIds);
 		while(rs.next())
 		{
 			supplyStatuses.add(new SupplyStatus(new DateTime(rs.getDate("FECHA")), rs.getInt("IDLOTE"), rs.getInt("IDSUMINISTRO"), rs.getInt("IDMEDIDOR"), 
@@ -39,6 +40,7 @@ public class SupplyStatusRDA {
 					rs.getInt("IDCBTE_SIM"), rs.getInt("CONS_FACTURACION"), rs.getInt("DELTA_PEND_COMPEN")));
 		}
 		rs.close();
+		stmt.close();
 		return supplyStatuses;
 	}
 }

@@ -13,7 +13,7 @@ public class UnabledDeviceException extends Exception {
 	@Override
 	public String getMessage()
 	{
-		return "Este dispositivo no fue habilitado para acceder a este sistema.";
+		return "Este dispositivo no fue habilitado para acceder a este sistema";
 	}
 
 }

@@ -3,6 +3,7 @@ package com.elfec.cobranza.remote_data_access;
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class ReceiptConceptRDA {
 	public static List<ReceiptConcept> requestReceiptConcepts(String username, String password, String coopReceiptIds) throws ConnectException, SQLException
 	{
 		List<ReceiptConcept> receiptConcepts = new ArrayList<ReceiptConcept>();
-		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT  /*+CHOOSE*/  * FROM ERP_ELFEC.CBTES_CPTOS WHERE IDCBTE IN "+coopReceiptIds);
+		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
+		ResultSet rs = stmt.executeQuery("SELECT  /*+CHOOSE*/  * FROM ERP_ELFEC.CBTES_CPTOS WHERE IDCBTE IN "+coopReceiptIds);
 		while(rs.next())
 		{
 			receiptConcepts.add(new ReceiptConcept(rs.getInt("IDEMPRESA"), rs.getInt("IDSUCURSAL"), rs.getString("TIPO_CBTE"), 
@@ -38,6 +39,7 @@ public class ReceiptConceptRDA {
 					rs.getInt("LECTURA_ANTERIOR"), rs.getInt("LECTURA_ACTUAL"), rs.getString("DESCRIPCION"), rs.getString("IDCATEGORIA"), rs.getInt("IDCBTE")));
 		}
 		rs.close();
+		stmt.close();
 		return receiptConcepts;
 	}
 

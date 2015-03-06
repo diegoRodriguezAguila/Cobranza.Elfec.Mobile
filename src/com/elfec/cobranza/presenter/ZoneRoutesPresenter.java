@@ -22,6 +22,8 @@ import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
+import com.elfec.cobranza.model.events.OnImportFinished;
+import com.elfec.cobranza.model.exceptions.RouteWithNoReceiptException;
 import com.elfec.cobranza.model.interfaces.ImportCaller;
 import com.elfec.cobranza.model.interfaces.OnceRequiredDataImportCaller;
 import com.elfec.cobranza.presenter.views.IZoneRoutesView;
@@ -36,6 +38,7 @@ public class ZoneRoutesPresenter {
 	private String password;
 	private int cashdeskNumber;
 	private int zoneRemoteId;
+	private boolean importFinished, supplyStatusFinished, receiptConceptFinished, fineBonusFinished;
 
 	public ZoneRoutesPresenter(IZoneRoutesView view) {
 		this.view = view;
@@ -71,17 +74,21 @@ public class ZoneRoutesPresenter {
 				initializeDataImport(selectedRoutes);				
 				DataAccessResult<?> result = new DataAccessResult<Boolean>();
 				result = importAllOnceRequiredData(result);				
-				result = importRoutesData(result);		
-				OracleDatabaseConnector.disposeInstance();
-				boolean hasErrors = result.hasErrors();
-				if(!hasErrors)	
-				{
-					ZonesManager.setZoneRoutesLoaded(selectedRoutes);
-					loadZoneRoutes(zoneRemoteId);
-				}
-				view.hideWaiting();
-				if(!hasErrors)	
-					view.successfullyImportation();
+				importRoutesData(result, new OnImportFinished() {					
+					@Override
+					public void importCallback(DataAccessResult<?> result) {
+						OracleDatabaseConnector.disposeInstance();
+						boolean hasErrors = result.hasErrors();
+						if(!hasErrors)	
+						{
+							ZonesManager.setZoneRoutesLoaded(selectedRoutes);
+							loadZoneRoutes(zoneRemoteId);
+						}
+						view.hideWaiting();
+						if(!hasErrors)	
+							view.successfullyImportation();
+					}
+				});				
 			}
 		});
 		thread.start();
@@ -214,45 +221,121 @@ public class ZoneRoutesPresenter {
 	
 	/**
 	 * Importa toda la información de la ruta actual
-	 * @return
+	 * @param result
+	 * @param importCallback
 	 */
 	@SuppressWarnings("unchecked")
-	private DataAccessResult<?> importRoutesData(DataAccessResult<?> result) {
-		DataAccessResult<List<CoopReceipt>> receiptsResult = (DataAccessResult<List<CoopReceipt>>) importData(result, R.string.msg_downloading_coop_receipts, new ImportCaller() {			
+	private void importRoutesData(DataAccessResult<?> result, final OnImportFinished importCallback) {
+		DataAccessResult<List<CoopReceipt>> receiptsResult = (DataAccessResult<List<CoopReceipt>>) importData(result, R.string.msg_downloading_coop_receipts,
+		new ImportCaller() {			
 			@Override
 			public DataAccessResult<?> callImport() {
 				return CoopReceiptManager.importCoopReceipts(username, password, selectedRoutesString);
 			}
 		});
 		if(receiptsResult.getResult().size()==0)
-			receiptsResult.addError(new Exception("La(s) ruta(s) seleccionada(s) no tiene(n) ninguna factura disponible!"));//TODO crear propia excepcion
-		coopReceiptIdsString = ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDCBTE", new AttributePicker<CoopReceipt>(){
-			@Override
-			public String pickString(CoopReceipt object) {
-				return ""+object.getReceiptId();
-			}});
-		result = importData(receiptsResult, R.string.msg_downloading_supply_status, new ImportCaller() {
-			
-			@Override
-			public DataAccessResult<?> callImport() {
-				return SupplyStatusManager.importSupplyStatuses(username, password, coopReceiptIdsString);
-			}
-		});
-		result = importData(result, R.string.msg_downloading_receipt_concepts, new ImportCaller() {			
-			@Override
-			public DataAccessResult<?> callImport() {
-				return ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
-			}
-		});
-		result = importData(result, R.string.msg_downloading_fine_bonusess, new ImportCaller() {			
-			@Override
-			public DataAccessResult<?> callImport() {
-				return ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
-			}
-		});
-		return result;
+			receiptsResult.addError(new RouteWithNoReceiptException());
+		if(receiptsResult.hasErrors())
+		{
+			importCallback.importCallback(receiptsResult);
+		}
+		else
+		{
+			coopReceiptIdsString = ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDCBTE", new AttributePicker<CoopReceipt>(){
+				@Override
+				public String pickString(CoopReceipt object) {
+					return ""+object.getReceiptId();
+				}});
+			importFinished = supplyStatusFinished = receiptConceptFinished = fineBonusFinished = false;
+			OnImportFinished dataImportCallback = new OnImportFinished() {				
+				@Override
+				public synchronized void importCallback(DataAccessResult<?> result) {
+					if(result.hasErrors() && !importFinished)
+					{
+						importFinished = true;
+						OracleDatabaseConnector.disposeInstance();
+						view.showImportErrors(result.getErrors());
+						importCallback.importCallback(result);
+					}
+					if(supplyStatusFinished && receiptConceptFinished && fineBonusFinished && !result.hasErrors() && !importFinished)
+					{
+						importFinished = true;
+						view.addWaitingMessage(R.string.msg_download_finished, true);
+						importCallback.importCallback(result);
+					}
+				}
+			};
+			view.deleteWaitingMessage(R.string.msg_downloading_coop_receipts);
+			threadedImportSupplyStatuses(dataImportCallback);
+			threadedImportReceiptConcepts(dataImportCallback);
+			threadedImportFineBonuses(dataImportCallback);
+		}
 	}
-	
+
+	/**
+	 * Llama a la importación de SUMIN_ESTADOS en un hilo aparte
+	 * @param lastResult
+	 * @param importCallback
+	 */
+	private void threadedImportSupplyStatuses(final OnImportFinished importCallback) {
+		Thread thread = new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_supply_status, new ImportCaller() {		
+					@Override
+					public DataAccessResult<?> callImport() {
+						return SupplyStatusManager.importSupplyStatuses(username, password, coopReceiptIdsString);
+					}
+				});
+				supplyStatusFinished = true;
+				importCallback.importCallback(result);
+			}
+		});
+		thread.start();
+	}
+	/**
+	 * Llama a la importación de CBTES_CPTOS en un hilo aparte
+	 * @param lastResult
+	 * @param importCallback
+	 */
+	private void threadedImportReceiptConcepts(final OnImportFinished importCallback) {
+		Thread thread = new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_receipt_concepts, new ImportCaller() {			
+					@Override
+					public DataAccessResult<?> callImport() {
+						return ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
+						}
+				});
+				receiptConceptFinished = true;
+				importCallback.importCallback(result);
+			}
+		});
+		thread.start();
+	}
+	/**
+	 * Llama a la importación de BONIF_MULTAS en un hilo aparte
+	 * @param lastResult
+	 * @param importCallback
+	 */
+	private void threadedImportFineBonuses(final OnImportFinished importCallback) {
+		Thread thread = new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_fine_bonusess, new ImportCaller() {			
+					@Override
+					public DataAccessResult<?> callImport() {
+						return ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
+					}
+				});	
+				fineBonusFinished = true;
+				importCallback.importCallback(result);
+			}
+		});
+		thread.start();
+	}
+
 	/**
 	 * Llama a los métodos para realizar una importación y también actualiza el mensaje de espera 
 	 * y muestra los errores en caso de haber sucedido
@@ -261,7 +344,7 @@ public class ZoneRoutesPresenter {
 	 * @param caller
 	 * @return
 	 */
-	private DataAccessResult<?> importData(DataAccessResult<?> lastResult, int loadingMessageResId, ImportCaller caller )
+	private DataAccessResult<?> importData(DataAccessResult<?> lastResult, int loadingMessageResId, ImportCaller caller)
 	{
 		boolean alreadyImported = false;
 		boolean isOnceReqData = (caller instanceof OnceRequiredDataImportCaller);
@@ -269,7 +352,7 @@ public class ZoneRoutesPresenter {
 			alreadyImported = ((OnceRequiredDataImportCaller)caller).isAlreadyImported();
 		if(!lastResult.hasErrors() && !alreadyImported)
 		{
-			view.updateWaitingMessage(loadingMessageResId);
+			view.addWaitingMessage(loadingMessageResId, true);
 			DataAccessResult<?> result = caller.callImport();
 			view.showImportErrors(result.getErrors());
 			if(isOnceReqData)
@@ -277,5 +360,20 @@ public class ZoneRoutesPresenter {
 			return result;
 		}
 		return lastResult;
+	}
+	
+	/**
+	 * Llama a los métodos para realizar una importación y también actualiza el mensaje de espera
+	 * @param lastResult
+	 * @param loadingMessageResId
+	 * @param caller
+	 * @return
+	 */
+	private DataAccessResult<?> threadImportData(int loadingMessageResId, ImportCaller caller)
+	{
+		view.addWaitingMessage(loadingMessageResId, false);
+		DataAccessResult<?> result = caller.callImport();
+		view.deleteWaitingMessage(loadingMessageResId);
+		return result;
 	}
 }

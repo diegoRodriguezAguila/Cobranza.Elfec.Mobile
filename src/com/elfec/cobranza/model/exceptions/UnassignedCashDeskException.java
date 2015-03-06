@@ -19,6 +19,6 @@ public class UnassignedCashDeskException extends Exception {
 	@Override
 	public String getMessage()
 	{
-		return "El usuario <b>"+username+"</b> no tiene asignada una caja o el perfil de cobranza <b>offline</b>.";
+		return "El usuario <b>"+username+"</b> no tiene asignada una caja o el perfil de cobranza <b>offline</b>";
 	}
 }

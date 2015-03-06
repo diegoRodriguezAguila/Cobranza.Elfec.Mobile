@@ -62,5 +62,5 @@
     <string name="msg_downloading_supply_status">Cargando estados suministros (SUMIN_ESTADOS)&#8230;</string>
     <string name="msg_downloading_receipt_concepts">Cargando conceptos de comprobantes (CBTES_CPTOS)&#8230;</string>
     <string name="msg_downloading_fine_bonusess">Cargando bonificaciones de multas (BONIF_MULTAS y BONIF_MULTAS_IT)&#8230;</string>
-
+	<string name="msg_download_finished">Finalizando la carga de datos&#8230;</string>
 </resources>

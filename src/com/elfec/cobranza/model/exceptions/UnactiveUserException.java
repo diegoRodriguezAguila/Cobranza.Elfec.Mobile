@@ -17,7 +17,7 @@ public class UnactiveUserException extends Exception {
 	@Override
 	public String getMessage()
 	{
-		return "El usuario <b>"+username+"</b> no tiene permiso para acceder a este sistema.";
+		return "El usuario <b>"+username+"</b> no tiene permiso para acceder a este sistema";
 	}
 
 }

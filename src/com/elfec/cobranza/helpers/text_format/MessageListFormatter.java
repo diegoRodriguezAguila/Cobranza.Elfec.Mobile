@@ -10,7 +10,7 @@ import android.text.Spanned;
  * @author drodriguez
  *
  */
-public class ErrorListFormatter {
+public class MessageListFormatter {
 
 	/**
 	 * Formatea una lista de errores una lista de errores en html
@@ -19,34 +19,32 @@ public class ErrorListFormatter {
 	 */
 	public static Spanned fotmatHTMLFromErrors(List<Exception> errors)
 	{
-		StringBuilder str = new StringBuilder("<font>");
+		StringBuilder str = new StringBuilder();
 		int size = errors.size();
 		if(size==1)
-			return Html.fromHtml(str.append(errors.get(0).getMessage()).append("</font>").toString());
+			return Html.fromHtml(str.append(errors.get(0).getMessage()).toString());
 		for (int i = 0; i < size; i++) {
 			str.append("● ").append(errors.get(i).getMessage());
 			str.append((i<size-1?"<br/>":""));
 		}
-		str.append("</b></font>");
 		return Html.fromHtml(str.toString());
 	}
 	
 	/**
-	 * Formatea una lista de errores una lista de errores (en cadena) en html
-	 * @param errors
+	 * Formatea una lista de mensajes una lista (en cadena) en html
+	 * @param messages
 	 * @return
 	 */
-	public static Spanned fotmatHTMLFromErrorStrings(List<String> errors)
+	public static Spanned fotmatHTMLFromStringList(List<String> messages)
 	{
-		StringBuilder str = new StringBuilder("<font>");
-		int size = errors.size();
+		StringBuilder str = new StringBuilder();
+		int size = messages.size();
 		if(size==1)
-			return Html.fromHtml(str.append(errors.get(0)).append("</font>").toString());
+			return Html.fromHtml(str.append(messages.get(0)).toString());
 		for (int i = 0; i < size; i++) {
-			str.append("● ").append(errors.get(i));
+			str.append("● ").append(messages.get(i));
 			str.append((i<size-1?"<br/>":""));
 		}
-		str.append("</b></font>");
 		return Html.fromHtml(str.toString());
 	}
 }

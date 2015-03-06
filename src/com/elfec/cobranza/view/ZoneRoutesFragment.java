@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
-import com.elfec.cobranza.helpers.text_format.ErrorListFormatter;
+import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.presenter.ZoneRoutesPresenter;
 import com.elfec.cobranza.presenter.views.IZoneRoutesView;
@@ -57,6 +57,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 	private Button btnDownloadRoutes;
 	private ProgressDialogPro waitingDialog;
 	private Handler mHandler;
+	private List<String> waitingMessages;
 	
 	private long lastClickTime = 0;
 	
@@ -83,6 +84,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		this.mHandler = new Handler();
 		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
 				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
+		waitingMessages = new ArrayList<String>();
 	}
 
 	@Override
@@ -206,16 +208,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		});
 	}
 
-	@Override
-	public void updateWaitingMessage(final int messageResource) {
-		getActivity().runOnUiThread(new Runnable() {			
-			@Override
-			public void run() {
-				if(waitingDialog!=null)
-					waitingDialog.setMessage(getResources().getString(messageResource));
-			}
-		});
-	}
+	
 
 	@Override
 	public void hideWaiting() {
@@ -238,7 +231,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 				{
 					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
 					builder.setTitle(R.string.title_download_errors)
-					.setMessage(ErrorListFormatter.fotmatHTMLFromErrors(errors))
+					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
 					.setPositiveButton(R.string.btn_ok, null)
 					.show();
 				}
@@ -255,6 +248,36 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 				setButtonSelectAllName();
 				Crouton.clearCroutonsForActivity(getActivity());
 				Crouton.makeText(getActivity(), R.string.msg_routes_downloaded_successfully, croutonStyle).show();
+			}
+		});
+	}
+
+	@Override
+	public void addWaitingMessage(final int messageResource, final boolean replaceAll) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(waitingDialog!=null)
+				{
+					if(replaceAll)
+						waitingMessages.clear();
+					waitingMessages.add(getResources().getString(messageResource));
+					waitingDialog.setMessage(MessageListFormatter.fotmatHTMLFromStringList(waitingMessages));
+				}
+			}
+		});
+	}
+
+	@Override
+	public void deleteWaitingMessage(final int messageResource) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(waitingDialog!=null)
+				{
+					waitingMessages.remove(getResources().getString(messageResource));
+					waitingDialog.setMessage(MessageListFormatter.fotmatHTMLFromStringList(waitingMessages));
+				}
 			}
 		});
 	}

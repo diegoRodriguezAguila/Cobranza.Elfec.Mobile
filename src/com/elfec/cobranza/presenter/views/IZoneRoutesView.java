@@ -22,9 +22,15 @@ public interface IZoneRoutesView {
 	public void showWaiting();
 	/**
 	 * Actualiza el mensaje de espera
-	 * @param message
+	 * @param messageResource
+	 * @param replaceAll si es que debe reemplazar el o los mensajes actuales por ese
 	 */
-	public void updateWaitingMessage(int messageResource);
+	public void addWaitingMessage(int messageResource, boolean replaceAll);
+	/**
+	 * Indica dejar de mostrar un mensaje específico de espera
+	 * @param messageResource
+	 */
+	public void deleteWaitingMessage(int messageResource);
 	/**
 	 * Oculta el mensaje de espera
 	 */

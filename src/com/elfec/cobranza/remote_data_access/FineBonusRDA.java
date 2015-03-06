@@ -3,6 +3,7 @@ package com.elfec.cobranza.remote_data_access;
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class FineBonusRDA {
 	public static List<FineBonus> requestFineBonuses(String username, String password, String receiptIds) throws ConnectException, SQLException
 	{
 		List<FineBonus> fineBonuses = new ArrayList<FineBonus>();
-		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT /*+CHOOSE*/  A.IDCBTE, A.IDCONCEPTO, "
+		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
+		ResultSet rs = stmt.executeQuery("SELECT /*+CHOOSE*/  A.IDCBTE, A.IDCONCEPTO, "
 						+ "trim(A.DESCRIPCION)||' '|| substr (bm.descripcion_legal, 1,instr(bm.descripcion_legal,'/')+2) descripcion, "
 						+ "A.IMPORTE, B.IMPRESION_AREA "
 						+ "FROM  (select * from erp_elfec.cbtes_CPTOS where  IDCBTE in "+receiptIds
@@ -48,6 +49,7 @@ public class FineBonusRDA {
 					rs.getString("DESCRIPCION"), rs.getBigDecimal("IMPORTE"), rs.getShort("IMPRESION_AREA")));
 		}
 		rs.close();
+		stmt.close();
 		return fineBonuses;
 	}
 }

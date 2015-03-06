@@ -18,7 +18,7 @@ import android.widget.EditText;
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
-import com.elfec.cobranza.helpers.text_format.ErrorListFormatter;
+import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
@@ -145,14 +145,14 @@ public class Login extends Activity implements ILoginView {
 	@Override
 	public void setUsernameFieldErrors(List<String> errors) {
 		if(errors.size()>0)
-			txtUsername.setError(ErrorListFormatter.fotmatHTMLFromErrorStrings(errors));
+			txtUsername.setError(MessageListFormatter.fotmatHTMLFromStringList(errors));
 		else txtUsername.setError(null);
 	}
 
 	@Override
 	public void setPasswordFieldErrors(List<String> errors) {
 		if(errors.size()>0)
-			txtPassword.setError(ErrorListFormatter.fotmatHTMLFromErrorStrings(errors));
+			txtPassword.setError(MessageListFormatter.fotmatHTMLFromStringList(errors));
 		else txtPassword.setError(null);
 	}
 
@@ -209,7 +209,7 @@ public class Login extends Activity implements ILoginView {
 				{
 					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(Login.this);
 					builder.setTitle(R.string.title_login_errors)
-					.setMessage(ErrorListFormatter.fotmatHTMLFromErrors(validationErrors))
+					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(validationErrors))
 					.setPositiveButton(R.string.btn_ok, null)
 					.show();
 				}

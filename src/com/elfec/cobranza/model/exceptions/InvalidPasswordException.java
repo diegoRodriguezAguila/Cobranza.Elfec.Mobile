@@ -14,6 +14,6 @@ public class InvalidPasswordException extends Exception {
 	@Override
 	public String getMessage()
 	{
-		return "Usuario o password incorrecto, por favor revise los datos e intente nuevamente.";
+		return "Usuario o password incorrecto, por favor revise los datos e intente nuevamente";
 	}
 }

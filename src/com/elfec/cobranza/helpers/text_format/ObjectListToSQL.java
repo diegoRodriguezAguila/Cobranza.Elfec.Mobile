@@ -47,7 +47,7 @@ public class ObjectListToSQL {
 			endLimit = ((i+1)*IN_LIMIT);
 			endLimit = Math.min(endLimit, totalSize);
 			query.append(convertToSQL(objectList.subList(startLimit, endLimit), picker));
-			if(i<count-1)//no es el ultimo
+			if(i<count)//no es el ultimo
 			{
 				query.append(" OR ").append(columnName).append(" IN ");
 			}
