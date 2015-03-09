@@ -20,4 +20,20 @@ public class DataFlowPresenter {
 		this.view.setCurrentUser(SessionManager.getLoggedInUsername());
 		this.view.setCashdeskNumber(SessionManager.getLoggedCashdeskNumber());
 	}
+	
+	/**
+	 * Llama a los metodos de control de sesion para finalizarla
+	 */
+	public void closeCurrentSession()
+	{
+		Thread thread = new Thread(new Runnable() {		
+			@Override
+			public void run() {
+				String username = SessionManager.getLoggedInUsername();
+				SessionManager.finishSession();
+				view.notifySessionClosed(username);
+			}
+		});
+		thread.start();
+	}
 }

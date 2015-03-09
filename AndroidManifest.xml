@@ -45,8 +45,13 @@
             android:name=".view.ZoneListActivity"
             android:label="@string/title_zone_list" >
         </activity>
-        <activity android:name=".view.ZoneRoutesActivity"
-            android:label="@string/title_zone_detail">
+        <activity
+            android:name=".view.ZoneRoutesActivity"
+            android:label="@string/title_zone_detail" >
+        </activity>
+        <activity
+            android:name=".view.MainMenu"
+            android:label="@string/title_activity_main_menu" >
         </activity>
     </application>
 

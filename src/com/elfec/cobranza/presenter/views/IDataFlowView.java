@@ -12,4 +12,9 @@ public interface IDataFlowView {
 	 * @param cashdeskNumber
 	 */
 	public void setCashdeskNumber(int cashdeskNumber);
+	/**
+	 * Notifica al usuario que se cerró la sesión
+	 * @param username
+	 */
+	public void notifySessionClosed(String username);
 }

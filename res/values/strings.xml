@@ -16,7 +16,7 @@
 
     <!-- Data Flow -->
     <string name="title_activity_data_flow">Inicio</string>
-    <string name="btn_main_menu">Menu principal</string>
+    <string name="btn_main_menu">Menú principal</string>
     <string name="lbl_main_menu_info">Presione menu principal para ingresar a las opciones de cobranza</string>
     <string name="btn_download_data">Cargar datos</string>
     <string name="btn_upload_data">Descargar datos</string>
@@ -36,7 +36,7 @@
     <string name="sample_zone_desc">M - Mizque</string>
     <string name="sample_route_id">84009</string>
     <string name="sample_route_desc">84&#8211;009   Totora Fase II</string>
-    
+
     <!-- Zone and Routes -->
     <string name="title_zone_list">Zonas</string>
     <string name="title_zone_routes">Zonas y rutas</string>
@@ -49,18 +49,25 @@
     <string name="title_waiting">CARGANDO DATOS</string>
     <string name="title_download_errors">ERROR EN LA CARGA DE DATOS</string>
     <string name="msg_waiting">Inicializando la carga de datos&#8230;</string>
-    
     <string name="msg_downloading_supply_category_types">Cargando tipos de categorias de suministros (TIPOS_CATEG_SUM)&#8230;</string>
     <string name="msg_downloading_cpt_calculation_bases">Cargando conceptos de bases de calculo (GBASES_CALC_CPTOS)&#8230;</string>
     <string name="msg_downloading_prnt_calculation_bases">Cargando impresión de bases de calculo (GBASES_CALC_IMP)&#8230;</string>
     <string name="msg_downloading_categories">Cargando categorias (CATEGORIAS)&#8230;</string>
-    <string name="msg_downloading_concepts">Cargando conceptos (CONCEPTOS)&#8230;</string>    
+    <string name="msg_downloading_concepts">Cargando conceptos (CONCEPTOS)&#8230;</string>
     <string name="msg_downloading_bank_accounts">Cargando cuentas de banco (BAN_CTAS)&#8230;</string>
     <string name="msg_downloading_period_bank_accounts">Cargando periodos de cuentas de banco (BAN_CTAS_PER)&#8230;</string>
-    
     <string name="msg_downloading_coop_receipts">Cargando comprobantes (CBTES_COOP)&#8230;</string>
     <string name="msg_downloading_supply_status">Cargando estados suministros (SUMIN_ESTADOS)&#8230;</string>
     <string name="msg_downloading_receipt_concepts">Cargando conceptos de comprobantes (CBTES_CPTOS)&#8230;</string>
     <string name="msg_downloading_fine_bonusess">Cargando bonificaciones de multas (BONIF_MULTAS y BONIF_MULTAS_IT)&#8230;</string>
-	<string name="msg_download_finished">Finalizando la carga de datos&#8230;</string>
+    <string name="msg_download_finished">Finalizando la carga de datos&#8230;</string>
+    
+    <!-- Main Menu -->
+    <string name="title_activity_main_menu">Menú principal</string>
+    <string name="btn_collection">Cobranza</string>
+    <string name="btn_details_report">Detalle de cobranzas</string>
+    <string name="btn_annuleds_report">Reporte de anulados</string>
+    <string name="btn_daily_summary">Resumen diario</string>
+    <string name="btn_cashdesk_summary">Resumen de caja</string>
+
 </resources>

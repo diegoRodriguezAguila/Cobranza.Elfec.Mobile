@@ -12,6 +12,7 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
@@ -47,6 +48,7 @@ public class DataFlow extends Activity implements IDataFlowView {
 	
 	@Override
 	public void onBackPressed() {
+		presenter.closeCurrentSession();
 	    finish();//go back to the previous Activity
 	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 	}
@@ -68,6 +70,16 @@ public class DataFlow extends Activity implements IDataFlowView {
         lastClickTime = SystemClock.elapsedRealtime();
 	}
 	
+	public void btnMainMenuClick(View view)
+	{
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+			Intent i = new Intent(DataFlow.this, MainMenu.class);
+			startActivity(i);
+			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+		}
+        lastClickTime = SystemClock.elapsedRealtime();
+	}
+	
 	//#region Interface Methods
 
 	@Override
@@ -78,6 +90,16 @@ public class DataFlow extends Activity implements IDataFlowView {
 	@Override
 	public void setCashdeskNumber(int cashdeskNumber) {
 		((TextView) findViewById(R.id.txt_cashdesk_number)).setText(""+cashdeskNumber);
+	}
+
+	@Override
+	public void notifySessionClosed(final String username) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				Toast.makeText(DataFlow.this, "Se finalizó la sesión de "+username+"!", Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 	
 	//#endregion

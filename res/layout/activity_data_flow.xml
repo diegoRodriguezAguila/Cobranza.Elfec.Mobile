@@ -71,6 +71,7 @@
         android:textSize="22sp"
         android:textAppearance="@style/TextAppearance.CustomFont.Light"
         android:textColor="@android:color/white"
+        android:onClick="btnMainMenuClick"
         android:text="@string/btn_main_menu" />
     <TextView
         android:id="@+id/lbl_main_menu_info"

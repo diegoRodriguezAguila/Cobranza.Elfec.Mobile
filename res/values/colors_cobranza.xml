@@ -8,4 +8,6 @@
     <color name="background_soft_gray">#E7E8EA</color>
     <color name="text_gray_color">#757575</color>
     <color name="text_blue_color">#133D5D</color>
+    <color name="dark_gray">#4C5656</color>
+    <color name="btn_pressed_gray">#D5D5D5</color>
 </resources>

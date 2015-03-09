@@ -8,5 +8,5 @@
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
     -->
     <item name="activity_zone_list" type="layout">@layout/activity_zone_twopane</item>
-
+	<item name="square_button_text_appererance" type="style">@style/TextAppearance.CustomFont.Light</item>
 </resources>

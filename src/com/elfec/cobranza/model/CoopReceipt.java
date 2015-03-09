@@ -17,7 +17,7 @@ public class CoopReceipt extends Model {
 	/**
 	 * IDCBTE Identificador unico de comprobantes
 	 */
-	@Column(name = "ReceiptId", notNull=true)
+	@Column(name = "ReceiptId", notNull=true, index=true)
 	private int receiptId;
 	/**
 	 * IDSUMINISTRO
@@ -103,7 +103,7 @@ public class CoopReceipt extends Model {
 	/**
 	 * IDRUTA en Oracle
 	 */
-	@Column(name = "RouteId")
+	@Column(name = "RouteId", index=true)
 	private int routeId;
 	/**
 	 * NOMBRE en Oracle
@@ -245,6 +245,11 @@ public class CoopReceipt extends Model {
 		this.controlCode = controlCode;
 	}
 
+	/**
+	 * Encuentra todas las facturas de la ruta indicada
+	 * @param routeId
+	 * @return
+	 */
 	public static List<CoopReceipt> findRouteReceipts(int routeId)
 	{
 		return new Select().from(CoopReceipt.class).where("RouteId=?",routeId).execute();
