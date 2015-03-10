@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cobranza="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="@dimen/activity_vertical_top_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="PxUsage" >
+
+    <TextView
+        android:id="@+id/lbl_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:text="@string/lbl_search"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.CustomFont.Light"
+        android:textSize="22sp" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/lbl_search"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        android:background="@color/cobranza_color" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/nus_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/nus_mini_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/cobranza_color"
+                android:contentDescription="@string/desc_nus"
+                android:padding="8dp"
+                android:src="@drawable/nus_mini" />
+
+            <EditText
+                android:id="@+id/txt_nus"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_nus"
+                android:inputType="number"
+                android:maxLength="10"
+                android:textAppearance="@style/TextAppearance.CustomFont.EditText" >
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/account_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/account_mini_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/cobranza_color"
+                android:contentDescription="@string/desc_account_number"
+                android:padding="8dp"
+                android:src="@drawable/account_mini" />
+
+            <com.elfec.cobranza.view.controls.MaskedEditText
+                android:id="@+id/txt_accountNumber"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_account_number"
+                android:inputType="number"
+                android:textAppearance="@style/TextAppearance.CustomFont.EditText"
+                cobranza:mask="@string/mask_account_number" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableEnd="@drawable/search"
+            android:drawableRight="@drawable/search"
+            android:onClick="btnSearchSupplyClick"
+            android:text="@string/btn_search" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -3,6 +3,7 @@ package com.elfec.cobranza.presenter;
 import java.util.List;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.business_logic.AnnulmentReasonManager;
 import com.elfec.cobranza.business_logic.BankAccountManager;
 import com.elfec.cobranza.business_logic.CalculationBaseManager;
 import com.elfec.cobranza.business_logic.CategoryManager;
@@ -214,6 +215,21 @@ public class ZoneRoutesPresenter {
 					PreferencesManager.instance().setPeriodBankAccountsImported(successfullyImport);
 				}
 			});
+			result = importData(result, R.string.msg_downloading_annulment_reasons, new OnceRequiredDataImportCaller() {			
+				@Override
+				public DataAccessResult<?> callImport() {
+					return AnnulmentReasonManager.importBankAccounts(username, password);
+				}			
+				@Override
+				public boolean isAlreadyImported() {
+					return PreferencesManager.instance().isAnnulmentReasonsImported();
+				}
+				@Override
+				public void setImportationResult(boolean successfullyImport) {
+					PreferencesManager.instance().setAnnulmentReasonsImported(successfullyImport);
+				}
+			});
+
 			PreferencesManager.instance().setAllOnceReqDataImported(!result.hasErrors());
 		}
 		return result;

@@ -7,12 +7,14 @@ import org.joda.time.DateTime;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 /**
  * Almacena los CBTES_COOP
  * @author drodriguez
  *
  */
+@Table(name = "CoopReceipts")
 public class CoopReceipt extends Model {
 	/**
 	 * IDCBTE Identificador unico de comprobantes

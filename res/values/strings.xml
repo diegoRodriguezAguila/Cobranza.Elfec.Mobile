@@ -56,12 +56,13 @@
     <string name="msg_downloading_concepts">Cargando conceptos (CONCEPTOS)&#8230;</string>
     <string name="msg_downloading_bank_accounts">Cargando cuentas de banco (BAN_CTAS)&#8230;</string>
     <string name="msg_downloading_period_bank_accounts">Cargando periodos de cuentas de banco (BAN_CTAS_PER)&#8230;</string>
+    <string name="msg_downloading_annulment_reasons">Cargando motivos de anulación (MOTIVOS_ANULACION)&#8230;</string>
     <string name="msg_downloading_coop_receipts">Cargando comprobantes (CBTES_COOP)&#8230;</string>
     <string name="msg_downloading_supply_status">Cargando estados suministros (SUMIN_ESTADOS)&#8230;</string>
     <string name="msg_downloading_receipt_concepts">Cargando conceptos de comprobantes (CBTES_CPTOS)&#8230;</string>
     <string name="msg_downloading_fine_bonusess">Cargando bonificaciones de multas (BONIF_MULTAS y BONIF_MULTAS_IT)&#8230;</string>
     <string name="msg_download_finished">Finalizando la carga de datos&#8230;</string>
-    
+
     <!-- Main Menu -->
     <string name="title_activity_main_menu">Menú principal</string>
     <string name="btn_collection">Cobranza</string>
@@ -69,5 +70,16 @@
     <string name="btn_annuleds_report">Reporte de anulados</string>
     <string name="btn_daily_summary">Resumen diario</string>
     <string name="btn_cashdesk_summary">Resumen de caja</string>
-
+    
+    <!-- Collection -->
+    <string name="title_activity_collection">Cobranza</string>
+    
+    	<!-- Search -->
+    	<string name="lbl_search">Búsqueda</string>
+    	<string name="hint_nus">261724</string>
+    	<string name="desc_nus">NUS del suministro</string>
+    	<string name="hint_account_number">34&#8211;453&#8211;321&#8211;65</string>
+    	<string name="desc_account_number">Número de cuenta del suministro</string>
+    	<string name="mask_account_number">##-###-###-##</string>
+		<string name="btn_search">Buscar</string>
 </resources>

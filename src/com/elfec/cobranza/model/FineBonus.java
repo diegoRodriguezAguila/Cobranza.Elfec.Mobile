@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 
 /**
  * Almacena los BONIF_MULTAS y BONIF_MULTAS_IT
  * @author drodriguez
  *
  */
+@Table(name = "FineBonuses")
 public class FineBonus extends Model {
 	/**
 	 * IDCBTE Identificador unico de comprobantes

@@ -15,6 +15,8 @@ public class PreferencesManager {
 
 	private final String LOGGED_USERNAME = "loggedUsername";
 	private final String LOGGED_CASHDESK_NUMBER = "loggedCashdeskNumber";
+	private final String LOGGED_CASHDESK_DESC = "loggedCashdeskDescription";
+	//ONCE IMPORT DATA
 	private final String ALL_ONCE_REQUIRED_DATA_IMPORTED = "allOnceReqDataImported";
 	private final String SUPPLY_CATEGORY_TYPES_IMPORTED = "supplyCategoryTypesImported";
 	private final String CPT_CALCULATION_BASES_IMPORTED = "conceptCalculationBasesImported";
@@ -23,6 +25,7 @@ public class PreferencesManager {
 	private final String CONCEPTS_IMPORTED = "conceptsImported";
 	private final String BANK_ACCOUNTS_IMPORTED = "bankAccountsImported";
 	private final String PERIOD_BANK_ACCOUNTS_IMPORTED = "periodBankAccountsImported";
+	private final String ANNULMENT_REASONS_IMPORTED = "annulmentReasonsImported";
 	
 	private SharedPreferences preferences;
 	
@@ -71,8 +74,7 @@ public class PreferencesManager {
 	{
 		preferences.edit().putString(LOGGED_USERNAME, loggedUsername).commit();
 		return this;
-	}
-	
+	}	
 	
 	/**
 	 * Obtiene el numero de caja del usuario logeado actual
@@ -84,12 +86,31 @@ public class PreferencesManager {
 	}
 	
 	/**
-	 * Asigna el numero de caja del usuario logeado actual, sobreescribe cualquier usuario que haya sido logeado antes
+	 * Asigna el numero de caja del usuario logeado actual
 	 * @return la instancia actual de PreferencesManager
 	 */
 	public PreferencesManager setLoggedCashdeskNumber(int loggedCashdeskNumber)
 	{
 		preferences.edit().putInt(LOGGED_CASHDESK_NUMBER, loggedCashdeskNumber).commit();
+		return this;
+	}	
+
+	/**
+	 * Obtiene la descripción de la caja del usuario logeado actual
+	 * @return -1 si es que ninguno se ha logeado, o si no se asignó el valor
+	 */
+	public String getLoggedCashdeskDesc()
+	{
+		return preferences.getString(LOGGED_CASHDESK_DESC, null);
+	}
+	
+	/**
+	 * Asigna la descripción de la caja  del usuario logeado actual
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setLoggedCashdeskDesc(String loggedCashdeskNumber)
+	{
+		preferences.edit().putString(LOGGED_CASHDESK_DESC, loggedCashdeskNumber).commit();
 		return this;
 	}
 	
@@ -234,6 +255,24 @@ public class PreferencesManager {
 	public PreferencesManager setPeriodBankAccountsImported(boolean isImported)
 	{
 		preferences.edit().putBoolean(PERIOD_BANK_ACCOUNTS_IMPORTED, isImported).commit();
+		return this;
+	}
+	
+	/**
+	 * Indica si los MOTIVOS_ANULACION han sido importados
+	 * @return true si es que ya se importó
+	 */
+	public boolean isAnnulmentReasonsImported()
+	{
+		return preferences.getBoolean(ANNULMENT_REASONS_IMPORTED, false);
+	}	
+	/**
+	 * Asigna si los MOTIVOS_ANULACION han sido importados
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setAnnulmentReasonsImported(boolean isImported)
+	{
+		preferences.edit().putBoolean(ANNULMENT_REASONS_IMPORTED, isImported).commit();
 		return this;
 	}
 	

@@ -5,5 +5,10 @@
         <attr name="buttonIcon" format="string" localization="suggested" />
         <attr name="buttonBackground" format="reference" localization="suggested" />
     </declare-styleable>
+    
+    <declare-styleable name="MaskedEditText">
+		<attr name="mask" format="string" />
+		<attr name="char_representation" format="string" />
+	</declare-styleable>
 </resources>
 

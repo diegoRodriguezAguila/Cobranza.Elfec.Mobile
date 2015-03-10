@@ -4,11 +4,13 @@ import java.math.BigDecimal;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 /**
  * Almacena los CBTES_CPTOS
  * @author drodriguez
  *
  */
+@Table(name = "ReceiptConcepts")
 public class ReceiptConcept extends Model{
 	/**
 	 * IDEMPRESA en Oracle

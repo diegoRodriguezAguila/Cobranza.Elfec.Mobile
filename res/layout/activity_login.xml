@@ -47,7 +47,7 @@
         android:src="@drawable/user" />
     <EditText
         android:id="@+id/txt_username"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:maxLength="20"
@@ -85,7 +85,7 @@
     
     <EditText
         android:id="@+id/txt_password"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:maxLength="20"

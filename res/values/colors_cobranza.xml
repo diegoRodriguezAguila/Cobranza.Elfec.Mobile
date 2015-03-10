@@ -10,4 +10,5 @@
     <color name="text_blue_color">#133D5D</color>
     <color name="dark_gray">#4C5656</color>
     <color name="btn_pressed_gray">#D5D5D5</color>
+    <color name="gray_contrast_color">#3C4646</color>
 </resources>
