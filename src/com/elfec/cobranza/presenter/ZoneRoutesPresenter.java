@@ -12,6 +12,7 @@ import com.elfec.cobranza.business_logic.CoopReceiptManager;
 import com.elfec.cobranza.business_logic.ReceiptConceptManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.SupplyCategoryTypeManager;
+import com.elfec.cobranza.business_logic.SupplyManager;
 import com.elfec.cobranza.business_logic.SupplyStatusManager;
 import com.elfec.cobranza.business_logic.ZonesManager;
 import com.elfec.cobranza.helpers.PreferencesManager;
@@ -35,11 +36,13 @@ public class ZoneRoutesPresenter {
 	private IZoneRoutesView view;
 	private String selectedRoutesString;
 	private String coopReceiptIdsString;
+	private String supplyIdsString;
 	private String username;
 	private String password;
 	private int cashdeskNumber;
 	private int zoneRemoteId;
-	private boolean importFinished, supplyStatusFinished, receiptConceptFinished, fineBonusFinished;
+	private boolean importFinished, supplyFinished, supplyStatusFinished, 
+					receiptConceptFinished, fineBonusFinished;
 
 	public ZoneRoutesPresenter(IZoneRoutesView view) {
 		this.view = view;
@@ -262,7 +265,12 @@ public class ZoneRoutesPresenter {
 				public String pickString(CoopReceipt object) {
 					return ""+object.getReceiptId();
 				}});
-			importFinished = supplyStatusFinished = receiptConceptFinished = fineBonusFinished = false;
+			supplyIdsString =  ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDSUMINISTRO", new AttributePicker<CoopReceipt>(){
+				@Override
+				public String pickString(CoopReceipt object) {
+					return ""+object.getSupplyId();
+				}});
+			importFinished = supplyFinished = supplyStatusFinished = receiptConceptFinished = fineBonusFinished = false;
 			OnImportFinished dataImportCallback = new OnImportFinished() {				
 				@Override
 				public synchronized void importCallback(DataAccessResult<?> result) {
@@ -273,7 +281,8 @@ public class ZoneRoutesPresenter {
 						view.showImportErrors(result.getErrors());
 						importCallback.importCallback(result);
 					}
-					if(supplyStatusFinished && receiptConceptFinished && fineBonusFinished && !result.hasErrors() && !importFinished)
+					if(supplyFinished && supplyStatusFinished && receiptConceptFinished && 
+							fineBonusFinished && !result.hasErrors() && !importFinished)
 					{
 						importFinished = true;
 						view.addWaitingMessage(R.string.msg_download_finished, true);
@@ -282,12 +291,34 @@ public class ZoneRoutesPresenter {
 				}
 			};
 			view.deleteWaitingMessage(R.string.msg_downloading_coop_receipts);
+			threadedImportSupplies(dataImportCallback);
 			threadedImportSupplyStatuses(dataImportCallback);
 			threadedImportReceiptConcepts(dataImportCallback);
 			threadedImportFineBonuses(dataImportCallback);
 		}
 	}
 
+	/**
+	 * Llama a la importación de SUMINISTROS en un hilo aparte
+	 * @param lastResult
+	 * @param importCallback
+	 */
+	private void threadedImportSupplies(final OnImportFinished importCallback) {
+		Thread thread = new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_supplies, new ImportCaller() {		
+					@Override
+					public DataAccessResult<?> callImport() {
+						return SupplyManager.importSupplies(username, password, supplyIdsString);
+					}
+				});
+				supplyStatusFinished = true;
+				importCallback.importCallback(result);
+			}
+		});
+		thread.start();
+	}
 	/**
 	 * Llama a la importación de SUMIN_ESTADOS en un hilo aparte
 	 * @param lastResult

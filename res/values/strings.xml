@@ -48,6 +48,7 @@
     <string name="msg_downloading_period_bank_accounts">Cargando periodos de cuentas de banco (BAN_CTAS_PER)&#8230;</string>
     <string name="msg_downloading_annulment_reasons">Cargando motivos de anulación (MOTIVOS_ANULACION)&#8230;</string>
     <string name="msg_downloading_coop_receipts">Cargando comprobantes (CBTES_COOP)&#8230;</string>
+     <string name="msg_downloading_supplies">Cargando suministros (SUMINISTROS)&#8230;</string>
     <string name="msg_downloading_supply_status">Cargando estados suministros (SUMIN_ESTADOS)&#8230;</string>
     <string name="msg_downloading_receipt_concepts">Cargando conceptos de comprobantes (CBTES_CPTOS)&#8230;</string>
     <string name="msg_downloading_fine_bonusess">Cargando bonificaciones de multas (BONIF_MULTAS y BONIF_MULTAS_IT)&#8230;</string>
@@ -72,6 +73,7 @@
     	<string name="desc_account_number">Número de cuenta del suministro</string>
     	<string name="mask_account_number">##-###-###-##</string>
 		<string name="btn_search">Buscar</string>
+		<string name="msg_atleast_one_filed">Debe proporcionar al menos un término de búsqueda!</string>
 		
 		<!-- Payment Collection -->
 		<string name="lbl_payment_collection">Cobranza</string>

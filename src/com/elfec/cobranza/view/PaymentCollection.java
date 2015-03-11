@@ -8,12 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.view.adapters.CollectionPagerAdapter;
 import com.elfec.cobranza.view.controls.SlidingTabLayout;
 import com.elfec.cobranza.view.controls.SlidingTabLayout.TabColorizer;
 
-public class PaymentCollection extends FragmentActivity {
-
+public class PaymentCollection extends FragmentActivity implements SearchCollectionFragment.Callbacks{
+	
 	private CollectionPagerAdapter adapter;
 	private ViewPager viewPager;
 	private SlidingTabLayout slidingTabLayout;
@@ -65,8 +66,13 @@ public class PaymentCollection extends FragmentActivity {
         slidingTabLayout.setSmoothScrollingEnabled(true);
 	}
 	
-	public void btnSearchSupplyClick(View view)
-	{
-		viewPager.setCurrentItem(1);
+	//#region Activity Callbacks
+
+	@Override
+	public void onSupplyFound(Supply supply) {
+		if(!mIsTwoPane)
+			viewPager.setCurrentItem(1);
 	}
+	
+	//#endregion
 }

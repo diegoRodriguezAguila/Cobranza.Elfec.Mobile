@@ -76,9 +76,6 @@ public class ZoneListFragment extends ListFragment implements IZoneListView{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// TODO: replace with a real list adapter.
-		
 		presenter = new ZoneListPresenter(this);
 		presenter.loadUserAssignedZones();
 	}

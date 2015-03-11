@@ -55,7 +55,7 @@
                 android:src="@drawable/account_mini" />
 
             <com.elfec.cobranza.view.controls.MaskedEditText
-                android:id="@+id/txt_accountNumber"
+                android:id="@+id/txt_account_number"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_account_number"
@@ -71,6 +71,5 @@
             android:layout_marginTop="10dp"
             android:drawableEnd="@drawable/search"
             android:drawableRight="@drawable/search"
-            android:onClick="btnSearchSupplyClick"
             android:text="@string/btn_search" />
 </LinearLayout>
