@@ -49,7 +49,9 @@ public class SupplyManager {
 	 */
 	public static Supply getSupplyByNUSOrAccount(String nus, String accountNumber) throws SupplyNotFoundException
 	{
-		int nusInt = Integer.getInteger(nus, -1);
+		int nusInt;
+		try{nusInt = Integer.parseInt(nus);}
+		catch(NumberFormatException e){nusInt = -1;}
 		Supply foundSupply = Supply.findSupplyByNUSOrAccount(nusInt, accountNumber);
 		if(foundSupply==null)
 			throw new SupplyNotFoundException(nus, accountNumber);

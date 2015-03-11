@@ -12,9 +12,10 @@ import com.elfec.cobranza.view.controls.interfaces.IconTabProvider;
 
 public class CollectionPagerAdapter extends FragmentPagerAdapter implements IconTabProvider{
 	private int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "BÚSQUEDA", "COBRANZA"};
-    private int imageResId[] = new int[]{R.drawable.search_supplies_selector, R.drawable.payment_collection_selector};
-	@SuppressWarnings("unused")
+    private final String tabTitles[] = new String[] { "BÚSQUEDA", "COBRANZA"};
+    private final int imageResId[] = new int[]{R.drawable.search_supplies_selector, R.drawable.payment_collection_selector};
+	private final Fragment fragments[] = new Fragment[]{new SearchCollectionFragment(), new PaymentCollectionFragment()};
+    @SuppressWarnings("unused")
 	private Context context;
 
     public CollectionPagerAdapter(FragmentManager fm, Context context) {
@@ -30,9 +31,7 @@ public class CollectionPagerAdapter extends FragmentPagerAdapter implements Icon
 
     @Override
     public Fragment getItem(int position) {
-    	if(position==0)
-    		return SearchCollectionFragment.newInstance(position + 1);
-    	return PaymentCollectionFragment.newInstance(position + 1);
+    	return fragments[position];
     }
 
     @Override

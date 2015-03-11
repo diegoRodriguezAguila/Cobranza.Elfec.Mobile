@@ -313,7 +313,7 @@ public class ZoneRoutesPresenter {
 						return SupplyManager.importSupplies(username, password, supplyIdsString);
 					}
 				});
-				supplyStatusFinished = true;
+				supplyFinished = true;
 				importCallback.importCallback(result);
 			}
 		});

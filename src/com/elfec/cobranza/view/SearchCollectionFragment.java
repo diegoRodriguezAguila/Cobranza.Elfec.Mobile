@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.elfec.cobranza.R;
-import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.SearchCollectionPresenter;
 import com.elfec.cobranza.presenter.views.ISearchCollectionView;
@@ -63,11 +62,6 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 	private EditText txtAccountNumber;
 	
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
-
-    public static SearchCollectionFragment newInstance(int page) {
-        SearchCollectionFragment fragment = new SearchCollectionFragment();
-        return fragment;
-    }
     
     @Override
 	public void onCreate(Bundle savedInstanceState) {

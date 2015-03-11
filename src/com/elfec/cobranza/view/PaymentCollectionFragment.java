@@ -20,11 +20,6 @@ public class PaymentCollectionFragment extends Fragment {
 	public PaymentCollectionFragment() {
 	}
 	
-	public static PaymentCollectionFragment newInstance(int page) {
-		PaymentCollectionFragment fragment = new PaymentCollectionFragment();
-        return fragment;
-    }
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

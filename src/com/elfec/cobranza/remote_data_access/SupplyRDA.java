@@ -35,7 +35,7 @@ public class SupplyRDA {
 				+ "WHERE G.IDCLIENTE=H.IDCLIENTE AND G.IDSUMINISTRO IN "+supplyIds);
 		while(rs.next())
 		{
-			supplies.add(new Supply(rs.getInt("IDCLIENTE"), rs.getString("RAZON_SOCIAL"), rs.getInt("IDSUMINISTRO"), 
+			supplies.add(new Supply(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getInt("IDSUMINISTRO"), 
 					rs.getString("NROSUM"), rs.getString("DIRECCION")));
 		}
 		rs.close();

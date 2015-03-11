@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.model.Supply;
