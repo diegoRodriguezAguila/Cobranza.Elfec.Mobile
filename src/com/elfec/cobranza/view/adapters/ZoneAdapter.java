@@ -47,7 +47,7 @@ public class ZoneAdapter extends ArrayAdapter<Zone> {
 			convertView = inflater.inflate(resource, null);
 		Zone zone = getItem(position);
 		((TextView)convertView.findViewById(R.id.txt_zone_id)).setText(""+zone.getZoneRemoteId());
-		((TextView)convertView.findViewById(R.id.txt_zone_desc)).setText(TextFormater.capitalize(zone.getDescription()));
+		((TextView)convertView.findViewById(R.id.txt_zone_desc)).setText(TextFormater.capitalize(zone.getDescription(), 3));
 		return convertView;
 	}
 }

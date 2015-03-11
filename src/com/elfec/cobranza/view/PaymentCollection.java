@@ -17,6 +17,7 @@ public class PaymentCollection extends FragmentActivity {
 	private CollectionPagerAdapter adapter;
 	private ViewPager viewPager;
 	private SlidingTabLayout slidingTabLayout;
+	private boolean mIsTwoPane;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,22 +25,12 @@ public class PaymentCollection extends FragmentActivity {
 		setContentView(R.layout.activity_collection);
 		 // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        adapter = new CollectionPagerAdapter(getSupportFragmentManager(), 
-        		PaymentCollection.this);
-        viewPager.setAdapter(adapter);
-
-        // Give the SlidingTabLayout the ViewPager
-        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        slidingTabLayout.setCustomTabColorizer(new TabColorizer() {			
-			@Override
-			public int getIndicatorColor(int position) {
-				return getResources().getColor(R.color.cobranza_color);
-			}
-		});
-        slidingTabLayout.setCustomTabView(R.layout.custom_tab, R.id.tab_title, R.id.tab_icon);
-        // Center the tabs in the layout
-        slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setViewPager(viewPager);
+        // If viewpager doesn't exists is two pane view
+        mIsTwoPane = (viewPager==null);
+        if(!mIsTwoPane)
+        {
+        	initializeTabs();
+        }
 	}
 	
 	@Override
@@ -53,9 +44,29 @@ public class PaymentCollection extends FragmentActivity {
 	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 	}
 	
+	/**
+	 * Inicializa los metodos de las tabs en caso de usarse un layout con tabs
+	 */
+	private void initializeTabs() {
+		adapter = new CollectionPagerAdapter(getSupportFragmentManager(), PaymentCollection.this);
+        viewPager.setAdapter(adapter);
+        // Give the SlidingTabLayout the ViewPager
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        slidingTabLayout.setCustomTabColorizer(new TabColorizer() {			
+			@Override
+			public int getIndicatorColor(int position) {
+				return getResources().getColor(R.color.cobranza_color);
+			}
+		});
+        slidingTabLayout.setCustomTabView(R.layout.custom_tab, R.id.tab_title, R.id.tab_icon);
+        // Center the tabs in the layout
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setViewPager(viewPager);
+        slidingTabLayout.setSmoothScrollingEnabled(true);
+	}
+	
 	public void btnSearchSupplyClick(View view)
 	{
-		viewPager.setAdapter(adapter);
-		slidingTabLayout.setViewPager(viewPager);
+		viewPager.setCurrentItem(1);
 	}
 }

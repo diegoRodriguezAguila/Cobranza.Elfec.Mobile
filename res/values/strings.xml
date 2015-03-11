@@ -27,16 +27,6 @@
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>
 
-    <!-- Samples -->
-    <string name="sample_welcome_user">Bienvenido <b>drodriguezd</b>!</string>
-    <string name="sample_date">25 Mar 2015</string>
-    <string name="sample_device_imei">331235343553633</string>
-    <string name="sample_cashdesk_number">523</string>
-    <string name="sample_zone_id">5002</string>
-    <string name="sample_zone_desc">M - Mizque</string>
-    <string name="sample_route_id">84009</string>
-    <string name="sample_route_desc">84&#8211;009   Totora Fase II</string>
-
     <!-- Zone and Routes -->
     <string name="title_zone_list">Zonas</string>
     <string name="title_zone_routes">Zonas y rutas</string>
@@ -82,4 +72,32 @@
     	<string name="desc_account_number">Número de cuenta del suministro</string>
     	<string name="mask_account_number">##-###-###-##</string>
 		<string name="btn_search">Buscar</string>
+		
+		<!-- Payment Collection -->
+		<string name="lbl_payment_collection">Cobranza</string>
+		<string name="btn_collect">Cobrar</string>
+		<string name="btn_annulate">Anular</string>
+		
+		
+	<!-- Samples -->
+    <string name="sample_welcome_user">Bienvenido <b>drodriguezd</b>!</string>
+    <string name="sample_date">25 Mar 2015</string>
+    <string name="sample_device_imei">331235343553633</string>
+    <string name="sample_cashdesk_number">523</string>
+    <string name="sample_zone_id">5002</string>
+    <string name="sample_zone_desc">M - Mizque</string>
+    <string name="sample_route_id">84009</string>
+    <string name="sample_route_desc">84&#8211;009   Totora Fase II</string>
+	<!-- Samples -->
+	<string name="sample_name">Alarcon Rodriguez Dionicia</string>
+	<string name="sample_nus">412781</string>
+	<string name="sample_account_number">91&#8211;002&#8211;321&#8211;00</string>
+	<string name="sample_address">Zn Andino S-N</string>
+	<string name="sample_category">RE1PB</string>
+	<string name="sample_short_date">25/11/2014</string>
+	<string name="sample_year">2014</string>
+	<string name="sample_month">Noviembre</string>
+	<string name="sample_amount">132,53</string>
+	
+	
 </resources>

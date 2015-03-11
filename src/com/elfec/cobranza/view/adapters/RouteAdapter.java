@@ -65,7 +65,7 @@ public class RouteAdapter extends ArrayAdapter<Route> {
 		Route route = getItem(position);
 		convertView.setEnabled(!route.isLoaded());
 		((TextView)convertView.findViewById(R.id.txt_route_id)).setText(""+route.getRouteRemoteId());
-		((TextView)convertView.findViewById(R.id.txt_route_desc)).setText(TextFormater.capitalize(route.getDescription())+(route.isLoaded()?" (cargado)":""));
+		((TextView)convertView.findViewById(R.id.txt_route_desc)).setText(TextFormater.capitalize(route.getDescription(), 3)+(route.isLoaded()?" (cargado)":""));
 		return convertView;
 	}
 }

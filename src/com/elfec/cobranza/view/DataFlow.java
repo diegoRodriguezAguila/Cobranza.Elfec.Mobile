@@ -57,7 +57,7 @@ public class DataFlow extends Activity implements IDataFlowView {
 	public void onResume()
 	{
 		super.onResume();
-		((TextView) findViewById(R.id.txt_date)).setText(TextFormater.capitalize(DateTime.now().toString("dd MMM yyyy")));
+		((TextView) findViewById(R.id.txt_date)).setText(TextFormater.capitalize(DateTime.now().toString("dd MMMM yyyy")));
 	}
 	
 	public void btnDownloadDataClick(View view)
