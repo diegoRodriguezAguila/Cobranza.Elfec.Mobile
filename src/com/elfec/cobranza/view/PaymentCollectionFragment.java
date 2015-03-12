@@ -8,15 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
+import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.PaymentCollectionPresenter;
 import com.elfec.cobranza.presenter.views.IPaymentCollectionView;
+import com.elfec.cobranza.view.adapters.ReceiptAdapter;
 /**
  * Fragment que representa solamente la pantalla de pago de un cobro 
  * @author drodriguez
@@ -43,6 +46,9 @@ public class PaymentCollectionFragment extends Fragment implements IPaymentColle
 	private TextView txtAccountNumber;
 	private TextView txtClientAddress;
 	
+	//Receipts
+	private ListView listPendingReceipts;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,8 @@ public class PaymentCollectionFragment extends Fragment implements IPaymentColle
         txtNus = (TextView) view.findViewById(R.id.txt_nus);
         txtAccountNumber = (TextView) view.findViewById(R.id.txt_account_number);
         txtClientAddress = (TextView) view.findViewById(R.id.txt_client_address);
+        
+        listPendingReceipts = (ListView) view.findViewById(R.id.list_pending_receipts);
         return view;
     }
 
@@ -88,17 +96,36 @@ public class PaymentCollectionFragment extends Fragment implements IPaymentColle
 	}
 
 	@Override
-	public void showSupplyInfo(Supply supply) {
-		txtClientName.setText(supply.getClientName());
-		txtNus.setText(""+supply.getSupplyId());
-		txtAccountNumber.setText(AccountFormatter.formatAccountNumber(supply.getSupplyNumber()));
-		txtClientAddress.setText(supply.getClientAddress());
-		layoutSupplyInfo.setVisibility(View.VISIBLE);
+	public void showSupplyInfo(final Supply supply) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				txtClientName.setText(supply.getClientName());
+				txtNus.setText(""+supply.getSupplyId());
+				txtAccountNumber.setText(AccountFormatter.formatAccountNumber(supply.getSupplyNumber()));
+				txtClientAddress.setText(supply.getClientAddress());
+				layoutSupplyInfo.setVisibility(View.VISIBLE);
+			}
+		});
 	}
 
 	@Override
 	public void hideNoSearchedSupplies() {
 		txtNoSuppliesFound.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void showReceipts(final List<CoopReceipt> receipts) {
+		getActivity().runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				listPendingReceipts.setAdapter(new ReceiptAdapter(getActivity(), R.layout.receipt_list_item, receipts));
+				hideSearchingMessage();
+				if(layoutSupplyInfo.getVisibility()==View.GONE)
+					layoutSupplyInfo.setVisibility(View.VISIBLE);
+			}
+		});
 	}
 	
 	//#endregion

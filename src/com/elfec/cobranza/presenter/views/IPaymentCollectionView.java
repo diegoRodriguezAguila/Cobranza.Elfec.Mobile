@@ -2,6 +2,7 @@ package com.elfec.cobranza.presenter.views;
 
 import java.util.List;
 
+import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.PaymentCollectionPresenter;
 
@@ -39,4 +40,9 @@ public interface IPaymentCollectionView {
 	 * @param supply
 	 */
 	public void showSupplyInfo(Supply supply);
+	/**
+	 * Muestra las facturas del suministro
+	 * @param receipts
+	 */
+	public void showReceipts(List<CoopReceipt> receipts);
 }

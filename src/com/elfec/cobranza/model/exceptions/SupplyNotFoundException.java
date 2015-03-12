@@ -1,5 +1,7 @@
 package com.elfec.cobranza.model.exceptions;
 
+import com.elfec.cobranza.helpers.text_format.AccountFormatter;
+
 public class SupplyNotFoundException extends Exception{
 
 	/**
@@ -18,13 +20,13 @@ public class SupplyNotFoundException extends Exception{
 	@Override
 	public String getMessage()
 	{
-		StringBuilder str = new StringBuilder("No se encontró ningun suministro ");
+		StringBuilder str = new StringBuilder("No se encontró ningún suministro ");
 		if((nus!=null && !nus.isEmpty()) && (accountNumber!=null && !accountNumber.isEmpty()))
-			str.append("con el NUS: <b>").append(nus).append("</b> y la cuenta: <b>").append(accountNumber).append("</b> ");
+			str.append("con el NUS: <b>").append(nus).append("</b> y la cuenta: <b>").append(AccountFormatter.formatAccountNumber(accountNumber)).append("</b> ");
 		if((nus!=null && !nus.isEmpty()) && (accountNumber==null || accountNumber.isEmpty()))
 			str.append("con el NUS: <b>").append(nus).append("</b> ");
 		if((nus==null || nus.isEmpty()) && (accountNumber!=null && !accountNumber.isEmpty()))
-			str.append("con la cuenta: <b>").append(accountNumber).append("</b> ");
+			str.append("con la cuenta: <b>").append(AccountFormatter.formatAccountNumber(accountNumber)).append("</b> ");
 		return str.append("que coincida con los términos de búsqueda!").toString();
 	}
 }

@@ -109,50 +109,66 @@ public class PaymentCollection extends FragmentActivity implements SearchCollect
 
 	@Override
 	public void onSearchStarted() {
-		hideKeyboard();
-		if(mIsTwoPane)
-		{
-			paymentView.hideNoSearchedSupplies();
-			paymentView.showSearchingMessage();
-		}
-		else
-		{
-			waitingDialog = new ProgressDialogPro(PaymentCollection.this, R.style.Theme_FlavoredMaterialLight);
-			waitingDialog.setMessage(getResources().getString(R.string.msg_searching));
-			waitingDialog.show();
-		}
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				hideKeyboard();
+				if(mIsTwoPane)
+				{
+					paymentView.hideNoSearchedSupplies();
+					paymentView.showSearchingMessage();
+				}
+				else
+				{
+					waitingDialog = new ProgressDialogPro(PaymentCollection.this, R.style.Theme_FlavoredMaterialLight);
+					waitingDialog.setMessage(getResources().getString(R.string.msg_searching));
+					waitingDialog.show();
+				}
+			}
+		});
 	}
 	
 	@Override
 	public void onSupplyFound(Supply supply) {
 		paymentView.showSupplyInfo(supply);
 		paymentView.getPresenter().loadSupplyReceipts(supply);
-		hideSearchingMessage();
-		if(!mIsTwoPane)
-		{
-			paymentView.hideNoSearchedSupplies();
-			viewPager.setCurrentItem(1);
-		}
-		else
-		{
-			collapseSearchFragment();
-		}
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				if(!mIsTwoPane)
+				{
+					hideSearchingMessage();
+					paymentView.hideNoSearchedSupplies();
+					viewPager.setCurrentItem(1);
+				}
+				else
+				{
+					collapseSearchFragment();
+				}
+			}
+		});
 	}
 
 	@Override
-	public void onSearchErrors(List<Exception> errors) {
-		hideSearchingMessage();
-		if(mIsTwoPane)
-		{
-			paymentView.showSearchErrors(errors);
-		}
-		else
-		{
-			AlertDialogPro.Builder builder = new AlertDialogPro.Builder(PaymentCollection.this);
-			builder.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
-			.setPositiveButton(R.string.btn_ok, null)
-			.show();
-		}
+	public void onSearchErrors(final List<Exception> errors) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				hideSearchingMessage();
+				if(mIsTwoPane)
+				{
+					paymentView.showSearchErrors(errors);
+				}
+				else
+				{
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(PaymentCollection.this);
+					builder.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+					.setPositiveButton(R.string.btn_ok, null)
+					.show();
+				}
+			}
+		});
 	}
 	
 	//#endregion

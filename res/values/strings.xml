@@ -81,7 +81,8 @@
 		<string name="btn_annulate">Anular</string>
 		<string name="msg_searching">Buscando suministro&#8230;</string>
 		<string name="msg_no_supplies_found">Actualmente no se buscó ningún suministro o las búsquedas realizadas no produjeron ningún resultado</string>
-		
+			<!-- ListItems Receipts -->
+			<string name="lbl_currency">Bs.</string>
 		
 	<!-- Samples -->
     <string name="sample_welcome_user">Bienvenido <b>drodriguezd</b>!</string>
@@ -99,9 +100,9 @@
 	<string name="sample_address">Zn Andino S-N</string>
 	<string name="sample_category">RE1PB</string>
 	<string name="sample_short_date">25/11/2014</string>
-	<string name="sample_year">2014</string>
-	<string name="sample_month">Noviembre</string>
-	<string name="sample_amount">132,53</string>
+	<string name="sample_year_month">2014 Diciembre</string>
+	<string name="sample_amount">1323</string>
+	<string name="sample_amount_decimal">30</string>
 	
 	
 </resources>

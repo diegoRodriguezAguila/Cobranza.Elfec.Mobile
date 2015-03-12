@@ -15,8 +15,8 @@ public class PaymentCollectionPresenter {
 	 * @param supply
 	 */
 	public void loadSupplyReceipts(Supply supply)
-	{
-		
+	{		
+		view.showReceipts(supply.getReceipts());
 	}
 	
 }

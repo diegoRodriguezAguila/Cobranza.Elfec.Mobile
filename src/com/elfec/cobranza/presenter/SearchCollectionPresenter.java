@@ -22,19 +22,25 @@ public class SearchCollectionPresenter {
 	 */
 	public void searchSupply()
 	{
-		String nus = view.getNUS();
-		String accountNumber = view.getAccountNumber();
+		final String nus = view.getNUS();
+		final String accountNumber = view.getAccountNumber();
 		if(!nus.isEmpty() || !accountNumber.isEmpty())
 		{
-			view.notifySearchStarted();
-			try {
-				Supply suplly = SupplyManager.getSupplyByNUSOrAccount(nus, accountNumber);
-				view.showFoundSupply(suplly);
-			} catch (SupplyNotFoundException e) {
-				List<Exception> errors = new ArrayList<Exception>();
-				errors.add(e);
-				view.showSearchErrors(errors);
-			}
+			Thread thread = new Thread(new Runnable() {				
+				@Override
+				public void run() {
+					view.notifySearchStarted();
+					try {
+						Supply suplly = SupplyManager.getSupplyByNUSOrAccount(nus, accountNumber);
+						view.showFoundSupply(suplly);
+					} catch (SupplyNotFoundException e) {
+						List<Exception> errors = new ArrayList<Exception>();
+						errors.add(e);
+						view.showSearchErrors(errors);
+					}
+				}
+			});
+			thread.start();			
 		}
 		else view.notifyAtleastOneField();
 	}
