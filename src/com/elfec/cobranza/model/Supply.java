@@ -1,5 +1,7 @@
 package com.elfec.cobranza.model;
 
+import java.util.List;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -39,6 +41,11 @@ public class Supply extends Model {
 	@Column(name = "ClientAddress")
 	private String clientAddress;
 	
+	/**
+	 * Las facturas relacionadas con el suministro
+	 */
+	private List<CoopReceipt> coopReceipts;
+	
 	public Supply() {
 		super();
 	}
@@ -66,6 +73,19 @@ public class Supply extends Model {
 		if(accountNumber!=null && !accountNumber.isEmpty())
 			query.where("SupplyNumber=?",accountNumber);
         return query.executeSingle();
+	}
+	
+	/**
+	 * Obtiene las facturas de este suministro
+	 * @return Lista de CoopReceipt
+	 */
+	public List<CoopReceipt> getReceipts()
+	{
+		if(coopReceipts==null)
+			coopReceipts = new Select()
+			        .from(CoopReceipt.class).where("SupplyId = ?", supplyId)
+			        .orderBy("Year, PeriodNumber").execute();
+		return coopReceipts;
 	}
 	
 	//#region Getters y Setters

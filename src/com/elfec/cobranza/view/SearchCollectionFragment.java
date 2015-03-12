@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.SearchCollectionPresenter;
 import com.elfec.cobranza.presenter.views.ISearchCollectionView;
@@ -30,9 +31,18 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 	 */
 	public interface Callbacks {
 		/**
+		 * Evento que se ejecuta cuando el usuario presionó el boton de búsqueda
+		 */
+		public void onSearchStarted();
+		/**
 		 * Callback for when a search is performed
 		 */
 		public void onSupplyFound(Supply supply);
+		/**
+		 * Callback para cuando existieron errores en una búsqueda realizada
+		 * @param errors
+		 */
+		public void onSearchErrors(List<Exception> errors);
 	}
 	
 	/**
@@ -46,8 +56,13 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 	 */
 	private static Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
-		public void onSupplyFound(Supply supply) {
-			
+		public void onSupplyFound(Supply supply) {			
+		}
+		@Override
+		public void onSearchErrors(List<Exception> errors) {
+		}
+		@Override
+		public void onSearchStarted() {
 		}};
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -80,7 +95,7 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
         txtAccountNumber = (EditText) view.findViewById(R.id.txt_account_number);
         btnSearch.setOnClickListener(new OnClickListener() {			
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {				
 				presenter.searchSupply();
 			}
 		});
@@ -116,10 +131,7 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 
 	@Override
 	public String getAccountNumber() {
-		String accNumber = txtAccountNumber.getText().toString();
-		if(accNumber.length()>0 && accNumber.charAt(0)=='0')
-			accNumber = accNumber.substring(1, accNumber.length());
-		return accNumber.replace("-", "").trim();
+		return AccountFormatter.unformatAccountNumber(txtAccountNumber.getText().toString());
 	}
 
 	@Override
@@ -135,8 +147,12 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 
 	@Override
 	public void showSearchErrors(List<Exception> errors) {
-		// TODO Auto-generated method stub
-		
+		mCallbacks.onSearchErrors(errors);
+	}
+
+	@Override
+	public void notifySearchStarted() {
+		mCallbacks.onSearchStarted();
 	}
 	
 	//#endregion

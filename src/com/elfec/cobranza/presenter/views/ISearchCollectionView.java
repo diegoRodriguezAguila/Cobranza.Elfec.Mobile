@@ -26,6 +26,10 @@ public interface ISearchCollectionView {
 	 */
 	public void notifyAtleastOneField();
 	/**
+	 * Notifica a la vista que se inició la búsqueda
+	 */
+	public void notifySearchStarted();
+	/**
 	 * Muestra al usuario el suministro encontrado
 	 * @param foundSupply
 	 */

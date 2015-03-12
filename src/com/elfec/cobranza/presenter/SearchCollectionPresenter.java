@@ -26,6 +26,7 @@ public class SearchCollectionPresenter {
 		String accountNumber = view.getAccountNumber();
 		if(!nus.isEmpty() || !accountNumber.isEmpty())
 		{
+			view.notifySearchStarted();
 			try {
 				Supply suplly = SupplyManager.getSupplyByNUSOrAccount(nus, accountNumber);
 				view.showFoundSupply(suplly);

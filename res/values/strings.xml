@@ -79,6 +79,8 @@
 		<string name="lbl_payment_collection">Cobranza</string>
 		<string name="btn_collect">Cobrar</string>
 		<string name="btn_annulate">Anular</string>
+		<string name="msg_searching">Buscando suministro&#8230;</string>
+		<string name="msg_no_supplies_found">Actualmente no se buscó ningún suministro o las búsquedas realizadas no produjeron ningún resultado</string>
 		
 		
 	<!-- Samples -->

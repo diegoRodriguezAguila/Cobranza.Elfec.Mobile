@@ -9,6 +9,7 @@
     <item name="colorPrimary">@color/cobranza_color</item>
     <item name="colorPrimaryDark">@color/cobranza_color_pressed</item>
     <item name="colorAccent">@color/cobranza_color</item>
+    <item name="colorControlActivated">@color/cobranza_color</item>
     <item name="alertDialogProTheme">@style/Theme.FlavoredMaterialLight</item>
       
     <!-- Actionbar theme -->

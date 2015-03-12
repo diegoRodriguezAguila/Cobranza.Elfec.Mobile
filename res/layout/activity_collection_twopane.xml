@@ -12,20 +12,23 @@
 
     <TextView
         android:id="@+id/lbl_search"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lbl_search"
         android:gravity="center_vertical"
+        android:background="@drawable/selectable_background_cobranza"
+        android:clickable="true"
+        android:onClick="lblSearchClicked"
         android:drawableLeft="@drawable/search_supplies_pressed"
         android:drawableStart="@drawable/search_supplies_pressed"
         android:textAppearance="@style/TextAppearance.CustomFont.Light"
+        android:paddingBottom="5dp"
         android:textSize="22sp" />
 
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:layout_marginTop="5dp"
         android:background="@color/cobranza_color" />
     
     <fragment
@@ -40,7 +43,7 @@
     
      <TextView
         android:id="@+id/lbl_payment_collection"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lbl_payment_collection"
         android:gravity="center_vertical"

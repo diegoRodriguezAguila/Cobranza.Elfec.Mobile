@@ -21,9 +21,9 @@ public class SupplyNotFoundException extends Exception{
 		StringBuilder str = new StringBuilder("No se encontró ningun suministro ");
 		if((nus!=null && !nus.isEmpty()) && (accountNumber!=null && !accountNumber.isEmpty()))
 			str.append("con el NUS: <b>").append(nus).append("</b> y la cuenta: <b>").append(accountNumber).append("</b> ");
-		if((nus!=null && !nus.isEmpty()) && (accountNumber!=null && !accountNumber.isEmpty()))
-			str.append("con la cuenta: <b>").append(nus).append("</b> ");
-		if((nus==null || nus.isEmpty()) && (accountNumber==null || accountNumber.isEmpty()))
+		if((nus!=null && !nus.isEmpty()) && (accountNumber==null || accountNumber.isEmpty()))
+			str.append("con el NUS: <b>").append(nus).append("</b> ");
+		if((nus==null || nus.isEmpty()) && (accountNumber!=null && !accountNumber.isEmpty()))
 			str.append("con la cuenta: <b>").append(accountNumber).append("</b> ");
 		return str.append("que coincida con los términos de búsqueda!").toString();
 	}
