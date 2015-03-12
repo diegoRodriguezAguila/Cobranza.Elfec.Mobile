@@ -19,9 +19,12 @@ public class AccountFormatter {
 		{
 			account.insert(0, "0");
 		}
-		account.insert(2, "-");
-		account.insert(6, "-");
-		account.insert(10, "-");
+		if(account.length()>2)
+			account.insert(2, "-");
+		if(account.length()>6)
+			account.insert(6, "-");
+		if(account.length()>10)
+			account.insert(10, "-");
 		return account.toString();
 	}
 	/**
