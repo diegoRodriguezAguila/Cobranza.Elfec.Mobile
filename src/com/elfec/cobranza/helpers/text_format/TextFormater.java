@@ -24,7 +24,19 @@ public class TextFormater {
 		for(String word:words)
 		{
 			if(word.length()>minSize)
-				result.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1).toLowerCase(Locale.getDefault()));
+			{
+				int start = 0;
+				for (int i = 0; i < word.length(); i++) {
+					if((word.charAt(i)>'a' && word.charAt(i)<'z') || (word.charAt(i)>'A' && word.charAt(i)<'Z'))
+					{
+						start = i;
+						break;
+					}
+				}
+				result.append(word.substring(0, start).toLowerCase(Locale.getDefault()))
+				.append(Character.toUpperCase(word.charAt(start)))
+				.append(word.substring(start+1).toLowerCase(Locale.getDefault()));
+			}
 			else result.append(word);
 			if(word!=words[words.length-1])
 				result.append(" ");

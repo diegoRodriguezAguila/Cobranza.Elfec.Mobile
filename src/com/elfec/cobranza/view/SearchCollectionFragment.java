@@ -143,6 +143,13 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 	@Override
 	public void showFoundSupply(Supply foundSupply) {
 		mCallbacks.onSupplyFound(foundSupply);
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				txtNUS.setText(null);
+				txtAccountNumber.setText(null);
+			}
+		});
 	}
 
 	@Override

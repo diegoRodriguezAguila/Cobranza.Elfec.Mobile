@@ -198,6 +198,9 @@ public class CoopReceipt extends Model {
 	@Column(name = "AuthorizationDescription")
 	private String authorizationDescription;
 	
+	//EXTRA ATTRIBUTES
+	private SupplyStatus supplyStatus;
+	
 	public CoopReceipt() {
 		super();
 	}
@@ -255,6 +258,18 @@ public class CoopReceipt extends Model {
 	public static List<CoopReceipt> findRouteReceipts(int routeId)
 	{
 		return new Select().from(CoopReceipt.class).where("RouteId=?",routeId).execute();
+	}
+	/**
+	 * Obtiene el SUMIN_ESTADOS de este comprobante
+	 * @return supplyStatus
+	 */
+	public SupplyStatus getSupplyStatus()
+	{
+		if(supplyStatus==null)
+			supplyStatus = new Select().from(SupplyStatus.class)
+							.where("ReceiptId = ?", this.receiptId)
+							.where("(ConceptId = 10010 OR ConceptId = 10080)").executeSingle();
+		return supplyStatus;
 	}
 
 	//#region Getters y Setters

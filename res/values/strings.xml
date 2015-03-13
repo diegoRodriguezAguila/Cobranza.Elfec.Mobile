@@ -67,9 +67,9 @@
     
     	<!-- Search -->
     	<string name="lbl_search">Búsqueda</string>
-    	<string name="hint_nus">261724</string>
+    	<string name="hint_nus">ej. 261724</string>
     	<string name="desc_nus">NUS del suministro</string>
-    	<string name="hint_account_number">34&#8211;453&#8211;321&#8211;65</string>
+    	<string name="hint_account_number">ej. 34&#8211;453&#8211;321&#8211;65</string>
     	<string name="desc_account_number">Número de cuenta del suministro</string>
     	<string name="mask_account_number">##-###-###-##</string>
 		<string name="btn_search">Buscar</string>
@@ -83,6 +83,9 @@
 		<string name="msg_no_supplies_found">Actualmente no se buscó ningún suministro o las búsquedas realizadas no produjeron ningún resultado</string>
 			<!-- ListItems Receipts -->
 			<string name="lbl_currency">Bs.</string>
+			<string name="lbl_issue">Emisión:</string>
+			<string name="lbl_expiration">Vencimiento:</string>
+			<string name="lbl_kwh">(kWh)</string>
 		
 	<!-- Samples -->
     <string name="sample_welcome_user">Bienvenido <b>drodriguezd</b>!</string>
@@ -98,11 +101,12 @@
 	<string name="sample_nus">412781</string>
 	<string name="sample_account_number">91&#8211;002&#8211;321&#8211;00</string>
 	<string name="sample_address">Zn Andino S-N</string>
-	<string name="sample_category">RE1PB</string>
 	<string name="sample_short_date">25/11/2014</string>
 	<string name="sample_year_month">2014 Diciembre</string>
-	<string name="sample_amount">1323</string>
+	<string name="sample_amount">1.323</string>
 	<string name="sample_amount_decimal">30</string>
-	
+	<string name="sample_receipt_number">327828</string>
+	<string name="sample_consume">145.252</string>
+	<string name="sample_category">Categoría: RE2PB</string>
 	
 </resources>

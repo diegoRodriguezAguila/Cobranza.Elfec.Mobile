@@ -5,4 +5,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 	<dimen name="square_button_text_size">16sp</dimen>
 	<dimen name="margin_horizontal_fragment">20dp</dimen>
+	<dimen name="list_item_left_margin">0dp</dimen>
+	<dimen name="list_item_categ_width">132dp</dimen>
 </resources>

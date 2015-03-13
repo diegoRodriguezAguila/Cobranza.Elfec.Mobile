@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="square_button_text_size">21sp</dimen>
+    <dimen name="list_item_left_margin">20dp</dimen>
+    <dimen name="list_item_categ_width">195dp</dimen>
 </resources>

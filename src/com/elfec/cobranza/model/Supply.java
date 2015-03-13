@@ -82,9 +82,24 @@ public class Supply extends Model {
 	public List<CoopReceipt> getReceipts()
 	{
 		if(coopReceipts==null)
+			coopReceipts = getReceipts(false);
+		return coopReceipts;
+	}
+	
+	/**
+	 * Obtiene las facturas de este suministro
+	 * @param cacheSupplyStatus indica si se debe cachear los sumin_estados de cada cbtes_coop
+	 * @return Lista de CoopReceipt
+	 */
+	public List<CoopReceipt> getReceipts(boolean cacheSupplyStatus)
+	{
+		if(coopReceipts==null)
 			coopReceipts = new Select()
 			        .from(CoopReceipt.class).where("SupplyId = ?", supplyId)
 			        .orderBy("Year, PeriodNumber").execute();
+		if(cacheSupplyStatus)
+			for(CoopReceipt receipt : coopReceipts)
+				receipt.getSupplyStatus();
 		return coopReceipts;
 	}
 	

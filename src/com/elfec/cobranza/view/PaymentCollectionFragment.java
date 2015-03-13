@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
+import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.PaymentCollectionPresenter;
@@ -100,10 +101,10 @@ public class PaymentCollectionFragment extends Fragment implements IPaymentColle
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				txtClientName.setText(supply.getClientName());
+				txtClientName.setText(TextFormater.capitalize(supply.getClientName()));
 				txtNus.setText(""+supply.getSupplyId());
 				txtAccountNumber.setText(AccountFormatter.formatAccountNumber(supply.getSupplyNumber()));
-				txtClientAddress.setText(supply.getClientAddress());
+				txtClientAddress.setText(TextFormater.capitalize(supply.getClientAddress(), 2));
 				layoutSupplyInfo.setVisibility(View.VISIBLE);
 			}
 		});
