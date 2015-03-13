@@ -65,7 +65,6 @@ public class SupplyManager {
 	 */
 	public static List<CoopReceipt> getSupplyReceiptsWithStatus(Supply supply)
 	{
-		return supply.getReceipts(true);
-		
+		return supply.getReceipts(true);		
 	}
 }
