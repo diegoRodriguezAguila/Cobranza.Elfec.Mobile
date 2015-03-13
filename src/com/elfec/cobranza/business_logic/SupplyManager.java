@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.elfec.cobranza.business_logic.DataImporter.ImportSpecs;
+import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.model.exceptions.SupplyNotFoundException;
@@ -56,5 +57,15 @@ public class SupplyManager {
 		if(foundSupply==null)
 			throw new SupplyNotFoundException(nus, accountNumber);
 		return foundSupply;
+	}
+	/**
+	 * Obtiene las facturas de un suministro con su respectivo estado de anulada, etc
+	 * @param supply
+	 * @return
+	 */
+	public static List<CoopReceipt> getSupplyReceiptsWithStatus(Supply supply)
+	{
+		return supply.getReceipts(true);
+		
 	}
 }

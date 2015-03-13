@@ -1,5 +1,6 @@
 package com.elfec.cobranza.presenter;
 
+import com.elfec.cobranza.business_logic.SupplyManager;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.views.IPaymentCollectionView;
 
@@ -16,7 +17,7 @@ public class PaymentCollectionPresenter {
 	 */
 	public void loadSupplyReceipts(Supply supply)
 	{		
-		view.showReceipts(supply.getReceipts(true));
+		view.showReceipts(SupplyManager.getSupplyReceiptsWithStatus(supply));
 	}
 	
 }

@@ -103,7 +103,11 @@ public class ElfecUserManager {
 			int cashDeskNumber = UserRDA.requestUserCashDeskNumber(username, password, remoteUser.getCashierId());
 			if(cashDeskNumber==-1)
 				result.addError(new UnassignedCashDeskException(username));
-			else remoteUser.setCashDeskNumber(cashDeskNumber);
+			else 
+			{
+				remoteUser.setCashDeskNumber(cashDeskNumber);
+				remoteUser.setCashDeskDesc(UserRDA.requestUserCashDeskDesc(username, password, remoteUser.getCashierId()));
+			}
 		}
 	}
 }

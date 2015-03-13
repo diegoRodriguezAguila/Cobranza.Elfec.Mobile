@@ -57,6 +57,7 @@
     <!-- Main Menu -->
     <string name="title_activity_main_menu">Menú principal</string>
     <string name="btn_collection">Cobranza</string>
+    <string name="btn_annulment">Anulación</string>
     <string name="btn_details_report">Detalle de cobranzas</string>
     <string name="btn_annuleds_report">Reporte de anulados</string>
     <string name="btn_daily_summary">Resumen diario</string>

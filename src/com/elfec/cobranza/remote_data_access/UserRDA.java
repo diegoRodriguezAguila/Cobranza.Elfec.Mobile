@@ -60,4 +60,28 @@ public class UserRDA {
 		rs.close();
 		return -1;
 	}
+	
+	/**
+	 * Obtiene remotamente la descripción de caja del usuario especificado, se requiere password
+	 * y nombre de usuario para la conexión
+	 * @param username
+	 * @param password
+	 * @param cashierId , este es el IDEMPLEADO en SEG_USER
+	 * @return descripción de caja
+	 * @throws ConnectException
+	 * @throws SQLException
+	 */
+	public static String requestUserCashDeskDesc(String username, String password, int cashierId) throws ConnectException, SQLException
+	{
+		OracleDatabaseConnector.disposeInstance();
+		ResultSet rs = OracleDatabaseConnector.instance(username, password).
+				executeSelect("SELECT  /*+CHOOSE*/  DESCRIPCION FROM COBRANZA.CAJERO_CAJA "
+						+ "WHERE CAJERO="+cashierId+" AND PERFIL='OFFLINE' AND ESTADO=1");
+		while(rs.next())
+		{
+			return rs.getString("DESCRIPCION");
+		}
+		rs.close();
+		return null;
+	}
 }

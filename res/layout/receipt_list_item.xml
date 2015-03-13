@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@drawable/receipt_list_item_background"
     android:clickable="false"
     android:orientation="vertical"
     android:paddingBottom="5dp"
@@ -54,8 +54,10 @@
             android:layout_gravity="end|top"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:orientation="horizontal"
-            android:background="@drawable/cobranza_btn_default_holo_dark"
+            android:background="@drawable/receipt_list_item_amount_background"
             android:gravity="center" >
             <TextView
                 android:id="@+id/receipt_amount"

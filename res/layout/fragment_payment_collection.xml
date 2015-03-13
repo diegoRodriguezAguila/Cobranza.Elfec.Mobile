@@ -102,6 +102,7 @@
         android:layout_below="@+id/client_info"
         android:layout_above="@+id/btn_collect"
         android:layout_width="match_parent"
+        android:choiceMode="multipleChoice"
         android:layout_height="wrap_content"
         android:smoothScrollbar="true"
         android:fastScrollEnabled="true"

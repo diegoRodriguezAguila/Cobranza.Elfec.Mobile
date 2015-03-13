@@ -38,6 +38,11 @@ public class User extends Model{
 	 */
 	@Column(name = "CashDeskNumber", notNull=true)
 	private int cashDeskNumber;
+	/**
+	 * Descripción de caja
+	 */
+	@Column(name = "CashDeskDesc")
+	private String cashDeskDesc;
 	
 	@Column(name = "SyncDate")
 	private DateTime syncDate;
@@ -59,7 +64,7 @@ public class User extends Model{
 		this.assignationNumber = assignationNumber;
 		this.status = status;
 	}
-	
+
 	//#region Getters y Setters
 	
 	public String getUsername() {
@@ -117,6 +122,15 @@ public class User extends Model{
 	public void setStatus(UserStatus status) {
 		this.status = status.toShort();
 	}
+
+	public String getCashDeskDesc() {
+		return cashDeskDesc;
+	}
+
+	public void setCashDeskDesc(String cashDeskDesc) {
+		this.cashDeskDesc = cashDeskDesc;
+	}
+	
 	
 	//#endregion
 

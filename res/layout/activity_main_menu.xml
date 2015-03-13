@@ -11,7 +11,19 @@
 		            cobranza:buttonIcon="@drawable/collection_selector"
 		            cobranza:buttonText="@string/btn_collection"
 		            android:layout_width="match_parent"
-	        		android:layout_weight="0.33"
+	        		android:layout_weight="0.25"
+	        		android:onClick="btnCollectionClick"
+		            android:layout_height="0dp" />
+	<View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/btn_pressed_gray" />
+	<com.elfec.cobranza.view.controls.SquareButton
+		            cobranza:buttonIcon="@drawable/receipt_annulment_selector"
+		            cobranza:buttonText="@string/btn_annulment"
+		            android:layout_width="match_parent"
+	        		android:layout_weight="0.25"
 	        		android:onClick="btnCollectionClick"
 		            android:layout_height="0dp" />
 	<View
@@ -22,7 +34,7 @@
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="0dp"
-	    android:layout_weight="0.33"
+	    android:layout_weight="0.25"
 	    android:orientation="horizontal">
 	    	<com.elfec.cobranza.view.controls.SquareButton
 	            cobranza:buttonIcon="@drawable/collection_details_selector"
@@ -52,7 +64,7 @@
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="0dp"
-	    android:layout_weight="0.33"
+	    android:layout_weight="0.25"
 	    android:orientation="horizontal">
 	    	<com.elfec.cobranza.view.controls.SquareButton
 	            cobranza:buttonIcon="@drawable/daily_summary_selector"
