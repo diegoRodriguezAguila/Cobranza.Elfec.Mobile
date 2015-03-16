@@ -44,7 +44,7 @@ public class Supply extends Model {
 	/**
 	 * Las facturas relacionadas con el suministro
 	 */
-	private List<CoopReceipt> coopReceipts;
+	private List<CoopReceipt> allReceipts;
 	
 	public Supply() {
 		super();
@@ -79,11 +79,9 @@ public class Supply extends Model {
 	 * Obtiene las facturas de este suministro
 	 * @return Lista de CoopReceipt
 	 */
-	public List<CoopReceipt> getReceipts()
+	public List<CoopReceipt> getAllReceipts()
 	{
-		if(coopReceipts==null)
-			coopReceipts = getReceipts(false);
-		return coopReceipts;
+		return getAllReceipts(false);
 	}
 	
 	/**
@@ -91,16 +89,42 @@ public class Supply extends Model {
 	 * @param cacheSupplyStatus indica si se debe cachear los sumin_estados de cada cbtes_coop
 	 * @return Lista de CoopReceipt
 	 */
-	public List<CoopReceipt> getReceipts(boolean cacheSupplyStatus)
+	public List<CoopReceipt> getAllReceipts(boolean cacheSupplyStatus)
 	{
-		if(coopReceipts==null)
-			coopReceipts = new Select()
+		if(allReceipts==null)
+			allReceipts = new Select()
 			        .from(CoopReceipt.class).where("SupplyId = ?", supplyId)
 			        .orderBy("Year, PeriodNumber").execute();
 		if(cacheSupplyStatus)
-			for(CoopReceipt receipt : coopReceipts)
+			for(CoopReceipt receipt : allReceipts)
 				receipt.getSupplyStatus();
-		return coopReceipts;
+		return allReceipts;
+	}
+	
+	/**
+	 * Obtiene todas las facturas pendientes del suministro
+	 * @return lista de comprobantes
+	 */
+	public List<CoopReceipt> getPendingReceipts()
+	{
+		return new Select()
+        .from(CoopReceipt.class).as("r").where("SupplyId = ? AND NOT EXISTS "
+        		+ "(SELECT 0 FROM CollectionPayments "
+        		+ "WHERE r.ReceiptId = c.ReceiptId AND Status=1)", supplyId)
+        		.orderBy("Year, PeriodNumber").execute();
+	}
+	
+	/**
+	 * Obtiene todas las facturas  del suministro que ya fueron pagadas
+	 * @return lista de comprobantes
+	 */
+	public List<CoopReceipt> getPaidReceipts()
+	{
+		return new Select()
+	        .from(CoopReceipt.class).as("r").where("SupplyId = ? AND EXISTS "
+	        		+ "(SELECT 0 FROM CollectionPayments "
+	        		+ "WHERE r.ReceiptId = c.ReceiptId AND Status=1)", supplyId)
+	        		.orderBy("Year, PeriodNumber DESC").execute();
 	}
 	
 	//#region Getters y Setters

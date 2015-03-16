@@ -10,7 +10,7 @@ public class CollectionAnnulmentBehavior implements ICollectionBehavior {
 
 	@Override
 	public List<CoopReceipt> getSupplyReceipts(Supply supply) {
-		return SupplyManager.getPendingReceipts(supply);
+		return SupplyManager.getPaidReceipts(supply);
 	}
 
 }

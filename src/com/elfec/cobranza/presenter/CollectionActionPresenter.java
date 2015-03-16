@@ -1,6 +1,7 @@
 package com.elfec.cobranza.presenter;
 
 import com.elfec.cobranza.model.Supply;
+import com.elfec.cobranza.model.exceptions.NoBehaviorSetException;
 import com.elfec.cobranza.presenter.behavior.ICollectionBehavior;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
 
@@ -28,6 +29,8 @@ public class CollectionActionPresenter {
 	 */
 	public void loadSupplyReceipts(Supply supply)
 	{	
+		if(collectionBehavior==null)
+			throw new NoBehaviorSetException();
 		view.showReceipts(collectionBehavior.getSupplyReceipts(supply));
 	}
 	

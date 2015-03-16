@@ -12,8 +12,8 @@ import com.activeandroid.annotation.Table;
  * @author drodriguez
  *
  */
-@Table(name = "PaymentCollections")
-public class PaymentCollection extends Model {
+@Table(name = "CollectionPayments")
+public class CollectionPayment extends Model {
 	/**
 	 * CAJA en Oracle Número de caja
 	 */
@@ -92,11 +92,11 @@ public class PaymentCollection extends Model {
 	@Column(name = "AnnulmentReasonId")
 	private int annulmentReasonId;
 	
-	public PaymentCollection() {
+	public CollectionPayment() {
 		super();
 	}
 
-	public PaymentCollection(int cashDeskNumber, DateTime paymentDate,
+	public CollectionPayment(int cashDeskNumber, DateTime paymentDate,
 			String user, int receiptId, BigDecimal amount, int status,
 			DateTime withdrawalDate, String withdrawalUser, int supplyId,
 			String supplyNumber, int receiptNumber, int year, int periodNumber,

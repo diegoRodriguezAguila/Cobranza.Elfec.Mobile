@@ -59,12 +59,21 @@ public class SupplyManager {
 		return foundSupply;
 	}
 	/**
-	 * Obtiene las facturas de un suministro con su respectivo estado de anulada, etc
+	 * Obtiene las facturas pendientes de un suministro
 	 * @param supply
 	 * @return
 	 */
 	public static List<CoopReceipt> getPendingReceipts(Supply supply)
 	{
-		return supply.getReceipts(true);		
+		return supply.getPendingReceipts();		
+	}
+	/**
+	 * Obtiene las facturas que ya fueron pagadas de un suministro
+	 * @param supply
+	 * @return
+	 */
+	public static List<CoopReceipt> getPaidReceipts(Supply supply)
+	{
+		return supply.getPaidReceipts();		
 	}
 }
