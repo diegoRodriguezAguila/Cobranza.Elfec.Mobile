@@ -9,6 +9,7 @@ import android.os.SystemClock;
 import android.view.View;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.view.adapters.collection.CollectionAdapterFactory;
 
 public class MainMenu extends Activity {
 
@@ -30,10 +31,22 @@ public class MainMenu extends Activity {
 	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 	}
 	
-	public void btnCollectionClick(View view)
+	public void btnCollectionPaymentClick(View view)
 	{
 		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
-			Intent i = new Intent(MainMenu.this, PaymentCollection.class);
+			Intent i = new Intent(MainMenu.this, CollectionAction.class);
+			i.putExtra(CollectionAction.COLLECTION_TYPE, CollectionAdapterFactory.COLLECTION_PAYMENT);
+			startActivity(i);
+			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+		}
+        lastClickTime = SystemClock.elapsedRealtime();
+	}
+	
+	public void btnCollectionAnnulmentClick(View view)
+	{
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+			Intent i = new Intent(MainMenu.this, CollectionAction.class);
+			i.putExtra(CollectionAction.COLLECTION_TYPE, CollectionAdapterFactory.COLLECTION_ANNULMENT);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 		}

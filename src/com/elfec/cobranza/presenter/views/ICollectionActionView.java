@@ -4,20 +4,21 @@ import java.util.List;
 
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
-import com.elfec.cobranza.presenter.PaymentCollectionPresenter;
+import com.elfec.cobranza.presenter.CollectionActionPresenter;
+import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
 
 /**
  * Abstracción de la vista de pagar cobros
  * @author drodriguez
  *
  */
-public interface IPaymentCollectionView {
+public interface ICollectionActionView {
 
 	/**
 	 * Obtiene el presenter de la vista
 	 * @return su presenter
 	 */
-	public PaymentCollectionPresenter getPresenter();
+	public CollectionActionPresenter getPresenter();
 	/**
 	 * Esconde el mensaje de que no se realizó ninguna búsqueda
 	 */
@@ -45,4 +46,9 @@ public interface IPaymentCollectionView {
 	 * @param receipts
 	 */
 	public void showReceipts(List<CoopReceipt> receipts);
+	/**
+	 * Asigna el adapter de cobranza
+	 * @param collectionAdapter
+	 */
+	public void setCollectionAdapter(CollectionBaseAdapter collectionAdapter);
 }

@@ -11,20 +11,26 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.model.Supply;
-import com.elfec.cobranza.presenter.views.IPaymentCollectionView;
+import com.elfec.cobranza.presenter.views.ICollectionActionView;
 import com.elfec.cobranza.view.adapters.CollectionPagerAdapter;
+import com.elfec.cobranza.view.adapters.collection.CollectionAdapterFactory;
+import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
 import com.elfec.cobranza.view.animations.HeightAnimation;
 import com.elfec.cobranza.view.controls.SlidingTabLayout;
 import com.elfec.cobranza.view.controls.SlidingTabLayout.TabColorizer;
 
-public class PaymentCollection extends FragmentActivity implements SearchCollectionFragment.Callbacks{
+public class CollectionAction extends FragmentActivity implements SearchCollectionFragment.Callbacks{
 	
+	public static final String COLLECTION_TYPE = "collectionType";
+	
+	private CollectionBaseAdapter collectionAdapter;
 	private CollectionPagerAdapter adapter;
 	private ViewPager viewPager;
 	private SlidingTabLayout slidingTabLayout;
@@ -34,13 +40,15 @@ public class PaymentCollection extends FragmentActivity implements SearchCollect
 	private boolean mIsTwoPane;
 	private int searchCollectionHeight;
 	private boolean searchCollectionCollapsed;
-	private IPaymentCollectionView paymentView;
+	private ICollectionActionView paymentView;
 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_collection);
+		collectionAdapter = CollectionAdapterFactory.instance(
+				getIntent().getExtras().getInt(COLLECTION_TYPE), this);
 		 // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         // If viewpager doesn't exists is two pane view
@@ -48,16 +56,17 @@ public class PaymentCollection extends FragmentActivity implements SearchCollect
         if(!mIsTwoPane)
         {
         	initializeTabs();
-        	paymentView = (IPaymentCollectionView)adapter.getItem(1);
+        	paymentView = (ICollectionActionView)adapter.getItem(1);
         }
         else 
     	{
-        	paymentView = (IPaymentCollectionView)getSupportFragmentManager().findFragmentById(R.id.f_payment_collection);
+        	paymentView = (ICollectionActionView)getSupportFragmentManager().findFragmentById(R.id.f_payment_collection);
         	fSearchCollection = getSupportFragmentManager().findFragmentById(R.id.f_search_collection);
+        	setActionTitle();
     	}
-        
+        paymentView.setCollectionAdapter(collectionAdapter);
 	}
-	
+
 	@Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -73,7 +82,7 @@ public class PaymentCollection extends FragmentActivity implements SearchCollect
 	 * Inicializa los metodos de las tabs en caso de usarse un layout con tabs
 	 */
 	private void initializeTabs() {
-		adapter = new CollectionPagerAdapter(getSupportFragmentManager(), PaymentCollection.this);
+		adapter = new CollectionPagerAdapter(getSupportFragmentManager(), CollectionAction.this, collectionAdapter);
         viewPager.setAdapter(adapter);
         // Give the SlidingTabLayout the ViewPager
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
@@ -120,7 +129,7 @@ public class PaymentCollection extends FragmentActivity implements SearchCollect
 				}
 				else
 				{
-					waitingDialog = new ProgressDialogPro(PaymentCollection.this, R.style.Theme_FlavoredMaterialLight);
+					waitingDialog = new ProgressDialogPro(CollectionAction.this, R.style.Theme_FlavoredMaterialLight);
 					waitingDialog.setMessage(getResources().getString(R.string.msg_searching));
 					waitingDialog.show();
 				}
@@ -162,7 +171,7 @@ public class PaymentCollection extends FragmentActivity implements SearchCollect
 				}
 				else
 				{
-					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(PaymentCollection.this);
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(CollectionAction.this);
 					builder.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
 					.setPositiveButton(R.string.btn_ok, null)
 					.show();
@@ -215,5 +224,14 @@ public class PaymentCollection extends FragmentActivity implements SearchCollect
 		if(searchCollectionCollapsed)
 			expandSearchFragment();
 		else collapseSearchFragment();
+	}
+	/**
+	 * Asigna el titulo correspondiente
+	 */
+	private void setActionTitle() {
+		TextView lblActionTitle = (TextView) findViewById(R.id.lbl_action_title);
+		lblActionTitle.setText(collectionAdapter.getActionTitle());
+		lblActionTitle.setCompoundDrawablesWithIntrinsicBounds(
+				getResources().getDrawable(collectionAdapter.getTitleDrawableId()), null, null, null);
 	}
 }

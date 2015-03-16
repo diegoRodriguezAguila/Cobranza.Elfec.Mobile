@@ -54,7 +54,7 @@
             android:label="@string/title_activity_main_menu" >
         </activity>
         <activity
-            android:name="com.elfec.cobranza.view.PaymentCollection"
+            android:name="com.elfec.cobranza.view.CollectionAction"
             android:label="@string/title_activity_collection" >
         </activity>
     </application>

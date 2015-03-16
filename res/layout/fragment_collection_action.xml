@@ -7,6 +7,7 @@
  	    android:id="@+id/txt_no_supplies_found"
 	 	android:layout_width="match_parent"
 	 	android:layout_height="wrap_content"
+	 	android:visibility="visible"
 	 	android:text="@string/msg_no_supplies_found"
 	 	android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
 	 	android:textSize="18sp"
@@ -97,19 +98,30 @@
 	        android:textIsSelectable="true"
 	        android:textSize="16sp" />
 	</LinearLayout>
+	<TextView 
+	    android:id="@+id/lbl_receipt_list_type"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/client_info"
+	    android:text="@string/lbl_pending_receipt_list_title"
+	    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+	    android:layout_marginTop="3dp"
+	    android:layout_marginLeft="3dp"
+	    android:layout_marginStart="3dp"
+	    android:textSize="14sp"
+	    />
     <ListView
-        android:id="@+id/list_pending_receipts"
-        android:layout_below="@+id/client_info"
-        android:layout_above="@+id/btn_collect"
+        android:id="@+id/list_receipts"
+        android:layout_below="@+id/lbl_receipt_list_type"
+        android:layout_above="@+id/btn_action"
         android:layout_width="match_parent"
         android:choiceMode="multipleChoice"
         android:layout_height="wrap_content"
         android:smoothScrollbar="true"
-        android:fastScrollEnabled="true"
-        android:layout_marginTop="10dp"/>
+        android:fastScrollEnabled="true"/>
 
     <Button
-        android:id="@+id/btn_collect"
+        android:id="@+id/btn_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -120,9 +132,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:drawableEnd="@drawable/collect"
-        android:drawableRight="@drawable/collect"
-        android:onClick="btnSearchSupplyClick"
         android:text="@string/btn_collect" />
 
 	</RelativeLayout>

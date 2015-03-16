@@ -63,7 +63,7 @@ public class SupplyManager {
 	 * @param supply
 	 * @return
 	 */
-	public static List<CoopReceipt> getSupplyReceiptsWithStatus(Supply supply)
+	public static List<CoopReceipt> getPendingReceipts(Supply supply)
 	{
 		return supply.getReceipts(true);		
 	}

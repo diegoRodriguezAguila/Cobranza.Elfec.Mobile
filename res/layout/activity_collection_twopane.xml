@@ -42,13 +42,13 @@
     tools:layout="@layout/fragment_search_payment_collection" />
     
      <TextView
-        android:id="@+id/lbl_payment_collection"
+        android:id="@+id/lbl_action_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/lbl_payment_collection"
+        android:text="@string/lbl_collection_payment"
         android:gravity="center_vertical"
-        android:drawableLeft="@drawable/payment_collection_pressed"
-        android:drawableStart="@drawable/payment_collection_pressed"
+        android:drawableLeft="@drawable/collection_payment_selector"
+        android:drawableStart="@drawable/collection_payment_selector"
         android:textAppearance="@style/TextAppearance.CustomFont.Light"
         android:textSize="22sp" />
 
@@ -60,12 +60,12 @@
         android:background="@color/cobranza_color" />
     <fragment
     android:id="@+id/f_payment_collection"
-    android:name="com.elfec.cobranza.view.PaymentCollectionFragment"
+    android:name="com.elfec.cobranza.view.CollectionActionFragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     tools:context="com.elfec.cobranza.view.PaymentCollection"
-    tools:layout="@layout/fragment_payment_collection" />
+    tools:layout="@layout/fragment_collection_action" />
 
 </LinearLayout>

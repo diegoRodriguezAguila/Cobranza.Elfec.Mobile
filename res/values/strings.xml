@@ -75,13 +75,19 @@
     	<string name="mask_account_number">##-###-###-##</string>
 		<string name="btn_search">Buscar</string>
 		<string name="msg_atleast_one_filed">Debe proporcionar al menos un término de búsqueda!</string>
-		
-		<!-- Payment Collection -->
-		<string name="lbl_payment_collection">Cobranza</string>
-		<string name="btn_collect">Cobrar</string>
-		<string name="btn_annulate">Anular</string>
 		<string name="msg_searching">Buscando suministro&#8230;</string>
 		<string name="msg_no_supplies_found">Actualmente no se buscó ningún suministro o las búsquedas realizadas no produjeron ningún resultado</string>
+		
+		<!-- Collection Payment -->
+		<string name="lbl_collection_payment">Cobranza</string>
+		<string name="btn_collect">Cobrar</string>
+		<string name="lbl_pending_receipt_list_title">Facturas pendientes</string>
+		
+		<!-- Collection Annulment -->
+		<string name="lbl_collection_annulment">Anulación</string>
+		<string name="btn_annulate">Anular</string>	
+		<string name="lbl_paid_receipt_list_title">Facturas cobradas</string>
+		
 			<!-- ListItems Receipts -->
 			<string name="lbl_currency">Bs.</string>
 			<string name="lbl_issue">Emisión:</string>
