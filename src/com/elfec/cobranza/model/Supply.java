@@ -109,7 +109,7 @@ public class Supply extends Model {
 	{
 		return new Select()
         .from(CoopReceipt.class).as("r").where("SupplyId = ? AND NOT EXISTS "
-        		+ "(SELECT 0 FROM CollectionPayments "
+        		+ "(SELECT 0 FROM CollectionPayments AS c"
         		+ "WHERE r.ReceiptId = c.ReceiptId AND Status=1)", supplyId)
         		.orderBy("Year, PeriodNumber").execute();
 	}
@@ -122,7 +122,7 @@ public class Supply extends Model {
 	{
 		return new Select()
 	        .from(CoopReceipt.class).as("r").where("SupplyId = ? AND EXISTS "
-	        		+ "(SELECT 0 FROM CollectionPayments "
+	        		+ "(SELECT 0 FROM CollectionPayments AS c"
 	        		+ "WHERE r.ReceiptId = c.ReceiptId AND Status=1)", supplyId)
 	        		.orderBy("Year, PeriodNumber DESC").execute();
 	}

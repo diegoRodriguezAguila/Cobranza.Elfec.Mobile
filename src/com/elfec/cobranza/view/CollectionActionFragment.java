@@ -1,10 +1,13 @@
 package com.elfec.cobranza.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +40,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	private CollectionBaseAdapter collectionAdapter;
 	private CollectionActionPresenter presenter;
 	private Handler mHandler;
+	private long lastClickTime;
 	
 	private int lastChecked;
 	
@@ -113,7 +117,21 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
         btnAction.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				
+				if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+					List<CoopReceipt> selectedReceipts = new ArrayList<CoopReceipt>();
+					SparseBooleanArray sparseBooleanArray = listReceipts.getCheckedItemPositions();
+					int size = listReceipts.getAdapter().getCount();
+					for (int i = 0; i < size; i++) {
+						if(sparseBooleanArray.get(i))
+						{
+							selectedReceipts.add((CoopReceipt)listReceipts.getItemAtPosition(i));
+						}
+					}
+					if(selectedReceipts.size()>0)
+						presenter.processAction(selectedReceipts);
+					//else warnUserNotSelectedRoutes();
+				}
+		        lastClickTime = SystemClock.elapsedRealtime();
 			}
 		});
         if(collectionAdapter!=null)

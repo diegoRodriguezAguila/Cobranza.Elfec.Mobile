@@ -53,6 +53,16 @@ public class DataAccessResult<TResult> {
 	{
 		listOfErrors.add(e);
 	}
+	/**
+	 * Agrega multiples errores a la lita de errores
+	 * @param errors
+	 */
+	public void addErrors(List<Exception> errors)
+	{
+		for (int i = 0; i < errors.size(); i++) {
+			addError(errors.get(i));
+		}
+	}
 	
 	/**
 	 * Asigna el resultado a un servicio web

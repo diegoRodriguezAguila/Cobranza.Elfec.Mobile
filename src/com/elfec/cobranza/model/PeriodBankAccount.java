@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 /**
  * Almacena los BAN_CTAS_PER
@@ -34,10 +35,15 @@ public class PeriodBankAccount extends Model {
 	@Column(name = "CashierId")
 	private int cashierId;	
 	/**
-	 * FECHA y HORA_APERTURA en Oracle
+	 * FECHA en Oracle
 	 */
-	@Column(name = "OpeningDateTime")
-	private DateTime openingDateTime;
+	@Column(name = "PeriodDate")
+	private DateTime periodDate;
+	/**
+	 * HORA_APERTURA en Oracle
+	 */
+	@Column(name = "OpeningTime")
+	private DateTime openingTime;
 	/**
 	 * FECHA_CIERRE y HORA_CIERRE en Oracle
 	 */
@@ -63,21 +69,38 @@ public class PeriodBankAccount extends Model {
 		super();
 	}
 	
+	
+
 	public PeriodBankAccount(int bankId, int bankAccountId, int periodNumber,
-			int cashierId, DateTime openingDateTime, DateTime closingDateTime,
-			short statusId, int zoneId, int enterpriseId) {
+			int cashierId, DateTime periodDate, DateTime openingTime,
+			DateTime closingDateTime, short statusId, int zoneId,
+			int enterpriseId) {
 		super();
 		this.bankId = bankId;
 		this.bankAccountId = bankAccountId;
 		this.periodNumber = periodNumber;
 		this.cashierId = cashierId;
-		this.openingDateTime = openingDateTime;
+		this.periodDate = periodDate;
+		this.openingTime = openingTime;
 		this.closingDateTime = closingDateTime;
 		this.statusId = statusId;
 		this.zoneId = zoneId;
 		this.enterpriseId = enterpriseId;
 	}
 
+
+
+	/**
+	 * Obtiene el periodo de la cuenta
+	 * @param cashdeskNumber
+	 * @return
+	 */
+	public static PeriodBankAccount findByCashdeskNumberAndDate(int cashdeskNumber)
+	{
+		return new Select().from(PeriodBankAccount.class)
+				.where("BankAccountId = ? AND PeriodDate = ?", cashdeskNumber, DateTime.now().withTimeAtStartOfDay()).executeSingle();
+	}
+	
 	//#region Getters y Setters
 	public int getBankId() {
 		return bankId;
@@ -103,12 +126,24 @@ public class PeriodBankAccount extends Model {
 	public void setCashierId(int cashierId) {
 		this.cashierId = cashierId;
 	}
-	public DateTime getOpeningDateTime() {
-		return openingDateTime;
+	
+	public DateTime getPeriodDate() {
+		return periodDate;
 	}
-	public void setOpeningDateTime(DateTime openingDateTime) {
-		this.openingDateTime = openingDateTime;
+
+	public void setPeriodDate(DateTime periodDate) {
+		this.periodDate = periodDate;
 	}
+
+	public DateTime getOpeningTime() {
+		return openingTime;
+	}
+
+	public void setOpeningTime(DateTime openingTime) {
+		this.openingTime = openingTime;
+	}
+
+	
 	public DateTime getClosingDateTime() {
 		return closingDateTime;
 	}

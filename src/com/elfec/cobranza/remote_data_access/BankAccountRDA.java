@@ -63,7 +63,7 @@ public class BankAccountRDA {
 		while(rs.next())
 		{
 			periodBankAccounts.add(new PeriodBankAccount(rs.getInt("IDBANCO"), rs.getInt("IDBAN_CTA"), rs.getInt("NROPERIODO"), 
-					rs.getInt("IDCAJERO"), new DateTime(rs.getDate("HORA_APERTURA")), new DateTime(rs.getDate("HORA_CIERRE")), 
+					rs.getInt("IDCAJERO"), new DateTime(rs.getDate("FECHA")), new DateTime(rs.getDate("HORA_APERTURA")), new DateTime(rs.getDate("HORA_CIERRE")), 
 					rs.getShort("IDSTATUS"), rs.getInt("IDZONA"), rs.getInt("IDEMPRESA")));
 		}
 		rs.close();

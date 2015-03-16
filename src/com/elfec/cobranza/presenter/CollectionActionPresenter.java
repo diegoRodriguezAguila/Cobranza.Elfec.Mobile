@@ -1,5 +1,8 @@
 package com.elfec.cobranza.presenter;
 
+import java.util.List;
+
+import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.model.exceptions.NoBehaviorSetException;
 import com.elfec.cobranza.presenter.behavior.ICollectionBehavior;
@@ -32,6 +35,15 @@ public class CollectionActionPresenter {
 		if(collectionBehavior==null)
 			throw new NoBehaviorSetException();
 		view.showReceipts(collectionBehavior.getSupplyReceipts(supply));
+	}
+	
+	/**
+	 * Procesa la acción con el comportamiento definido actual
+	 * @param selectedReceipts
+	 */
+	public void processAction(List<CoopReceipt> selectedReceipts)
+	{
+		
 	}
 	
 }

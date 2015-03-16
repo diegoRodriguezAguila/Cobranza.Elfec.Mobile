@@ -43,8 +43,7 @@ public class CollectionPayment extends Model {
 	 * ESTADO 1 cobrado, 0 anulado
 	 */
 	@Column(name = "Status", notNull=true)
-	private int status;
-	
+	private int status;	
 	/**
 	 * FECHA_BAJA en Oracle, en la que se anuló un cobro
 	 */
@@ -90,7 +89,7 @@ public class CollectionPayment extends Model {
 	 * IDMOTIVO_ANULA en Oracle El id del motivo de la anulación de un cobro
 	 */
 	@Column(name = "AnnulmentReasonId")
-	private int annulmentReasonId;
+	private Integer annulmentReasonId;
 	
 	public CollectionPayment() {
 		super();
@@ -100,7 +99,7 @@ public class CollectionPayment extends Model {
 			String user, int receiptId, BigDecimal amount, int status,
 			DateTime withdrawalDate, String withdrawalUser, int supplyId,
 			String supplyNumber, int receiptNumber, int year, int periodNumber,
-			String cashDeskDescription, int annulmentReasonId) {
+			String cashDeskDescription, Integer annulmentReasonId) {
 		super();
 		this.cashDeskNumber = cashDeskNumber;
 		this.paymentDate = paymentDate;
@@ -233,11 +232,11 @@ public class CollectionPayment extends Model {
 		this.cashDeskDescription = cashDeskDescription;
 	}
 
-	public int getAnnulmentReasonId() {
+	public Integer getAnnulmentReasonId() {
 		return annulmentReasonId;
 	}
 
-	public void setAnnulmentReasonId(int annulmentReasonId) {
+	public void setAnnulmentReasonId(Integer annulmentReasonId) {
 		this.annulmentReasonId = annulmentReasonId;
 	}
 	

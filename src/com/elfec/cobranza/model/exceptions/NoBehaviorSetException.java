@@ -1,5 +1,9 @@
 package com.elfec.cobranza.model.exceptions;
-
+/**
+ * Excepción que se lanza cuando no se pasó un comportamiento en el presenter de las cobranzas
+ * @author drodriguez
+ *
+ */
 public class NoBehaviorSetException extends RuntimeException {
 
 	/**

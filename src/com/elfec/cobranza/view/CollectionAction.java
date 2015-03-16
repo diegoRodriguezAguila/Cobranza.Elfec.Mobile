@@ -141,8 +141,7 @@ public class CollectionAction extends FragmentActivity implements SearchCollecti
 	public void onSupplyFound(Supply supply) {
 		paymentView.showSupplyInfo(supply);
 		paymentView.getPresenter().loadSupplyReceipts(supply);
-		runOnUiThread(new Runnable() {
-			
+		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
 				if(!mIsTwoPane)
