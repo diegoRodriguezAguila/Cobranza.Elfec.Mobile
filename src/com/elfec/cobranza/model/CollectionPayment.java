@@ -45,15 +45,25 @@ public class CollectionPayment extends Model {
 	@Column(name = "Status", notNull=true)
 	private int status;	
 	/**
+	 * NROTRANSACCION en Oracle
+	 */
+	@Column(name = "TransactionNumber", notNull=true)
+	private long transactionNumber;
+	/**
 	 * FECHA_BAJA en Oracle, en la que se anuló un cobro
 	 */
-	@Column(name = "WithdrawalDate")
-	private DateTime withdrawalDate;
+	@Column(name = "AnnulmentDate")
+	private DateTime annulmentDate;
 	/**
 	 * USUARIO_BAJA el usuario que realizó la anulación del cobro
 	 */
-	@Column(name = "WithdrawalUser")
-	private String withdrawalUser;
+	@Column(name = "AnnulmentUser")
+	private String annulmentUser;
+	/**
+	 * NROTRANSACCION_A en Oracle
+	 */
+	@Column(name = "AnnulmentTransacNum")
+	private long annulmentTransacNum;
 	/**
 	 * IDSUMINISTRO
 	 * Identificador del suministros, tabla de referencia suministros	
@@ -95,11 +105,15 @@ public class CollectionPayment extends Model {
 		super();
 	}
 
+	
+
+	//#region Getters y Setters
+	
 	public CollectionPayment(int cashDeskNumber, DateTime paymentDate,
 			String user, int receiptId, BigDecimal amount, int status,
-			DateTime withdrawalDate, String withdrawalUser, int supplyId,
-			String supplyNumber, int receiptNumber, int year, int periodNumber,
-			String cashDeskDescription, Integer annulmentReasonId) {
+			long transactionNumber, int supplyId, String supplyNumber,
+			int receiptNumber, int year, int periodNumber,
+			String cashDeskDescription) {
 		super();
 		this.cashDeskNumber = cashDeskNumber;
 		this.paymentDate = paymentDate;
@@ -107,19 +121,17 @@ public class CollectionPayment extends Model {
 		this.receiptId = receiptId;
 		this.amount = amount;
 		this.status = status;
-		this.withdrawalDate = withdrawalDate;
-		this.withdrawalUser = withdrawalUser;
+		this.transactionNumber = transactionNumber;
 		this.supplyId = supplyId;
 		this.supplyNumber = supplyNumber;
 		this.receiptNumber = receiptNumber;
 		this.year = year;
 		this.periodNumber = periodNumber;
 		this.cashDeskDescription = cashDeskDescription;
-		this.annulmentReasonId = annulmentReasonId;
 	}
 
-	//#region Getters y Setters
-	
+
+
 	public int getCashDeskNumber() {
 		return cashDeskNumber;
 	}
@@ -168,20 +180,36 @@ public class CollectionPayment extends Model {
 		this.status = status;
 	}
 
-	public DateTime getWithdrawalDate() {
-		return withdrawalDate;
+	public long getTransactionNumber() {
+		return transactionNumber;
 	}
 
-	public void setWithdrawalDate(DateTime withdrawalDate) {
-		this.withdrawalDate = withdrawalDate;
+	public void setTransactionNumber(long transactionNumber) {
+		this.transactionNumber = transactionNumber;
 	}
 
-	public String getWithdrawalUser() {
-		return withdrawalUser;
+	public DateTime getAnnulmentDate() {
+		return annulmentDate;
 	}
 
-	public void setWithdrawalUser(String withdrawalUser) {
-		this.withdrawalUser = withdrawalUser;
+	public void setAnnulmentDate(DateTime annulmentDate) {
+		this.annulmentDate = annulmentDate;
+	}
+
+	public String getAnnulmentUser() {
+		return annulmentUser;
+	}
+
+	public void setAnnulmentUser(String withdrawalUser) {
+		this.annulmentUser = withdrawalUser;
+	}
+
+	public long getAnnulmentTransacNum() {
+		return annulmentTransacNum;
+	}
+
+	public void setAnnulmentTransacNum(long withdrawalTransacNum) {
+		this.annulmentTransacNum = withdrawalTransacNum;
 	}
 
 	public int getSupplyId() {

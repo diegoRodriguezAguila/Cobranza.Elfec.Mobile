@@ -52,12 +52,13 @@ public class CollectionManager {
 		DataAccessResult<Long> result = new DataAccessResult<Long>();
 		try
 		{
-			generateWSCollection(receipt).save();
-			result.setResult((new CollectionPayment(SessionManager.getLoggedCashdeskNumber(), DateTime.now(),
-					SessionManager.getLoggedInUsername(), receipt.getReceiptId(), receipt.getTotalAmount(), 1, 
-					null, null, receipt.getSupplyId(), 
+			long transactionNumber = generateWSCollection(receipt).save();
+			
+			result.setResult(new CollectionPayment(SessionManager.getLoggedCashdeskNumber(), DateTime.now(), 
+					SessionManager.getLoggedInUsername(), receipt.getReceiptId(), receipt.getTotalAmount(), 
+					1, transactionNumber, receipt.getSupplyId(), 
 					receipt.getSupplyNumber(), receipt.getReceiptNumber(), receipt.getYear(), 
-					receipt.getPeriodNumber(), SessionManager.getLoggedCashdeskDesc(), null)).save());
+					receipt.getPeriodNumber(), SessionManager.getLoggedCashdeskDesc()).save());
 		}
 		catch(SQLException e)
 		{ 
