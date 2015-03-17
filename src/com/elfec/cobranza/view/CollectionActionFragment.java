@@ -1,5 +1,10 @@
 package com.elfec.cobranza.view;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +16,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -45,6 +51,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	private Handler mHandler;
 	private long lastClickTime;
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
+	private NumberFormat nf;
 	
 	private int lastChecked;
 	
@@ -52,6 +59,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	private RelativeLayout layoutSupplyInfo;
 	private TextView txtNoSuppliesFound;
 	private LinearLayout layoutWaitingSearch;
+	private LinearLayout layoutTotalAmount;
 	
 	//Supply info
 	private TextView txtClientName;
@@ -63,6 +71,10 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	private ListView listReceipts;
 	private Button btnAction;
 	
+	//Total Amount
+	private TextView txtTotalAmount;
+	private TextView txtTotalAmountDecimal;
+
 	//Events
 	/**
 	 * Evento para ejecutar cuando se asigna un adapter de collection
@@ -83,6 +95,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 			{
 				((TextView)rootView.findViewById(R.id.lbl_receipt_list_type)).setText(collectionAdapter.getReceiptListTitle());
 		        setButtonInfo();
+		        getActivity().getActionBar().setTitle(collectionAdapter.getActionTitle());
 			}	
 		}
 	};
@@ -93,6 +106,12 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	 */
 	public CollectionActionFragment() {
 		this.mHandler = new Handler();
+		nf = DecimalFormat.getInstance();
+		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
+		customSymbol.setDecimalSeparator(',');
+		customSymbol.setGroupingSeparator('.');
+		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
+		nf.setGroupingUsed(true);
 	}
 	
 	@Override
@@ -109,30 +128,25 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
         layoutSupplyInfo = (RelativeLayout) view.findViewById(R.id.layout_supply_info);
         txtNoSuppliesFound = (TextView) view.findViewById(R.id.txt_no_supplies_found);
         layoutWaitingSearch = (LinearLayout) view.findViewById(R.id.layout_waiting_search);
+        layoutTotalAmount = (LinearLayout) view.findViewById(R.id.layout_total_amount);
         
         txtClientName = (TextView) view.findViewById(R.id.txt_client_name);
         txtNUS = (TextView) view.findViewById(R.id.txt_nus);
-        //TEST PRUPOUSES ONLY
         txtAccountNumber = (TextView) view.findViewById(R.id.txt_account_number);
         txtClientAddress = (TextView) view.findViewById(R.id.txt_client_address);
         
         listReceipts = (ListView) view.findViewById(R.id.list_receipts);
         setReceiptListItemClickListener();
         
+        txtTotalAmount = (TextView) view.findViewById(R.id.txt_total_amount);
+        txtTotalAmountDecimal = (TextView) view.findViewById(R.id.txt_total_amount_decimal);
+        
         btnAction = (Button) view.findViewById(R.id.btn_action);
         btnAction.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
-					List<CoopReceipt> selectedReceipts = new ArrayList<CoopReceipt>();
-					SparseBooleanArray sparseBooleanArray = listReceipts.getCheckedItemPositions();
-					int size = listReceipts.getAdapter().getCount();
-					for (int i = 0; i < size; i++) {
-						if(sparseBooleanArray.get(i))
-						{
-							selectedReceipts.add((CoopReceipt)listReceipts.getItemAtPosition(i));
-						}
-					}
+					List<CoopReceipt> selectedReceipts = getSelectedReceipts();
 					if(selectedReceipts.size()>0)
 						presenter.processAction(selectedReceipts);
 					else warnUserNoReceiptsSelected();
@@ -153,33 +167,14 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View v, final int position,
 					long id) {
-				new Thread(new Runnable() {
-		            @Override
-		            public void run() {
-		            	final boolean setChecked = (position!=lastChecked)? true : listReceipts.isItemChecked(position);
-		            	
-						int size = listReceipts.getAdapter().getCount();
-						lastChecked = position;
-		                for (int i = 0; i <= position; i++) {
-		                    final int pos = i;
-		                    mHandler.post(new Runnable() {
-		                        @Override
-		                        public void run() {
-		                        	listReceipts.setItemChecked(pos, setChecked);  
-		                        }
-		                    });
-		                }
-		                for (int i = position+1; i < size; i++) {
-		                    final int pos = i;
-		                    mHandler.post(new Runnable() {
-		                        @Override
-		                        public void run() {
-		                        	listReceipts.setItemChecked(pos, false);  
-		                        }
-		                    });
-		                }
-		            }
-		        }).start();  
+				final boolean setChecked = (position!=lastChecked)? true : listReceipts.isItemChecked(position);
+				listReceipts.setItemChecked(position, setChecked);					            	
+				int size = listReceipts.getAdapter().getCount();
+				lastChecked = position;
+                for (int i = 0; i < size; i++) {
+                	listReceipts.setItemChecked(i, (i>position)? false: setChecked);  
+                }
+				processTotalAmount();
 			}
 		});
 	}
@@ -190,12 +185,67 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	}
     
     /**
+     * Obtiene las facturas seleccionadas por el usuario
+     * @return lista de facturas seleccionadas
+     */
+	private List<CoopReceipt> getSelectedReceipts() {
+		List<CoopReceipt> selectedReceipts = new ArrayList<CoopReceipt>();
+		SparseBooleanArray sparseBooleanArray = listReceipts.getCheckedItemPositions();
+		int size = listReceipts.getAdapter().getCount();
+		for (int i = 0; i < size; i++) {
+			if(sparseBooleanArray.get(i))
+			{
+				selectedReceipts.add((CoopReceipt)listReceipts.getItemAtPosition(i));
+			}
+		}
+		return selectedReceipts;
+	}
+    
+    /**
 	 * Muestra un mensaje al usuario de que no se seleccionaron facturas para cobrar o anular
 	 */
 	public void warnUserNoReceiptsSelected()
 	{
 		Crouton.clearCroutonsForActivity(getActivity());
 		Crouton.makeText(getActivity(), R.string.msg_no_receipts_selected, croutonStyle).show();
+	}
+	/**
+	 * Modifica el texto de monto total
+	 */
+	private void processTotalAmount() {
+		new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				List<CoopReceipt> selectedReceipts = getSelectedReceipts();
+				int size = selectedReceipts.size();
+				final int animId = size==0?R.anim.slide_right_to_outside:R.anim.slide_left_from_outside;
+				final int visibility = size==0?View.GONE:View.VISIBLE;
+				BigDecimal totalAmount = BigDecimal.ZERO;
+				
+				for(CoopReceipt receipt : selectedReceipts)
+				{
+					totalAmount = totalAmount.add(receipt.getTotalAmount());
+				}
+				
+				final String totalAmountStr = nf.format
+						(totalAmount.toBigInteger().doubleValue());
+				final String decimal = (totalAmount.remainder(BigDecimal.ONE).multiply(new BigDecimal("100"))
+						.setScale(0, RoundingMode.CEILING).toString());
+
+				mHandler.post(new Runnable() {						
+					@Override
+					public void run() {
+						layoutTotalAmount.setVisibility(visibility);
+						layoutTotalAmount.startAnimation(AnimationUtils.loadAnimation(getActivity(), animId));
+						if(!totalAmountStr.equals("0"))
+						{
+							txtTotalAmount.setText(totalAmountStr);
+							txtTotalAmountDecimal.setText(decimal.equals("0")?"00":decimal);
+						}
+					}
+				});
+			}
+		}).start();
 	}
 
 	//#region Interface Methods
@@ -286,7 +336,6 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 				}
 			}
 		});
-	}
-	
+	}	
 	//#endregion
 }

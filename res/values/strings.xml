@@ -82,6 +82,7 @@
 		<string name="lbl_collection_payment">Cobranza</string>
 		<string name="btn_collect">Cobrar</string>
 		<string name="lbl_pending_receipt_list_title">Facturas pendientes</string>
+		<string name="lbl_total_amount">Total:</string>
 		<string name="title_payment_errors">ERROR AL REALIZAR COBRO</string>
 		
 		<!-- Collection Annulment -->
