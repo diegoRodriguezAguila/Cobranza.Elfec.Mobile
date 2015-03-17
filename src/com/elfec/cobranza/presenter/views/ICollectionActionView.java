@@ -5,6 +5,7 @@ import java.util.List;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
+import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
 
 /**
@@ -60,4 +61,8 @@ public interface ICollectionActionView {
 	 * @param errors
 	 */
 	public void showActionErrors(List<Exception> errors);
+	/**
+	 * Pide al usuario la confirmación para proceder con un pago
+	 */
+	public void showPaymentConfirmation(List<CoopReceipt> selectedReceipts, OnPaymentConfirmedCallback paymentCallback);
 }

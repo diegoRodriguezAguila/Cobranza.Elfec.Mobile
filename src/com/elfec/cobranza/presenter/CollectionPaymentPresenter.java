@@ -11,6 +11,15 @@ import com.elfec.cobranza.presenter.views.ICollectionActionView;
 
 public class CollectionPaymentPresenter extends CollectionActionPresenter {
 
+	/**
+	 * Interfaz que sirve para llamarse cuando un pago se confirma por el usuario
+	 * @author drodriguez
+	 *
+	 */
+	public interface OnPaymentConfirmedCallback
+	{
+		public void paymentConfirmed();
+	}
 	public CollectionPaymentPresenter(ICollectionActionView view) {
 		super(view);
 	}
@@ -23,17 +32,21 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter {
 
 	@Override
 	public void processAction(final List<CoopReceipt> selectedReceipts) {
-		Thread thread = new Thread(new Runnable() {			
+		view.showPaymentConfirmation(selectedReceipts, new OnPaymentConfirmedCallback() {			
 			@Override
-			public void run() {
-				DataAccessResult<List<Long>> result = CollectionManager.savePayments(selectedReceipts);
-				if(!result.hasErrors())
-					view.informActionSuccessfullyFinished();
-				view.showActionErrors(result.getErrors());
-				loadSupplyReceipts(currentSupply);
+			public void paymentConfirmed() {
+				new Thread(new Runnable() {			
+					@Override
+					public void run() {
+						DataAccessResult<List<Long>> result = CollectionManager.savePayments(selectedReceipts);
+						if(!result.hasErrors())
+							view.informActionSuccessfullyFinished();
+						view.showActionErrors(result.getErrors());
+						loadSupplyReceipts(currentSupply);
+					}
+				}).start();
 			}
-		});
-		thread.start();
+		});	
 	}
 
 }

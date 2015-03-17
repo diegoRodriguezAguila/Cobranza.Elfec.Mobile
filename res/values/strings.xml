@@ -26,6 +26,7 @@
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>
+    <string name="btn_confirm">Confirmar</string>
 
     <!-- Zone and Routes -->
     <string name="title_zone_list">Zonas</string>
@@ -78,12 +79,17 @@
 		<string name="msg_searching">Buscando suministro&#8230;</string>
 		<string name="msg_no_supplies_found">Actualmente no se buscó ningún suministro o las búsquedas realizadas no produjeron ningún resultado</string>
 		<string name="msg_no_receipts_selected">Seleccione por lo menos una factura para proceder!</string>
+		
 		<!-- Collection Payment -->
 		<string name="lbl_collection_payment">Cobranza</string>
 		<string name="btn_collect">Cobrar</string>
 		<string name="lbl_pending_receipt_list_title">Facturas pendientes</string>
 		<string name="lbl_total_amount">Total:</string>
 		<string name="title_payment_errors">ERROR AL REALIZAR COBRO</string>
+		<string name="title_payment_confirmation">CONFIRMACIÓN DE COBRO</string>
+		<string name="lbl_payment_confirmation">Se procederá a realizar el cobro al suministro %1$s, por el monto de:</string>
+		<string name="lbl_payment_count">y se imprimirá%1$s %2$s factura%3$s</string>
+		<string name="msg_succesfull_payment">El cobro se realizó exitosamente!</string>
 		
 		<!-- Collection Annulment -->
 		<string name="lbl_collection_annulment">Anulación</string>

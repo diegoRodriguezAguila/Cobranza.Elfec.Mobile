@@ -24,7 +24,7 @@ public class CollectionManager {
 
 	/**
 	 * Registra el cobro de multiples facturas
-	 * @param receipt
+	 * @param receipts
 	 * @return Lista de los Ids de los cobros realizados
 	 */
 	public static DataAccessResult<List<Long>> savePayments(List<CoopReceipt> receipts){

@@ -1,10 +1,6 @@
 package com.elfec.cobranza.view;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +12,8 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -31,12 +27,15 @@ import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
+import com.elfec.cobranza.helpers.utils.ReceiptsCounter;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
+import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
 import com.elfec.cobranza.view.adapters.ReceiptAdapter;
 import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
+import com.elfec.cobranza.view.controls.services.PaymentConfirmationDialogService;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 /**
@@ -51,7 +50,6 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	private Handler mHandler;
 	private long lastClickTime;
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
-	private NumberFormat nf;
 	
 	private int lastChecked;
 	
@@ -106,12 +104,6 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	 */
 	public CollectionActionFragment() {
 		this.mHandler = new Handler();
-		nf = DecimalFormat.getInstance();
-		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
-		customSymbol.setDecimalSeparator(',');
-		customSymbol.setGroupingSeparator('.');
-		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
-		nf.setGroupingUsed(true);
 	}
 	
 	@Override
@@ -220,17 +212,8 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 				int size = selectedReceipts.size();
 				final int animId = size==0?R.anim.slide_right_to_outside:R.anim.slide_left_from_outside;
 				final int visibility = size==0?View.GONE:View.VISIBLE;
-				BigDecimal totalAmount = BigDecimal.ZERO;
-				
-				for(CoopReceipt receipt : selectedReceipts)
-				{
-					totalAmount = totalAmount.add(receipt.getTotalAmount());
-				}
-				
-				final String totalAmountStr = nf.format
-						(totalAmount.toBigInteger().doubleValue());
-				final String decimal = (totalAmount.remainder(BigDecimal.ONE).multiply(new BigDecimal("100"))
-						.setScale(0, RoundingMode.CEILING).toString());
+				final BigDecimal totalAmount = ReceiptsCounter.countTotalAmount(selectedReceipts);				
+				final String totalAmountStr = ReceiptsCounter.formatIntAmount(totalAmount);
 
 				mHandler.post(new Runnable() {						
 					@Override
@@ -240,7 +223,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 						if(!totalAmountStr.equals("0"))
 						{
 							txtTotalAmount.setText(totalAmountStr);
-							txtTotalAmountDecimal.setText(decimal.equals("0")?"00":decimal);
+							txtTotalAmountDecimal.setText(ReceiptsCounter.formatDecimalAmount(totalAmount));
 						}
 					}
 				});
@@ -316,7 +299,8 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				
+				Crouton.clearCroutonsForActivity(getActivity());
+				Crouton.makeText(getActivity(), R.string.msg_succesfull_payment, croutonStyle).show();
 			}
 		});
 	}
@@ -336,6 +320,14 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 				}
 			}
 		});
+	}
+
+	@Override
+	public void showPaymentConfirmation(List<CoopReceipt> selectedReceipts,
+			OnPaymentConfirmedCallback paymentCallback) {
+		new PaymentConfirmationDialogService(getActivity(), selectedReceipts, paymentCallback).show();
 	}	
+
+	
 	//#endregion
 }
