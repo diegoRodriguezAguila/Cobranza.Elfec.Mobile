@@ -92,6 +92,7 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
         View view = inflater.inflate(R.layout.fragment_search_payment_collection, container, false);
         btnSearch = (Button) view.findViewById(R.id.btn_search);
         txtNUS = (EditText) view.findViewById(R.id.txt_nus);
+        txtNUS.setText("425154");
         txtAccountNumber = (EditText) view.findViewById(R.id.txt_account_number);
         btnSearch.setOnClickListener(new OnClickListener() {			
 			@Override

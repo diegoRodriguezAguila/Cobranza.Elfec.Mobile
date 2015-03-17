@@ -174,6 +174,9 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
         }).start();     
 	}
 
+	/**
+	 * Muestra un mensaje al usuario de que no se seleccionaron rutas para cargar
+	 */
 	public void warnUserNotSelectedRoutes()
 	{
 		Crouton.clearCroutonsForActivity(getActivity());

@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import com.elfec.cobranza.R;
-import com.elfec.cobranza.presenter.behavior.CollectionPaymentBehavior;
+import com.elfec.cobranza.presenter.CollectionActionPresenter;
+import com.elfec.cobranza.presenter.CollectionPaymentPresenter;
+import com.elfec.cobranza.presenter.views.ICollectionActionView;
 
 public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 
 	public CollectionPaymentAdapter(Context context) {
-		super(context, new CollectionPaymentBehavior());
+		super(context);
 	}
 
 	@Override
@@ -35,6 +37,17 @@ public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 	@Override
 	public String getReceiptListTitle() {
 		return getContext().getResources().getString(R.string.lbl_pending_receipt_list_title);
+	}
+
+	@Override
+	public int getActionErrorsTitleId() {
+		return R.string.title_payment_errors;
+	}
+
+	@Override
+	public CollectionActionPresenter getCollectionPresenter(
+			ICollectionActionView view) {
+		return new CollectionPaymentPresenter(view);
 	}
 
 }

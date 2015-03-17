@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import com.elfec.cobranza.R;
-import com.elfec.cobranza.presenter.behavior.CollectionAnnulmentBehavior;
+import com.elfec.cobranza.presenter.CollectionActionPresenter;
+import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter;
+import com.elfec.cobranza.presenter.views.ICollectionActionView;
 
 public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
 
 	public CollectionAnnulmentAdapter(Context context) {
-		super(context, new CollectionAnnulmentBehavior());
+		super(context);
 	}
 
 	@Override
@@ -35,6 +37,17 @@ public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
 	@Override
 	public String getReceiptListTitle() {
 		return getContext().getResources().getString(R.string.lbl_paid_receipt_list_title);
+	}
+
+	@Override
+	public int getActionErrorsTitleId() {
+		return R.string.title_annulment_errors;
+	}
+
+	@Override
+	public CollectionActionPresenter getCollectionPresenter(
+			ICollectionActionView view) {
+		return new CollectionAnnulmentPresenter(view);
 	}
 
 }

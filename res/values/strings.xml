@@ -77,16 +77,18 @@
 		<string name="msg_atleast_one_filed">Debe proporcionar al menos un término de búsqueda!</string>
 		<string name="msg_searching">Buscando suministro&#8230;</string>
 		<string name="msg_no_supplies_found">Actualmente no se buscó ningún suministro o las búsquedas realizadas no produjeron ningún resultado</string>
-		
+		<string name="msg_no_receipts_selected">Seleccione por lo menos una factura para proceder!</string>
 		<!-- Collection Payment -->
 		<string name="lbl_collection_payment">Cobranza</string>
 		<string name="btn_collect">Cobrar</string>
 		<string name="lbl_pending_receipt_list_title">Facturas pendientes</string>
+		<string name="title_payment_errors">ERROR AL REALIZAR COBRO</string>
 		
 		<!-- Collection Annulment -->
 		<string name="lbl_collection_annulment">Anulación</string>
 		<string name="btn_annulate">Anular</string>	
 		<string name="lbl_paid_receipt_list_title">Facturas cobradas</string>
+		<string name="title_annulment_errors">ERROR AL ANULAR COBRO</string>
 		
 			<!-- ListItems Receipts -->
 			<string name="lbl_currency">Bs.</string>

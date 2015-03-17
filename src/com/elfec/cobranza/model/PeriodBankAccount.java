@@ -6,6 +6,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
+import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 
 /**
  * Almacena los BAN_CTAS_PER
@@ -98,7 +99,8 @@ public class PeriodBankAccount extends Model {
 	public static PeriodBankAccount findByCashdeskNumberAndDate(int cashdeskNumber)
 	{
 		return new Select().from(PeriodBankAccount.class)
-				.where("BankAccountId = ? AND PeriodDate = ?", cashdeskNumber, DateTime.now().withTimeAtStartOfDay()).executeSingle();
+				.where("BankAccountId = ? AND PeriodDate = ?", cashdeskNumber, 
+				(new JodaDateTimeSerializer()).serialize(DateTime.now().withTimeAtStartOfDay())).executeSingle();
 	}
 	
 	//#region Getters y Setters

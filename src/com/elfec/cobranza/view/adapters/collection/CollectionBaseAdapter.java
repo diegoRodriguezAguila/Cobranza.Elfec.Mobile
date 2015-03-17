@@ -1,6 +1,8 @@
 package com.elfec.cobranza.view.adapters.collection;
 
-import com.elfec.cobranza.presenter.behavior.ICollectionBehavior;
+
+import com.elfec.cobranza.presenter.CollectionActionPresenter;
+import com.elfec.cobranza.presenter.views.ICollectionActionView;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -13,12 +15,10 @@ import android.graphics.drawable.Drawable;
 public abstract class CollectionBaseAdapter {
 
 	private Context context;
-	private ICollectionBehavior collectionBehavior;
 
-	public CollectionBaseAdapter(Context context, ICollectionBehavior collectionBehavior)
+	public CollectionBaseAdapter(Context context)
 	{
 		this.context = context;
-		this.collectionBehavior = collectionBehavior;
 	}
 	
 	/**
@@ -47,12 +47,15 @@ public abstract class CollectionBaseAdapter {
 	 */
 	public abstract String getReceiptListTitle();
 	/**
-	 * Obtiene el comportamiento con el que debe regirse el presentador de la acción de cobranza
+	 * Obtiene el id de la cadena que se muestra en el titulo de 
+	 * los errores de la acción
+	 * @return id de la string
 	 */
-	public ICollectionBehavior getCollectionBehavior()
-	{
-		return collectionBehavior;
-	}
+	public abstract int getActionErrorsTitleId();
+	/**
+	 * Obtiene el presenter adecuado para la acción de cobranza
+	 */
+	public abstract CollectionActionPresenter getCollectionPresenter(ICollectionActionView view);
 
 	/**
 	 * Obtiene el context

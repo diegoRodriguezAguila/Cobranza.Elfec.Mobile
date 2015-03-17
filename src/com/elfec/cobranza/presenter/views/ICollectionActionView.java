@@ -51,4 +51,13 @@ public interface ICollectionActionView {
 	 * @param collectionAdapter
 	 */
 	public void setCollectionAdapter(CollectionBaseAdapter collectionAdapter);
+	/**
+	 * Informa al usuario que se completó la acción exitosamente
+	 */
+	public void informActionSuccessfullyFinished();
+	/**
+	 * Muestra los errores ocurridos en la acción
+	 * @param errors
+	 */
+	public void showActionErrors(List<Exception> errors);
 }

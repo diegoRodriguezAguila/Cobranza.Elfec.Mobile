@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
@@ -30,6 +31,8 @@ import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
 import com.elfec.cobranza.view.adapters.ReceiptAdapter;
 import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 /**
  * Fragment que representa solamente la pantalla de pago de un cobro 
  * @author drodriguez
@@ -41,6 +44,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	private CollectionActionPresenter presenter;
 	private Handler mHandler;
 	private long lastClickTime;
+	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
 	
 	private int lastChecked;
 	
@@ -51,7 +55,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	
 	//Supply info
 	private TextView txtClientName;
-	private TextView txtNus;
+	private TextView txtNUS;
 	private TextView txtAccountNumber;
 	private TextView txtClientAddress;
 	
@@ -88,13 +92,14 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	 * fragment (e.g. upon screen orientation changes).
 	 */
 	public CollectionActionFragment() {
-		presenter = new CollectionActionPresenter(this);
 		this.mHandler = new Handler();
 	}
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+        super.onCreate(savedInstanceState);     
+        croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
+				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
     }
 
     @Override
@@ -106,7 +111,8 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
         layoutWaitingSearch = (LinearLayout) view.findViewById(R.id.layout_waiting_search);
         
         txtClientName = (TextView) view.findViewById(R.id.txt_client_name);
-        txtNus = (TextView) view.findViewById(R.id.txt_nus);
+        txtNUS = (TextView) view.findViewById(R.id.txt_nus);
+        //TEST PRUPOUSES ONLY
         txtAccountNumber = (TextView) view.findViewById(R.id.txt_account_number);
         txtClientAddress = (TextView) view.findViewById(R.id.txt_client_address);
         
@@ -129,7 +135,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 					}
 					if(selectedReceipts.size()>0)
 						presenter.processAction(selectedReceipts);
-					//else warnUserNotSelectedRoutes();
+					else warnUserNoReceiptsSelected();
 				}
 		        lastClickTime = SystemClock.elapsedRealtime();
 			}
@@ -182,6 +188,15 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 		btnAction.setText(collectionAdapter.getButtonText());
 		btnAction.setCompoundDrawablesWithIntrinsicBounds(null, null, collectionAdapter.getButtonDrawable(),null);
 	}
+    
+    /**
+	 * Muestra un mensaje al usuario de que no se seleccionaron facturas para cobrar o anular
+	 */
+	public void warnUserNoReceiptsSelected()
+	{
+		Crouton.clearCroutonsForActivity(getActivity());
+		Crouton.makeText(getActivity(), R.string.msg_no_receipts_selected, croutonStyle).show();
+	}
 
 	//#region Interface Methods
     
@@ -212,7 +227,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 			@Override
 			public void run() {
 				txtClientName.setText(TextFormater.capitalize(supply.getClientName()));
-				txtNus.setText(""+supply.getSupplyId());
+				txtNUS.setText(""+supply.getSupplyId());
 				txtAccountNumber.setText(AccountFormatter.formatAccountNumber(supply.getSupplyNumber()));
 				txtClientAddress.setText(TextFormater.capitalize(supply.getClientAddress(), 2));
 				layoutSupplyInfo.setVisibility(View.VISIBLE);
@@ -242,8 +257,35 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	@Override
 	public void setCollectionAdapter(CollectionBaseAdapter collectionAdapter) {
 		this.collectionAdapter = collectionAdapter;
-		presenter.setCollectionBehavior(collectionAdapter.getCollectionBehavior());
+		presenter = collectionAdapter.getCollectionPresenter(this);
 		this.defaultCollectionAdapterEvent.collectionAdapterSet(collectionAdapter, getView());
+	}
+
+	@Override
+	public void informActionSuccessfullyFinished() {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				
+			}
+		});
+	}
+
+	@Override
+	public void showActionErrors(final List<Exception> errors) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(errors.size()>0)
+				{
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
+					builder.setTitle(collectionAdapter.getActionErrorsTitleId())
+					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+					.setPositiveButton(R.string.btn_ok, null)
+					.show();
+				}
+			}
+		});
 	}
 	
 	//#endregion

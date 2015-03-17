@@ -11,6 +11,7 @@ import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.PeriodBankAccount;
 import com.elfec.cobranza.model.WSCollection;
 import com.elfec.cobranza.model.exceptions.CollectionPaymentException;
+import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
 
 import android.database.SQLException;
 
@@ -51,16 +52,18 @@ public class CollectionManager {
 		DataAccessResult<Long> result = new DataAccessResult<Long>();
 		try
 		{
+			generateWSCollection(receipt).save();
 			result.setResult((new CollectionPayment(SessionManager.getLoggedCashdeskNumber(), DateTime.now(),
 					SessionManager.getLoggedInUsername(), receipt.getReceiptId(), receipt.getTotalAmount(), 1, 
 					null, null, receipt.getSupplyId(), 
 					receipt.getSupplyNumber(), receipt.getReceiptNumber(), receipt.getYear(), 
 					receipt.getPeriodNumber(), SessionManager.getLoggedCashdeskDesc(), null)).save());
-			generateWSCollection(receipt).save();
 		}
 		catch(SQLException e)
 		{ 
 			result.addError(new CollectionPaymentException(receipt.getReceiptNumber()));
+		} catch (NoPeriodBankAccountException e) {
+			result.addError(e);
 		}
 		return result;
 	}
@@ -69,11 +72,15 @@ public class CollectionManager {
 	 * Genera el COB_WS para el cobro realizado
 	 * @param receipt
 	 * @return WSCollection
+	 * @throws NoPeriodBankAccountException 
 	 */
-	private static WSCollection generateWSCollection(CoopReceipt receipt) {
+	private static WSCollection generateWSCollection(CoopReceipt receipt) throws NoPeriodBankAccountException {
+		PeriodBankAccount period = PeriodBankAccount.findByCashdeskNumberAndDate(SessionManager.getLoggedCashdeskNumber());
+		if(period==null)
+			throw new NoPeriodBankAccountException(SessionManager.getLoggedCashdeskNumber());
 		return new WSCollection("COBRANZA", receipt.getReceiptId(), "P", 
-				1, SessionManager.getLoggedCashdeskNumber(), 
-				PeriodBankAccount.findByCashdeskNumberAndDate(SessionManager.getLoggedCashdeskNumber()).getPeriodNumber(), 
-				DateTime.now());
+					1, SessionManager.getLoggedCashdeskNumber(), 
+					period.getPeriodNumber(), 
+					DateTime.now());
 	}
 }
