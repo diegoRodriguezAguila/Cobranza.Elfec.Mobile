@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical" >
+    
+    <TextView 
+        android:id="@+id/lbl_annulment_confirmation"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+	    android:textColor="@color/gray_contrast_color"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginStart="5dp"
+	    android:text="@string/lbl_annulment_confirmation"
+	    android:textSize="16sp" />
+    <TextView
+        android:id="@+id/txt_year_month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:text="@string/sample_year_month"
+        android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+        android:textColor="@color/dark_gray"
+        android:textSize="20sp" />
+    <TextView
+    	android:id="@+id/txt_receipt_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+        android:textColor="@color/dark_gray"
+        android:text="@string/sample_receipt_number"
+        android:drawableLeft="@drawable/receipt"
+        android:drawableStart="@drawable/receipt"
+        android:gravity="center_vertical"
+        android:textSize="18sp" />
+    <TextView 
+        android:id="@+id/lbl_select_annulment_reason"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+	    android:textColor="@color/gray_contrast_color"
+	    android:gravity="end"
+	    android:text="@string/lbl_select_annulment_reason"
+	    android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/spinner_annulment_reason"
+        android:layout_width="match_parent"
+        android:padding="0dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

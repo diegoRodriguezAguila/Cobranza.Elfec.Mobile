@@ -30,6 +30,12 @@ public class AnnulmentReason extends Model {
 		this.annulmentReasonRemoteId = annulmentReasonRemoteId;
 		this.description = description;
 	}
+	
+	@Override 
+	public String toString()
+	{
+		return description;
+	}
 
 	public int getAnnulmentReasonRemoteId() {
 		return annulmentReasonRemoteId;

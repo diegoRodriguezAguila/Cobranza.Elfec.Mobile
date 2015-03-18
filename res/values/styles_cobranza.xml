@@ -54,14 +54,14 @@
     </style>
 
     <style name="AdpNormalButtonStyle" parent="Widget.AlertDialogPro.Material.Light.Button">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="fontPath">fonts/segoe_ui.ttf</item>
+        <item name="android:textColor">@color/gray_contrast_color</item>
+        <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
         <item name="android:background">@drawable/adp_btn_mtrl_light</item>
     </style>
     
     <style name="AdpPositiveButtonStyle" parent="Widget.AlertDialogPro.Material.Light.Button">
-        <item name="android:textColor">?attr/colorAccent</item>
-        <item name="fontPath">fonts/segoe_ui.ttf</item>
+        <item name="android:textColor">@color/cobranza_color</item>
+        <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
         <item name="android:background">@drawable/adp_btn_mtrl_light</item>
     </style>
     

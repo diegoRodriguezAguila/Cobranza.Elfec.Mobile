@@ -96,8 +96,11 @@
 		<string name="btn_annulate">Anular</string>	
 		<string name="lbl_paid_receipt_list_title">Facturas cobradas</string>
 		<string name="title_annulment_errors">ERROR AL ANULAR COBRO</string>
+		<string name="title_collection_annulment">ANULACIÓN DE COBRO</string>
+		<string name="lbl_annulment_confirmation">Se procederá con la anulación de la factura:</string>
+		<string name="lbl_select_annulment_reason">Debe seleccionar un  motivo de anulación:</string>
 		
-		<string name="msg_succesfull_annulment">El cobro se anuló exitosamente!</string>
+		<string name="msg_succesfull_annulment">El cobro y su factura se anularon exitosamente!</string>
 		
 			<!-- ListItems Receipts -->
 			<string name="lbl_currency">Bs.</string>
@@ -123,7 +126,7 @@
 	<string name="sample_year_month">2014 Diciembre</string>
 	<string name="sample_amount">1.323</string>
 	<string name="sample_amount_decimal">30</string>
-	<string name="sample_receipt_number">327828</string>
+	<string name="sample_receipt_number">N°: 327828</string>
 	<string name="sample_consume">145.252</string>
 	<string name="sample_category">Categoría: RE2PB</string>
 	

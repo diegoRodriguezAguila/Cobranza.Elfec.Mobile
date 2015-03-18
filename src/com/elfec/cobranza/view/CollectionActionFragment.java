@@ -35,6 +35,7 @@ import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnn
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
 import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
+import com.elfec.cobranza.view.controls.services.CollectionAnnulmentDialogService;
 import com.elfec.cobranza.view.controls.services.PaymentConfirmationDialogService;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -331,8 +332,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	@Override
 	public void showAnnulmentConfirmation(List<CoopReceipt> selectedReceipts,
 			OnCollectionAnnulmentCallback annulmentCallback) {
-		// TODO dialgo service de confirmación
-		annulmentCallback.collectionAnnuled(1);
+		new CollectionAnnulmentDialogService(getActivity(), selectedReceipts, annulmentCallback).show();
 	}
 	
 	//#endregion
