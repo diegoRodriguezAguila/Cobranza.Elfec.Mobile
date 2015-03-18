@@ -256,6 +256,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	public void showSearchErrors(List<Exception> errors) {
 		txtNoSuppliesFound.setText(MessageListFormatter.fotmatHTMLFromErrors(errors));
 		txtNoSuppliesFound.setVisibility(View.VISIBLE);
+		layoutSupplyInfo.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -282,12 +283,12 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
+				int size = receipts.size();
 				listReceipts.setAdapter(collectionAdapter.getReceiptAdapter(receipts));
 				hideSearchingMessage();
-				if(layoutSupplyInfo.getVisibility()==View.GONE)
-					layoutSupplyInfo.setVisibility(View.VISIBLE);
+				layoutSupplyInfo.setVisibility((size>0)?View.VISIBLE:View.GONE);
 				processTotalAmount();
-				if(receipts.size()==0)
+				if(size==0)
 					txtReceiptListType.setText("Sin " +collectionAdapter.getReceiptListTitle().toLowerCase(Locale.getDefault()));
 				else txtReceiptListType.setText(collectionAdapter.getReceiptListTitle());
 			}
