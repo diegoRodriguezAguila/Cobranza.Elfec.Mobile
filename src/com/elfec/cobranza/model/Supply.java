@@ -2,11 +2,14 @@ package com.elfec.cobranza.model;
 
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
+import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 /**
  * Contiene la información del suministro, cliente y medidor
  * @author drodriguez
@@ -115,15 +118,18 @@ public class Supply extends Model {
 	}
 	
 	/**
-	 * Obtiene todas las facturas  del suministro que ya fueron pagadas
+	 * Obtiene todas las facturas  del suministro que ya fueron pagadas, a partir de la fecha proporcionada
+	 * @param fromDate
 	 * @return lista de comprobantes
 	 */
-	public List<CoopReceipt> getPaidReceipts()
+	public List<CoopReceipt> getDatePaidReceipts(DateTime fromDate)
 	{
+		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
 		return new Select()
 	        .from(CoopReceipt.class).as("r").where("SupplyId = ? AND EXISTS "
 	        		+ "(SELECT 0 FROM CollectionPayments AS c "
-	        		+ "WHERE r.ReceiptId = c.ReceiptId AND Status=1)", supplyId)
+	        		+ "WHERE r.ReceiptId = c.ReceiptId AND c.PaymentDate >= ? AND Status=1)", supplyId,
+	        		serializer.serialize(fromDate.withTimeAtStartOfDay()))
 	        		.orderBy("Year DESC, PeriodNumber DESC").execute();
 	}
 	

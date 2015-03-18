@@ -4,6 +4,8 @@ import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import com.elfec.cobranza.business_logic.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.DataAccessResult;
@@ -68,12 +70,12 @@ public class SupplyManager {
 		return supply.getPendingReceipts();		
 	}
 	/**
-	 * Obtiene las facturas que ya fueron pagadas de un suministro
+	 * Obtiene las facturas que ya fueron pagadas de un suministro en la fecha actual
 	 * @param supply
 	 * @return
 	 */
-	public static List<CoopReceipt> getPaidReceipts(Supply supply)
+	public static List<CoopReceipt> getTodayPaidReceipts(Supply supply)
 	{
-		return supply.getPaidReceipts();		
+		return supply.getDatePaidReceipts(DateTime.now());		
 	}
 }

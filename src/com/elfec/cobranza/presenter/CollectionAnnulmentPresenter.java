@@ -27,7 +27,7 @@ public class CollectionAnnulmentPresenter extends CollectionActionPresenter{
 	@Override
 	public void loadSupplyReceipts(Supply supply) {
 		currentSupply = supply;
-		view.showReceipts(SupplyManager.getPaidReceipts(supply));
+		view.showReceipts(SupplyManager.getTodayPaidReceipts(supply));
 	}
 
 	@Override

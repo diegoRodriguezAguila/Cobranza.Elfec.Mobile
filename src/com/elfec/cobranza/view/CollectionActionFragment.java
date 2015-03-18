@@ -3,6 +3,7 @@ package com.elfec.cobranza.view;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -65,6 +66,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	private TextView txtNUS;
 	private TextView txtAccountNumber;
 	private TextView txtClientAddress;
+	private TextView txtReceiptListType;
 	
 	//Receipts
 	private ListView listReceipts;
@@ -92,7 +94,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 		public void collectionAdapterSet(CollectionBaseAdapter collectionAdapter, View rootView) {
 			if(rootView!=null)
 			{
-				((TextView)rootView.findViewById(R.id.lbl_receipt_list_type)).setText(collectionAdapter.getReceiptListTitle());
+				txtReceiptListType.setText(collectionAdapter.getReceiptListTitle());
 		        setButtonInfo();
 		        getActivity().getActionBar().setTitle(collectionAdapter.getActionTitle());
 			}	
@@ -127,6 +129,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
         txtNUS = (TextView) view.findViewById(R.id.txt_nus);
         txtAccountNumber = (TextView) view.findViewById(R.id.txt_account_number);
         txtClientAddress = (TextView) view.findViewById(R.id.txt_client_address);
+        txtReceiptListType = (TextView) view.findViewById(R.id.lbl_receipt_list_type);
         
         listReceipts = (ListView) view.findViewById(R.id.list_receipts);
         setReceiptListItemClickListener();
@@ -284,6 +287,9 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 				if(layoutSupplyInfo.getVisibility()==View.GONE)
 					layoutSupplyInfo.setVisibility(View.VISIBLE);
 				processTotalAmount();
+				if(receipts.size()==0)
+					txtReceiptListType.setText("Sin " +collectionAdapter.getReceiptListTitle().toLowerCase(Locale.getDefault()));
+				else txtReceiptListType.setText(collectionAdapter.getReceiptListTitle());
 			}
 		});
 	}
