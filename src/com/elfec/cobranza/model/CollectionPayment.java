@@ -104,10 +104,6 @@ public class CollectionPayment extends Model {
 	public CollectionPayment() {
 		super();
 	}
-
-	
-
-	//#region Getters y Setters
 	
 	public CollectionPayment(int cashDeskNumber, DateTime paymentDate,
 			String user, int receiptId, BigDecimal amount, int status,
@@ -130,7 +126,23 @@ public class CollectionPayment extends Model {
 		this.cashDeskDescription = cashDeskDescription;
 	}
 
+	/**
+	 * Anula el cobro, poniendo su estado en cero y llenando los campos de
+	 * anulación. <br><b>NOTA.-</b> No lo guarda, es necesario llamar a save()
+	 * @param annulmentUser
+	 * @param annulmentTransacNum
+	 * @param annulmentReasonId
+	 */
+	public void setAnnulated(String annulmentUser, long annulmentTransacNum, int annulmentReasonId)
+	{
+		status = 0;
+		annulmentDate = DateTime.now();
+		this.annulmentUser = annulmentUser;
+		this.annulmentTransacNum = annulmentTransacNum;
+		this.annulmentReasonId = annulmentReasonId;
+	}
 
+	//#region Getters y Setters
 
 	public int getCashDeskNumber() {
 		return cashDeskNumber;

@@ -10,7 +10,8 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.PeriodBankAccount;
 import com.elfec.cobranza.model.WSCollection;
-import com.elfec.cobranza.model.exceptions.CollectionPaymentException;
+import com.elfec.cobranza.model.exceptions.AnnulationTimeExpiredException;
+import com.elfec.cobranza.model.exceptions.CollectionException;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
 
 import android.database.SQLException;
@@ -27,13 +28,13 @@ public class CollectionManager {
 	 * @param receipts
 	 * @return Lista de los Ids de los cobros realizados
 	 */
-	public static DataAccessResult<List<Long>> savePayments(List<CoopReceipt> receipts){
+	public static DataAccessResult<List<Long>> payCollections(List<CoopReceipt> receipts){
 		DataAccessResult<List<Long>> result = new DataAccessResult<List<Long>>();
 		DataAccessResult<Long> res;
 		List<Long> collectionPaymentIds = new ArrayList<Long>();
 		int size = receipts.size();
 		for (int i = 0; i < size; i++) {
-			res = savePayment(receipts.get(i));
+			res = payCollection(receipts.get(i));
 			result.addErrors(res.getErrors());
 			collectionPaymentIds.add(res.getResult());
 			if(result.hasErrors())
@@ -48,11 +49,11 @@ public class CollectionManager {
 	 * @param receipt
 	 * @return Resultado del acceso a datos, donde el resultado es el id que se le asignó al comprobante
 	 */
-	public static DataAccessResult<Long> savePayment(CoopReceipt receipt){
+	public static DataAccessResult<Long> payCollection(CoopReceipt receipt){
 		DataAccessResult<Long> result = new DataAccessResult<Long>();
 		try
 		{
-			long transactionNumber = generateWSCollection(receipt).save();
+			long transactionNumber = generateWSCollection(receipt, "COBRANZA").save();
 			
 			result.setResult(new CollectionPayment(SessionManager.getLoggedCashdeskNumber(), DateTime.now(), 
 					SessionManager.getLoggedInUsername(), receipt.getReceiptId(), receipt.getTotalAmount(), 
@@ -62,8 +63,57 @@ public class CollectionManager {
 		}
 		catch(SQLException e)
 		{ 
-			result.addError(new CollectionPaymentException(receipt.getReceiptNumber()));
+			result.addError(new CollectionException(receipt.getReceiptNumber()));
 		} catch (NoPeriodBankAccountException e) {
+			result.addError(e);
+		}
+		return result;
+	}
+	/**
+	 * Realiza la anulación de múltiples cobros
+	 * @param receipts
+	 * @return
+	 */
+	public static DataAccessResult<Void> annulateCollections(List<CoopReceipt> receipts, int annulmentReasonId){
+		DataAccessResult<Void> result = new DataAccessResult<Void>();
+		DataAccessResult<Void> res;
+		
+		int size = receipts.size();
+		for (int i = 0; i < size; i++) {
+			res = annulateCollection(receipts.get(i), annulmentReasonId);
+			result.addErrors(res.getErrors());
+			if(result.hasErrors())
+				break;
+		}
+		return result;
+	}
+	
+	/**
+	 * Anula el cobro de una factura
+	 * @param receipt
+	 * @return Resultado del acceso a datos, donde el resultado es el id que se le asignó al comprobante
+	 */
+	public static DataAccessResult<Void> annulateCollection(CoopReceipt receipt, int annulmentReasonId){
+		DataAccessResult<Void> result = new DataAccessResult<Void>();
+		try
+		{
+			CollectionPayment payment = receipt.getActiveCollectionPayment();
+			if(payment.getPaymentDate().getDayOfYear()!=DateTime.now().getDayOfYear())
+				throw new AnnulationTimeExpiredException(receipt.getReceiptNumber(), receipt.getId());
+			
+			long transactionNumber = generateWSCollection(receipt, "ANULACION_COBRANZA").save();			
+			if(payment !=null)
+			{
+				payment.setAnnulated(SessionManager.getLoggedInUsername(), transactionNumber, annulmentReasonId);
+				payment.save();
+				receipt.clearActiveCollectionPayment();
+			}
+		}
+		catch(SQLException e){ 
+			result.addError(new CollectionException(receipt.getReceiptNumber()));
+		} catch (NoPeriodBankAccountException e) {
+			result.addError(e);
+		} catch (AnnulationTimeExpiredException e) {
 			result.addError(e);
 		}
 		return result;
@@ -72,14 +122,15 @@ public class CollectionManager {
 	/**
 	 * Genera el COB_WS para el cobro realizado
 	 * @param receipt
+	 * @param type COBRANZA o ANULACION_COBRANZA
 	 * @return WSCollection
 	 * @throws NoPeriodBankAccountException 
 	 */
-	private static WSCollection generateWSCollection(CoopReceipt receipt) throws NoPeriodBankAccountException {
+	private static WSCollection generateWSCollection(CoopReceipt receipt, String type) throws NoPeriodBankAccountException {
 		PeriodBankAccount period = PeriodBankAccount.findByCashdeskNumberAndDate(SessionManager.getLoggedCashdeskNumber());
 		if(period==null)
 			throw new NoPeriodBankAccountException(SessionManager.getLoggedCashdeskNumber());
-		return new WSCollection("COBRANZA", receipt.getReceiptId(), "P", 
+		return new WSCollection(type, receipt.getReceiptId(), "P", 
 					1, SessionManager.getLoggedCashdeskNumber(), 
 					period.getPeriodNumber(), 
 					DateTime.now());

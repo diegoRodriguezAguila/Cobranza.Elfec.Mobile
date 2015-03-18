@@ -200,6 +200,10 @@ public class CoopReceipt extends Model {
 	
 	//EXTRA ATTRIBUTES
 	private SupplyStatus supplyStatus;
+	/**
+	 * Sirve de caché de la consulta, debe actualizarse al realizar una anulación
+	 */
+	private CollectionPayment collectionPayment;
 	
 	public CoopReceipt() {
 		super();
@@ -270,6 +274,29 @@ public class CoopReceipt extends Model {
 							.where("ReceiptId = ?", this.receiptId)
 							.where("(ConceptId = 10010 OR ConceptId = 10080)").executeSingle();
 		return supplyStatus;
+	}
+	
+	/**
+	 * Obtiene su cobro (CollectionPayment) en caso de tener uno, y que tenga el estado en 1
+	 * @return
+	 */
+	public CollectionPayment getActiveCollectionPayment()
+	{
+		if(collectionPayment==null)
+			collectionPayment  = new Select().from(CollectionPayment.class)
+					.where("Status=1")
+					.where("ReceiptId = ? ", receiptId)
+					.where("SupplyId = ?", supplyId)
+					.orderBy("PaymentDate DESC")
+					.executeSingle();
+		return collectionPayment;
+	}
+	/**
+	 * Limpia la variable que sirve de caché para la consulta de obtención del cobro  actual activo (estado 1)
+	 */
+	public void clearActiveCollectionPayment()
+	{
+		collectionPayment = null;
 	}
 
 	//#region Getters y Setters

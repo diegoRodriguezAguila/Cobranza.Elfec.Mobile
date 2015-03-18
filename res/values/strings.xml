@@ -97,6 +97,8 @@
 		<string name="lbl_paid_receipt_list_title">Facturas cobradas</string>
 		<string name="title_annulment_errors">ERROR AL ANULAR COBRO</string>
 		
+		<string name="msg_succesfull_annulment">El cobro se anuló exitosamente!</string>
+		
 			<!-- ListItems Receipts -->
 			<string name="lbl_currency">Bs.</string>
 			<string name="lbl_issue">Emisión:</string>

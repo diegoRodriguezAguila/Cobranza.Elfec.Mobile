@@ -1,8 +1,12 @@
 package com.elfec.cobranza.view.adapters.collection;
 
 
+import java.util.List;
+
+import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.view.adapters.ReceiptAdapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -53,10 +57,20 @@ public abstract class CollectionBaseAdapter {
 	 */
 	public abstract int getActionErrorsTitleId();
 	/**
+	 * Obtiene el id de la cadena de mensaje de éxito
+	 * @return string id
+	 */
+	public abstract int getActionSuccessMsgId();
+	/**
 	 * Obtiene el presenter adecuado para la acción de cobranza
 	 */
 	public abstract CollectionActionPresenter getCollectionPresenter(ICollectionActionView view);
-
+	/**
+	 * Obtiene el adapter para la lista de facturas
+	 * @param receipts
+	 * @return
+	 */
+	public abstract ReceiptAdapter getReceiptAdapter(List<CoopReceipt> receipts);
 	/**
 	 * Obtiene el context
 	 * @return

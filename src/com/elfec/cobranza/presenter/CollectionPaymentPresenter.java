@@ -38,7 +38,7 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter {
 				new Thread(new Runnable() {			
 					@Override
 					public void run() {
-						DataAccessResult<List<Long>> result = CollectionManager.savePayments(selectedReceipts);
+						DataAccessResult<List<Long>> result = CollectionManager.payCollections(selectedReceipts);
 						if(!result.hasErrors())
 							view.informActionSuccessfullyFinished();
 						view.showActionErrors(result.getErrors());

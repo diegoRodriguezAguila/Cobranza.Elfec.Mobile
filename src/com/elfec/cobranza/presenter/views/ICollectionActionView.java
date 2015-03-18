@@ -5,6 +5,7 @@ import java.util.List;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
+import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
 
@@ -63,6 +64,14 @@ public interface ICollectionActionView {
 	public void showActionErrors(List<Exception> errors);
 	/**
 	 * Pide al usuario la confirmación para proceder con un pago
+	 * @param selectedReceipts
+	 * @param paymentCallback
 	 */
 	public void showPaymentConfirmation(List<CoopReceipt> selectedReceipts, OnPaymentConfirmedCallback paymentCallback);
+	/**
+	 * Pide al usuario la confirmación para porceder con la anulación de un cobro
+	 * @param selectedReceipts
+	 * @param annulmentCallback
+	 */
+	public void showAnnulmentConfirmation(List<CoopReceipt> selectedReceipts, OnCollectionAnnulmentCallback annulmentCallback);
 }

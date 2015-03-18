@@ -31,9 +31,9 @@ import com.elfec.cobranza.helpers.utils.ReceiptsCounter;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
+import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
-import com.elfec.cobranza.view.adapters.ReceiptAdapter;
 import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
 import com.elfec.cobranza.view.controls.services.PaymentConfirmationDialogService;
 
@@ -275,14 +275,14 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 
 	@Override
 	public void showReceipts(final List<CoopReceipt> receipts) {
-		getActivity().runOnUiThread(new Runnable() {
-			
+		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				listReceipts.setAdapter(new ReceiptAdapter(getActivity(), R.layout.receipt_list_item, receipts));
+				listReceipts.setAdapter(collectionAdapter.getReceiptAdapter(receipts));
 				hideSearchingMessage();
 				if(layoutSupplyInfo.getVisibility()==View.GONE)
 					layoutSupplyInfo.setVisibility(View.VISIBLE);
+				processTotalAmount();
 			}
 		});
 	}
@@ -300,7 +300,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 			@Override
 			public void run() {
 				Crouton.clearCroutonsForActivity(getActivity());
-				Crouton.makeText(getActivity(), R.string.msg_succesfull_payment, croutonStyle).show();
+				Crouton.makeText(getActivity(), collectionAdapter.getActionSuccessMsgId(), croutonStyle).show();
 			}
 		});
 	}
@@ -326,8 +326,14 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	public void showPaymentConfirmation(List<CoopReceipt> selectedReceipts,
 			OnPaymentConfirmedCallback paymentCallback) {
 		new PaymentConfirmationDialogService(getActivity(), selectedReceipts, paymentCallback).show();
-	}	
+	}
 
+	@Override
+	public void showAnnulmentConfirmation(List<CoopReceipt> selectedReceipts,
+			OnCollectionAnnulmentCallback annulmentCallback) {
+		// TODO dialgo service de confirmación
+		annulmentCallback.collectionAnnuled(1);
+	}
 	
 	//#endregion
 }

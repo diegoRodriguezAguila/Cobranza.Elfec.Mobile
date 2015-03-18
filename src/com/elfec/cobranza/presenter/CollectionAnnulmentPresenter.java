@@ -10,7 +10,16 @@ import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
 
 public class CollectionAnnulmentPresenter extends CollectionActionPresenter{
-
+	/**
+	 * Interfaz que sirve para llamarse cuando una factura se anula
+	 * @author drodriguez
+	 *
+	 */
+	public interface OnCollectionAnnulmentCallback
+	{
+		public void collectionAnnuled(int annulmentReasonRemoteId);
+	}
+	
 	public CollectionAnnulmentPresenter(ICollectionActionView view) {
 		super(view);
 	}
@@ -23,17 +32,21 @@ public class CollectionAnnulmentPresenter extends CollectionActionPresenter{
 
 	@Override
 	public void processAction(final List<CoopReceipt> selectedReceipts) {
-		Thread thread = new Thread(new Runnable() {			
+		view.showAnnulmentConfirmation(selectedReceipts, new OnCollectionAnnulmentCallback() {			
 			@Override
-			public void run() {
-				DataAccessResult<List<Long>> result = CollectionManager.savePayments(selectedReceipts);//TODO CAMBIAR
-				if(!result.hasErrors())
-					view.informActionSuccessfullyFinished();
-				view.showActionErrors(result.getErrors());
-				loadSupplyReceipts(currentSupply);
+			public void collectionAnnuled(final int annulmentReasonRemoteId) {
+				new Thread(new Runnable() {			
+					@Override
+					public void run() {
+						DataAccessResult<Void> result = CollectionManager.annulateCollections(selectedReceipts, annulmentReasonRemoteId);
+						if(!result.hasErrors())
+							view.informActionSuccessfullyFinished();
+						view.showActionErrors(result.getErrors());
+						loadSupplyReceipts(currentSupply);
+					}
+				}).start();
 			}
 		});
-		thread.start();
 	}
 
 }

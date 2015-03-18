@@ -1,12 +1,16 @@
 package com.elfec.cobranza.view.adapters.collection;
 
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.view.adapters.ReceiptAdapter;
 
 public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 
@@ -48,6 +52,16 @@ public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 	public CollectionActionPresenter getCollectionPresenter(
 			ICollectionActionView view) {
 		return new CollectionPaymentPresenter(view);
+	}
+
+	@Override
+	public ReceiptAdapter getReceiptAdapter(List<CoopReceipt> receipts) {
+		return new ReceiptAdapter(getContext(), R.layout.receipt_list_item, receipts);
+	}
+
+	@Override
+	public int getActionSuccessMsgId() {
+		return R.string.msg_succesfull_payment;
 	}
 
 }
