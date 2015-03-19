@@ -286,7 +286,6 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 				int size = receipts.size();
 				listReceipts.setAdapter(collectionAdapter.getReceiptAdapter(receipts));
 				hideSearchingMessage();
-				layoutSupplyInfo.setVisibility((size>0)?View.VISIBLE:View.GONE);
 				processTotalAmount();
 				if(size==0)
 					txtReceiptListType.setText("Sin " +collectionAdapter.getReceiptListTitle().toLowerCase(Locale.getDefault()));

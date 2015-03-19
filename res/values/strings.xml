@@ -99,6 +99,10 @@
 		<string name="title_collection_annulment">ANULACIÓN DE COBRO</string>
 		<string name="lbl_annulment_confirmation">Se procederá con la anulación de la factura:</string>
 		<string name="lbl_select_annulment_reason">Debe seleccionar un  motivo de anulación:</string>
+		<string name="lbl_internal_control_code">N° Control interno:</string>
+		<string name="hint_internal_control_code">ej. 23</string>
+		<string name="error_empty_internal_control_code">El número de control interno no puede estar vacio!</string>
+		<string name="error_internal_control_code">El número de control interno no coincide con el de la factura!</string>
 		
 		<string name="msg_succesfull_annulment">El cobro y su factura se anularon exitosamente!</string>
 		

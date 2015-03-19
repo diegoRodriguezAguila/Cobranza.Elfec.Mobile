@@ -5,9 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.elfec.cobranza.R;
 import com.elfec.cobranza.model.CoopReceipt;
 
 public class AnnulationReceiptAdapter extends ReceiptAdapter {
@@ -31,8 +29,6 @@ public class AnnulationReceiptAdapter extends ReceiptAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		convertView = super.getView(position, convertView, parent);
 		convertView.setEnabled(isEnabled(position));
-		CoopReceipt receipt = getItem(position);
-		((TextView)convertView.findViewById(R.id.txt_receipt_number)).setText("N°: "+receipt.getReceiptNumber()+"/"+receipt.getActiveCollectionPayment().getId());
 		return convertView;
 	}
 
