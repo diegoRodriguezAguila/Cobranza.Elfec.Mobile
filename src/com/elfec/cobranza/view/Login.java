@@ -192,8 +192,8 @@ public class Login extends Activity implements ILoginView {
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				Intent i = new Intent(Login.this, DataFlow.class);
-				i.putExtra(DataFlow.IMEI, getIMEI());
+				Intent i = new Intent(Login.this, DataExchange.class);
+				i.putExtra(DataExchange.IMEI, getIMEI());
 				startActivity(i);
 				overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 			}

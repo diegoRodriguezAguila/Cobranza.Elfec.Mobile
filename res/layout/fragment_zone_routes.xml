@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_top_margin"
-    tools:context="com.elfec.cobranza.view.DataFlow" >
+    tools:context="com.elfec.cobranza.view.DataExchange" >
 
     <RelativeLayout 
         android:id="@+id/layout_routes_header"

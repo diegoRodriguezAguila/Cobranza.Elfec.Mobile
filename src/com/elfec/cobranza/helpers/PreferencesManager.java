@@ -17,6 +17,7 @@ public class PreferencesManager {
 	private final String LOGGED_CASHDESK_NUMBER = "loggedCashdeskNumber";
 	private final String LOGGED_CASHDESK_DESC = "loggedCashdeskDescription";
 	//ONCE IMPORT DATA
+	private final String RECEIPT_IMAGES_DOWNLOADED = "receiptImagesDownloaded";
 	private final String ALL_ONCE_REQUIRED_DATA_IMPORTED = "allOnceReqDataImported";
 	private final String SUPPLY_CATEGORY_TYPES_IMPORTED = "supplyCategoryTypesImported";
 	private final String CPT_CALCULATION_BASES_IMPORTED = "conceptCalculationBasesImported";
@@ -34,7 +35,7 @@ public class PreferencesManager {
 		preferences = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 	
-	
+		
 	private static Context context;
 	private static PreferencesManager preferencesManager;
 	/**
@@ -44,6 +45,14 @@ public class PreferencesManager {
 	public static void initialize(Context context)
 	{
 		PreferencesManager.context = context;
+	}
+	/**
+	 * Obtiene el contexto de la aplicación
+	 * @return el contexto de la aplicación
+	 */
+	public static Context getApplicationContext()
+	{
+		return PreferencesManager.context;
 	}
 	
 	public static PreferencesManager instance()
@@ -111,6 +120,24 @@ public class PreferencesManager {
 	public PreferencesManager setLoggedCashdeskDesc(String loggedCashdeskNumber)
 	{
 		preferences.edit().putString(LOGGED_CASHDESK_DESC, loggedCashdeskNumber).commit();
+		return this;
+	}
+	
+	/**
+	 * Indica si las imagenes que se utilizan en las facturas fueron descargadas correctamente
+	 * @return true si es que ya se importó toda
+	 */
+	public boolean isReceiptImagesDownloaded()
+	{
+		return preferences.getBoolean(RECEIPT_IMAGES_DOWNLOADED, false);
+	}	
+	/**
+	 * Asigna si las imagenes que se utilizan en las facturas fueron descargadas correctamente
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setReceiptImagesDownloaded(boolean isImported)
+	{
+		preferences.edit().putBoolean(RECEIPT_IMAGES_DOWNLOADED, isImported).commit();
 		return this;
 	}
 	

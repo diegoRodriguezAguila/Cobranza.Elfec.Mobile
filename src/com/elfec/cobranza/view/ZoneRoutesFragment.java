@@ -202,7 +202,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 			public void run() {
 				getActivity().getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 				waitingDialog = new ProgressDialogPro(getActivity(), R.style.Theme_FlavoredMaterialLight);
-				waitingDialog.setMessage(getResources().getString(R.string.msg_login_waiting));
+				waitingDialog.setMessage(getResources().getString(R.string.msg_waiting));
 				waitingDialog.setTitle(R.string.title_waiting);
 				waitingDialog.setCancelable(false);
 				waitingDialog.setCanceledOnTouchOutside(false);

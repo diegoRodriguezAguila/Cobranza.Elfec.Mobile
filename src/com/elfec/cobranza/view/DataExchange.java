@@ -16,20 +16,20 @@ import android.widget.Toast;
 
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
-import com.elfec.cobranza.presenter.DataFlowPresenter;
+import com.elfec.cobranza.presenter.DataExchangePresenter;
 import com.elfec.cobranza.presenter.views.IDataFlowView;
 
-public class DataFlow extends Activity implements IDataFlowView {
+public class DataExchange extends Activity implements IDataFlowView {
 
 	public static final String IMEI = "IMEI";
 	private long lastClickTime = 0;
-	private DataFlowPresenter presenter;
+	private DataExchangePresenter presenter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_data_flow);
-		presenter = new DataFlowPresenter(this);
+		setContentView(R.layout.activity_data_exchange);
+		presenter = new DataExchangePresenter(this);
 		((TextView) findViewById(R.id.txt_device_imei)).setText(getIntent().getExtras().getString(IMEI));
 		presenter.setFields();
 	}
@@ -63,7 +63,7 @@ public class DataFlow extends Activity implements IDataFlowView {
 	public void btnDownloadDataClick(View view)
 	{
 		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
-			Intent i = new Intent(DataFlow.this, ZoneListActivity.class);
+			Intent i = new Intent(DataExchange.this, ZoneListActivity.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 		}
@@ -73,7 +73,7 @@ public class DataFlow extends Activity implements IDataFlowView {
 	public void btnMainMenuClick(View view)
 	{
 		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
-			Intent i = new Intent(DataFlow.this, MainMenu.class);
+			Intent i = new Intent(DataExchange.this, MainMenu.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 		}
@@ -97,7 +97,7 @@ public class DataFlow extends Activity implements IDataFlowView {
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				Toast.makeText(DataFlow.this, "Se finalizó la sesión de "+username+"!", Toast.LENGTH_LONG).show();
+				Toast.makeText(DataExchange.this, "Se finalizó la sesión de "+username+"!", Toast.LENGTH_LONG).show();
 			}
 		});
 	}

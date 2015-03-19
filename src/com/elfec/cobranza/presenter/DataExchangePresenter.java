@@ -3,11 +3,11 @@ package com.elfec.cobranza.presenter;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.presenter.views.IDataFlowView;
 
-public class DataFlowPresenter {
+public class DataExchangePresenter {
 
 	private IDataFlowView view;
 	
-	public DataFlowPresenter(IDataFlowView view)
+	public DataExchangePresenter(IDataFlowView view)
 	{
 		this.view = view;		
 	}

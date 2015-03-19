@@ -26,8 +26,8 @@ import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnn
 
 /**
  * Esta clase provee de un servicio de dialogo para confirmar y realizar la anulación de un cobro
+ * <br><b>TODO</b> Refactorizar con su propio presenter
  * @author drodriguez
- *
  */
 public class CollectionAnnulmentDialogService {
 	
