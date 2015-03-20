@@ -36,8 +36,8 @@ import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnn
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
 import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
-import com.elfec.cobranza.view.controls.services.CollectionAnnulmentDialogService;
-import com.elfec.cobranza.view.controls.services.PaymentConfirmationDialogService;
+import com.elfec.cobranza.view.services.CollectionAnnulmentDialogService;
+import com.elfec.cobranza.view.services.PaymentConfirmationDialogService;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 /**

@@ -1,4 +1,4 @@
-package com.elfec.cobranza.view.controls.services;
+package com.elfec.cobranza.view.services;
 
 import java.math.BigDecimal;
 import java.util.List;
