@@ -12,7 +12,7 @@ import com.elfec.cobranza.model.Route;
 public interface IZoneRoutesView {
 
 	/**
-	 * Hace que la vista muestre la lsita de rutas de una zona
+	 * Hace que la vista muestre la lista de rutas de una zona
 	 * @param zoneRoutes
 	 */
 	public void setZoneRoutes(List<Route> zoneRoutes);

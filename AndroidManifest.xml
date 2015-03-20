@@ -42,8 +42,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.DataFlow"
-            android:label="@string/title_activity_data_flow" >
+            android:name=".view.DataExchange"
+            android:label="@string/title_activity_data_exchange" >
         </activity>
         <activity
             android:name=".view.ZoneListActivity"

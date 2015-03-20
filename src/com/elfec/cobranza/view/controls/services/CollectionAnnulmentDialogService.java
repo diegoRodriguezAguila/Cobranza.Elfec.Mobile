@@ -8,6 +8,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,19 +25,21 @@ import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.model.AnnulmentReason;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
+import com.elfec.cobranza.presenter.services.CollectionAnnulmentDialogPresenter;
+import com.elfec.cobranza.presenter.views.ICollectionAnnulmentDialog;
 
 /**
  * Esta clase provee de un servicio de dialogo para confirmar y realizar la anulación de un cobro
- * <br><b>TODO</b> Refactorizar con su propio presenter
  * @author drodriguez
  */
-public class CollectionAnnulmentDialogService {
+public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDialog {
 	
 	private AlertDialogPro.Builder dialogBuilder;
-	private OnCollectionAnnulmentCallback annulmentCallback;
+	private AlertDialogPro dialog;
 	private Context context;
-	private CoopReceipt annulmentReceipt;
+	private Handler mHandler;
 	
+	private CollectionAnnulmentDialogPresenter presenter;
 	//components
 	private View annulmentView;
 	private Spinner spinnerAnnulmentReason;
@@ -47,17 +51,17 @@ public class CollectionAnnulmentDialogService {
 		if(annulmentReceipts.size()>1)
 			throw new UnsupportedOperationException("Si bien la implementación para anulación de múltiples facturas existe,"
 					+ "no se implementó el dialogo de anulación para múltiples facturas!");
+		presenter = new CollectionAnnulmentDialogPresenter(this, annulmentCallback, annulmentReceipts.get(0));
 		this.context = context;
-		this.annulmentCallback = annulmentCallback;
+		mHandler = new Handler(Looper.getMainLooper());
 		annulmentView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
 				.inflate(R.layout.dialog_collection_annulment, null);
 		spinnerAnnulmentReason = (Spinner) annulmentView.findViewById(R.id.spinner_annulment_reason);
-		populateSpinner(context);
-		
+		presenter.loadAnnulmentReasons();
+		setItemClickListener();		
 		txtInternalControlCode = (TextView) annulmentView.findViewById(R.id.txt_internal_control_code);
 		
-		this.annulmentReceipt = annulmentReceipts.get(0);//si no existe al menos uno dará excepción
-		showReceiptData();
+		presenter.loadReceiptInfo();
 		
 		dialogBuilder = new AlertDialogPro.Builder(context);
 		dialogBuilder.setTitle(R.string.title_collection_annulment).setIcon(R.drawable.collection_annulment_pressed)
@@ -68,36 +72,19 @@ public class CollectionAnnulmentDialogService {
 					hideKeyboard();
 				}
 			})
-			.setPositiveButton(R.string.btn_confirm, new OnClickListener() {				
-				@Override
-				public void onClick(DialogInterface dialog, int wich) {
-				}
-			});
+			.setPositiveButton(R.string.btn_confirm, null);
 	}
 	
-	private void showReceiptData() {
-		DateTime date = new DateTime(annulmentReceipt.getYear(), annulmentReceipt.getPeriodNumber(),1,0,0);
-		((TextView)annulmentView.findViewById(R.id.txt_year_month))
-			.setText(TextFormater.capitalize(date.toString("yyyy MMMM")));
-		((TextView)annulmentView.findViewById(R.id.txt_receipt_number))
-		.setText("N°: "+annulmentReceipt.getReceiptNumber()+"/"+annulmentReceipt.getActiveCollectionPayment().getId());
-	}
 
 	/**
-	 * Obtiene las motivos de anulación para ponerlos en el spinner
+	 * Asigna las acciones que se toman al cambiar de item seleccionado
 	 */
-	private void populateSpinner(Context context) {
-		spinnerAnnulmentReason.setAdapter(new ArrayAdapter<AnnulmentReason>(context, 
-				R.layout.simple_spinner_row, AnnulmentReason.getAll(AnnulmentReason.class)));
+	private void setItemClickListener() {
 		spinnerAnnulmentReason.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapter, View v,
 					int pos, long id) {
-				int annulmentReasonId = ((AnnulmentReason)adapter.getItemAtPosition(pos)).getAnnulmentReasonRemoteId();
-				if(annulmentReasonId==2 || annulmentReasonId==3)
-					txtInternalControlCode.setText(""+annulmentReceipt.getActiveCollectionPayment().getId());
-				else txtInternalControlCode.setText(null);
-				txtInternalControlCode.setError(null);
+				presenter.processSelectedAnnulmentReason();
 			}
 			@Override public void onNothingSelected(AdapterView<?> adapter) {}
 		});
@@ -108,29 +95,14 @@ public class CollectionAnnulmentDialogService {
 	 */
 	public void show()
 	{
-		final AlertDialogPro dialog = dialogBuilder.create();
+		dialog = dialogBuilder.create();
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 		dialog.getButton(AlertDialogPro.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
 	      {            
 	          @Override
-	          public void onClick(View v)
-	          {
-	        	  String internalCode = txtInternalControlCode.getText().toString();
-	        	  if(!internalCode.isEmpty())
-	        	  {
-		        	  if(Long.parseLong(txtInternalControlCode.getText().toString())==annulmentReceipt.getActiveCollectionPayment().getId())
-						{
-							hideKeyboard();
-							dialog.dismiss();
-							if(CollectionAnnulmentDialogService.this.annulmentCallback!=null)
-								CollectionAnnulmentDialogService.this.annulmentCallback
-									.collectionAnnuled(((AnnulmentReason)spinnerAnnulmentReason.getSelectedItem()).getAnnulmentReasonRemoteId());
-					
-						}
-						else txtInternalControlCode.setError(context.getResources().getString(R.string.error_internal_control_code));
-					}
-	        	  else txtInternalControlCode.setError(context.getResources().getString(R.string.error_empty_internal_control_code));
+	          public void onClick(View v) {
+	        	  presenter.verifyAnnulation();
 	          }
 	      });
 	}	
@@ -146,4 +118,75 @@ public class CollectionAnnulmentDialogService {
 	        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 	    }
 	}
+	
+	//#region Interface Methods
+
+	@Override
+	public void setAnnulmentReasons(final List<AnnulmentReason> annulmentReasons) {
+		mHandler.post(new Runnable() {			
+			@Override
+			public void run() {
+				spinnerAnnulmentReason.setAdapter(new ArrayAdapter<AnnulmentReason>(context, 
+						R.layout.simple_spinner_row, annulmentReasons));
+			}
+		});
+	}
+
+	@Override
+	public String getInternalControlCode() {
+		return txtInternalControlCode.getText().toString();
+	}
+
+	@Override
+	public void closeView() {
+		mHandler.post(new Runnable() {			
+			@Override
+			public void run() {
+				hideKeyboard();
+				if(dialog!=null && dialog.isShowing())
+					dialog.dismiss();
+			}
+		});		
+	}
+
+	@Override
+	public int getSelectedAnnulmentReasonId() {
+		return ((AnnulmentReason)spinnerAnnulmentReason.getSelectedItem()).getAnnulmentReasonRemoteId();
+	}
+
+	@Override
+	public void setInternalControlCodeError(final int strErrorId) {
+		mHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				txtInternalControlCode.setError(strErrorId==-1?null:context.getResources().getString(strErrorId));
+			}
+		});
+	}
+
+	@Override
+	public void setPeriod(int year, int month) {
+		DateTime date = new DateTime(year, month,1 ,0 ,0 );
+		((TextView)annulmentView.findViewById(R.id.txt_year_month))
+			.setText(TextFormater.capitalize(date.toString("yyyy MMMM")));
+	}
+
+	@Override
+	public void setReceiptNumber(String receiptNumber) {
+		((TextView)annulmentView.findViewById(R.id.txt_receipt_number))
+		.setText("N°: "+receiptNumber);
+	}
+
+
+	@Override
+	public void setInternalControlCode(final long internalControlCode) {
+		mHandler.post(new Runnable() {		
+			@Override
+			public void run() {
+				txtInternalControlCode.setText(internalControlCode==-1?null:""+internalControlCode);
+			}
+		});
+	}
+	
+	//#endregion
 }
