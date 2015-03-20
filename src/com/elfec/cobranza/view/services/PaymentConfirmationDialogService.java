@@ -14,7 +14,8 @@ import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
-import com.elfec.cobranza.helpers.utils.ReceiptsCounter;
+import com.elfec.cobranza.helpers.text_format.AttributePicker;
+import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 
@@ -70,9 +71,14 @@ public class PaymentConfirmationDialogService {
 		String paymentCountText = String.format(
 				context.getResources().getString(R.string.lbl_payment_count), count>1?"n":"", ""+count, count>1?"s":"");
 		lblPaymentReceiptCount.setText(paymentCountText);
-		BigDecimal totalAmount = ReceiptsCounter.countTotalAmount(paymentReceipts);
-		txtTotalAmount.setText(ReceiptsCounter.formatIntAmount(totalAmount));
-		txtTotalAmountDecimal.setText(ReceiptsCounter.formatDecimalAmount(totalAmount));
+		BigDecimal totalAmount = AmountsCounter.countTotalAmount(paymentReceipts, new AttributePicker<BigDecimal, CoopReceipt>() {
+			@Override
+			public BigDecimal pickAttribute(CoopReceipt receipt) {
+				return receipt.getTotalAmount();
+			}
+		});
+		txtTotalAmount.setText(AmountsCounter.formatIntAmount(totalAmount));
+		txtTotalAmountDecimal.setText(AmountsCounter.formatDecimalAmount(totalAmount));
 	}
 	
 	/**

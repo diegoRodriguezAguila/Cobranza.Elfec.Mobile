@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
-import com.elfec.cobranza.helpers.text_format.ObjectListToSQL.AttributePicker;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
@@ -78,9 +78,9 @@ public class CoopReceiptRDA {
 	 */
 	public static List<CoopReceipt> requestCoopReceipts(String username, String password, List<Route> routes) throws ConnectException, SQLException
 	{
-		return requestCoopReceipts(username, password, ObjectListToSQL.convertToSQL(routes, new AttributePicker<Route>() {
+		return requestCoopReceipts(username, password, ObjectListToSQL.convertToSQL(routes, new AttributePicker<String, Route>() {
 			@Override
-			public String pickString(Route route) {
+			public String pickAttribute(Route route) {
 				return ""+route.getRouteRemoteId();
 			}}));
 	}

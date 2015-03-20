@@ -18,8 +18,8 @@ import com.elfec.cobranza.business_logic.SupplyStatusManager;
 import com.elfec.cobranza.business_logic.ZonesManager;
 import com.elfec.cobranza.helpers.PreferencesManager;
 import com.elfec.cobranza.helpers.security.AES;
+import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
-import com.elfec.cobranza.helpers.text_format.ObjectListToSQL.AttributePicker;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Route;
@@ -104,9 +104,9 @@ public class ZoneRoutesPresenter {
 	 * @param selectedRoutes
 	 */
 	private void initializeDataImport(final List<Route> selectedRoutes) {
-		selectedRoutesString = ObjectListToSQL.convertToSQL(selectedRoutes, new AttributePicker<Route>() {
+		selectedRoutesString = ObjectListToSQL.convertToSQL(selectedRoutes, new AttributePicker<String, Route>() {
 			@Override
-			public String pickString(Route route) {
+			public String pickAttribute(Route route) {
 				return ""+route.getRouteRemoteId();
 			}});
 		username = SessionManager.getLoggedInUsername();
@@ -262,14 +262,14 @@ public class ZoneRoutesPresenter {
 		}
 		else
 		{
-			coopReceiptIdsString = ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDCBTE", new AttributePicker<CoopReceipt>(){
+			coopReceiptIdsString = ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDCBTE", new AttributePicker<String, CoopReceipt>(){
 				@Override
-				public String pickString(CoopReceipt object) {
+				public String pickAttribute(CoopReceipt object) {
 					return ""+object.getReceiptId();
 				}});
-			supplyIdsString =  ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDSUMINISTRO", new AttributePicker<CoopReceipt>(){
+			supplyIdsString =  ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDSUMINISTRO", new AttributePicker<String, CoopReceipt>(){
 				@Override
-				public String pickString(CoopReceipt object) {
+				public String pickAttribute(CoopReceipt object) {
 					return ""+object.getSupplyId();
 				}});
 			importFinished = supplyFinished = supplyStatusFinished = receiptConceptFinished = fineBonusFinished = false;

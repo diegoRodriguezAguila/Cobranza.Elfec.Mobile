@@ -111,6 +111,14 @@
 			<string name="lbl_issue">Emisión:</string>
 			<string name="lbl_expiration">Vencimiento:</string>
 			<string name="lbl_kwh">(kWh)</string>
+	
+	<!-- Bluetooth Device Picker -->
+	<string name="title_bluetooth_device_picker">SELECCIONE UNA IMPRESORA</string>
+	<string name="lbl_paired_printers">Impresoras vinculadas:</string>
+	<string name="lbl_discovered_printers">Dispositivos encontrados:</string>
+	<string name="lbl_no_paired_printers">No existen impresoras vinculadas</string>
+	<string name="lbl_no_devices_found">No se encontraron más dispositivos</string>
+	<string name="lbl_discovering_printers">Buscando dispositivos&#8230;</string>
 		
 	<!-- Samples -->
     <string name="sample_welcome_user">Bienvenido <b>drodriguezd</b>!</string>
@@ -133,5 +141,7 @@
 	<string name="sample_receipt_number">N°: 327828</string>
 	<string name="sample_consume">145.252</string>
 	<string name="sample_category">Categoría: RE2PB</string>
+	<string name="sample_printer_name">IMP-22</string>
+	<string name="sample_printer_mac">00:22:58:39:A4:38</string>
 	
 </resources>

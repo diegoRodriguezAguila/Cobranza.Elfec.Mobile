@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
-import com.elfec.cobranza.helpers.utils.ReceiptsCounter;
+import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.CoopReceipt;
 
 public class ReceiptAdapter extends ArrayAdapter<CoopReceipt> {
@@ -60,8 +60,8 @@ public class ReceiptAdapter extends ArrayAdapter<CoopReceipt> {
 		if(convertView==null)
 			convertView = inflater.inflate(resource, null);
 		CoopReceipt receipt = getItem(position);
-		((TextView) convertView.findViewById(R.id.receipt_amount)).setText(ReceiptsCounter.formatIntAmount(receipt.getTotalAmount()));
-		((TextView) convertView.findViewById(R.id.receipt_amount_decimal)).setText(ReceiptsCounter.formatDecimalAmount(receipt.getTotalAmount()));
+		((TextView) convertView.findViewById(R.id.receipt_amount)).setText(AmountsCounter.formatIntAmount(receipt.getTotalAmount()));
+		((TextView) convertView.findViewById(R.id.receipt_amount_decimal)).setText(AmountsCounter.formatDecimalAmount(receipt.getTotalAmount()));
 		DateTime date = new DateTime(receipt.getYear(), receipt.getPeriodNumber(),1,0,0);
 		((TextView)convertView.findViewById(R.id.txt_year_month))
 			.setText(TextFormater.capitalize(date.toString("yyyy MMMM")));
@@ -69,7 +69,7 @@ public class ReceiptAdapter extends ArrayAdapter<CoopReceipt> {
 		((TextView)convertView.findViewById(R.id.txt_expiration_date)).setText(receipt.getExpirationDate().toString("dd/MM/yyyy"));
 		((TextView)convertView.findViewById(R.id.txt_receipt_number)).setText("N°: "+receipt.getReceiptNumber());
 		((TextView)convertView.findViewById(R.id.txt_category)).setText("Categoría: "+receipt.getCategoryId());
-		((TextView)convertView.findViewById(R.id.txt_consume)).setText(ReceiptsCounter.formatInteger(receipt.getSupplyStatus().getConsume()));
+		((TextView)convertView.findViewById(R.id.txt_consume)).setText(AmountsCounter.formatInteger(receipt.getSupplyStatus().getConsume()));
 		return convertView;
 	}
 }

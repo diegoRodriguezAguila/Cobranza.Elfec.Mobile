@@ -7,14 +7,14 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.List;
 
-import com.elfec.cobranza.model.CoopReceipt;
+import com.elfec.cobranza.helpers.text_format.AttributePicker;
 
 /**
  * Clase de ayuda para labores sobre recibos
  * @author drodriguez
  *
  */
-public class ReceiptsCounter {
+public class AmountsCounter {
 	private static NumberFormat nf;
 	static
 	{
@@ -30,13 +30,13 @@ public class ReceiptsCounter {
 	 * @param receipts
 	 * @return
 	 */
-	public static BigDecimal countTotalAmount(List<CoopReceipt> receipts)
+	public static <T>BigDecimal countTotalAmount(List<T> objects, AttributePicker<BigDecimal, T> amountGetter)
 	{
 		BigDecimal totalAmount = BigDecimal.ZERO;
 		
-		for(CoopReceipt receipt : receipts)
+		for(T obj : objects)
 		{
-			totalAmount = totalAmount.add(receipt.getTotalAmount());
+			totalAmount = totalAmount.add(amountGetter.pickAttribute(obj));
 		}
 		return totalAmount;
 	}

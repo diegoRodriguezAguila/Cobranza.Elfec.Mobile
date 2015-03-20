@@ -26,9 +26,10 @@ import android.widget.TextView;
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
+import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
-import com.elfec.cobranza.helpers.utils.ReceiptsCounter;
+import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
@@ -216,8 +217,13 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 				int size = selectedReceipts.size();
 				final int animId = size==0?R.anim.slide_right_to_outside:R.anim.slide_left_from_outside;
 				final int visibility = size==0?View.GONE:View.VISIBLE;
-				final BigDecimal totalAmount = ReceiptsCounter.countTotalAmount(selectedReceipts);				
-				final String totalAmountStr = ReceiptsCounter.formatIntAmount(totalAmount);
+				final BigDecimal totalAmount = AmountsCounter.countTotalAmount(selectedReceipts, new AttributePicker<BigDecimal, CoopReceipt>() {
+					@Override
+					public BigDecimal pickAttribute(CoopReceipt receipt) {
+						return receipt.getTotalAmount();
+					}
+				});				
+				final String totalAmountStr = AmountsCounter.formatIntAmount(totalAmount);
 
 				mHandler.post(new Runnable() {						
 					@Override
@@ -227,7 +233,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 						if(!totalAmountStr.equals("0"))
 						{
 							txtTotalAmount.setText(totalAmountStr);
-							txtTotalAmountDecimal.setText(ReceiptsCounter.formatDecimalAmount(totalAmount));
+							txtTotalAmountDecimal.setText(AmountsCounter.formatDecimalAmount(totalAmount));
 						}
 					}
 				});

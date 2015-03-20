@@ -17,12 +17,12 @@ public class ObjectListToSQL {
 	 * @param picker se encarga de elegir con que atributo de la clase se llenara la lista IN
 	 * @return lista en formato (123,5423,7645)
 	 */
-	public static <T> String convertToSQL(List<T> objectList, AttributePicker<T> picker)
+	public static <T> String convertToSQL(List<T> objectList, AttributePicker<String, T> picker)
 	{
 		StringBuilder query = new StringBuilder("(");
 		for(T obj : objectList)
 		{
-			query.append(picker.pickString(obj)).append(",");
+			query.append(picker.pickAttribute(obj)).append(",");
 		}
 		query.setCharAt(query.length()-1, ')');
 		return query.toString();
@@ -36,7 +36,7 @@ public class ObjectListToSQL {
 	 * @param picker
 	 * @return lista con el formato (123,425,...) OR COLUMNNAME IN (423,645,...)
 	 */
-	public static <T> String convertToSQL(List<T> objectList, String columnName, AttributePicker<T> picker)
+	public static <T> String convertToSQL(List<T> objectList, String columnName, AttributePicker<String, T> picker)
 	{
 		StringBuilder query = new StringBuilder();
 		int totalSize = objectList.size();
@@ -62,26 +62,11 @@ public class ObjectListToSQL {
 	 */
 	public static <T> String convertToSQL(List<T> objectList)
 	{
-		return convertToSQL(objectList, new AttributePicker<T>() {
+		return convertToSQL(objectList, new AttributePicker<String, T>() {
 			@Override
-			public String pickString(T object) {
+			public String pickAttribute(T object) {
 				return object.toString();
 			}
 		});
-	}
-	/**
-	 * Sirve para que el converToSQL pueda elegir el atributo que se quiere poner en la lista sql
-	 * @author drodriguez
-	 *
-	 * @param <T>
-	 */
-	public static interface AttributePicker<T>
-	{
-		/**
-		 * Obtiene un atributo especifico del objeto
-		 * @param object
-		 * @return
-		 */
-		public String pickString(T object);
 	}
 }
