@@ -1,22 +1,16 @@
 package com.elfec.cobranza.view.adapters.collection;
 
 
-import java.util.List;
-
-import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.presenter.CollectionActionPresenter;
-import com.elfec.cobranza.presenter.views.ICollectionActionView;
-import com.elfec.cobranza.view.adapters.ReceiptAdapter;
-
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+
+import com.elfec.cobranza.presenter.adapter_interfaces.ICollectionBaseAdapter;
 
 /**
  * Adapter que sirve para cambiar de la interfaz de cobranza
  * @author drodriguez
  *
  */
-public abstract class CollectionBaseAdapter {
+public abstract class CollectionBaseAdapter implements ICollectionBaseAdapter{
 
 	private Context context;
 
@@ -25,56 +19,7 @@ public abstract class CollectionBaseAdapter {
 		this.context = context;
 	}
 	
-	/**
-	 * Obtiene el titulo para la vista
-	 * @return titulo
-	 */
-	public abstract String getActionTitle();
-	/**
-	 * Obtiene el id del drawable para el titulo de la vista
-	 * @return id del drawable
-	 */
-	public abstract int getTitleDrawableId();
-	/**
-	 * Obtiene el texto del boton de la acción
-	 * @return texto boton
-	 */
-	public abstract String getButtonText();
-	/**
-	 * Obtiene el drawable para el boton
-	 * @return drawable
-	 */
-	public abstract Drawable getButtonDrawable();
-	/**
-	 * Obtiene el titulo que se utilizará para la lista de recibos
-	 * @return titulo
-	 */
-	public abstract String getReceiptListTitle();
-	/**
-	 * Obtiene el id de la cadena que se muestra en el titulo de 
-	 * los errores de la acción
-	 * @return id de la string
-	 */
-	public abstract int getActionErrorsTitleId();
-	/**
-	 * Obtiene el id de la cadena de mensaje de éxito
-	 * @return string id
-	 */
-	public abstract int getActionSuccessMsgId();
-	/**
-	 * Obtiene el presenter adecuado para la acción de cobranza
-	 */
-	public abstract CollectionActionPresenter getCollectionPresenter(ICollectionActionView view);
-	/**
-	 * Obtiene el adapter para la lista de facturas
-	 * @param receipts
-	 * @return
-	 */
-	public abstract ReceiptAdapter getReceiptAdapter(List<CoopReceipt> receipts);
-	/**
-	 * Obtiene el context
-	 * @return
-	 */
+	@Override
 	public Context getContext() {
 		return context;
 	}

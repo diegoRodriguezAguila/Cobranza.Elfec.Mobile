@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.widget.ArrayAdapter;
 
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.model.CoopReceipt;
@@ -11,7 +12,6 @@ import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
 import com.elfec.cobranza.view.adapters.AnnulationReceiptAdapter;
-import com.elfec.cobranza.view.adapters.ReceiptAdapter;
 
 public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
 
@@ -56,7 +56,7 @@ public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
 	}
 
 	@Override
-	public ReceiptAdapter getReceiptAdapter(List<CoopReceipt> receipts) {
+	public ArrayAdapter<CoopReceipt> getReceiptAdapter(List<CoopReceipt> receipts) {
 		return new AnnulationReceiptAdapter(getContext(), R.layout.receipt_list_item, receipts, 1);
 	}
 

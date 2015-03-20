@@ -34,8 +34,8 @@ import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
+import com.elfec.cobranza.presenter.adapter_interfaces.ICollectionBaseAdapter;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
-import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
 import com.elfec.cobranza.view.services.CollectionAnnulmentDialogService;
 import com.elfec.cobranza.view.services.PaymentConfirmationDialogService;
 
@@ -47,7 +47,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
  */
 public class CollectionActionFragment extends Fragment implements ICollectionActionView {
 
-	private CollectionBaseAdapter collectionAdapter;
+	private ICollectionBaseAdapter collectionAdapter;
 	private CollectionActionPresenter presenter;
 	private Handler mHandler;
 	private long lastClickTime;
@@ -84,14 +84,14 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	 */
 	public interface OnSetCollectionAdapter
 	{
-		public void collectionAdapterSet(CollectionBaseAdapter collectionAdapter, View rootView);
+		public void collectionAdapterSet(ICollectionBaseAdapter collectionAdapter, View rootView);
 	}
 	/**
 	 * Evento por defecto
 	 */
 	private OnSetCollectionAdapter defaultCollectionAdapterEvent = new OnSetCollectionAdapter() {		
 		@Override
-		public void collectionAdapterSet(CollectionBaseAdapter collectionAdapter, View rootView) {
+		public void collectionAdapterSet(ICollectionBaseAdapter collectionAdapter, View rootView) {
 			if(rootView!=null)
 			{
 				txtReceiptListType.setText(collectionAdapter.getReceiptListTitle());
@@ -295,10 +295,10 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	}
 
 	@Override
-	public void setCollectionAdapter(CollectionBaseAdapter collectionAdapter) {
+	public void setCollectionAdapter(ICollectionBaseAdapter collectionAdapter) {
 		this.collectionAdapter = collectionAdapter;
 		presenter = collectionAdapter.getCollectionPresenter(this);
-		this.defaultCollectionAdapterEvent.collectionAdapterSet(collectionAdapter, getView());
+		this.defaultCollectionAdapterEvent.collectionAdapterSet(this.collectionAdapter, getView());
 	}
 
 	@Override

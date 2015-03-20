@@ -7,7 +7,7 @@ import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
-import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
+import com.elfec.cobranza.presenter.adapter_interfaces.ICollectionBaseAdapter;
 
 /**
  * Abstracción de la vista de pagar cobros
@@ -52,7 +52,7 @@ public interface ICollectionActionView {
 	 * Asigna el adapter de cobranza
 	 * @param collectionAdapter
 	 */
-	public void setCollectionAdapter(CollectionBaseAdapter collectionAdapter);
+	public void setCollectionAdapter(ICollectionBaseAdapter collectionAdapter);
 	/**
 	 * Informa al usuario que se completó la acción exitosamente
 	 */

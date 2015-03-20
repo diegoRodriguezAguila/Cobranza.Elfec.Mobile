@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.widget.ArrayAdapter;
 
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.model.CoopReceipt;
@@ -55,7 +56,7 @@ public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 	}
 
 	@Override
-	public ReceiptAdapter getReceiptAdapter(List<CoopReceipt> receipts) {
+	public ArrayAdapter<CoopReceipt> getReceiptAdapter(List<CoopReceipt> receipts) {
 		return new ReceiptAdapter(getContext(), R.layout.receipt_list_item, receipts);
 	}
 
