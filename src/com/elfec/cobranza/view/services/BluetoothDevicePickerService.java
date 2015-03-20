@@ -61,16 +61,16 @@ public class BluetoothDevicePickerService implements IBluetoothDevicePickerDialo
 		mHandler = new Handler(Looper.getMainLooper());
 		this.context = context;
 		View rootView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-				.inflate(R.layout.dialog_bluetooth_device_picker, null);
-		presenter.loadPairedDevices();
-		presenter.searchBluetoothDevices();
-		
+				.inflate(R.layout.dialog_bluetooth_device_picker, null);	
 		listPairedDevices = (ListView) rootView.findViewById(R.id.list_paired_devices);
 		layoutDiscoveringDevices = (LinearLayout) rootView.findViewById(R.id.layout_discovering_devices);
 		listDiscoveredDevices = (ListView) rootView.findViewById(R.id.list_discovered_devices);
 		lblDiscoveredPrinters = (TextView) rootView.findViewById(R.id.lbl_discovered_printers);
 		lblPairedPrinters = (TextView) rootView.findViewById(R.id.lbl_paired_printers);
 		setOnItemClickListeners();
+		
+		presenter.loadPairedDevices();
+		presenter.searchBluetoothDevices();
 		
 		dialogBuilder = new AlertDialogPro.Builder(context);
 		dialogBuilder.setTitle(R.string.title_bluetooth_device_picker).setIcon(R.drawable.printer_picker)

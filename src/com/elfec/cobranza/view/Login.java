@@ -22,6 +22,7 @@ import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+import com.elfec.cobranza.view.services.BluetoothDevicePickerService;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
@@ -51,6 +52,7 @@ public class Login extends Activity implements ILoginView {
 		//TEST PRUPOUSES
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
+		new BluetoothDevicePickerService(this,null).show();
 	}
 
 	@Override

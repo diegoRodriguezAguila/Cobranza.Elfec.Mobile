@@ -10,7 +10,7 @@
         android:id="@+id/user_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/cobranza_color"
+        android:background="@drawable/zone_list_item_id_background"
         android:padding="8dp"
         android:contentDescription="@string/sample_printer_name"
         android:src="@drawable/printer" />
