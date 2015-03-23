@@ -40,7 +40,10 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter {
 					public void run() {
 						DataAccessResult<List<Long>> result = CollectionManager.payCollections(selectedReceipts);
 						if(!result.hasErrors())
+						{
 							view.informActionSuccessfullyFinished();
+							//TODO call print receipt							
+						}
 						view.showActionErrors(result.getErrors());
 						loadSupplyReceipts(currentSupply);
 					}

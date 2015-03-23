@@ -4,10 +4,23 @@ import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
 
+import android.graphics.Bitmap;
+
 import com.elfec.cobranza.business_logic.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.DataAccessResult;
+import com.elfec.cobranza.model.ManagerProcessResult;
+import com.elfec.cobranza.model.printer.CPCLCommand;
+import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
+import com.elfec.cobranza.model.printer.CPCLCommand.Unit;
 import com.elfec.cobranza.remote_data_access.CoopReceiptRDA;
+import com.zebra.sdk.comm.Connection;
+import com.zebra.sdk.comm.ConnectionException;
+import com.zebra.sdk.graphics.internal.ZebraImageAndroid;
+import com.zebra.sdk.printer.ZebraPrinter;
+import com.zebra.sdk.printer.ZebraPrinterFactory;
+import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
+import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
 /**
  * Se encarga de las operaciones de negocio de <b>CBTES_COOP</b> 
@@ -36,5 +49,43 @@ public class CoopReceiptManager {
 			}
 			
 		});
+	}
+	
+	/**
+	 * Imprime el recibo con la impresora dada
+	 * @param internalControlCode
+	 * @param receipt
+	 * @param printerDevice
+	 */
+	public static ManagerProcessResult printReceipt(long internalControlCode, CoopReceipt receipt, DiscoveredPrinterBluetooth printerDevice)
+	{
+		ManagerProcessResult result = new ManagerProcessResult();
+		try {
+			Connection conn = printerDevice.getConnection();
+			conn.open();
+			ZebraPrinter printer = ZebraPrinterFactory.getInstance(conn);
+			
+			Bitmap header = ReceiptImagesManager.getHeaderImage();
+			//printer.printImage(new ZebraImageAndroid(header), 36, 0, header.getWidth(), header.getHeight(), false);
+			printer.sendCommand(new CPCLCommand(200, 200, 3)
+				.inUnit(Unit.IN_CENTIMETERS)
+				.justify(Justify.CENTER)
+				.setBold(0.05)
+				.text("4", 0, 0, 0, "FACTURA ORIGINAL")
+				.setBold(0)
+				.text("4", 0, 0, 0.7, "NIT: 1023213028")
+				.text("4", 0, 0, 1.2, "FACTURA No: 2745232")
+				.print().toString());
+			
+			conn.close();
+			header.recycle();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			result.addError(e);
+		} catch (ZebraPrinterLanguageUnknownException e) {
+			e.printStackTrace();
+			result.addError(e);
+		}
+		return result;
 	}
 }

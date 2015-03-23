@@ -1,5 +1,8 @@
 package com.elfec.cobranza.business_logic;
 
+import android.graphics.Bitmap;
+
+import com.elfec.cobranza.helpers.ImageInternalAccess;
 import com.elfec.cobranza.helpers.PreferencesManager;
 import com.elfec.cobranza.model.downloaders.ImageDownloader;
 import com.elfec.cobranza.model.events.OnImageDownloadFinished;
@@ -31,5 +34,14 @@ public class ReceiptImagesManager {
 					PreferencesManager.instance().setReceiptImagesDownloaded(succes);
 				}
 			}).execute(url+headerImageName, url+footerImageName);
+	}
+	
+	/**
+	 * Obtiene la imagen que se usa de encabezado
+	 * @return
+	 */
+	public static Bitmap getHeaderImage()
+	{
+		return ImageInternalAccess.loadImageFromStorage(headerImageName);
 	}
 }

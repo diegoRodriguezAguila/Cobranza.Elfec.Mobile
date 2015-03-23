@@ -16,7 +16,7 @@ import android.graphics.BitmapFactory;
  *
  */
 public class ImageInternalAccess {
-	public static final String imagesFolder = "images";
+	public static final String IMAGES_DIR = "images";
 
 	/**
 	 * Guarda la imagen en el almacenamiento interno con el nombre provisto
