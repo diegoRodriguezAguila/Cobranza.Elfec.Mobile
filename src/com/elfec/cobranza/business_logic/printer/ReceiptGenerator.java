@@ -28,7 +28,7 @@ public class ReceiptGenerator {
 	private static final int WRAP_LIMIT = 30;
 	
 	/**
-	 * Genera el comando cpcl de impresión del recibo
+	 * Genera el comando cpcl de impresión del recibo, sin las imagenes de header ni footer
 	 * @param receipt
 	 * @return
 	 */
@@ -37,10 +37,11 @@ public class ReceiptGenerator {
 		CPCLCommand command = new CPCLCommand(200, 400, 7.9).inUnit(Unit.IN_CENTIMETERS );
 		assignHeaderData(command, receipt);
 		assignReceiptData(command, receipt);
+		assignReceiptDetails(command, receipt);
 		command.print();
 		return command;
 	}
-	
+
 	/**
 	 * Asigna la información de la factura a la cabecera en el comando de la impresora
 	 * @param command
@@ -116,6 +117,17 @@ public class ReceiptGenerator {
 				"VENCIMIENTO: "+receipt.getExpirationDate().toString("dd/MM/yyyy"),
 				"DIAS MOROSIDAD: "+(daysPastDue<0?0:daysPastDue),
 				"PRÓXIMA EMISIÓN: "+receipt.getIssueDate().plusDays(33).toString("dd/MM/yyyy"));
+	}
+	
+	/**
+	 * Asigna los concetos y sus importes de la factura
+	 * @param command
+	 * @param receipt
+	 */
+	private static void assignReceiptDetails(CPCLCommand command, CoopReceipt receipt) 
+	{
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/**

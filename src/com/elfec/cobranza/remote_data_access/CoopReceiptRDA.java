@@ -60,7 +60,7 @@ public class CoopReceiptRDA {
 			receipt.setLiteral(rs.getString("LITERAL"));
 			receipt.setClientAddress(rs.getString("DIRECCION"));
 			receipt.setMeterNumber(rs.getString("MEDIDOR"));
-			receipt.setMeterNumber(rs.getString("DESC_AUT_IMPRESION"));
+			receipt.setAuthorizationDescription(rs.getString("DESC_AUT_IMPRESION"));
 			coopReceipts.add(receipt);
 		}
 		rs.close();

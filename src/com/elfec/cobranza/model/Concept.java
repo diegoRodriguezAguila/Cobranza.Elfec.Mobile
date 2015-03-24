@@ -1,8 +1,16 @@
 package com.elfec.cobranza.model;
 
+import java.math.BigDecimal;
+
+import android.database.Cursor;
+
+import com.activeandroid.Cache;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.From;
+import com.activeandroid.query.Select;
+import com.elfec.cobranza.model.printer.PrintConcept;
 
 /**
  * Almacena los CONCEPTOS
@@ -101,6 +109,40 @@ public class Concept extends Model {
 		this.printArea = printArea;
 		this.partType = partType;
 		this.includeUnits = includeUnits;
+	}
+	
+	/**
+	 * Obtiene el concepto de consumo total para impresión
+	 * @param receiptId
+	 * @return concepto TOTAL CONSUMO
+	 */
+	public static PrintConcept getTotalConsumeConcepts(int receiptId)
+	{
+		String query = "SELECT 'TOTAL CONSUMO' Description, SUM(Amount) Amount FROM (";
+		String groupBy = ") GROUP BY PrintArea ";
+		From subQuery = new Select("A.ReceiptId,A.EnterpriseId, A.BranchOfficeId, A.ReceiptType, A.ReceiptGroup, A.ReceiptLetter,"
+				+ "A.ReceiptNumber, A.ConceptId, A.Description Desc, A.Amount, B.PrintArea, C.ClaculationBaseId, D.Description")
+	    .from(ReceiptConcept.class).as("A")
+	    .join(Concept.class).as("B")
+	    .on("(A.ConceptId = B.ConceptId AND A.SubconceptId = B.SubconceptId)")
+	    .join(ConceptCalculationBase.class).as("C")
+	    .on("(A.ConceptId = C.ConceptId AND A.SubconceptId = C.SubconceptId)")
+	    .join(PrintCalculationBase.class).as("D")
+	    .on(" C.ClaculationBaseId = D.ClaculationBaseId")
+	    .where(" (A.EnterpriseId = 1) AND (A.BranchOfficeId = 10) "
+	    		+ "AND (A.ReceiptType = 'FC') AND (A.ReceiptLetter = 'Y') "
+	    		+ "AND (B.PrintArea IN (1)) "
+	    		+ "AND A.ReceiptId = ? "
+	    		+ "AND C.ClaculationBaseId>=100 "
+	    		+ "AND A.Amount<>0", receiptId);
+
+		Cursor cursor = Cache.openDatabase().rawQuery(query+subQuery.toSql()+groupBy, subQuery.getArguments());
+		if(cursor!=null)
+		{
+			cursor.moveToFirst();
+			return new PrintConcept(cursor.getString(0), new BigDecimal(cursor.getString(1)));
+		}
+		return null;
 	}
 
 	//#region Getters y Setters

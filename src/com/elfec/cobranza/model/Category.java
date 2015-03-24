@@ -114,13 +114,13 @@ public class Category extends Model {
 	    .on("a.CategoryTypeId = b.CategoryTypeId")
 	    .where("a.CategoryId = ?", categoryId);
 
-	Cursor cursor = Cache.openDatabase().rawQuery(query.toSql(), query.getArguments());
-	if(cursor!=null)
-	{
-		cursor.moveToFirst();
-		return cursor.getString(0);
-	}
-	return categoryId;//retorna el mismo id como categoría en caso de no encontrarse
+		Cursor cursor = Cache.openDatabase().rawQuery(query.toSql(), query.getArguments());
+		if(cursor!=null)
+		{
+			cursor.moveToFirst();
+			return cursor.getString(0);
+		}
+		return categoryId;//retorna el mismo id como categoría en caso de no encontrarse
 	}
 
 	//#region Getters y Setters

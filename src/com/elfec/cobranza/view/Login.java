@@ -1,5 +1,6 @@
 package com.elfec.cobranza.view;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,7 +21,9 @@ import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.CoopReceiptManager;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
+import com.elfec.cobranza.model.Concept;
 import com.elfec.cobranza.model.CoopReceipt;
+import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
@@ -54,9 +57,12 @@ public class Login extends Activity implements ILoginView {
 		//TEST PRUPOUSES
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
-		CoopReceiptManager.printReceipt(1,CoopReceipt.findRouteReceipts(45009).get(0), new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
+		//CoopReceiptManager.printReceipt(1,CoopReceipt.findRouteReceipts(45009).get(0), new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
 		//CoopReceiptManager.printReceipt(1,null, new DiscoveredPrinterBluetooth("AC:3F:A4:14:03:05", "IMPMZ-01"));
 		//new BluetoothDevicePickerService(this, null).show();
+		PrintConcept prntCpt = Concept.getTotalConsumeConcepts(CoopReceipt.findRouteReceipts(45009).get(0).getReceiptId());
+		String des = prntCpt.getDescription();
+		BigDecimal am = prntCpt.getAmount();
 	}
 
 	@Override
