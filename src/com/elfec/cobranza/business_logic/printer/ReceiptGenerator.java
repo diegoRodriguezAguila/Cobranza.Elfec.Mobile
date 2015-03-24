@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.apache.commons.lang.WordUtils;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.model.Category;
@@ -73,22 +74,22 @@ public class ReceiptGenerator {
 	 */
 	private static void assignReceiptLeftData(CPCLCommand command, CoopReceipt receipt)
 	{
-		SupplyStatus powerSupplyStatus = receipt.getPowerSupplyStatus();
+		String clientName = wrapName(Supply.findSupplyByNUSOrAccount(receipt.getSupplyId(), receipt.getSupplyNumber()).getClientName());
+		double extraSpacing = ((clientName.split("\r\n").length-1)*0.37);
 		command.justify(Justify.LEFT, 3)
 		.setFont("TAHOMA8P.CPF")
 		.text(0, 0.3, 3.3, 0.03, 0.03, "FECHA EMISIÓN:")
-		.text(0, 3.1, 3.3, receipt.getIssueDate().toString("dd/MM/yyyy"))
+		.text(0, 3, 3.3, receipt.getIssueDate().toString("dd/MM/yyyy"))
 		.text("TAHOMA11.CPF", 0, 0.3, 3.65, 0.035, 0.035, "NUS:")
 		.text("TAHOMA11.CPF", 0, 1.4, 3.65, 0.035, 0.035, ""+receipt.getSupplyId())
 		.text(0, 0.3, 4.15, 0.03, 0.03, "CUENTA:")
 		.text(0, 1.8, 4.15, AccountFormatter.formatAccountNumber(receipt.getSupplyNumber()))
 		.text(0, 0.3, 4.5, 0.03, 0.03, "NOMBRE:")
-		.text(0, 1.85, 4.5, Supply.findSupplyByNUSOrAccount(receipt.getSupplyId(), receipt.getSupplyNumber()).getClientName())
-		.multilineText(0.37, 0, 0.35, 4.85, "NIT/CI: "+receipt.getNIT(), 
+		.multilineText(0.37, 0, 1.85, 4.5, clientName)
+		.multilineText(0.37, 0, 0.35, 4.85+extraSpacing, "NIT/CI: "+receipt.getNIT(), 
 				wrapAddress("DIRECCIÓN: "+receipt.getClientAddress()),
 				"CATEGORÍA: "+Category.getFullCategoryDesc(receipt.getCategoryId()),
-				"MEDIDOR: "+receipt.getMeterNumber(),
-				"POTENCIA: "+(powerSupplyStatus==null?0:powerSupplyStatus.getBilledConsume()));
+				"MEDIDOR: "+receipt.getMeterNumber());
 	}
 	
 	/**
@@ -98,11 +99,14 @@ public class ReceiptGenerator {
 	 */
 	private static void assignReceiptRightData(CPCLCommand command, CoopReceipt receipt)
 	{
+		SupplyStatus powerSupplyStatus = receipt.getPowerSupplyStatus();
 		DateTime period = new DateTime(receipt.getYear(), receipt.getPeriodNumber(),1,0,0);
+		int daysPastDue = Days.daysBetween(receipt.getExpirationDate(), DateTime.now()).getDays();
 		command.justify(Justify.LEFT, 4.6)
 		.setFont("TAHOMA8P.CPF")
 		.multilineText(0.37, 0, 5.4, 3.3, 
 				"CONSUMO (kWh): "+receipt.getSupplyStatus().getBilledConsume(),
+				"POTENCIA: "+(powerSupplyStatus==null?0:powerSupplyStatus.getBilledConsume()),
 				"PERIODO: "+period.toString("MMM/yyyy").toUpperCase(Locale.getDefault()),
 				"DE: "+receipt.getSupplyStatus().getLastReadingDate().toString("dd/MM/yyyy")
 				+"  A: "+receipt.getSupplyStatus().getDate().toString("dd/MM/yyyy"),
@@ -110,18 +114,29 @@ public class ReceiptGenerator {
 				"LECTURA ACTUAL: "+receipt.getSupplyStatus().getReading(),
 				"FECHA PAGO: "+(DateTime.now().toString("dd/MM/yyyy hh:mm")),
 				"VENCIMIENTO: "+receipt.getExpirationDate().toString("dd/MM/yyyy"),
-				"DIAS MOROSIDAD: 23",
-				"PRÓXIMA EMISIÓN: 06/01/2015");
+				"DIAS MOROSIDAD: "+(daysPastDue<0?0:daysPastDue),
+				"PRÓXIMA EMISIÓN: "+receipt.getIssueDate().plusDays(33).toString("dd/MM/yyyy"));
+	}
+	
+	/**
+	 * Si es necesario parte el nombre en pedazos para que se impriman de forma
+	 * subsecuente
+	 * @param name
+	 * @return la cadena con lineas de salto respentando el WRAP_LIMIT
+	 */
+	private static String wrapName(String name)
+	{
+		return WordUtils.wrap(name, WRAP_LIMIT-9).replace("\n", "\r\n");
 	}
 	
 	/**
 	 * Si es necesario parte la dirección en pedazos para que se impriman de forma
 	 * subsecuente
 	 * @param fullAddress
-	 * @return
+	 * @return la cadena con lineas de salto respentando el WRAP_LIMIT
 	 */
 	private static String wrapAddress(String fullAddress)
 	{
-		return WordUtils.wrap(fullAddress, WRAP_LIMIT);
+		return WordUtils.wrap(fullAddress, WRAP_LIMIT).replace("\n", "\r\n");
 	}
 }
