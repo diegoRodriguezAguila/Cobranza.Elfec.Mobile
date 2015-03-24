@@ -1,6 +1,8 @@
 package com.elfec.cobranza.model.printer;
 
 
+
+
 /**
  * Representa un comando en lenguaje CPCL
  * @author drodriguez
@@ -18,11 +20,27 @@ public class CPCLCommand {
 	/**
 	 * Comando de texto
 	 */
-	private static final String TEXT = "TEXT";
+	private static final String TEXT = "T";
+	/**
+	 * Comando de texto multilinea
+	 */
+	private static final String ML = "ML";
+	/**
+	 * Comando de fin de texto multilinea
+	 */
+	private static final String ENDML = "ENDML";
+	/**
+	 * Comando para asignar codificación
+	 */
+	private static final String ENCODING = "ENCODING";
 	/**
 	 * Comando set bold
 	 */
 	private static final String SETBOLD = "SETBOLD";
+	/**
+	 * Comando de definición del espacio entre letras
+	 */
+	private static final String SPACING = "SETSP";
 	/**
 	 * Comando de impresión
 	 */
@@ -73,7 +91,35 @@ public class CPCLCommand {
 			return this.valueStr;
 		}
 	};
-	
+	/**
+	 * Define los tipos de codificación del texto
+	 * @author drodriguez
+	 *
+	 */
+	public enum Encoding{
+		/**
+		 * Codificación ASCII
+		 */
+		ASCII("ASCII"), 
+		/**
+		 * Codificación UTF-8
+		 */
+		UTF_8("UTF-8");
+		private String valueStr;
+		private Encoding(String valueStr)
+		{	this.valueStr = valueStr;}
+		@Override public String toString(){
+			return this.valueStr;
+		}
+	};
+	/**
+	 * La fuente que se asigna con sus getters y setters
+	 * para usarse en textos sin necesidad de indicar la fuente
+	 */
+	private String font;
+	/**
+	 * El comando que está siendo construido
+	 */
 	private StringBuilder command;
 	
 	/**
@@ -99,7 +145,16 @@ public class CPCLCommand {
 		command = new StringBuilder("! ").append(offset).append(SP).append(horizontalRes)
 				.append(SP).append(verticalRes).append(SP).append(height).append(" 1\r\n");
 	}
-	
+
+	/**
+	 * Asigna la fuente para utilizar en los textos en los que no se necesita definir la fuente
+	 * @param font la fuente, puede ser una interna o externa que se encuentre en la impresora
+	 */
+	public CPCLCommand setFont(String font) {
+		this.font = font;
+		return this;
+	}
+
 	/**
 	 * Todo lo que venga despues se tratará en las unidades definidas
 	 * @param unitType
@@ -107,7 +162,8 @@ public class CPCLCommand {
 	 */
 	public CPCLCommand inUnit(Unit unitType)
 	{
-		command.append(unitType.toString()).append(ENDL);
+		command.append(unitType.toString()).append(ENDL)
+			.append("COUNTRY SPAIN").append(ENDL);
 		return this;
 	}
 	
@@ -119,6 +175,17 @@ public class CPCLCommand {
 	public CPCLCommand justify(Justify justifyType)
 	{
 		justify(justifyType, -1);
+		return this;
+	}
+	
+	/**
+	 * Asigna el tipo de codificación a utilizar
+	 * @param encodingType
+	 * @return
+	 */
+	public CPCLCommand encoding(Encoding encodingType)
+	{
+		command.append(ENCODING).append(SP).append(encodingType.toString()).append(ENDL);
 		return this;
 	}
 	
@@ -150,12 +217,55 @@ public class CPCLCommand {
 	}
 	
 	/**
-	 * 
+	 * Pone el texto que venga despues con el espaciado extra entre los caracteres definido 
+	 * es necesario volver a llamarlo con valor 0 para que vuelva el texto a la normalidad
+	 * @param extraSpacing valor del espaciado extra, en la unidad definida
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand setSpacing(double extraSpacing)
+	{
+		command.append(SPACING).append(SP).append(extraSpacing).append(ENDL);
+		return this;
+	}
+	
+	/**
+	 * Agrega un texto para imprimir con la fuente seteada con el método setFont()
+	 * @param size tamaño de la fuente
+	 * @param x posición en la factura en la unidad definida
+	 * @param y posición en la factura en la unidad definida
+	 * @param text el texto que se quiere imprimir
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand text(int size, double x, double y, String text)
+	{
+		if(font==null)
+			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin parámetros de fuente");
+		text(font, size, x, y, text);
+		return this;
+	}
+	
+	/**
+	 * Agrega un texto para imprimir
+	 * @param innerFont la fuente que se usará para el texto, es una fuente interna de zebra
+	 * @param size tamaño de la fuente
+	 * @param x posición en la factura en la unidad definida
+	 * @param y posición en la factura en la unidad definida
+	 * @param text el texto que se quiere imprimir
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand text(int innerFont, int size, double x, double y, String text)
+	{
+		text(""+innerFont, size, x, y, text);
+		return this;
+	}
+	
+	/**
+	 * Agrega un texto para imprimir
 	 * @param font la fuente que se usará para el texto, puede ser una fuente interna
 	 * o una externa que se encuentra en la impresora
 	 * @param size tamaño de la fuente
-	 * @param x posición en la factura en las unidades definidas
-	 * @param y posición en la factura en las unidades definidas
+	 * @param x posición en la factura en la unidad definida
+	 * @param y posición en la factura en la unidad definida
 	 * @param text el texto que se quiere imprimir
 	 * @return la instancia de este comando
 	 */
@@ -163,6 +273,91 @@ public class CPCLCommand {
 	{
 		command.append(TEXT).append(SP).append(font).append(SP).append(size)
 			.append(SP).append(x).append(SP).append(y).append(SP).append(text).append(ENDL);
+		return this;
+	}
+	
+	/**
+	 * Agrega un texto para imprimir, con formato de negrilla y extra espaciado definido,
+	 * esto solo afecta a esta linea de texto
+	 * @param font la fuente que se usará para el texto, puede ser una fuente interna
+	 * o una externa que se encuentra en la impresora
+	 * @param size tamaño de la fuente
+	 * @param x posición en la factura en la unidad definida
+	 * @param y posición en la factura en la unidad definida
+	 * @param boldLevel nivel de bold
+	 * @param extraSpacing espaciado extra entre caracteres
+	 * @param text el texto que se quiere imprimir
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand text(String font, int size, double x, double y, double boldLevel, double extraSpacing, String text)
+	{
+		setBold(boldLevel);
+		setSpacing(extraSpacing);
+		text(font, size, x, y, text);
+		setBold(0);
+		setSpacing(0);
+		return this;
+	}
+	
+	/**
+	 * Agrega un texto para imprimir, con formato de negrilla y extra espaciado definido,
+	 * esto solo afecta a esta linea de texto. Utiliza la fuente asignada en setFont()
+	 * o una externa que se encuentra en la impresora
+	 * @param size tamaño de la fuente
+	 * @param x posición en la factura en la unidad definida
+	 * @param y posición en la factura en la unidad definida
+	 * @param boldLevel nivel de bold
+	 * @param extraSpacing espaciado extra entre caracteres
+	 * @param text el texto que se quiere imprimir
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand text(int size, double x, double y, double boldLevel, double extraSpacing, String text)
+	{
+		if(font==null)
+			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin parámetros de fuente");
+		text(font, size, x, y, boldLevel, extraSpacing, text);
+		return this;
+	}
+	
+	/**
+	 * Agrega un texto multilinea para imprimir
+	 * @param lineHeight el alto de cada línea en la unidad definida
+	 * @param font la fuente que se usará para el texto, puede ser una fuente interna
+	 * o una externa que se encuentra en la impresora
+	 * @param size tamaño de la fuente
+	 * @param x posición en la factura en la unidad definida
+	 * @param y posición en la factura en las unidad definida
+	 * @param textLines las líneas de texto a imprimir
+	 * @return
+	 */
+	public CPCLCommand multilineText(double lineHeight, String font, int size, double x, double y, String... textLines)
+	{
+		command.append(ML).append(SP).append(lineHeight).append(ENDL)
+			.append(TEXT).append(SP).append(font).append(SP).append(size).append(SP)
+				.append(x).append(SP).append(y).append(ENDL);
+		
+		for (int i = 0; i < textLines.length; i++) {
+			command.append(textLines[i]).append(ENDL);
+		}
+		
+		command.append(ENDML).append(ENDL);
+		return this;
+	}
+	
+	/**
+	 * Agrega un texto multilinea para imprimir utilizando al fuente seteada con setFont
+	 * @param lineHeight el alto de cada línea en la unidad definida
+	 * @param size tamaño de la fuente
+	 * @param x posición en la factura en la unidad definida
+	 * @param y posición en la factura en las unidad definida
+	 * @param textLines las líneas de texto a imprimir
+	 * @return
+	 */
+	public CPCLCommand multilineText(double lineHeight, int size, double x, double y, String... textLines)
+	{
+		if(font==null)
+			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin parámetros de fuente");
+		multilineText(lineHeight, font, size, x, y, textLines);
 		return this;
 	}
 	
@@ -179,7 +374,7 @@ public class CPCLCommand {
 	@Override 
 	public String toString(){
 		if(command.lastIndexOf(PRINT)==-1)
-			throw new RuntimeException("Debe llamar a print antes de toString()");
+			throw new RuntimeException("Debe llamar a print() antes de toString()");
 		return command.toString();
 	}
 }

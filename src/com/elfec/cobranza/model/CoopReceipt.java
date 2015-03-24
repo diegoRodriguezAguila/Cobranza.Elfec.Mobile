@@ -264,7 +264,7 @@ public class CoopReceipt extends Model {
 		return new Select().from(CoopReceipt.class).where("RouteId=?",routeId).execute();
 	}
 	/**
-	 * Obtiene el SUMIN_ESTADOS de este comprobante
+	 * Obtiene el SUMIN_ESTADOS (De consumo energia activa) de este comprobante
 	 * @return supplyStatus
 	 */
 	public SupplyStatus getSupplyStatus()
@@ -272,10 +272,19 @@ public class CoopReceipt extends Model {
 		if(supplyStatus==null)
 			supplyStatus = new Select().from(SupplyStatus.class)
 							.where("ReceiptId = ?", this.receiptId)
-							.where("(ConceptId = 10010 OR ConceptId = 10080)").executeSingle();
+							.where("ConceptId IN (10010, 10080, 10090, 10100)").executeSingle();
 		return supplyStatus;
 	}
-	
+	/**
+	 * Obtiene el SUMIN_ESTADOS (De consumo de potencia) de este comprobante
+	 * @return supplyStatus
+	 */
+	public SupplyStatus getPowerSupplyStatus()
+	{
+		return new Select().from(SupplyStatus.class)
+							.where("ReceiptId = ?", this.receiptId)
+							.where("ConceptId IN (10020, 10140)").executeSingle();
+	}
 	/**
 	 * Obtiene su cobro (CollectionPayment) en caso de tener uno, y que tenga el estado en 1
 	 * @return

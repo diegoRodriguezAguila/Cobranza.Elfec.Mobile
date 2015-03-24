@@ -2,9 +2,14 @@ package com.elfec.cobranza.model;
 
 import java.math.BigDecimal;
 
+import android.database.Cursor;
+
+import com.activeandroid.Cache;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.From;
+import com.activeandroid.query.Select;
 /**
  * Almacena las CATEGORIAS
  * @author drodriguez
@@ -94,6 +99,28 @@ public class Category extends Model {
 		this.classification2 = classification2;
 		this.loadFactor = loadFactor;
 		this.billingDemand = billingDemand;
+	}
+	
+	/**
+	 * Obtiene la cadena para mostrar de la categoría
+	 * @param categoryId
+	 * @return la cadena en formato DOMICILIARIA/PDBTR1
+	 */
+	public static String getFullCategoryDesc(String categoryId)
+	{
+		From query = new Select("trim(b.Description)||'/'||trim(a.Classification2) FullCategoryDesc")
+	    .from(Category.class).as("a")
+	    .innerJoin(SupplyCategoryType.class).as("b")
+	    .on("a.CategoryTypeId = b.CategoryTypeId")
+	    .where("a.CategoryId = ?", categoryId);
+
+	Cursor cursor = Cache.openDatabase().rawQuery(query.toSql(), query.getArguments());
+	if(cursor!=null)
+	{
+		cursor.moveToFirst();
+		return cursor.getString(0);
+	}
+	return categoryId;//retorna el mismo id como categoría en caso de no encontrarse
 	}
 
 	//#region Getters y Setters

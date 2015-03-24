@@ -24,7 +24,6 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
-import com.elfec.cobranza.view.services.BluetoothDevicePickerService;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -55,7 +54,9 @@ public class Login extends Activity implements ILoginView {
 		//TEST PRUPOUSES
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
-		CoopReceiptManager.printReceipt(1,null, new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
+		CoopReceiptManager.printReceipt(1,CoopReceipt.findRouteReceipts(45009).get(0), new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
+		//CoopReceiptManager.printReceipt(1,null, new DiscoveredPrinterBluetooth("AC:3F:A4:14:03:05", "IMPMZ-01"));
+		//new BluetoothDevicePickerService(this, null).show();
 	}
 
 	@Override
