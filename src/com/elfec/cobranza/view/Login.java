@@ -60,9 +60,13 @@ public class Login extends Activity implements ILoginView {
 		//CoopReceiptManager.printReceipt(1,CoopReceipt.findRouteReceipts(45009).get(0), new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
 		//CoopReceiptManager.printReceipt(1,null, new DiscoveredPrinterBluetooth("AC:3F:A4:14:03:05", "IMPMZ-01"));
 		//new BluetoothDevicePickerService(this, null).show();
-		PrintConcept prntCpt = Concept.getTotalConsumeConcepts(CoopReceipt.findRouteReceipts(45009).get(0).getReceiptId());
-		String des = prntCpt.getDescription();
-		BigDecimal am = prntCpt.getAmount();
+		int rcptId = 47671061;
+		//PrintConcept prntCpt = Concept.getTotalConsumeConcept(rcptId);
+		List<PrintConcept> list = Concept.getTotalConsumeAreaConcepts(rcptId);
+		PrintConcept totalSupply = Concept.getTotalSupplyConcept(rcptId);
+		List<PrintConcept> list2 = Concept.getTotalSupplyAreaConcepts(rcptId);
+		PrintConcept totalReceipt = Concept.getTotalReceiptConcept(rcptId);
+		List<PrintConcept> list3 = Concept.getFineBonusConcepts(rcptId);
 	}
 
 	@Override

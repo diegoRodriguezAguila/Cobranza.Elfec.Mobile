@@ -20,8 +20,8 @@ public class AmountsCounter {
 	{
 		nf = DecimalFormat.getInstance();
 		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
-		customSymbol.setDecimalSeparator(',');
-		customSymbol.setGroupingSeparator('.');
+		customSymbol.setDecimalSeparator('.');
+		customSymbol.setGroupingSeparator(',');
 		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
 		nf.setGroupingUsed(true);
 	}

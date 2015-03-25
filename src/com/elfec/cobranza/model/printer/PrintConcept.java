@@ -16,6 +16,7 @@ public class PrintConcept {
 	public PrintConcept(String description, BigDecimal amount) {
 		this.description = description;
 		this.amount = amount;
+		this.amount.setScale(2);
 	}
 	public String getDescription() {
 		return description;
@@ -26,8 +27,15 @@ public class PrintConcept {
 	public BigDecimal getAmount() {
 		return amount;
 	}
+
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return description+": "+amount.toString();
 	}
 	
 }

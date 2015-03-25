@@ -1,6 +1,8 @@
 package com.elfec.cobranza.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.database.Cursor;
 
@@ -11,6 +13,7 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.elfec.cobranza.model.printer.PrintConcept;
+import com.elfec.cobranza.model.printer.PrintConceptQuerier;
 
 /**
  * Almacena los CONCEPTOS
@@ -116,33 +119,102 @@ public class Concept extends Model {
 	 * @param receiptId
 	 * @return concepto TOTAL CONSUMO
 	 */
-	public static PrintConcept getTotalConsumeConcepts(int receiptId)
+	public static PrintConcept getTotalConsumeConcept(int receiptId)
 	{
-		String query = "SELECT 'TOTAL CONSUMO' Description, SUM(Amount) Amount FROM (";
-		String groupBy = ") GROUP BY PrintArea ";
-		From subQuery = new Select("A.ReceiptId,A.EnterpriseId, A.BranchOfficeId, A.ReceiptType, A.ReceiptGroup, A.ReceiptLetter,"
-				+ "A.ReceiptNumber, A.ConceptId, A.Description Desc, A.Amount, B.PrintArea, C.ClaculationBaseId, D.Description")
+		return (new PrintConceptQuerier(receiptId, 1)
+				.setDescription("TOTAL CONSUMO").setGroupBy("PrintArea").execute()).get(0);
+	}
+	
+	/**
+	 * Obtiene los conceptos del consumo total para impresión
+	 * @param receiptId
+	 * @return Lista de conceptos del área de TOTAL CONSUMO
+	 */
+	public static List<PrintConcept> getTotalConsumeAreaConcepts(int receiptId)
+	{
+		return (new PrintConceptQuerier(receiptId, 2).setGroupBy("PrintArea, Description").execute());
+	}
+	
+	/**
+	 * Obtiene el concepto de total suministro para impresión
+	 * @param receiptId
+	 * @return concepto TOTAL SUMINISTRO
+	 */
+	public static PrintConcept getTotalSupplyConcept(int receiptId)
+	{
+		return (new PrintConceptQuerier(receiptId, 1, 2).setDescription("TOTAL SUMINISTRO").execute()).get(0);
+	}
+	
+	/**
+	 * Obtiene los conceptos del consumo total para impresión
+	 * @param receiptId
+	 * @return Lista de conceptos del área de TOTAL SUMINISTRO
+	 */
+	public static List<PrintConcept> getTotalSupplyAreaConcepts(int receiptId)
+	{
+		return (new PrintConceptQuerier(receiptId, 3).setGroupBy("PrintArea, Description").execute());
+	}
+	
+	/**
+	 * Obtiene el concepto del total de la factura para impresión
+	 * @param receiptId
+	 * @return Concepto de TOTAL FACTURA
+	 */
+	public static PrintConcept getTotalReceiptConcept(int receiptId)
+	{
+		return (new PrintConceptQuerier(receiptId, 1, 2, 3).setDescription("TOTAL FACTURA").execute()).get(0);
+	}
+	
+	/**
+	 * Obtiene el concepto de IMPORTE BASE PARA CREDITO FISCAL
+	 * @param receiptId
+	 * @return concepto IMPORTE BASE PARA CREDITO FISCAL
+	 */
+	public static PrintConcept getSubjectToTaxCreditConcept(int receiptId)
+	{
+		return (new PrintConceptQuerier(receiptId, 1, 2).setDescription("IMPORTE BASE PARA CRÉDITO FISCAL").execute()).get(0);
+	}
+	
+	/**
+	 * Obtiene los conceptos de devoluciones y bonificaciones de multas
+	 * @param receiptId
+	 * @return Lista de conceptos del área de Bonificaciones y devoluciones
+	 */
+	public static List<PrintConcept> getFineBonusConcepts(int receiptId)
+	{
+		From subQuery = new Select("C.Description, A.Amount")
 	    .from(ReceiptConcept.class).as("A")
 	    .join(Concept.class).as("B")
 	    .on("(A.ConceptId = B.ConceptId AND A.SubconceptId = B.SubconceptId)")
-	    .join(ConceptCalculationBase.class).as("C")
-	    .on("(A.ConceptId = C.ConceptId AND A.SubconceptId = C.SubconceptId)")
-	    .join(PrintCalculationBase.class).as("D")
-	    .on(" C.ClaculationBaseId = D.ClaculationBaseId")
+	    .join(FineBonus.class).as("C")
+	    .on("A.ConceptId = C.ConceptId")
+
 	    .where(" (A.EnterpriseId = 1) AND (A.BranchOfficeId = 10) "
 	    		+ "AND (A.ReceiptType = 'FC') AND (A.ReceiptLetter = 'Y') "
-	    		+ "AND (B.PrintArea IN (1)) "
+	    		+ "AND (B.PrintArea IN (4)) "
 	    		+ "AND A.ReceiptId = ? "
-	    		+ "AND C.ClaculationBaseId>=100 "
 	    		+ "AND A.Amount<>0", receiptId);
-
-		Cursor cursor = Cache.openDatabase().rawQuery(query+subQuery.toSql()+groupBy, subQuery.getArguments());
-		if(cursor!=null)
+		
+		List<PrintConcept> concepts = new ArrayList<PrintConcept>();
+		Cursor cursor = Cache.openDatabase().rawQuery(subQuery.toSql(), subQuery.getArguments());
+		if(cursor!=null && cursor.moveToFirst())
 		{
-			cursor.moveToFirst();
-			return new PrintConcept(cursor.getString(0), new BigDecimal(cursor.getString(1)));
+			do{ 	
+				concepts.add(new PrintConcept(cursor.getString(cursor.getColumnIndex("Description")), 
+						new BigDecimal(cursor.getString(cursor.getColumnIndex("Amount")))));			
+			} while(cursor.moveToNext());
 		}
-		return null;
+		return concepts;
+	}
+	
+	/**
+	 * Obtiene el concepto de IMPORTE NO SUJETO A CRÉDITO FISCAL
+	 * @param receiptId
+	 * @return concepto IMPORTE NO SUJETO A CRÉDITO FISCAL
+	 */
+	public static PrintConcept getNotSubjectToTaxCreditConcept(int receiptId)
+	{
+		return (new PrintConceptQuerier(receiptId, 3).setDescription("IMPORTE NO SUJETO A CREDITO FISCAL").execute()).get(0);
 	}
 
 	//#region Getters y Setters

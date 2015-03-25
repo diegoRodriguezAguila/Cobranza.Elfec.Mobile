@@ -9,6 +9,7 @@ import com.elfec.cobranza.business_logic.CalculationBaseManager;
 import com.elfec.cobranza.business_logic.CategoryManager;
 import com.elfec.cobranza.business_logic.ConceptManager;
 import com.elfec.cobranza.business_logic.CoopReceiptManager;
+import com.elfec.cobranza.business_logic.FineBonusManager;
 import com.elfec.cobranza.business_logic.ReceiptConceptManager;
 import com.elfec.cobranza.business_logic.ReceiptImagesManager;
 import com.elfec.cobranza.business_logic.SessionManager;
@@ -375,7 +376,7 @@ public class ZoneRoutesPresenter {
 				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_fine_bonusess, new ImportCaller() {			
 					@Override
 					public DataAccessResult<?> callImport() {
-						return ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
+						return FineBonusManager.importFineBonuses(username, password, coopReceiptIdsString);
 					}
 				});	
 				fineBonusFinished = true;
