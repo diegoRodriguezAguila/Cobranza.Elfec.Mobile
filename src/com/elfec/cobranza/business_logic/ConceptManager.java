@@ -2,11 +2,13 @@ package com.elfec.cobranza.business_logic;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.elfec.cobranza.business_logic.DataImporter.ImportSource;
 import com.elfec.cobranza.model.Concept;
 import com.elfec.cobranza.model.DataAccessResult;
+import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.remote_data_access.ConceptRDA;
 
 /**
@@ -29,6 +31,32 @@ public class ConceptManager {
 				return ConceptRDA.requestConcepts(username, password);
 			}
 		}); 
+	}
+	
+	/**
+	 * Obtiene los conceptos para imprimir, del TOTAL CONSUMO
+	 * @param receiptId
+	 * @return lista de conceptos de impresión
+	 */
+	public static List<PrintConcept> getAllTotalConsumeConcepts(int receiptId)
+	{
+		List<PrintConcept> concepts = new ArrayList<PrintConcept>();
+		concepts.add(Concept.getTotalConsumeConcept(receiptId));
+		concepts.addAll(Concept.getTotalConsumeAreaConcepts(receiptId));
+		return concepts;
+	}
+	
+	/**
+	 * Obtiene los conceptos para imprimir, del TOTAL SUMINISTRO
+	 * @param receiptId
+	 * @return lista de conceptos de impresión
+	 */
+	public static List<PrintConcept> getAllTotalSupplyConcepts(int receiptId)
+	{
+		List<PrintConcept> concepts = new ArrayList<PrintConcept>();
+		concepts.add(Concept.getTotalSupplyConcept(receiptId));
+		concepts.addAll(Concept.getTotalSupplyAreaConcepts(receiptId));
+		return concepts;
 	}
 
 }

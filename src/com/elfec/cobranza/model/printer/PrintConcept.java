@@ -1,6 +1,7 @@
 package com.elfec.cobranza.model.printer;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Concepto para impresión
@@ -15,8 +16,7 @@ public class PrintConcept {
 	}
 	public PrintConcept(String description, BigDecimal amount) {
 		this.description = description;
-		this.amount = amount;
-		this.amount.setScale(2);
+		this.amount = amount.setScale(2, RoundingMode.FLOOR);
 	}
 	public String getDescription() {
 		return description;

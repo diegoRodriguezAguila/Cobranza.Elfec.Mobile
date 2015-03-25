@@ -57,16 +57,17 @@ public class Login extends Activity implements ILoginView {
 		//TEST PRUPOUSES
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
-		//CoopReceiptManager.printReceipt(1,CoopReceipt.findRouteReceipts(45009).get(0), new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
+		int rcptId = 47671187;
+		CoopReceiptManager.printReceipt(1,CoopReceipt.findRouteReceipts(45009).get(0), new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
 		//CoopReceiptManager.printReceipt(1,null, new DiscoveredPrinterBluetooth("AC:3F:A4:14:03:05", "IMPMZ-01"));
 		//new BluetoothDevicePickerService(this, null).show();
-		int rcptId = 47671187;
+		/*
 		PrintConcept prntCpt = Concept.getTotalConsumeConcept(rcptId);
 		List<PrintConcept> list = Concept.getTotalConsumeAreaConcepts(rcptId);
 		PrintConcept totalSupply = Concept.getTotalSupplyConcept(rcptId);
 		List<PrintConcept> list2 = Concept.getTotalSupplyAreaConcepts(rcptId);
 		PrintConcept totalReceipt = Concept.getTotalReceiptConcept(rcptId);
-		List<PrintConcept> list3 = Concept.getFineBonusConcepts(rcptId);
+		List<PrintConcept> list3 = Concept.getFineBonusConcepts(rcptId);*/
 	}
 
 	@Override

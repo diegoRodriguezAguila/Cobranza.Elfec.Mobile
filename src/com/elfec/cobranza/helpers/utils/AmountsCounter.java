@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import com.elfec.cobranza.helpers.text_format.AttributePicker;
 
@@ -18,7 +19,8 @@ public class AmountsCounter {
 	private static NumberFormat nf;
 	static
 	{
-		nf = DecimalFormat.getInstance();
+		nf = DecimalFormat.getInstance(Locale.getDefault());
+		nf.setMinimumFractionDigits(2);
 		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
 		customSymbol.setDecimalSeparator('.');
 		customSymbol.setGroupingSeparator(',');
@@ -39,6 +41,16 @@ public class AmountsCounter {
 			totalAmount = totalAmount.add(amountGetter.pickAttribute(obj));
 		}
 		return totalAmount;
+	}
+	
+	/**
+	 * Obtiene un bigdecimal y la formatea
+	 * @param amount
+	 * @return el bigdecimal formateado
+	 */
+	public static String formatBigDecimal(BigDecimal amount)
+	{
+		return nf.format(amount.setScale(2, RoundingMode.FLOOR));
 	}
 	
 	/**

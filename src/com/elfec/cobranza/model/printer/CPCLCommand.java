@@ -46,6 +46,14 @@ public class CPCLCommand {
 	 */
 	private static final String PRINT = "PRINT";
 	/**
+	 * Comando de Cuadrado
+	 */
+	private static final String BOX = "BOX";
+	/**
+	 * Comando de Linea
+	 */
+	private static final String LINE = "LINE";
+	/**
 	 * Define las unidades del lenguaje
 	 * @author drodriguez
 	 *
@@ -225,6 +233,42 @@ public class CPCLCommand {
 	public CPCLCommand setSpacing(double extraSpacing)
 	{
 		command.append(SPACING).append(SP).append(extraSpacing).append(ENDL);
+		return this;
+	}
+	
+	/**
+	 * Crea un cuadrado en la posición especificada. Tome en cuenta que según la justificación definida 
+	 * se dibuja el cuadrado en la factura, para coordenadas absolutas llame a la justificación LEFT, sin parámetros
+	 * antes de definir el cuadrado
+	 * @param leftTopX coordenada X de la punta izquierda superior (en unidad definida)
+	 * @param leftTopY coordenada Y de la punta izquierda superior (en unidad definida)
+	 * @param rightBotX coordenada X de la punta derecha inferior (en unidad definida)
+	 * @param rightBotY coordenada Y de la punta derecha inferior (en unidad definida)
+	 * @param width el ancho del las lineas del cuadrado, en la unidad definida
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand box(double leftTopX, double leftTopY, double rightBotX, double rightBotY, double width)
+	{
+		command.append(BOX).append(SP).append(leftTopX).append(SP).append(leftTopY)
+			.append(SP).append(rightBotX).append(SP).append(rightBotY).append(SP).append(width).append(ENDL);
+		return this;
+	}
+	
+	/**
+	 * Crea una línea en la posición especificada. Tome en cuenta que según la justificación definida 
+	 * se dibuja el cuadrado en la factura, para coordenadas absolutas llame a la justificación LEFT, sin parámetros
+	 * antes de definir el cuadrado
+	 * @param startX coordenada X del inicio de la linea (en unidad definida)
+	 * @param startY coordenada Y del inicio de la linea (en unidad definida)
+	 * @param endX coordenada X del final de la linea (en unidad definida)
+	 * @param endY coordenada Y del final de la linea (en unidad definida)
+	 * @param width el ancho del la linea, en la unidad definida
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand line(double startX, double startY, double endX, double endY, double width)
+	{
+		command.append(LINE).append(SP).append(startX).append(SP).append(startY)
+			.append(SP).append(endX).append(SP).append(endY).append(SP).append(width).append(ENDL);
 		return this;
 	}
 	
