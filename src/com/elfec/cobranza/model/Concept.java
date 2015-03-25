@@ -182,18 +182,9 @@ public class Concept extends Model {
 	 */
 	public static List<PrintConcept> getFineBonusConcepts(int receiptId)
 	{
-		From subQuery = new Select("C.Description, A.Amount")
-	    .from(ReceiptConcept.class).as("A")
-	    .join(Concept.class).as("B")
-	    .on("(A.ConceptId = B.ConceptId AND A.SubconceptId = B.SubconceptId)")
-	    .join(FineBonus.class).as("C")
-	    .on("A.ConceptId = C.ConceptId")
-
-	    .where(" (A.EnterpriseId = 1) AND (A.BranchOfficeId = 10) "
-	    		+ "AND (A.ReceiptType = 'FC') AND (A.ReceiptLetter = 'Y') "
-	    		+ "AND (B.PrintArea IN (4)) "
-	    		+ "AND A.ReceiptId = ? "
-	    		+ "AND A.Amount<>0", receiptId);
+		From subQuery = new Select("Description, Amount")
+	    .from(FineBonus.class)
+	    .where("ReceiptId = ? ", receiptId);
 		
 		List<PrintConcept> concepts = new ArrayList<PrintConcept>();
 		Cursor cursor = Cache.openDatabase().rawQuery(subQuery.toSql(), subQuery.getArguments());
