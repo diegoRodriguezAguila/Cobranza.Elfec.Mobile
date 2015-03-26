@@ -20,7 +20,6 @@ public class AmountsCounter {
 	static
 	{
 		nf = DecimalFormat.getInstance(Locale.getDefault());
-		nf.setMinimumFractionDigits(2);
 		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
 		customSymbol.setDecimalSeparator('.');
 		customSymbol.setGroupingSeparator(',');
@@ -50,7 +49,10 @@ public class AmountsCounter {
 	 */
 	public static String formatBigDecimal(BigDecimal amount)
 	{
-		return nf.format(amount.setScale(2, RoundingMode.FLOOR));
+		nf.setMinimumFractionDigits(2);
+		String formatedBigDecimal = nf.format(amount.setScale(2, RoundingMode.FLOOR));
+		nf.setMinimumFractionDigits(0);
+		return formatedBigDecimal;
 	}
 	
 	/**

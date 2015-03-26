@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import com.elfec.cobranza.business_logic.ConceptManager;
+import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.Category;
@@ -31,15 +32,36 @@ public class ReceiptGenerator {
 	 */
 	private static final double SP_FACTOR = 0.37;
 	/**
-	 * Define el tamaño máximo de caracteres que puede ocupar una línea de texto<br>
-	 * Se lo utiliza para formatear la dirección.
+	 * Define el tamaño máximo de caracteres que puede ocupar una línea de texto
 	 */
 	private static final int WRAP_LIMIT = 30;
 	/**
 	 * El limite de tamaño de un concepto
 	 */
 	private static final int CONCEPT_WRAP_LIMIT = 34;
-	
+	/**
+	 * Define el tamaño máximo de caracteres que puede ocupar una línea de texto del literal de la factura
+	 */
+	private static final int LITERAL_WRAP_LIMIT = 66;
+	/**
+	 * Define el tamaño máximo de caracteres que puede ocupar una línea de texto del footer
+	 */
+	private static final int FOOTER_WRAP_LIMIT = 42;
+	private static final DateTime SFC_DATE_LIMIT = DateTime.now().minusDays(2);
+	/**
+	 * Mensaje de la empresa
+	 */
+	private static final String ENTERPRISE_MSG = "Recuerde pagar sus facturas puntualmente";
+	/**
+	 * Mensaje post SFC
+	 */
+	private static final String NEW_MSG = "\"ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, "
+			+ "EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY\"";
+	/**
+	 * Mensaje pre SFC
+	 */
+	private static final String OLD_MSG = "\"La reproducción total o parcial y/o el uso no autorizado de esta Nota Fiscal, "
+			+ "constituye un delito a ser sancionado conforme a Ley\"";
 	/**
 	 * El espacio extra en la información de la factura
 	 */
@@ -49,6 +71,11 @@ public class ReceiptGenerator {
 	 * El tamaño de la factura en cm
 	 */
 	private static double receiptHeight;
+	
+	/**
+	 * Booleano que indica si es que se debe usar el nuevo formato
+	 */
+	private static boolean isNewFormat;
 	
 	
 	/**
@@ -60,10 +87,12 @@ public class ReceiptGenerator {
 	{
 		rcptDataExtraSpacing = 0;
 		receiptHeight = 0;
+		isNewFormat = (Days.daysBetween(SFC_DATE_LIMIT, DateTime.now()).getDays()>=0);
 		CPCLCommand command = new CPCLCommand(200, 400, 11.5).inUnit(Unit.IN_CENTIMETERS );
 		assignHeaderData(command, receipt);
 		assignReceiptData(command, receipt);
 		assignReceiptDetails(command, receipt);
+		assignFooterData(command, receipt);
 		command.setLabelHeight(receiptHeight+0.8);
 		command.print();
 		return command;
@@ -77,7 +106,9 @@ public class ReceiptGenerator {
 	{
 		command.justify(Justify.CENTER)
 		.text("TAHOMA15.CPF", 0, 0, receiptHeight, 0.049, 0.076, "FACTURA ORIGINAL");
-		double boxStartY = receiptHeight+=0.75;
+		if(!isNewFormat)
+			command.text("TAHOMA8P.CPF", 0, 0, receiptHeight+=0.75, receipt.getAuthorizationDescription());
+		double boxStartY = receiptHeight += (isNewFormat?0.75:SP_FACTOR);
 		command.setFont("TAHOMA11.CPF")
 		.multilineText(0.44, 0, 0, receiptHeight+=0.15, "NIT: 1023213028", "FACTURA No.: "+receipt.getReceiptNumber(),
 				"AUTORIZACIÓN: "+receipt.getAuthorizationNumber())
@@ -285,12 +316,65 @@ public class ReceiptGenerator {
 			receiptHeight += (size+totalExtraRows)*SP_FACTOR;
 		}
 	}
+	
+	/**
+	 * Asigna la información del final de la factura
+	 * @param command
+	 * @param receipt
+	 */
+	private static void assignFooterData(CPCLCommand command,
+			CoopReceipt receipt) {
+		String selectedMsg =  wrapFooterContent((isNewFormat?NEW_MSG:OLD_MSG));
+		String enterpriseMsg = wrapFooterContent(ENTERPRISE_MSG);
+		String literal = wrapLiteral(receipt.getLiteral()+" Bolivianos");
+		String authDesc = wrapFooterContent(receipt.getAuthorizationDescription());
+		command.justify(Justify.LEFT, 8)
+		.setFont("TAHOMA8P.CPF")
+		.text(0, 0.6, receiptHeight+=0.15, 0.03, 0.03, "Son:")
+		.multilineText(SP_FACTOR, 0, 1.4, receiptHeight, literal);
+		int spaces = (literal.split("\r\n").length);
+		command.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*spaces)+0.1), 
+				("CÓDIGO DE CONTROL: "+receipt.getControlCode()),
+				("FECHA LÍMITE DE EMISIÓN: "+receipt.getAuthExpirationDate().toString("dd/MM/yyyy")))
+				.text(0, 7.3, receiptHeight, 0.03, 0.03, "CAJA/"+SessionManager.getLoggedCashdeskNumber()+":"+receipt.getId())
+				.justify(Justify.CENTER, 7.3)
+				.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*2)+0.05), enterpriseMsg);
+		spaces = (enterpriseMsg.split("\r\n").length);
+		command.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*spaces)+0.3), selectedMsg);
+		spaces = (selectedMsg.split("\r\n").length);
+		if(isNewFormat)
+			command.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*spaces)+0.2), authDesc);
+		receiptHeight+=(isNewFormat?(authDesc.split("\r\n").length*SP_FACTOR):(SP_FACTOR*spaces));
+	}
 
+
+	/**
+	 * Wrapea la cadena del literal tomando en cuenta los 7.3 de limite que se tiene
+	 * subsecuente
+	 * @param footerMsg
+	 * @return la cadena con lineas de salto respentando el LITERAL_WRAP_LIMIT
+	 */
+	private static String wrapLiteral(String literal)
+	{
+		return WordUtils.wrap(literal, LITERAL_WRAP_LIMIT).replace("\n", "\r\n");
+	}
+	
+	/**
+	 * Wrapea la cadena del footer tomando en cuenta los 7.3 de limite que se tiene
+	 * subsecuente
+	 * @param footerMsg
+	 * @return la cadena con lineas de salto respentando el WRAP_LIMIT
+	 */
+	private static String wrapFooterContent(String footerMsg)
+	{
+		return WordUtils.wrap(footerMsg, FOOTER_WRAP_LIMIT).replace("\n", "\r\n");
+	}
+	
 	/**
 	 * Si es necesario parte la descripcion del concepto en pedazos para que se impriman de forma
 	 * subsecuente
-	 * @param name
-	 * @return la cadena con lineas de salto respentando el WRAP_LIMIT
+	 * @param conceptDesc
+	 * @return la cadena con lineas de salto respentando el CONCEPT_WRAP_LIMIT
 	 */
 	private static String wrapConcept(String conceptDesc)
 	{
