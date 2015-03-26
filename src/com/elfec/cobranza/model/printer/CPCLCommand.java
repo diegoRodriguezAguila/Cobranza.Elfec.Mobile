@@ -54,6 +54,14 @@ public class CPCLCommand {
 	 */
 	private static final String LINE = "LINE";
 	/**
+	 * Comando de inicio de código QR
+	 */
+	private static final String QR = "B QR";
+	/**
+	 * Comando de fin de código QR
+	 */
+	private static final String ENDQR = "ENDQR";
+	/**
 	 * Define las unidades del lenguaje
 	 * @author drodriguez
 	 *
@@ -120,6 +128,38 @@ public class CPCLCommand {
 			return this.valueStr;
 		}
 	};
+
+	/**
+	 * Define los tipos de calidades de un código QR
+	 * @author drodriguez
+	 *
+	 */
+	public enum QRQuality{
+		/**
+		 * Ultra high reliability level (Level H)
+		 */
+		H("H"), 
+		/**
+		 * High reliability level (Level Q)
+		 */
+		Q("Q"), 
+		/**
+		 * Standard level (Level M)
+		 */
+		M("M"), 
+		/**
+		 * High density level (Level L)
+		 */
+		L("L");
+		
+		private String valueStr;
+		private QRQuality(String valueStr)
+		{	this.valueStr = valueStr;}
+		@Override public String toString(){
+			return this.valueStr;
+		}
+	};
+	
 	/**
 	 * La fuente que se asigna con sus getters y setters
 	 * para usarse en textos sin necesidad de indicar la fuente
@@ -423,6 +463,22 @@ public class CPCLCommand {
 		if(font==null)
 			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin parámetros de fuente");
 		multilineText(lineHeight, font, size, x, y, textLines);
+		return this;
+	}
+	
+	/**
+	 * Grafica un código QR
+	 * @param size entre 1 y 32
+	 * @param x la posición X en la unidad definida
+	 * @param y la posición Y en la unidad definida
+	 * @param text el texto a codificar
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand QR(int size, double x, double y, QRQuality quality, String text)
+	{
+		command.append(QR).append(SP).append(x).append(SP).append(y).append(" U ").append(size).append(ENDL)
+		.append(quality.toString()).append(",").append(text).append(ENDL)
+		.append(ENDQR).append(ENDL);
 		return this;
 	}
 	

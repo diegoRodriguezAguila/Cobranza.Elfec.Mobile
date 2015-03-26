@@ -19,6 +19,7 @@ import com.elfec.cobranza.model.SupplyStatus;
 import com.elfec.cobranza.model.printer.CPCLCommand;
 import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
+import com.elfec.cobranza.model.printer.CPCLCommand.QRQuality;
 import com.elfec.cobranza.model.printer.CPCLCommand.Unit;
 
 /**
@@ -47,6 +48,10 @@ public class ReceiptGenerator {
 	 * Define el tamaño máximo de caracteres que puede ocupar una línea de texto del footer
 	 */
 	private static final int FOOTER_WRAP_LIMIT = 42;
+	/**
+	 * El NIT de Elfec
+	 */
+	private static final String ELFEC_NIT = "1023213028";
 	private static final DateTime SFC_DATE_LIMIT = DateTime.now().minusDays(2);
 	/**
 	 * Mensaje de la empresa
@@ -110,7 +115,7 @@ public class ReceiptGenerator {
 			command.text("TAHOMA8P.CPF", 0, 0, receiptHeight+=0.75, receipt.getAuthorizationDescription());
 		double boxStartY = receiptHeight += (isNewFormat?0.75:SP_FACTOR);
 		command.setFont("TAHOMA11.CPF")
-		.multilineText(0.44, 0, 0, receiptHeight+=0.15, "NIT: 1023213028", "FACTURA No.: "+receipt.getReceiptNumber(),
+		.multilineText(0.44, 0, 0, receiptHeight+=0.15, "NIT: "+ELFEC_NIT, "FACTURA No.: "+receipt.getReceiptNumber(),
 				"AUTORIZACIÓN: "+receipt.getAuthorizationNumber())
 		.setFont("TAHOMA8P.CPF")
 	    .text( 0, 0, receiptHeight+=1.5, 0.025, 0.025, "Actividad Económica:")
@@ -345,8 +350,23 @@ public class ReceiptGenerator {
 		if(isNewFormat)
 			command.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*spaces)+0.2), authDesc);
 		receiptHeight+=(isNewFormat?(authDesc.split("\r\n").length*SP_FACTOR):(SP_FACTOR*spaces));
+		generateQR(command, receipt);
 	}
 
+	/**
+	 * Genera el código QR de la factura
+	 * @param command
+	 * @param receipt
+	 */
+	private static void generateQR(CPCLCommand command, CoopReceipt receipt) {
+		String textToCode = ELFEC_NIT+"|"+receipt.getReceiptNumber()+"|"+
+				receipt.getAuthorizationNumber()+"|"+receipt.getIssueDate().toString("dd/MM/yyyy")+"|"+
+				AmountsCounter.formatBigDecimal(receipt.getTotalAmount())+"|"+
+				AmountsCounter.formatBigDecimal(Concept.getSubjectToTaxCreditConcept(receipt.getReceiptId()).getAmount())+"|"+
+				receipt.getControlCode()+"|"+receipt.getNIT()+"|0|0|"+
+				AmountsCounter.formatBigDecimal(Concept.getNotSubjectToTaxCreditConcept(receipt.getReceiptId()).getAmount())+"|0";
+		command.QR(5, 7.5, receiptHeight-2.5, QRQuality.M, textToCode);
+	}
 
 	/**
 	 * Wrapea la cadena del literal tomando en cuenta los 7.3 de limite que se tiene
