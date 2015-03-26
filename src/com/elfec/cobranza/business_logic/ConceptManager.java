@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.elfec.cobranza.business_logic.DataImporter.ImportSource;
 import com.elfec.cobranza.model.Concept;
+import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.remote_data_access.ConceptRDA;
@@ -56,6 +57,20 @@ public class ConceptManager {
 		List<PrintConcept> concepts = new ArrayList<PrintConcept>();
 		concepts.add(Concept.getTotalSupplyConcept(receiptId));
 		concepts.addAll(Concept.getTotalSupplyAreaConcepts(receiptId));
+		return concepts;
+	}
+	
+	/**
+	 * Obtiene los conceptos para imprimir, del TOTAL FACTURA
+	 * @param receipt
+	 * @return lista de conceptos de impresión
+	 */
+	public static List<PrintConcept> getAllTotalReceiptConcepts(CoopReceipt receipt)
+	{
+		List<PrintConcept> concepts = new ArrayList<PrintConcept>();
+		concepts.add(Concept.getTotalReceiptConcept(receipt.getReceiptId()));
+		concepts.add(Concept.getSubjectToTaxCreditConcept(receipt.getReceiptId()));
+		concepts.add(new PrintConcept("TOTAL A PAGAR", receipt.getTotalAmount()));
 		return concepts;
 	}
 

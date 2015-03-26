@@ -129,6 +129,10 @@ public class CPCLCommand {
 	 * El comando que está siendo construido
 	 */
 	private StringBuilder command;
+	/**
+	 * Define el tamaño de la impresión en la unidad deinida
+	 */
+	private double labelHeight;
 	
 	/**
 	 * Inicializa el comando con offset=0 y los valores proporcionados
@@ -150,8 +154,25 @@ public class CPCLCommand {
 	 */
 	public CPCLCommand(int offset, int horizontalRes, int verticalRes, double height)
 	{
+		labelHeight = height;
 		command = new StringBuilder("! ").append(offset).append(SP).append(horizontalRes)
-				.append(SP).append(verticalRes).append(SP).append(height).append(" 1\r\n");
+				.append(SP).append(verticalRes).append(" %s 1\r\n");
+	}
+	
+	/**
+	 * Obtiene el tamaño del label definido
+	 * @return
+	 */
+	public double getLabelHeight() {
+		return labelHeight;
+	}
+
+	/**
+	 * Asigna el tamaño que tendrá el label , en la unidad definida
+	 * @param labelHeight
+	 */
+	public void setLabelHeight(double labelHeight) {
+		this.labelHeight = labelHeight;
 	}
 
 	/**
@@ -419,6 +440,6 @@ public class CPCLCommand {
 	public String toString(){
 		if(command.lastIndexOf(PRINT)==-1)
 			throw new RuntimeException("Debe llamar a print() antes de toString()");
-		return command.toString();
+		return String.format(command.toString(), labelHeight);
 	}
 }

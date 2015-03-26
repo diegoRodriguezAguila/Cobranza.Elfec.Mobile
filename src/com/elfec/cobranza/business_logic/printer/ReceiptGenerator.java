@@ -46,9 +46,10 @@ public class ReceiptGenerator {
 	private static double rcptDataExtraSpacing;
 	
 	/**
-	 * El espacio de los conceptos
+	 * El tamaño de la factura en cm
 	 */
-	private static double conceptsSpacing; 
+	private static double receiptHeight;
+	
 	
 	/**
 	 * Genera el comando cpcl de impresión del recibo, sin las imagenes de header ni footer
@@ -58,11 +59,12 @@ public class ReceiptGenerator {
 	public static CPCLCommand generateCommand(CoopReceipt receipt)
 	{
 		rcptDataExtraSpacing = 0;
-		conceptsSpacing = 0;
+		receiptHeight = 0;
 		CPCLCommand command = new CPCLCommand(200, 400, 11.5).inUnit(Unit.IN_CENTIMETERS );
 		assignHeaderData(command, receipt);
 		assignReceiptData(command, receipt);
 		assignReceiptDetails(command, receipt);
+		command.setLabelHeight(receiptHeight+0.8);
 		command.print();
 		return command;
 	}
@@ -74,15 +76,16 @@ public class ReceiptGenerator {
 	private static void assignHeaderData(CPCLCommand command, CoopReceipt receipt)
 	{
 		command.justify(Justify.CENTER)
-		.text("TAHOMA15.CPF", 0, 0, 0, 0.049, 0.076, "FACTURA ORIGINAL")
-		.setFont("TAHOMA11.CPF")
-		.multilineText(0.44, 0, 0, 0.7, "NIT: 1023213028", "FACTURA No.: "+receipt.getReceiptNumber(),
+		.text("TAHOMA15.CPF", 0, 0, receiptHeight, 0.049, 0.076, "FACTURA ORIGINAL");
+		double boxStartY = receiptHeight+=0.75;
+		command.setFont("TAHOMA11.CPF")
+		.multilineText(0.44, 0, 0, receiptHeight+=0.15, "NIT: 1023213028", "FACTURA No.: "+receipt.getReceiptNumber(),
 				"AUTORIZACIÓN: "+receipt.getAuthorizationNumber())
 		.setFont("TAHOMA8P.CPF")
-	    .text( 0, 0, 2.1, 0.025, 0.025, "Actividad Económica:")
-		.text( 0, 0, 2.45, "Venta de Energía Eléctrica")
+	    .text( 0, 0, receiptHeight+=1.5, 0.025, 0.025, "Actividad Económica:")
+		.text( 0, 0, receiptHeight+=0.35, "Venta de Energía Eléctrica")
 		.justify(Justify.LEFT)
-		.box(0.4, 0.65, 10.05, 3.1, 0.02);
+		.box(0.4, boxStartY, 10.05, receiptHeight+=0.55, 0.02);
 	}
 	
 	/**
@@ -91,10 +94,13 @@ public class ReceiptGenerator {
 	 */
 	private static void assignReceiptData(CPCLCommand command, CoopReceipt receipt)
 	{
+		double boxStartY = receiptHeight-0.02;
+		double startY = receiptHeight+=0.15;
+		assignReceiptRightData(command, receipt, startY);
 		assignReceiptLeftData(command, receipt);
-		assignReceiptRightData(command, receipt);
+		receiptHeight = Math.max((startY+3.8), (receiptHeight+0.15))+rcptDataExtraSpacing;
 		command.justify(Justify.LEFT)
-		.box(0.4, 3.08, 10.05, 7.1+rcptDataExtraSpacing, 0.02);
+		.box(0.4, boxStartY, 10.05, receiptHeight, 0.02); //3.85 ocupa el bloque
 	}
 	
 
@@ -107,17 +113,18 @@ public class ReceiptGenerator {
 		String clientName = wrapName(Supply.findSupplyByNUSOrAccount(receipt.getSupplyId(), receipt.getSupplyNumber()).getClientName());
 		String clientAddress = wrapAddress("DIRECCIÓN: "+receipt.getClientAddress());
 		double extraSpacing = ((clientName.split("\r\n").length-1)*SP_FACTOR);
+		
 		command.justify(Justify.LEFT, 3)
 		.setFont("TAHOMA8P.CPF")
-		.text(0, 0.6, 3.3, 0.03, 0.03, "FECHA EMISIÓN:")
-		.text(0, 3.3, 3.3, receipt.getIssueDate().toString("dd/MM/yyyy"))
-		.text("TAHOMA11.CPF", 0, 0.6, 3.65, 0.035, 0.035, "NUS:")
-		.text("TAHOMA11.CPF", 0, 1.6, 3.65, 0.035, 0.035, ""+receipt.getSupplyId())
-		.text(0, 0.6, 4.15, 0.03, 0.03, "CUENTA:")
-		.text(0, 2, 4.15, AccountFormatter.formatAccountNumber(receipt.getSupplyNumber()))
-		.text(0, 0.6, 4.5, 0.03, 0.03, "NOMBRE:")
-		.multilineText(SP_FACTOR, 0, 2.05, 4.5, clientName)
-		.multilineText(SP_FACTOR, 0, 0.6, 4.85+extraSpacing, "NIT/CI: "+receipt.getNIT(), 
+		.text(0, 0.6, receiptHeight, 0.03, 0.03, "FECHA EMISIÓN:")
+		.text(0, 3.3, receiptHeight, receipt.getIssueDate().toString("dd/MM/yyyy"))
+		.text("TAHOMA11.CPF", 0, 0.6, receiptHeight+=0.35, 0.035, 0.035, "NUS:")
+		.text("TAHOMA11.CPF", 0, 1.6, receiptHeight, 0.035, 0.035, ""+receipt.getSupplyId())
+		.text(0, 0.6, receiptHeight+=0.5, 0.03, 0.03, "CUENTA:")
+		.text(0, 2, receiptHeight, AccountFormatter.formatAccountNumber(receipt.getSupplyNumber()))
+		.text(0, 0.6, receiptHeight+=0.35, 0.03, 0.03, "NOMBRE:")
+		.multilineText(SP_FACTOR, 0, 2.05, receiptHeight, clientName)
+		.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=(0.35+extraSpacing), "NIT/CI: "+receipt.getNIT(), 
 				clientAddress,
 				"CATEGORÍA: "+Category.getFullCategoryDesc(receipt.getCategoryId()),
 				"MEDIDOR: "+receipt.getMeterNumber());
@@ -130,14 +137,15 @@ public class ReceiptGenerator {
 	 * segundo sector de la factura en el comando de la impresora
 	 * @param command
 	 */
-	private static void assignReceiptRightData(CPCLCommand command, CoopReceipt receipt)
+	private static void assignReceiptRightData(CPCLCommand command, CoopReceipt receipt, double startY)
 	{
 		SupplyStatus powerSupplyStatus = receipt.getPowerSupplyStatus();
 		DateTime period = new DateTime(receipt.getYear(), receipt.getPeriodNumber(),1,0,0);
 		int daysPastDue = Days.daysBetween(receipt.getExpirationDate(), DateTime.now()).getDays();
+		
 		command.justify(Justify.LEFT, 4.6)
 		.setFont("TAHOMA8P.CPF")
-		.multilineText(SP_FACTOR, 0, 5.6, 3.3, 
+		.multilineText(SP_FACTOR, 0, 5.6, startY, 
 				"CONSUMO (kWh): "+receipt.getSupplyStatus().getBilledConsume(),
 				"POTENCIA: "+(powerSupplyStatus==null?0:powerSupplyStatus.getBilledConsume()),
 				"PERIODO: "+period.toString("MMM/yyyy").toUpperCase(Locale.getDefault()),
@@ -158,14 +166,20 @@ public class ReceiptGenerator {
 	 */
 	private static void assignReceiptDetails(CPCLCommand command, CoopReceipt receipt) 
 	{
-		command.justify(Justify.LEFT, 6.5)
+		double boxStartY = receiptHeight-0.02;
+		receiptHeight+=0.15;
+		command.justify(Justify.LEFT, 6.7)
 		.setFont("TAHOMA8P.CPF")
-		.text(0, 1, 7.3+rcptDataExtraSpacing, 0.03, 0.03, "DETALLE")
+		.text(0, 1, receiptHeight, 0.03, 0.03, "DETALLE")
 		.justify(Justify.RIGHT, 9)
-		.text(0, 7, 7.3+rcptDataExtraSpacing, 0.03, 0.03, "IMPORTE");
+		.text(0, 7, receiptHeight, 0.03, 0.03, "IMPORTE");
+		receiptHeight+=0.45;
 		assignTotalConsumeConcepts(command, receipt);
+		receiptHeight+=0.1;
 		assignTotalSupplyConcepts(command, receipt);
-		//assignTotalReceiptConcepts(command, receipt);
+		receiptHeight+=0.1;
+		assignTotalReceiptConcepts(command, receipt);
+		command.justify(Justify.LEFT).box(0.4, boxStartY, 10.05, receiptHeight+=0.15, 0.02);
 	}
 	
 	/**
@@ -175,29 +189,20 @@ public class ReceiptGenerator {
 	 */
 	private static void assignTotalConsumeConcepts(CPCLCommand command,
 			CoopReceipt receipt) {
-		double startY = 7.75+rcptDataExtraSpacing;
 		List<PrintConcept> concepts =  ConceptManager.getAllTotalConsumeConcepts(receipt.getReceiptId());
 		int size = concepts.size();
 		String[] conceptDescs = new String[size];
 		String[] conceptAmounts =  new String[size];
-		int totalExtraRows = 0, extraRows;
-		for (int i = 0; i < size; i++) {
-			conceptDescs[i] = wrapConcept(concepts.get(i).getDescription());
-			extraRows = conceptDescs[i].split("\r\n").length-1;
-			totalExtraRows+=extraRows;
-			conceptAmounts[i] = AmountsCounter.formatBigDecimal(concepts.get(i).getAmount());
-			for (int j = 0; j < extraRows; j++) {
-				conceptAmounts[i] = conceptAmounts[i]+"\r\n   ";
-			}
-		}
-		conceptsSpacing = (size+totalExtraRows)*SP_FACTOR + startY;
-		command.justify(Justify.LEFT, 6.5)
+		int totalExtraRows = getPrintableWrappedConceptArrays(concepts, conceptDescs, conceptAmounts);
+		double startY = receiptHeight;
+		receiptHeight += (size+totalExtraRows)*SP_FACTOR;
+		command.justify(Justify.LEFT, 6.7)
 		.multilineText(SP_FACTOR, 0, 1, startY, conceptDescs)
-		.line(1, conceptsSpacing, 6.5, conceptsSpacing, 0.02)
+		.line(1, receiptHeight, 6.7, receiptHeight, 0.02)
 		.justify(Justify.RIGHT, 9)
-		.multilineText(SP_FACTOR, 0, 7.2, startY, conceptAmounts)
+		.multilineText(SP_FACTOR, 0, 7.4, startY, conceptAmounts)
 		.justify(Justify.LEFT)
-		.line(7.2, conceptsSpacing, 9, conceptsSpacing, 0.02);
+		.line(7.4, receiptHeight, 9, receiptHeight, 0.02);
 	}
 	
 	/**
@@ -207,29 +212,20 @@ public class ReceiptGenerator {
 	 */
 	private static void assignTotalSupplyConcepts(CPCLCommand command,
 			CoopReceipt receipt) {
-		double startY = 0.1+conceptsSpacing;
 		List<PrintConcept> concepts =  ConceptManager.getAllTotalSupplyConcepts(receipt.getReceiptId());
 		int size = concepts.size();
 		String[] conceptDescs = new String[size];
 		String[] conceptAmounts =  new String[size];
-		int totalExtraRows = 0, extraRows;
-		for (int i = 0; i < size; i++) {
-			conceptDescs[i] = wrapConcept(concepts.get(i).getDescription()+" PARA VER SI ENTRA UNA DESCRIPCIÓN MUCHO MAS LARGA DE LO NORMAL");
-			extraRows = conceptDescs[i].split("\r\n").length-1;
-			totalExtraRows+=extraRows;
-			conceptAmounts[i] = AmountsCounter.formatBigDecimal(concepts.get(i).getAmount());
-			for (int j = 0; j < extraRows; j++) {
-				conceptAmounts[i] = conceptAmounts[i]+"\r\n   ";
-			}
-		}
-		conceptsSpacing = (size+totalExtraRows)*SP_FACTOR + startY;
-		command.justify(Justify.LEFT, 6.5)
+		int totalExtraRows = getPrintableWrappedConceptArrays(concepts, conceptDescs, conceptAmounts);
+		double startY = receiptHeight;
+		receiptHeight += (size+totalExtraRows)*SP_FACTOR;
+		command.justify(Justify.LEFT, 6.7)
 		.multilineText(SP_FACTOR, 0, 1, startY, conceptDescs)
-		.line(1, conceptsSpacing, 6.5, conceptsSpacing, 0.02)
+		.line(1, receiptHeight, 6.7, receiptHeight, 0.02)
 		.justify(Justify.RIGHT, 9)
-		.multilineText(SP_FACTOR, 0, 7.2, startY, conceptAmounts)
+		.multilineText(SP_FACTOR, 0, 7.4, startY, conceptAmounts)
 		.justify(Justify.LEFT)
-		.line(7.2, conceptsSpacing, 9, conceptsSpacing, 0.02);
+		.line(7.4, receiptHeight, 9, receiptHeight, 0.02);
 	}
 	
 	/**
@@ -239,26 +235,55 @@ public class ReceiptGenerator {
 	 */
 	private static void assignTotalReceiptConcepts(CPCLCommand command,
 			CoopReceipt receipt) {
-		double startY = 0.1+conceptsSpacing;
-		PrintConcept receiptTotalCpt = Concept.getTotalReceiptConcept(receipt.getReceiptId());
-		PrintConcept subjectToTaxCreditCpt = Concept.getSubjectToTaxCreditConcept(receipt.getReceiptId());
-		PrintConcept totalDueCpt = new PrintConcept("TOTAL A PAGAR", receipt.getTotalAmount());
-		List<PrintConcept> fineBonusConcepts =  Concept.getFineBonusConcepts(receipt.getReceiptId());
-		int size = fineBonusConcepts.size();
+		List<PrintConcept> concepts = ConceptManager.getAllTotalReceiptConcepts(receipt);
+		int size = concepts.size();
 		String[] conceptDescs = new String[size];
 		String[] conceptAmounts =  new String[size];
-		for (int i = 0; i < size; i++) {
-			conceptDescs[i] = wrapConcept(fineBonusConcepts.get(i).getDescription());
-			conceptAmounts[i] = AmountsCounter.formatBigDecimal(fineBonusConcepts.get(i).getAmount());
-		}
-		conceptsSpacing = size*SP_FACTOR + startY;
-		command.justify(Justify.LEFT, 6.5)
-		.multilineText(SP_FACTOR, 0, 1, startY, conceptDescs)
-		.line(1, conceptsSpacing, 6.5, conceptsSpacing, 0.02)
+		int totalExtraRows = getPrintableWrappedConceptArrays(concepts, conceptDescs, conceptAmounts);
+		double startY = receiptHeight;
+		command.justify(Justify.LEFT, 6.7)
+		.multilineText(SP_FACTOR, 0, 1, receiptHeight, conceptDescs[0])
 		.justify(Justify.RIGHT, 9)
-		.multilineText(SP_FACTOR, 0, 7.2, startY, conceptAmounts)
-		.justify(Justify.LEFT)
-		.line(7.2, conceptsSpacing, 9, conceptsSpacing, 0.02);
+		.multilineText(SP_FACTOR, 0, 7.4, receiptHeight, conceptAmounts[0]);
+		
+		double spacing = (conceptDescs[0].split("\r\n").length)*SP_FACTOR;	
+		command.justify(Justify.LEFT, 6.7)
+		.setBold(0.03).setSpacing(0.03)
+		.multilineText(SP_FACTOR, 0, 1, receiptHeight+=spacing, conceptDescs[1])
+		.justify(Justify.RIGHT, 9)
+		.multilineText(SP_FACTOR, 0, 7.4, receiptHeight, conceptAmounts[1])
+		.setBold(0).setSpacing(0);
+		
+		spacing = (conceptDescs[1].split("\r\n").length)*SP_FACTOR;
+		command.justify(Justify.LEFT, 6.7)
+		.multilineText(SP_FACTOR, 0, 1, receiptHeight+=spacing, conceptDescs[2])
+		.justify(Justify.RIGHT, 9)
+		.multilineText(SP_FACTOR, 0, 7.4, receiptHeight, conceptAmounts[2]);
+		
+		receiptHeight = startY+((size+totalExtraRows)*SP_FACTOR);
+		assignFineBonusConcepts(command, receipt);
+	}
+	
+	/**
+	 * Muestra la lista de conceptos de devoluciones y de bonificaciones multas
+	 * @param command
+	 * @param receipt
+	 */
+	private static void assignFineBonusConcepts(CPCLCommand command,
+			CoopReceipt receipt) {
+		List<PrintConcept> fineBonusConcepts =  Concept.getFineBonusConcepts(receipt.getReceiptId());
+		int size = fineBonusConcepts.size();
+		if(size>0)
+		{
+			String[] conceptDescs = new String[size];
+			String[] conceptAmounts =  new String[size];
+			int totalExtraRows = getPrintableWrappedConceptArrays(fineBonusConcepts, conceptDescs, conceptAmounts);
+			command.justify(Justify.LEFT, 6.7)
+			.multilineText(SP_FACTOR, 0, 1, receiptHeight, conceptDescs)
+			.justify(Justify.RIGHT, 9)
+			.multilineText(SP_FACTOR, 0, 7.4, receiptHeight, conceptAmounts);
+			receiptHeight += (size+totalExtraRows)*SP_FACTOR;
+		}
 	}
 
 	/**
@@ -292,5 +317,28 @@ public class ReceiptGenerator {
 	private static String wrapAddress(String fullAddress)
 	{
 		return WordUtils.wrap(fullAddress, WRAP_LIMIT).replace("\n", "\r\n");
+	}
+	
+	/**
+	 * Arma los arrays imprimibles tomando en cuenta el wrap del texto del tamaño limite
+	 * @param concepts la lista de conceptos de la que se quieren armar sus arrays imprimibles
+	 * @param conceptDescs el array de descripciones con las filas formateadas
+	 * @param conceptAmounts el array de importes con las filas formateadas
+	 * @return la cantidad de filas extra que se aumentaron
+	 */
+	private static int getPrintableWrappedConceptArrays(List<PrintConcept> concepts, String[] conceptDescs, String[] conceptAmounts)
+	{
+		int size = concepts.size();
+		int totalExtraRows = 0, extraRows;
+		for (int i = 0; i < size; i++) {
+			conceptDescs[i] = wrapConcept(concepts.get(i).getDescription());
+			extraRows = conceptDescs[i].split("\r\n").length-1;
+			totalExtraRows+=extraRows;
+			conceptAmounts[i] = AmountsCounter.formatBigDecimal(concepts.get(i).getAmount());
+			for (int j = 0; j < extraRows; j++) {
+				conceptAmounts[i] = conceptAmounts[i]+"\r\n   ";
+			}
+		}
+		return totalExtraRows;
 	}
 }
