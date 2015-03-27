@@ -1,5 +1,7 @@
 package com.elfec.cobranza.model.printer;
 
+import java.util.Locale;
+
 
 
 
@@ -61,6 +63,10 @@ public class CPCLCommand {
 	 * Comando de fin de código QR
 	 */
 	private static final String ENDQR = "ENDQR";
+	/**
+	 * Comando para impresión de imágen PCX
+	 */
+	private static final String IMAGE = "PCX";
 	/**
 	 * Define las unidades del lenguaje
 	 * @author drodriguez
@@ -479,6 +485,23 @@ public class CPCLCommand {
 		command.append(QR).append(SP).append(x).append(SP).append(y).append(" U ").append(size).append(ENDL)
 		.append(quality.toString()).append(",").append(text).append(ENDL)
 		.append(ENDQR).append(ENDL);
+		return this;
+	}
+	
+	/**
+	 * Imprime una imagen en la posición definida
+	 * @param x posición en la unidad definida
+	 * @param y posición en la unidad definida
+	 * @param imageName nombre de la imagen, con extensión PCX o sin extensión, en caso de pasarse sin extensión
+	 * se le agregará la extensión .PCX, si se envía con otra extensión se lo tomara como si esta fuera parte del nombre
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand image(double x, double y, String imageName)
+	{
+		imageName = imageName.toUpperCase(Locale.getDefault());
+		imageName += imageName.contains(".PCX")?"":".PCX";
+		command.append(IMAGE).append(SP).append(x).append(SP).append(y).append(" !<")
+		.append(imageName).append(ENDL);
 		return this;
 	}
 	

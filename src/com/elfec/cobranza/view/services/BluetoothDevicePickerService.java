@@ -22,8 +22,7 @@ import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter;
 import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBluetoothDevicePicked;
 import com.elfec.cobranza.presenter.views.IBluetoothDevicePickerDialog;
 import com.elfec.cobranza.view.adapters.BluetoothPrinterAdapter;
-import com.zebra.sdk.comm.ConnectionException;
-import com.zebra.sdk.printer.discovery.BluetoothDiscoverer;
+import com.elfec.cobranza.view.services.bluetooth.BluetoothPrinterDiscoverer;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 import com.zebra.sdk.printer.discovery.DiscoveryHandler;
 
@@ -55,7 +54,7 @@ public class BluetoothDevicePickerService implements IBluetoothDevicePickerDialo
 	 * @param bluetoothDevicePickedCallback
 	 */
 	@SuppressLint("InflateParams")
-	public BluetoothDevicePickerService(Context context, OnBluetoothDevicePicked bluetoothDevicePickedCallback)
+	public BluetoothDevicePickerService(Context context, OnBluetoothDevicePicked bluetoothDevicePickedCallback, boolean cancelable)
 	{
 		presenter = new BluetoothDevicePickerPresenter(this, bluetoothDevicePickedCallback);
 		mHandler = new Handler(Looper.getMainLooper());
@@ -75,7 +74,8 @@ public class BluetoothDevicePickerService implements IBluetoothDevicePickerDialo
 		dialogBuilder = new AlertDialogPro.Builder(context);
 		dialogBuilder.setTitle(R.string.title_bluetooth_device_picker).setIcon(R.drawable.printer_picker)
 			.setView(rootView)
-			.setNegativeButton(R.string.btn_cancel, null);
+			.setNegativeButton(R.string.btn_cancel, null)
+			.setCancelable(cancelable);
 	}
 	
 	/**
@@ -119,8 +119,8 @@ public class BluetoothDevicePickerService implements IBluetoothDevicePickerDialo
 	}
 
 	@Override
-	public void invokeBluetoothDiscoverer(DiscoveryHandler discoveryHandler) throws ConnectionException {
-		BluetoothDiscoverer.findPrinters(context, discoveryHandler);
+	public void invokeBluetoothDiscoverer(DiscoveryHandler discoveryHandler){
+		BluetoothPrinterDiscoverer.findPrinters(context, discoveryHandler);
 	}
 
 	@Override

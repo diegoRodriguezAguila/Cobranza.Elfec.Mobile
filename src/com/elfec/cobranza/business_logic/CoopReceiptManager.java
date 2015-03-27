@@ -4,8 +4,6 @@ import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
 
-import android.graphics.Bitmap;
-
 import com.elfec.cobranza.business_logic.DataImporter.ImportSpecs;
 import com.elfec.cobranza.business_logic.printer.ReceiptGenerator;
 import com.elfec.cobranza.model.CoopReceipt;
@@ -18,6 +16,7 @@ import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
+import com.zebra.sdk.settings.SettingsException;
 
 /**
  * Se encarga de las operaciones de negocio de <b>CBTES_COOP</b> 
@@ -49,6 +48,34 @@ public class CoopReceiptManager {
 	}
 	
 	/**
+	 * Manda a imprimir multiples facturas, se DEBE llamar de un hilo
+	 * sino detendrá el hilo principal multiples veces
+	 * @param internalControlCodes
+	 * @param receipts
+	 * @param printerDevice
+	 * @return
+	 */
+	public static ManagerProcessResult printReceipts(List<Long> internalControlCodes, List<CoopReceipt> receipts, 
+			DiscoveredPrinterBluetooth printerDevice)
+	{
+		ManagerProcessResult result = new ManagerProcessResult();
+		int size = internalControlCodes.size();
+		for (int i = 0; i < size; i++) {
+			try {
+				result.addErrors(printReceipt(internalControlCodes.get(i), 
+						receipts.get(i), printerDevice).getErrors());
+				if(!result.hasErrors())
+					Thread.sleep(5000);
+				else break;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				result.addError(e);
+			}
+		}
+		return result;
+	}
+	
+	/**
 	 * Imprime el recibo con la impresora dada
 	 * @param internalControlCode
 	 * @param receipt
@@ -61,19 +88,21 @@ public class CoopReceiptManager {
 			Connection conn = printerDevice.getConnection();
 			conn.open();
 			ZebraPrinterExt printer = new ZebraPrinterExt(ZebraPrinterFactory.getInstance(conn));
-			Bitmap header = ReceiptImagesManager.getHeaderImage();
-			//printer.printImage(new ZebraImageAndroid(header), 36, 0, 770, 318, false);		
+			//ReceiptImagesManager.sendHeaderImageIfNecesary(printer);
+			//ReceiptImagesManager.sendFooterImageIfNecesary(printer);
 			printer.sendCommand(ReceiptGenerator.generateCommand(receipt));
-			if(header!=null)
-				header.recycle();
 			conn.close();
 			//header.recycle();
 		} catch (ConnectionException e) {
 			e.printStackTrace();
-			result.addError(e);
+			result.addError(new ConnectionException("No se pudo establecer conexión con la impresora, "
+					+ "asegurese de que esté encendida y de que ha seleccionado la impresora correcta en la aplicación!"));
 		} catch (ZebraPrinterLanguageUnknownException e) {
 			e.printStackTrace();
-			result.addError(e);
+			result.addError(new SettingsException("La impresora no está configurada adecuadamente para ser utilizada por la aplicación!"));
+		//} catch (ZebraIllegalArgumentException e) {
+			// TODO Auto-generated catch block
+		//	e.printStackTrace();
 		}
 		return result;
 	}

@@ -6,6 +6,10 @@ import com.elfec.cobranza.helpers.ImageInternalAccess;
 import com.elfec.cobranza.helpers.PreferencesManager;
 import com.elfec.cobranza.model.downloaders.ImageDownloader;
 import com.elfec.cobranza.model.events.OnImageDownloadFinished;
+import com.zebra.sdk.comm.ConnectionException;
+import com.zebra.sdk.device.ZebraIllegalArgumentException;
+import com.zebra.sdk.graphics.internal.ZebraImageAndroid;
+import com.zebra.sdk.printer.ZebraPrinter;
 
 /**
  * Maneja las operaciones de negocio relacionadas con las imágenes para las
@@ -19,8 +23,28 @@ public class ReceiptImagesManager {
 	//TEST PRUPOUSES
 	public static final String url="http://elfcob04/offline_logos/";
 	
-	public static final String headerImageName = "factura_logo.jpg";
-	public static final String footerImageName = "banner_horizontal.jpg";
+	/**
+	 * El nombre de la imagen del encabezado de la factura
+	 */
+	public static final String HEADER_IMAGE_NAME = "factura_logo.png";
+	/**
+	 * El nombre con el que se guardó la imagen de encabezado en la impresora
+	 */
+	public static final String HEADER_IMAGE_IN_PRINTER_NAME = "HEADER.PCX";
+	
+	private static final int headerWidth = 770;
+	private static final int headerHeight = 318;
+	
+	/**
+	 * El nombre de la imagen del pie de la factura
+	 */
+	public static final String FOOTER_IMAGE_NAME = "banner_pie.png";
+	/**
+	 * El nombre con el que se guardó la imagen de pie en la impresora
+	 */
+	public static final String FOOTER_IMAGE_IN_PRINTER_NAME = "FOOTER.PCX";
+	private static final int footerWidth = 770;
+	private static final int footerHeight = 440;
 	
 	/**
 	 * Importa las imagenes para la cebecera y el pié de la factura, solo si es necesario importarlos
@@ -33,15 +57,54 @@ public class ReceiptImagesManager {
 				public void downloadFinished(boolean succes) {
 					PreferencesManager.instance().setReceiptImagesDownloaded(succes);
 				}
-			}).execute(url+headerImageName, url+footerImageName);
+			}).execute(url+HEADER_IMAGE_NAME, url+FOOTER_IMAGE_NAME);
 	}
 	
 	/**
 	 * Obtiene la imagen que se usa de encabezado
-	 * @return
+	 * @return Bitmap
 	 */
 	public static Bitmap getHeaderImage()
 	{
-		return ImageInternalAccess.loadImageFromStorage(headerImageName);
+		return ImageInternalAccess.loadImageFromStorage(HEADER_IMAGE_NAME);
+	}
+	
+	/**
+	 * Obtiene la imagen que se usa de pie
+	 * @return Bitmap
+	 */
+	public static Bitmap getFooterImage()
+	{
+		return ImageInternalAccess.loadImageFromStorage(FOOTER_IMAGE_NAME);
+	}
+	
+	/**
+	 * Realiza las validaciones necesarias de fecha de la imagen de encabezado
+	 * y si es necesario la envía a la impresora pasada en los parámetros
+	 * @param printer
+	 * @throws ZebraIllegalArgumentException 
+	 * @throws ConnectionException 
+	 */
+	public static void sendHeaderImageIfNecesary(ZebraPrinter printer) throws ConnectionException, ZebraIllegalArgumentException
+	{
+		Bitmap header = getHeaderImage();
+		printer.storeImage(HEADER_IMAGE_IN_PRINTER_NAME, new ZebraImageAndroid(header), headerWidth, headerHeight);
+		if(header!=null)
+			header.recycle();
+	}
+	
+	/**
+	 * Realiza las validaciones necesarias de fecha de la imagen de pie
+	 * y si es necesario la envía a la impresora pasada en los parámetros
+	 * @param printer
+	 * @throws ZebraIllegalArgumentException 
+	 * @throws ConnectionException 
+	 */
+	public static void sendFooterImageIfNecesary(ZebraPrinter printer) throws ConnectionException, ZebraIllegalArgumentException
+	{
+		Bitmap footer = getFooterImage();
+		printer.storeImage(FOOTER_IMAGE_IN_PRINTER_NAME, new ZebraImageAndroid(footer), footerWidth, footerHeight);
+		if(footer!=null)
+			footer.recycle();
 	}
 }

@@ -2,7 +2,6 @@ package com.elfec.cobranza.presenter.views;
 
 import java.util.List;
 
-import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 import com.zebra.sdk.printer.discovery.DiscoveryHandler;
 
@@ -28,7 +27,7 @@ public interface IBluetoothDevicePickerDialog {
 	 * Invoca al bluetooth discoverer del sdk de zebra
 	 * @param discoveryHandler
 	 */
-	public void invokeBluetoothDiscoverer(DiscoveryHandler discoveryHandler)  throws ConnectionException;
+	public void invokeBluetoothDiscoverer(DiscoveryHandler discoveryHandler);
 	/**
 	 * Esconde la información de que se están buscando impresoras
 	 */

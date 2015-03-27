@@ -25,6 +25,10 @@ import com.zebra.sdk.printer.ZebraPrinter;
  */
 public class ZebraPrinterExt implements ZebraPrinter {
 
+	/**
+	 * Constante para las impresoras zebras RW 420, para otro tipo de impresora es necesario ver otras constantes
+	 */
+	public static final int ZEBRA_BLUETOOTH_PRINTER = 1664;
 	private ZebraPrinter printer;
 	
 	public ZebraPrinterExt(ZebraPrinter printer) {

@@ -1,6 +1,7 @@
 package com.elfec.cobranza.helpers;
 
 import com.elfec.cobranza.model.exceptions.InitializationException;
+import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,6 +28,10 @@ public class PreferencesManager {
 	private final String BANK_ACCOUNTS_IMPORTED = "bankAccountsImported";
 	private final String PERIOD_BANK_ACCOUNTS_IMPORTED = "periodBankAccountsImported";
 	private final String ANNULMENT_REASONS_IMPORTED = "annulmentReasonsImported";
+	
+	//DEFAULT PRINTER
+	private final String DEFAULT_PRINTER_ADDRESS = "defaultPrinterAddress";
+	private final String DEFAULT_PRINTER_NAME = "defaultPrinterName";
 	
 	private SharedPreferences preferences;
 	
@@ -300,6 +305,30 @@ public class PreferencesManager {
 	public PreferencesManager setAnnulmentReasonsImported(boolean isImported)
 	{
 		preferences.edit().putBoolean(ANNULMENT_REASONS_IMPORTED, isImported).commit();
+		return this;
+	}
+	
+	//DEFAULT PRINTER
+	/**
+	 * Obtiene la impresora por defecto
+	 * @return la impresora por defecto elegida por el usuario, null si es que nunca se eligió una
+	 */
+	public DiscoveredPrinterBluetooth getDefaultPrinter()
+	{
+		String address = preferences.getString(DEFAULT_PRINTER_ADDRESS, null);
+		if(address==null)
+			return null;
+		String friendlyName = preferences.getString(DEFAULT_PRINTER_NAME, null);
+		return new DiscoveredPrinterBluetooth(address, friendlyName);
+	}	
+	/**
+	 * Asigna lla impresora por defecto
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setDefaultPrinter(DiscoveredPrinterBluetooth defaultPrinter)
+	{
+		preferences.edit().putString(DEFAULT_PRINTER_ADDRESS, defaultPrinter.address).commit();
+		preferences.edit().putString(DEFAULT_PRINTER_NAME, defaultPrinter.friendlyName).commit();
 		return this;
 	}
 	

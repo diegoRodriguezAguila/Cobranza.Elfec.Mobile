@@ -90,6 +90,7 @@
 		<string name="lbl_payment_confirmation">Se procederá a realizar el cobro al suministro %1$s, por el monto de:</string>
 		<string name="lbl_payment_count">y se imprimirá%1$s %2$s factura%3$s</string>
 		<string name="msg_succesfull_payment">El cobro se realizó exitosamente!</string>
+		<string name="title_print_errors">ERROR AL IMPRIMIR</string>
 		
 		<!-- Collection Annulment -->
 		<string name="lbl_collection_annulment">Anulación</string>

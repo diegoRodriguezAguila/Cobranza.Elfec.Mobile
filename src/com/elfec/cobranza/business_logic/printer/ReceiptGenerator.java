@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import com.elfec.cobranza.business_logic.ConceptManager;
+import com.elfec.cobranza.business_logic.ReceiptImagesManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
@@ -52,7 +53,7 @@ public class ReceiptGenerator {
 	 * El NIT de Elfec
 	 */
 	private static final String ELFEC_NIT = "1023213028";
-	private static final DateTime SFC_DATE_LIMIT = DateTime.now().minusDays(2);
+	private static final DateTime SFC_DATE_LIMIT = DateTime.now().plusDays(2);
 	/**
 	 * Mensaje de la empresa
 	 */
@@ -110,7 +111,8 @@ public class ReceiptGenerator {
 	private static void assignHeaderData(CPCLCommand command, CoopReceipt receipt)
 	{
 		command.justify(Justify.CENTER)
-		.text("TAHOMA15.CPF", 0, 0, receiptHeight, 0.049, 0.076, "FACTURA ORIGINAL");
+		.image(0, receiptHeight, ReceiptImagesManager.HEADER_IMAGE_IN_PRINTER_NAME)
+		.text("TAHOMA15.CPF", 0, 0, receiptHeight+=4.1, 0.049, 0.076, "FACTURA ORIGINAL");
 		if(!isNewFormat)
 			command.text("TAHOMA8P.CPF", 0, 0, receiptHeight+=0.75, receipt.getAuthorizationDescription());
 		double boxStartY = receiptHeight += (isNewFormat?0.75:SP_FACTOR);
@@ -136,7 +138,7 @@ public class ReceiptGenerator {
 		assignReceiptLeftData(command, receipt);
 		receiptHeight = Math.max((startY+3.8), (receiptHeight+0.15))+rcptDataExtraSpacing;
 		command.justify(Justify.LEFT)
-		.box(0.4, boxStartY, 10.05, receiptHeight, 0.02); //3.85 ocupa el bloque
+		.box(0.4, boxStartY, 10.05, receiptHeight, 0.02); 
 	}
 	
 
@@ -351,6 +353,8 @@ public class ReceiptGenerator {
 			command.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*spaces)+0.2), authDesc);
 		receiptHeight+=(isNewFormat?(authDesc.split("\r\n").length*SP_FACTOR):(SP_FACTOR*spaces));
 		generateQR(command, receipt);
+		command.justify(Justify.CENTER).image(0, receiptHeight+=0.3, ReceiptImagesManager.FOOTER_IMAGE_IN_PRINTER_NAME);
+		receiptHeight+=5.6;
 	}
 
 	/**

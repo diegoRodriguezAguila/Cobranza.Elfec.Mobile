@@ -32,13 +32,17 @@ import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
+import com.elfec.cobranza.model.events.BluetoothStateListener;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 import com.elfec.cobranza.presenter.adapter_interfaces.ICollectionBaseAdapter;
+import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBluetoothDevicePicked;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.view.services.BluetoothDevicePickerService;
 import com.elfec.cobranza.view.services.CollectionAnnulmentDialogService;
 import com.elfec.cobranza.view.services.PaymentConfirmationDialogService;
+import com.elfec.cobranza.view.services.bluetooth.BluetoothStateMonitor;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 /**
@@ -101,6 +105,11 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 			}	
 		}
 	};
+	/**
+	 * Monitor en los cambios de estado del bluetooth, solo se usa para el pago de cobros
+	 * no para anulaciones
+	 */
+	private BluetoothStateMonitor bluetoothStateMonitor;
 	
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -116,6 +125,11 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
         croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
 				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
     }
+	
+	@Override
+	public void onDestroy(){
+		bluetoothStateMonitor.removeListener();
+	}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -304,6 +318,8 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	public void setCollectionAdapter(ICollectionBaseAdapter collectionAdapter) {
 		this.collectionAdapter = collectionAdapter;
 		presenter = collectionAdapter.getCollectionPresenter(this);
+		if(presenter instanceof BluetoothStateListener)
+			bluetoothStateMonitor = new BluetoothStateMonitor(getActivity(),(BluetoothStateListener)presenter);
 		this.defaultCollectionAdapterEvent.collectionAdapterSet(this.collectionAdapter, getView());
 	}
 
@@ -345,6 +361,42 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	public void showAnnulmentConfirmation(List<CoopReceipt> selectedReceipts,
 			OnCollectionAnnulmentCallback annulmentCallback) {
 		new CollectionAnnulmentDialogService(getActivity(), selectedReceipts, annulmentCallback).show();
+	}
+
+	@Override
+	public void showBluetoothPrintDialog(final OnBluetoothDevicePicked callback) {
+		mHandler.post(new Runnable() {			
+			@Override
+			public void run() {
+				try
+				{
+					new BluetoothDevicePickerService(getActivity(), callback, false).show();
+				}
+				catch(IllegalStateException e)
+				{
+					List<Exception> exceptions = new ArrayList<Exception>();
+					exceptions.add(e);
+					showPrintErrors(exceptions);
+				}
+			}
+		});
+	}
+
+	@Override
+	public void showPrintErrors(final List<Exception> errors) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(errors.size()>0)
+				{
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
+					builder.setTitle(R.string.title_print_errors)
+					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+					.setPositiveButton(R.string.btn_ok, null)
+					.show();
+				}
+			}
+		});
 	}
 	
 	//#endregion

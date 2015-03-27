@@ -8,6 +8,7 @@ import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 import com.elfec.cobranza.presenter.adapter_interfaces.ICollectionBaseAdapter;
+import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBluetoothDevicePicked;
 
 /**
  * Abstracción de la vista de pagar cobros
@@ -63,11 +64,22 @@ public interface ICollectionActionView {
 	 */
 	public void showActionErrors(List<Exception> errors);
 	/**
+	 * Muestra errores al imprimir la factura
+	 * @param errors
+	 */
+	public void showPrintErrors(List<Exception> errors);
+	/**
 	 * Pide al usuario la confirmación para proceder con un pago
 	 * @param selectedReceipts
 	 * @param paymentCallback
 	 */
 	public void showPaymentConfirmation(List<CoopReceipt> selectedReceipts, OnPaymentConfirmedCallback paymentCallback);
+	/**
+	 * Pide al usuario que seleccione un dispositivo bluetooth para la impresión
+	 * @param selectedReceipts
+	 * @param paymentCallback
+	 */
+	public void showBluetoothPrintDialog(OnBluetoothDevicePicked callback);
 	/**
 	 * Pide al usuario la confirmación para porceder con la anulación de un cobro
 	 * @param selectedReceipts

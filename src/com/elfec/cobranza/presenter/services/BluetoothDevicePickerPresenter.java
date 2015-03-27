@@ -7,8 +7,8 @@ import java.util.Set;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 
+import com.elfec.cobranza.model.printer.ZebraPrinterExt;
 import com.elfec.cobranza.presenter.views.IBluetoothDevicePickerDialog;
-import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinter;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 import com.zebra.sdk.printer.discovery.DiscoveryHandler;
@@ -29,10 +29,7 @@ public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
 		 */
 		public void bluetoothDevicePicked(DiscoveredPrinterBluetooth device);
 	}
-	/**
-	 * Constante para las impresoras zebras RW 420, para otro tipo de impresora es necesario ver otras constantes
-	 */
-	public static final int ZEBRA_BLUETOOTH_PRINTER = 1664;
+
 	
 	private IBluetoothDevicePickerDialog view;
 	private OnBluetoothDevicePicked bluetoothDevicePickedCallback;
@@ -46,6 +43,8 @@ public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
 		this.bluetoothDevicePickedCallback = bluetoothDevicePickedCallback;
 		this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		devicesList = new ArrayList<DiscoveredPrinterBluetooth>();
+		if (!mBluetoothAdapter.isEnabled())
+		    throw new IllegalStateException("Para poder seleccionar un dispositivo para imprimir debe asegurarse que tiene encendido el bluetooth!");
 	}
 	
 	/**
@@ -56,12 +55,10 @@ public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
 		new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				if (!mBluetoothAdapter.isEnabled())
-				    throw new IllegalStateException("Antes de llamar al servicio se tiene que asegurar que el usuario tiene encendido el bluetooth");
 				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 			    for (BluetoothDevice device : pairedDevices) 
 			    {
-			    	if( device.getBluetoothClass().getDeviceClass()==ZEBRA_BLUETOOTH_PRINTER)
+			    	if( device.getBluetoothClass().getDeviceClass()==ZebraPrinterExt.ZEBRA_BLUETOOTH_PRINTER)
 			    		devicesList.add(new DiscoveredPrinterBluetooth(device.getAddress(), device.getName()));
 			    }
 			    view.showPairedBluetoothPrinters(devicesList);
@@ -76,11 +73,7 @@ public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
 		new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				try {
-					view.invokeBluetoothDiscoverer(BluetoothDevicePickerPresenter.this);
-				} catch (ConnectionException e) {
-					e.printStackTrace();
-				}
+				view.invokeBluetoothDiscoverer(BluetoothDevicePickerPresenter.this);
 			}
 		}).start();
 	}
@@ -96,9 +89,7 @@ public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
 	}
 
 	@Override
-	public void discoveryError(String message) {
-		// TODO Auto-generated method stub
-		
+	public void discoveryError(String message) {		
 	}
 
 	@Override
@@ -108,7 +99,22 @@ public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
 
 	@Override
 	public void foundPrinter(DiscoveredPrinter printer) {
-		if(!devicesList.contains(printer))
+		if(!isInPairedDevices(printer))
 			view.showDiscoveredBluetoothPrinter((DiscoveredPrinterBluetooth) printer);
+	}
+	
+	/**
+	 * Verifica si el dispostivo ya está en la lista de dispositivos vinculados
+	 * @param printer
+	 * @return true/false
+	 */
+	private boolean isInPairedDevices(DiscoveredPrinter printer)
+	{
+		for(DiscoveredPrinter prt : devicesList)
+		{
+			if(prt.address.equals(printer.address))
+				return true;
+		}
+		return false;
 	}
 }
