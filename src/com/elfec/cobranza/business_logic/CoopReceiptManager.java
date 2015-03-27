@@ -13,6 +13,8 @@ import com.elfec.cobranza.model.printer.ZebraPrinterExt;
 import com.elfec.cobranza.remote_data_access.CoopReceiptRDA;
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.comm.ConnectionException;
+import com.zebra.sdk.device.ZebraIllegalArgumentException;
+import com.zebra.sdk.printer.PrinterLanguage;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
@@ -88,21 +90,21 @@ public class CoopReceiptManager {
 			Connection conn = printerDevice.getConnection();
 			conn.open();
 			ZebraPrinterExt printer = new ZebraPrinterExt(ZebraPrinterFactory.getInstance(conn));
-			//ReceiptImagesManager.sendHeaderImageIfNecesary(printer);
-			//ReceiptImagesManager.sendFooterImageIfNecesary(printer);
+			if(printer.getPrinterControlLanguage()!=PrinterLanguage.CPCL)
+				throw new ZebraPrinterLanguageUnknownException(null);
+			ReceiptImagesManager.sendHeaderImageIfNecesary(printer);
+			ReceiptImagesManager.sendFooterImageIfNecesary(printer);
 			printer.sendCommand(ReceiptGenerator.generateCommand(receipt));
 			conn.close();
-			//header.recycle();
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 			result.addError(new ConnectionException("No se pudo establecer conexión con la impresora, "
-					+ "asegurese de que esté encendida y de que ha seleccionado la impresora correcta en la aplicación!"));
+					+ "asegurese de que esté encendida y que haya seleccionado la impresora correcta en la aplicación!"));
 		} catch (ZebraPrinterLanguageUnknownException e) {
 			e.printStackTrace();
 			result.addError(new SettingsException("La impresora no está configurada adecuadamente para ser utilizada por la aplicación!"));
-		//} catch (ZebraIllegalArgumentException e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
+		} catch (ZebraIllegalArgumentException e) {
+			e.printStackTrace();
 		}
 		return result;
 	}

@@ -87,10 +87,13 @@ public class ReceiptImagesManager {
 	 */
 	public static void sendHeaderImageIfNecesary(ZebraPrinter printer) throws ConnectionException, ZebraIllegalArgumentException
 	{
-		Bitmap header = getHeaderImage();
-		printer.storeImage(HEADER_IMAGE_IN_PRINTER_NAME, new ZebraImageAndroid(header), headerWidth, headerHeight);
-		if(header!=null)
-			header.recycle();
+		if(!isImageOnPrinter(printer, HEADER_IMAGE_IN_PRINTER_NAME))
+		{
+			Bitmap header = getHeaderImage();
+			printer.storeImage(HEADER_IMAGE_IN_PRINTER_NAME, new ZebraImageAndroid(header), headerWidth, headerHeight);
+			if(header!=null)
+				header.recycle();
+		}
 	}
 	
 	/**
@@ -102,9 +105,30 @@ public class ReceiptImagesManager {
 	 */
 	public static void sendFooterImageIfNecesary(ZebraPrinter printer) throws ConnectionException, ZebraIllegalArgumentException
 	{
-		Bitmap footer = getFooterImage();
-		printer.storeImage(FOOTER_IMAGE_IN_PRINTER_NAME, new ZebraImageAndroid(footer), footerWidth, footerHeight);
-		if(footer!=null)
-			footer.recycle();
+		if(!isImageOnPrinter(printer, FOOTER_IMAGE_IN_PRINTER_NAME))
+		{
+			Bitmap footer = getFooterImage();
+			printer.storeImage(FOOTER_IMAGE_IN_PRINTER_NAME, new ZebraImageAndroid(footer), footerWidth, footerHeight);
+			if(footer!=null)
+				footer.recycle();
+		}
+	}
+	
+	/**
+	 * Verifica si la imagen con el nombre proporcionado se encuentra en la impresora
+	 * @param printer
+	 * @param imageName
+	 * @return true/false
+	 * @throws ZebraIllegalArgumentException 
+	 * @throws ConnectionException 
+	 */
+	private static boolean isImageOnPrinter(ZebraPrinter printer, String imageName) throws ConnectionException, ZebraIllegalArgumentException
+	{
+		String[] printerImages = printer.retrieveFileNames(new String[]{"PCX"});	
+		for (int i = 0; i < printerImages.length; i++) {
+			if(printerImages[i].equals(imageName))
+				return true;
+		}
+		return false;
 	}
 }

@@ -53,13 +53,13 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 					@Override
 					public void run() {
 						DataAccessResult<List<Long>> result = CollectionManager.payCollections(selectedReceipts);
+						loadSupplyReceipts(currentSupply);
 						if(!result.hasErrors())
 						{
 							view.informActionSuccessfullyFinished();
 							printReceipts(result.getResult(), selectedReceipts);
 						}
 						view.showActionErrors(result.getErrors());
-						loadSupplyReceipts(currentSupply);
 					}
 				}).start();
 			}
