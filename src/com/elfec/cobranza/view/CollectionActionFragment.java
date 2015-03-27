@@ -128,7 +128,9 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	
 	@Override
 	public void onDestroy(){
-		bluetoothStateMonitor.removeListener();
+		super.onDestroy();
+		if(bluetoothStateMonitor!=null)
+			bluetoothStateMonitor.removeListener();
 	}
 
     @Override
