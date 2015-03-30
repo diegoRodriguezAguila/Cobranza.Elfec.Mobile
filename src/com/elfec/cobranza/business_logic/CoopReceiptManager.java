@@ -4,12 +4,13 @@ import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.elfec.cobranza.business_logic.DataImporter.ImportSpecs;
 import com.elfec.cobranza.business_logic.printer.ReceiptGenerator;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.DataAccessResult;
-import com.elfec.cobranza.model.ManagerProcessResult;
+import com.elfec.cobranza.model.downloaders.DataImporter;
+import com.elfec.cobranza.model.downloaders.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.printer.ZebraPrinterExt;
+import com.elfec.cobranza.model.results.DataAccessResult;
+import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.elfec.cobranza.remote_data_access.CoopReceiptRDA;
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.comm.ConnectionException;

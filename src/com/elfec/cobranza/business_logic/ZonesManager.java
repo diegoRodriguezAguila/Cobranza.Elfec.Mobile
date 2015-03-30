@@ -6,10 +6,10 @@ import java.util.List;
 
 import com.activeandroid.ActiveAndroid;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
+import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.RouteRDA;
 import com.elfec.cobranza.remote_data_access.ZoneRDA;
 

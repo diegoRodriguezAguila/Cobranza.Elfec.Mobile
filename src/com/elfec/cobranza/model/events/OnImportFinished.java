@@ -1,6 +1,6 @@
 package com.elfec.cobranza.model.events;
 
-import com.elfec.cobranza.model.DataAccessResult;
+import com.elfec.cobranza.model.results.DataAccessResult;
 
 /**
  * Evento que se llama cuando se finalizó una importación

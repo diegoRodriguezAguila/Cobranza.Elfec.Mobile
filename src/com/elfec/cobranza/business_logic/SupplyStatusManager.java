@@ -4,9 +4,10 @@ import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.elfec.cobranza.business_logic.DataImporter.ImportSpecs;
-import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.SupplyStatus;
+import com.elfec.cobranza.model.downloaders.DataImporter;
+import com.elfec.cobranza.model.downloaders.DataImporter.ImportSpecs;
+import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.SupplyStatusRDA;
 
 /**

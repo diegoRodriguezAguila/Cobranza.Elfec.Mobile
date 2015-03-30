@@ -1,7 +1,7 @@
 package com.elfec.cobranza.business_logic;
 
-import com.elfec.cobranza.helpers.PreferencesManager;
 import com.elfec.cobranza.model.User;
+import com.elfec.cobranza.settings.PreferencesManager;
 
 /**
  * Maneja las sesiones de los usuarios

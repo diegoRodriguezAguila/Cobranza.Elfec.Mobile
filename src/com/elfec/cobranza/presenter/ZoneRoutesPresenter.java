@@ -17,12 +17,10 @@ import com.elfec.cobranza.business_logic.SupplyCategoryTypeManager;
 import com.elfec.cobranza.business_logic.SupplyManager;
 import com.elfec.cobranza.business_logic.SupplyStatusManager;
 import com.elfec.cobranza.business_logic.ZonesManager;
-import com.elfec.cobranza.helpers.PreferencesManager;
 import com.elfec.cobranza.helpers.security.AES;
 import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
@@ -30,8 +28,10 @@ import com.elfec.cobranza.model.events.OnImportFinished;
 import com.elfec.cobranza.model.exceptions.RouteWithNoReceiptException;
 import com.elfec.cobranza.model.interfaces.ImportCaller;
 import com.elfec.cobranza.model.interfaces.OnceRequiredDataImportCaller;
+import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.presenter.views.IZoneRoutesView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+import com.elfec.cobranza.settings.PreferencesManager;
 
 public class ZoneRoutesPresenter {
 

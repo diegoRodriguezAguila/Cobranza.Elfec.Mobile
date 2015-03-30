@@ -5,11 +5,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.elfec.cobranza.business_logic.DataImporter.ImportSource;
 import com.elfec.cobranza.model.Concept;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.DataAccessResult;
+import com.elfec.cobranza.model.downloaders.DataImporter;
+import com.elfec.cobranza.model.downloaders.DataImporter.ImportSource;
 import com.elfec.cobranza.model.printer.PrintConcept;
+import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.ConceptRDA;
 
 /**

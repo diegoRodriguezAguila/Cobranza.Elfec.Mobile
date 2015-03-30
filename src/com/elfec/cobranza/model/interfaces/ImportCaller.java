@@ -1,6 +1,6 @@
 package com.elfec.cobranza.model.interfaces;
 
-import com.elfec.cobranza.model.DataAccessResult;
+import com.elfec.cobranza.model.results.DataAccessResult;
 
 /**
  * Interfaz que sirve para llamar a los diferentes importers

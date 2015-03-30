@@ -6,11 +6,12 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import com.elfec.cobranza.business_logic.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Supply;
+import com.elfec.cobranza.model.downloaders.DataImporter;
+import com.elfec.cobranza.model.downloaders.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.exceptions.SupplyNotFoundException;
+import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.SupplyRDA;
 
 /**

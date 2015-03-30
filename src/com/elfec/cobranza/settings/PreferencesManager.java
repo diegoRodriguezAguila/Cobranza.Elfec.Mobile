@@ -1,4 +1,4 @@
-package com.elfec.cobranza.helpers;
+package com.elfec.cobranza.settings;
 
 import com.elfec.cobranza.model.exceptions.InitializationException;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;

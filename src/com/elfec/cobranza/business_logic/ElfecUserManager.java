@@ -3,7 +3,6 @@ package com.elfec.cobranza.business_logic;
 import java.net.ConnectException;
 import java.sql.SQLException;
 
-import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.enums.DeviceStatus;
 import com.elfec.cobranza.model.enums.UserStatus;
@@ -11,6 +10,7 @@ import com.elfec.cobranza.model.exceptions.InvalidPasswordException;
 import com.elfec.cobranza.model.exceptions.UnabledDeviceException;
 import com.elfec.cobranza.model.exceptions.UnactiveUserException;
 import com.elfec.cobranza.model.exceptions.UnassignedCashDeskException;
+import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.DeviceRDA;
 import com.elfec.cobranza.remote_data_access.UserRDA;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;

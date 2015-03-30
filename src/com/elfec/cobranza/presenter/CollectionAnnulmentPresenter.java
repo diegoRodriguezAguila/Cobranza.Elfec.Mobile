@@ -5,8 +5,8 @@ import java.util.List;
 import com.elfec.cobranza.business_logic.CollectionManager;
 import com.elfec.cobranza.business_logic.SupplyManager;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.Supply;
+import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
 
 public class CollectionAnnulmentPresenter extends CollectionActionPresenter{

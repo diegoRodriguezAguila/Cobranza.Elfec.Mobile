@@ -1,4 +1,4 @@
-package com.elfec.cobranza.model;
+package com.elfec.cobranza.model.results;
 
 import java.util.ArrayList;
 

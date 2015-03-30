@@ -3,9 +3,9 @@ package com.elfec.cobranza.business_logic;
 import android.graphics.Bitmap;
 
 import com.elfec.cobranza.helpers.ImageInternalAccess;
-import com.elfec.cobranza.helpers.PreferencesManager;
 import com.elfec.cobranza.model.downloaders.ImageDownloader;
 import com.elfec.cobranza.model.events.OnImageDownloadFinished;
+import com.elfec.cobranza.settings.PreferencesManager;
 import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.device.ZebraIllegalArgumentException;
 import com.zebra.sdk.graphics.internal.ZebraImageAndroid;

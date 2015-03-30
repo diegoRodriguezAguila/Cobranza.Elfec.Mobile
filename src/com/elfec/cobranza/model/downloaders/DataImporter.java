@@ -1,4 +1,4 @@
-package com.elfec.cobranza.business_logic;
+package com.elfec.cobranza.model.downloaders;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
-import com.elfec.cobranza.model.DataAccessResult;
+import com.elfec.cobranza.model.results.DataAccessResult;
 
 /**
  * Se encarga de importar cualquier tipo de información
@@ -34,6 +34,9 @@ public class DataImporter {
 		} catch (ConnectException e) {
 			result.addError(e);
 		} catch (SQLException e) {
+			e.printStackTrace();
+			result.addError(e);
+		}catch (Exception e) {
 			e.printStackTrace();
 			result.addError(e);
 		}

@@ -1,4 +1,4 @@
-package com.elfec.cobranza.remote_data_access.settings;
+package com.elfec.cobranza.settings.remote_data_access;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+
+import com.elfec.cobranza.helpers.FileManager;
 
 /**
  * Es un objeto estático que sirve para poder obtener y escribir el archivo de configuración que está en JSON bajo la carpeta
@@ -28,7 +30,9 @@ public class OracleDatabaseSettings {
 	{
 		try 
 		{
-			InputStream is = context.getAssets().open(SETTINGS_FILE);
+			InputStream is = FileManager.getExternalFileInput(SETTINGS_FILE, false);
+			if(is==null)
+				is = context.getAssets().open(SETTINGS_FILE);
 			int size = is.available();
 			byte[] buffer = new byte[size];
 			is.read(buffer);

@@ -4,10 +4,11 @@ import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.elfec.cobranza.business_logic.DataImporter.ImportSource;
 import com.elfec.cobranza.model.BankAccount;
-import com.elfec.cobranza.model.DataAccessResult;
 import com.elfec.cobranza.model.PeriodBankAccount;
+import com.elfec.cobranza.model.downloaders.DataImporter;
+import com.elfec.cobranza.model.downloaders.DataImporter.ImportSource;
+import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.BankAccountRDA;
 
 /**

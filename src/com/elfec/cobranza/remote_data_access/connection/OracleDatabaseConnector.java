@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.elfec.cobranza.remote_data_access.settings.OracleDatabaseSettings;
+import com.elfec.cobranza.settings.remote_data_access.OracleDatabaseSettings;
 
 import android.content.Context;
 

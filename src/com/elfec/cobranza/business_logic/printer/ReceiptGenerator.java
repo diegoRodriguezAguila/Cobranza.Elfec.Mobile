@@ -22,6 +22,8 @@ import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
 import com.elfec.cobranza.model.printer.CPCLCommand.QRQuality;
 import com.elfec.cobranza.model.printer.CPCLCommand.Unit;
+import com.elfec.cobranza.settings.ParameterSettingsManager;
+import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;
 
 /**
  * Clase que se encarga de generar el comando de impresión de una factura
@@ -53,21 +55,7 @@ public class ReceiptGenerator {
 	 * El NIT de Elfec
 	 */
 	private static final String ELFEC_NIT = "1023213028";
-	private static final DateTime SFC_DATE_LIMIT = DateTime.now().plusDays(2);
-	/**
-	 * Mensaje de la empresa
-	 */
-	private static final String ENTERPRISE_MSG = "Recuerde pagar sus facturas puntualmente";
-	/**
-	 * Mensaje post SFC
-	 */
-	private static final String NEW_MSG = "\"ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, "
-			+ "EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY\"";
-	/**
-	 * Mensaje pre SFC
-	 */
-	private static final String OLD_MSG = "\"La reproducción total o parcial y/o el uso no autorizado de esta Nota Fiscal, "
-			+ "constituye un delito a ser sancionado conforme a Ley\"";
+	
 	/**
 	 * El espacio extra en la información de la factura
 	 */
@@ -93,7 +81,9 @@ public class ReceiptGenerator {
 	{
 		rcptDataExtraSpacing = 0;
 		receiptHeight = 0;
-		isNewFormat = (Days.daysBetween(SFC_DATE_LIMIT, DateTime.now()).getDays()>=0);
+		isNewFormat = (Days.daysBetween(
+				ParameterSettingsManager.getParameter(ParamKey.SFV_DATE).getDateTimeValue(), 
+					DateTime.now()).getDays()>=0);
 		CPCLCommand command = new CPCLCommand(200, 400, 11.5).inUnit(Unit.IN_CENTIMETERS );
 		assignHeaderData(command, receipt);
 		assignReceiptData(command, receipt);
@@ -331,8 +321,10 @@ public class ReceiptGenerator {
 	 */
 	private static void assignFooterData(CPCLCommand command,
 			CoopReceipt receipt) {
-		String selectedMsg =  wrapFooterContent((isNewFormat?NEW_MSG:OLD_MSG));
-		String enterpriseMsg = wrapFooterContent(ENTERPRISE_MSG);
+		String selectedMsg =  wrapFooterContent(
+				ParameterSettingsManager.getParameter(isNewFormat?ParamKey.NEW_MSG:ParamKey.OLD_MSG).getStringValue());
+		String enterpriseMsg = wrapFooterContent(
+				ParameterSettingsManager.getParameter(ParamKey.ENTERPRISE_MSG).getStringValue());
 		String literal = wrapLiteral(receipt.getLiteral()+" Bolivianos");
 		String authDesc = wrapFooterContent(receipt.getAuthorizationDescription());
 		command.justify(Justify.LEFT, 8)

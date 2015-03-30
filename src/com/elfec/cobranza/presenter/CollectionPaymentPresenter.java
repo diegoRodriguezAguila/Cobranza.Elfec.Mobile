@@ -8,14 +8,14 @@ import android.bluetooth.BluetoothAdapter;
 import com.elfec.cobranza.business_logic.CollectionManager;
 import com.elfec.cobranza.business_logic.CoopReceiptManager;
 import com.elfec.cobranza.business_logic.SupplyManager;
-import com.elfec.cobranza.helpers.PreferencesManager;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.DataAccessResult;
-import com.elfec.cobranza.model.ManagerProcessResult;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.model.events.BluetoothStateListener;
+import com.elfec.cobranza.model.results.DataAccessResult;
+import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBluetoothDevicePicked;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.settings.PreferencesManager;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
 public class CollectionPaymentPresenter extends CollectionActionPresenter implements BluetoothStateListener {
