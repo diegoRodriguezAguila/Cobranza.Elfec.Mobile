@@ -1,10 +1,18 @@
 package com.elfec.cobranza.business_logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 import android.graphics.Bitmap;
 
 import com.elfec.cobranza.helpers.ImageInternalAccess;
 import com.elfec.cobranza.model.downloaders.ImageDownloader;
 import com.elfec.cobranza.model.events.OnImageDownloadFinished;
+import com.elfec.cobranza.settings.ParameterSettingsManager;
+import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;
 import com.elfec.cobranza.settings.PreferencesManager;
 import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.device.ZebraIllegalArgumentException;
@@ -19,9 +27,6 @@ import com.zebra.sdk.printer.ZebraPrinter;
  *
  */
 public class ReceiptImagesManager {
-
-	//TEST PRUPOUSES
-	public static final String url="http://elfcob04/offline_logos/";
 	
 	/**
 	 * El nombre de la imagen del encabezado de la factura
@@ -51,13 +56,75 @@ public class ReceiptImagesManager {
 	 */
 	public static void importReceiptImages()
 	{
-		if(!PreferencesManager.instance().isReceiptImagesDownloaded())
-			new ImageDownloader(new OnImageDownloadFinished() {			
+		String url = ParameterSettingsManager.getParameter(ParamKey.IMAGES_SERVER).getStringValue();
+		if(url.lastIndexOf("/") != url.length()-1)
+			url+="/";
+			List<String> urlList = new ArrayList<String>();
+			if(hasToImportHeader())
+				urlList.add(url+HEADER_IMAGE_NAME);
+			if(hasToImportFooter())
+				urlList.add(url+FOOTER_IMAGE_NAME);
+			
+			String[] urls = new String[urlList.size()];
+			urls = urlList.toArray(urls);
+			ImageDownloader imageDownloader = new ImageDownloader(new OnImageDownloadFinished() {			
 				@Override
 				public void downloadFinished(boolean succes) {
-					PreferencesManager.instance().setReceiptImagesDownloaded(succes);
+					if(succes)
+					{
+						if(hasToImportHeader())
+							 PreferencesManager.instance().setHeaderImageDownloadDate(DateTime.now());
+						if(hasToImportFooter())
+							PreferencesManager.instance().setFooterImageDownloadDate(DateTime.now());
+					}					
 				}
-			}).execute(url+HEADER_IMAGE_NAME, url+FOOTER_IMAGE_NAME);
+			});
+			if(urls.length>0)
+				imageDownloader.execute(urls);
+	}
+	
+	/**
+	 * Indica si se debe o no importar el header
+	 * @return true/false
+	 */
+	private static boolean hasToImportHeader()
+	{
+		DateTime lastDownloadDate = PreferencesManager.instance().getHeaderImageDownloadDate();
+		DateTime headerDate = ParameterSettingsManager.getParameter(ParamKey.HEADER_IMG_DATE).getDateTimeValue();
+		return (Days.daysBetween(lastDownloadDate, headerDate).getDays()>0);
+	}
+	
+	/**
+	 * Indica si se debe o no importar el footer
+	 * @return true/false
+	 */
+	private static boolean hasToImportFooter()
+	{
+		DateTime lastDownloadDate = PreferencesManager.instance().getFooterImageDownloadDate();
+		DateTime footerDate = ParameterSettingsManager.getParameter(ParamKey.FOOTER_IMG_DATE).getDateTimeValue();
+		return (Days.daysBetween(lastDownloadDate, footerDate).getDays()>0);
+	}
+	
+	/**
+	 * Indica si se debe o no enviar el header a la impresora
+	 * @return true/false
+	 */
+	private static boolean hasToSendHeaderToPrinter()
+	{
+		DateTime lastDownloadDate = PreferencesManager.instance().getHeaderSentToPrinterDate();
+		DateTime headerDate = ParameterSettingsManager.getParameter(ParamKey.HEADER_IMG_DATE).getDateTimeValue();
+		return (Days.daysBetween(lastDownloadDate, headerDate).getDays()>0);
+	}
+	
+	/**
+	 * Indica si se debe o no enviar el footer a la impresora
+	 * @return true/false
+	 */
+	private static boolean hasToSendFooterToPrinter()
+	{
+		DateTime lastDownloadDate = PreferencesManager.instance().getFooterSentToPrinterDate();
+		DateTime footerDate = ParameterSettingsManager.getParameter(ParamKey.FOOTER_IMG_DATE).getDateTimeValue();
+		return (Days.daysBetween(lastDownloadDate, footerDate).getDays()>0);
 	}
 	
 	/**
@@ -87,12 +154,14 @@ public class ReceiptImagesManager {
 	 */
 	public static void sendHeaderImageIfNecesary(ZebraPrinter printer) throws ConnectionException, ZebraIllegalArgumentException
 	{
-		if(!isImageOnPrinter(printer, HEADER_IMAGE_IN_PRINTER_NAME))
+		if(!isImageOnPrinter(printer, HEADER_IMAGE_IN_PRINTER_NAME) || hasToSendHeaderToPrinter())
 		{
 			Bitmap header = getHeaderImage();
 			printer.storeImage(HEADER_IMAGE_IN_PRINTER_NAME, new ZebraImageAndroid(header), headerWidth, headerHeight);
 			if(header!=null)
 				header.recycle();
+			if(hasToSendHeaderToPrinter())
+				PreferencesManager.instance().setHeaderSentToPrinterDate(DateTime.now());
 		}
 	}
 	
@@ -105,12 +174,14 @@ public class ReceiptImagesManager {
 	 */
 	public static void sendFooterImageIfNecesary(ZebraPrinter printer) throws ConnectionException, ZebraIllegalArgumentException
 	{
-		if(!isImageOnPrinter(printer, FOOTER_IMAGE_IN_PRINTER_NAME))
+		if(!isImageOnPrinter(printer, FOOTER_IMAGE_IN_PRINTER_NAME) || hasToSendFooterToPrinter())
 		{
 			Bitmap footer = getFooterImage();
 			printer.storeImage(FOOTER_IMAGE_IN_PRINTER_NAME, new ZebraImageAndroid(footer), footerWidth, footerHeight);
 			if(footer!=null)
 				footer.recycle();
+			if(hasToSendFooterToPrinter())
+				PreferencesManager.instance().setFooterSentToPrinterDate(DateTime.now());
 		}
 	}
 	

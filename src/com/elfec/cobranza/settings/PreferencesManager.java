@@ -1,5 +1,7 @@
 package com.elfec.cobranza.settings;
 
+import org.joda.time.DateTime;
+
 import com.elfec.cobranza.model.exceptions.InitializationException;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
@@ -18,7 +20,6 @@ public class PreferencesManager {
 	private final String LOGGED_CASHDESK_NUMBER = "loggedCashdeskNumber";
 	private final String LOGGED_CASHDESK_DESC = "loggedCashdeskDescription";
 	//ONCE IMPORT DATA
-	private final String RECEIPT_IMAGES_DOWNLOADED = "receiptImagesDownloaded";
 	private final String ALL_ONCE_REQUIRED_DATA_IMPORTED = "allOnceReqDataImported";
 	private final String SUPPLY_CATEGORY_TYPES_IMPORTED = "supplyCategoryTypesImported";
 	private final String CPT_CALCULATION_BASES_IMPORTED = "conceptCalculationBasesImported";
@@ -32,6 +33,12 @@ public class PreferencesManager {
 	//DEFAULT PRINTER
 	private final String DEFAULT_PRINTER_ADDRESS = "defaultPrinterAddress";
 	private final String DEFAULT_PRINTER_NAME = "defaultPrinterName";
+	// IMAGES
+	private final String HEADER_IMAGE_DOWNLOAD_DATE = "headerImageDownloadDate";
+	private final String FOOTER_IMAGE_DOWNLOAD_DATE = "footerImageDownloadDate";
+	
+	private final String HEADER_SEND_TO_PRINTER_DATE = "headerSendToPrinterDate";
+	private final String FOOTER_SEND_TO_PRINTER_DATE = "footerSendToPrinterDate";
 	
 	private SharedPreferences preferences;
 	
@@ -129,20 +136,74 @@ public class PreferencesManager {
 	}
 	
 	/**
-	 * Indica si las imagenes que se utilizan en las facturas fueron descargadas correctamente
-	 * @return true si es que ya se importó toda
+	 * Obtiene la fecha en que se descargó la imagen del header
+	 * @return fecha en la fecha en que se descargó la imagen del footer
 	 */
-	public boolean isReceiptImagesDownloaded()
+	public DateTime getHeaderImageDownloadDate()
 	{
-		return preferences.getBoolean(RECEIPT_IMAGES_DOWNLOADED, false);
+		return new DateTime(preferences.getLong(HEADER_IMAGE_DOWNLOAD_DATE, 0));
 	}	
 	/**
-	 * Asigna si las imagenes que se utilizan en las facturas fueron descargadas correctamente
+	 * Asigna la fecha en que se descargó la imagen del header
 	 * @return la instancia actual de PreferencesManager
 	 */
-	public PreferencesManager setReceiptImagesDownloaded(boolean isImported)
+	public PreferencesManager setHeaderImageDownloadDate(DateTime date)
 	{
-		preferences.edit().putBoolean(RECEIPT_IMAGES_DOWNLOADED, isImported).commit();
+		preferences.edit().putLong(HEADER_IMAGE_DOWNLOAD_DATE, date.toDate().getTime()).commit();
+		return this;
+	}
+	
+	/**
+	 * Obtiene la fecha en que se envió la imagen del header a la impresora
+	 * @return fecha en la fecha en que se descargó la imagen del footer
+	 */
+	public DateTime getHeaderSentToPrinterDate()
+	{
+		return new DateTime(preferences.getLong(HEADER_SEND_TO_PRINTER_DATE, 0));
+	}	
+	/**
+	 * Asigna la fecha en que se envió la imagen del header a la impresora
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setHeaderSentToPrinterDate(DateTime date)
+	{
+		preferences.edit().putLong(HEADER_SEND_TO_PRINTER_DATE, date.toDate().getTime()).commit();
+		return this;
+	}
+	
+	/**
+	 * Obtiene la fecha en que se descargó la imagen del footer
+	 * @return fecha en la fecha en que se descargó la imagen del footer
+	 */
+	public DateTime getFooterImageDownloadDate()
+	{
+		return new DateTime(preferences.getLong(FOOTER_IMAGE_DOWNLOAD_DATE, 0));
+	}	
+	/**
+	 * Asigna la fecha en que se descargó la imagen del footer
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setFooterImageDownloadDate(DateTime date)
+	{
+		preferences.edit().putLong(FOOTER_IMAGE_DOWNLOAD_DATE, date.toDate().getTime()).commit();
+		return this;
+	}
+	
+	/**
+	 * Obtiene la fecha en que se envió la imagen del footer a la impresora
+	 * @return fecha en la fecha en que se descargó la imagen del footer
+	 */
+	public DateTime getFooterSentToPrinterDate()
+	{
+		return new DateTime(preferences.getLong(FOOTER_SEND_TO_PRINTER_DATE, 0));
+	}	
+	/**
+	 * Asigna la fecha en que se envió la imagen del footer a la impresora
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setFooterSentToPrinterDate(DateTime date)
+	{
+		preferences.edit().putLong(FOOTER_SEND_TO_PRINTER_DATE, date.toDate().getTime()).commit();
 		return this;
 	}
 	

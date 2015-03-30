@@ -57,6 +57,10 @@ public interface ILoginView {
 	 */
 	public void showWaiting();
 	/**
+	 * Acualiza el mensaje de espera del usuario
+	 */
+	public void updateWaiting(int strId);
+	/**
 	 * Borra el mensaje de espera
 	 */
 	public void hideWaiting();

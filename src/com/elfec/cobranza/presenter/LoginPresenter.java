@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.os.Looper;
 
+import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.ElfecUserManager;
 import com.elfec.cobranza.business_logic.FieldValidator;
 import com.elfec.cobranza.business_logic.SessionManager;
@@ -12,6 +13,7 @@ import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+import com.elfec.cobranza.settings.ParameterSettingsManager;
 
 public class LoginPresenter {
 
@@ -47,6 +49,7 @@ public class LoginPresenter {
 				String password = view.getPassword();
 				DataAccessResult<User> result = ElfecUserManager.validateUser(view.getUsername(), password, view.getIMEI());
 				result = importUserZones(password, result);
+				result = importParameterSettings(password, result);
 				view.hideWaiting();
 				view.clearPassword();
 				if(!result.hasErrors())
@@ -63,6 +66,22 @@ public class LoginPresenter {
 	}
 
 	/**
+	 * Llama a los métodos necesarios para importar la tabla de parámetros si es necesario hacerlo
+	 * @param password
+	 * @param result
+	 * @return
+	 */
+	private DataAccessResult<User> importParameterSettings(String password,
+			DataAccessResult<User> result) {
+		if(!result.hasErrors() && result.isRemoteDataAccess())
+		{
+			view.updateWaiting(R.string.msg_login_sync_param_settings);
+			result = ParameterSettingsManager.importParameterSettings(result.getResult(), password);
+		}
+		return result;
+	}
+
+	/**
 	 * Llama a los métodos necesarios para importar las zonas del usuario si es que es necesario hacerlo
 	 * @param password
 	 * @param result
@@ -72,6 +91,7 @@ public class LoginPresenter {
 			DataAccessResult<User> result) {
 		if(!result.hasErrors() && result.isRemoteDataAccess())
 		{
+			view.updateWaiting(R.string.msg_login_sync_zones);
 			result = ZonesManager.importUserZones(result.getResult(), password);
 		}
 		return result;

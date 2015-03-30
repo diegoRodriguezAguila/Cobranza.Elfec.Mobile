@@ -77,7 +77,7 @@ public class ReceiptGenerator {
 	 * @param receipt
 	 * @return
 	 */
-	public static CPCLCommand generateCommand(CoopReceipt receipt)
+	public static CPCLCommand generateCommand(CoopReceipt receipt, long internalControlCode)
 	{
 		rcptDataExtraSpacing = 0;
 		receiptHeight = 0;
@@ -88,7 +88,7 @@ public class ReceiptGenerator {
 		assignHeaderData(command, receipt);
 		assignReceiptData(command, receipt);
 		assignReceiptDetails(command, receipt);
-		assignFooterData(command, receipt);
+		assignFooterData(command, receipt, internalControlCode);
 		command.setLabelHeight(receiptHeight+0.8);
 		command.print();
 		return command;
@@ -320,7 +320,7 @@ public class ReceiptGenerator {
 	 * @param receipt
 	 */
 	private static void assignFooterData(CPCLCommand command,
-			CoopReceipt receipt) {
+			CoopReceipt receipt, long internalControlCode) {
 		String selectedMsg =  wrapFooterContent(
 				ParameterSettingsManager.getParameter(isNewFormat?ParamKey.NEW_MSG:ParamKey.OLD_MSG).getStringValue());
 		String enterpriseMsg = wrapFooterContent(
@@ -335,7 +335,7 @@ public class ReceiptGenerator {
 		command.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*spaces)+0.1), 
 				("CÓDIGO DE CONTROL: "+receipt.getControlCode()),
 				("FECHA LÍMITE DE EMISIÓN: "+receipt.getAuthExpirationDate().toString("dd/MM/yyyy")))
-				.text(0, 7.3, receiptHeight, 0.03, 0.03, "CAJA/"+SessionManager.getLoggedCashdeskNumber()+":"+receipt.getId())
+				.text(0, 7.3, receiptHeight, 0.03, 0.03, "CAJA/"+SessionManager.getLoggedCashdeskNumber()+":"+internalControlCode)
 				.justify(Justify.CENTER, 7.3)
 				.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*2)+0.05), enterpriseMsg);
 		spaces = (enterpriseMsg.split("\r\n").length);

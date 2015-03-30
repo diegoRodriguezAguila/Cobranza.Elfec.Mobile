@@ -11,7 +11,9 @@
     <string name="hint_user">Usuario</string>
     <string name="hint_password">●●●●●●●●</string>
     <string name="errors_in_fields">Los campos tienen errores, reviselos para poder continuar</string>
-    <string name="msg_login_waiting">Se está validando la información de usuario proporcionada, espere por favor&#8230;</string>
+    <string name="msg_login_waiting">Validando la información del usuario, espere por favor&#8230;</string>
+    <string name="msg_login_sync_zones">Sincronizando zonas y rutas del usuario&#8230;</string>
+    <string name="msg_login_sync_param_settings">Sincronizando configuraciones parametrizables&#8230;</string>
     <string name="title_login_errors">ERROR DE INGRESO AL SISTEMA</string>
 
     <!-- Data Flow -->

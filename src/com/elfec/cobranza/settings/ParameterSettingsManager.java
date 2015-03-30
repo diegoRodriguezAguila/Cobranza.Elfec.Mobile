@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.downloaders.DataImporter;
 import com.elfec.cobranza.model.downloaders.DataImporter.ImportSource;
 import com.elfec.cobranza.model.results.DataAccessResult;
@@ -48,16 +49,19 @@ public class ParameterSettingsManager {
 	 * @param password
 	 * @return resultado del acceso remoto
 	 */
-	public static DataAccessResult<Boolean> importParameterSettings(final String username, final String password)
+	public static DataAccessResult<User> importParameterSettings(final User user, final String password)
 	{
-		return DataImporter.importOnceRequiredData(new ImportSource<ParameterSetting>() {
+		DataAccessResult<User> result = new DataAccessResult<User>(true, user);
+		DataAccessResult<Boolean> res = DataImporter.importOnceRequiredData(new ImportSource<ParameterSetting>() {
 			@Override
 			public List<ParameterSetting> requestData() throws ConnectException, SQLException {
-				List<ParameterSetting> parameters = ParameterSettingsRDA.requestParameterSettings(username, password);
+				List<ParameterSetting> parameters = ParameterSettingsRDA.requestParameterSettings(user.getUsername(), password);
 				loadParameters(parameters);
 				return parameters;
 			}
 		});
+		result.addErrors(res.getErrors());
+		return result;
 	}
 	
 	/**
@@ -84,7 +88,7 @@ public class ParameterSettingsManager {
 		FOOTER_IMG_DATE("FECHA_FOOTER_IMG"),
 		IMAGES_SERVER("SERVIDOR_IMAGENES"),
 		WS_SERVER("SERVIDOR_WS"),
-		ANULATION_HOURS_LIMIT("TIEMPO_ANULACION_HORAS"),
+		ANNULMENT_HOURS_LIMIT("TIEMPO_ANULACION_HORAS"),
 		WS_ENABLED("ACTIVAR_WS"),
 		OLD_MSG("LEYENDA_ANTIGUA"),
 		NEW_MSG("LEYENDA_NUEVA"),

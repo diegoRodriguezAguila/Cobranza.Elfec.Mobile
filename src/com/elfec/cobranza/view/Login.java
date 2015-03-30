@@ -217,6 +217,17 @@ public class Login extends Activity implements ILoginView {
 			}
 		});
 	}
+
+	@Override
+	public void updateWaiting(final int strId) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(waitingDialog!=null)
+					waitingDialog.setMessage(getResources().getString(strId));
+			}
+		});
+	}
 	
 	//#endregion
 }

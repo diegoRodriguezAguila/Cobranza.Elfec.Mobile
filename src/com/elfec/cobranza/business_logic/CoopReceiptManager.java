@@ -95,7 +95,7 @@ public class CoopReceiptManager {
 				throw new ZebraPrinterLanguageUnknownException(null);
 			ReceiptImagesManager.sendHeaderImageIfNecesary(printer);
 			ReceiptImagesManager.sendFooterImageIfNecesary(printer);
-			printer.sendCommand(ReceiptGenerator.generateCommand(receipt));
+			printer.sendCommand(ReceiptGenerator.generateCommand(receipt, internalControlCode));
 			conn.close();
 		} catch (ConnectionException e) {
 			e.printStackTrace();

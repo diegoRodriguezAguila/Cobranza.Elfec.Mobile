@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.Hours;
 
 import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.CoopReceipt;
@@ -13,6 +14,8 @@ import com.elfec.cobranza.model.exceptions.AnnulationTimeExpiredException;
 import com.elfec.cobranza.model.exceptions.CollectionException;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
 import com.elfec.cobranza.model.results.DataAccessResult;
+import com.elfec.cobranza.settings.ParameterSettingsManager;
+import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;
 
 import android.database.SQLException;
 
@@ -98,7 +101,8 @@ public class CollectionManager {
 		try
 		{
 			CollectionPayment payment = receipt.getActiveCollectionPayment();
-			if(payment.getPaymentDate().getDayOfYear()!=DateTime.now().getDayOfYear())
+			int maxDif = ParameterSettingsManager.getParameter(ParamKey.ANNULMENT_HOURS_LIMIT).getIntValue();
+			if(Hours.hoursBetween(payment.getPaymentDate(),DateTime.now()).getHours()>maxDif)
 				throw new AnnulationTimeExpiredException(receipt.getReceiptNumber(), receipt.getId());
 			
 			long transactionNumber = generateWSCollection(receipt, "ANULACION_COBRANZA").save();			

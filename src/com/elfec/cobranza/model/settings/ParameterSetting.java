@@ -1,11 +1,11 @@
 package com.elfec.cobranza.model.settings;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 
 /**
  * Define una configuración de la tabla de parámetros
@@ -44,8 +44,7 @@ public class ParameterSetting extends Model {
 	public ParameterSetting(String key, DateTime value) {
 		super();
 		this.key = key;
-		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
-		this.value = ""+serializer.serialize(value);
+		this.value = value.toString("yyyy-MM-dd HH:mm:ss.S");
 	}
 
 	public String getKey() {
@@ -65,7 +64,7 @@ public class ParameterSetting extends Model {
 	}
 	
 	public DateTime getDateTimeValue() {
-		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
-		return (DateTime) serializer.deserialize(value);
+		return DateTime.parse(value, 
+                DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.S"));
 	}
 }
