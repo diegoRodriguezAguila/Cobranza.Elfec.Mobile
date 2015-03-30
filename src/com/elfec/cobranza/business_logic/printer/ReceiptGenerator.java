@@ -73,7 +73,7 @@ public class ReceiptGenerator {
 	
 	
 	/**
-	 * Genera el comando cpcl de impresión del recibo, sin las imagenes de header ni footer
+	 * Genera el comando cpcl de impresión del recibo
 	 * @param receipt
 	 * @return
 	 */

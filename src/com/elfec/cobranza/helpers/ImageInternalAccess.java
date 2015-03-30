@@ -57,4 +57,21 @@ public class ImageInternalAccess {
 	    }
 	    return null;
 	}
+	
+	/**
+	 * Obtiene la imagen de la carpetaAssets
+	 * @param path
+	 */
+	public static Bitmap loadImageFromAssets(String fileName)
+	{
+	    try {
+	        return BitmapFactory.decodeStream(PreferencesManager.getApplicationContext().getAssets().open(fileName));
+	    } 
+	    catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+			e.printStackTrace();
+		}
+	    return null;
+	}
 }

@@ -48,6 +48,16 @@ public class ReceiptImagesManager {
 	 * El nombre con el que se guardó la imagen de pie en la impresora
 	 */
 	public static final String FOOTER_IMAGE_IN_PRINTER_NAME = "FOOTER.PCX";
+	
+	/**
+	 * Nombre de la imagen de logo que sale en los reportes
+	 */
+	public static final String REP_LOGO_NAME = "REP_LOGO.png";
+	/**
+	 * Nombre de la imagen de logo que sale en los reportes, del archivo en impresora
+	 */
+	public static final String REP_LOGO_IN_PRINTER_NAME = "REP_LOGO.PCX";
+	
 	private static final int footerWidth = 770;
 	private static final int footerHeight = 440;
 	
@@ -143,6 +153,32 @@ public class ReceiptImagesManager {
 	public static Bitmap getFooterImage()
 	{
 		return ImageInternalAccess.loadImageFromStorage(FOOTER_IMAGE_NAME);
+	}
+	
+	/**
+	 * Obtiene el logo que se usa arriba a la izquierda de los reportes
+	 * @return Bitmap
+	 */
+	public static Bitmap getReportLogoImage()
+	{
+		return ImageInternalAccess.loadImageFromAssets(REP_LOGO_NAME);
+	}
+	
+	/**
+	 * Realiza las validaciones necesarias y si es necesario envía a la impresora
+	 * @param printer
+	 * @throws ZebraIllegalArgumentException 
+	 * @throws ConnectionException 
+	 */
+	public static void sendReportLogoImageIfNecesary(ZebraPrinter printer) throws ConnectionException, ZebraIllegalArgumentException
+	{
+		if(!isImageOnPrinter(printer, REP_LOGO_IN_PRINTER_NAME))
+		{
+			Bitmap reportLogo = getReportLogoImage();
+			printer.storeImage(REP_LOGO_IN_PRINTER_NAME, new ZebraImageAndroid(reportLogo), headerWidth, headerHeight);
+			if(reportLogo!=null)
+				reportLogo.recycle();
+		}
 	}
 	
 	/**
