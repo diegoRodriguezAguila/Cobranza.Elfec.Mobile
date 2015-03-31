@@ -144,18 +144,39 @@ public class CollectionPayment extends Model {
 		this.annulmentTransacNum = annulmentTransacNum;
 		this.annulmentReasonId = annulmentReasonId;
 	}
+	
 	/**
 	 * Obtiene todos los cobros válidos, es decir con estado 1, realizados
-	 * entre las fechas proporcionadas
+	 * entre las fechas proporcionadas realizadas por el cajero
 	 * @param startDate fecha inicio (inclusiva)
 	 * @param endDate fecha fin (inclusiva)
+	 * @param cashDeskNum
 	 * @return lista de cobros
 	 */
-	public static List<CollectionPayment> getValidCollectionPayments(DateTime startDate, DateTime endDate)
+	public static List<CollectionPayment> getValidCollectionPayments(DateTime startDate, DateTime endDate, int cashDeskNum)
 	{
 		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
 		return new Select().from(CollectionPayment.class)
-				.where("Status=1")
+				.where("Status=1").where("CashDeskNumber = ?", cashDeskNum)
+				.where("PaymentDate >= ?", serializer.serialize(startDate))
+				.where("PaymentDate <= ?", serializer.serialize(endDate))
+				.orderBy("PaymentDate")
+				.execute();
+	}
+	
+	/**
+	 * Obtiene todos los cobros anulados, es decir con estado 0, realizados
+	 * entre las fechas proporcionadas realizadas por el cajero
+	 * @param startDate fecha inicio (inclusiva)
+	 * @param endDate fecha fin (inclusiva)
+	 * @param cashDeskNum
+	 * @return lista de cobros
+	 */
+	public static List<CollectionPayment> getAnnuledCollectionPayments(DateTime startDate, DateTime endDate, int cashDeskNum)
+	{
+		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
+		return new Select().from(CollectionPayment.class)
+				.where("Status=0").where("CashDeskNumber = ?", cashDeskNum)
 				.where("PaymentDate >= ?", serializer.serialize(startDate))
 				.where("PaymentDate <= ?", serializer.serialize(endDate))
 				.orderBy("PaymentDate")

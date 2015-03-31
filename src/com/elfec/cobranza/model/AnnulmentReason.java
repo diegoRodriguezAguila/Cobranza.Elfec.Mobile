@@ -1,5 +1,7 @@
 package com.elfec.cobranza.model;
 
+import java.util.List;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 /**
@@ -8,6 +10,7 @@ import com.activeandroid.annotation.Column;
  *
  */
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 @Table(name = "AnnulmentReasons")
 public class AnnulmentReason extends Model {
 	/**
@@ -29,6 +32,18 @@ public class AnnulmentReason extends Model {
 		super();
 		this.annulmentReasonRemoteId = annulmentReasonRemoteId;
 		this.description = description;
+	}
+	
+	/**
+	 * Obtiene los motivos de anulacion determinado por la clausula IN
+	 * @param inClause clausula IN en formato (12,54,2...)
+	 * @return lista de motivos que cumplan la propiedad IN pasada
+	 */
+	public static List<AnnulmentReason> pickAnnulmentReasons(String inClause)
+	{
+		return new Select().from(AnnulmentReason.class)
+				.where("AnnulmentReasonRemoteId IN "+inClause)
+				.execute();
 	}
 	
 	@Override 

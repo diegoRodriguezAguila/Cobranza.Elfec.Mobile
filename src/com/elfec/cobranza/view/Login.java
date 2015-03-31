@@ -21,6 +21,7 @@ import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.ReportManager;
+import com.elfec.cobranza.business_logic.printer.CollectionAnnulmentRerportGenerator;
 import com.elfec.cobranza.business_logic.printer.CollectionDetailReportGenerator;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.presenter.LoginPresenter;
@@ -57,7 +58,7 @@ public class Login extends Activity implements ILoginView {
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
 		
-		ReportManager.printReport(new CollectionDetailReportGenerator(DateTime.now().minusDays(5), DateTime.now()),  
+		ReportManager.printReport(new CollectionAnnulmentRerportGenerator(DateTime.now().minusDays(5), DateTime.now()),  
 				new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
 	}
 
