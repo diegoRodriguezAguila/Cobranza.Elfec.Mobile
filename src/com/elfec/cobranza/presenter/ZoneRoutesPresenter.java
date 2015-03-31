@@ -11,7 +11,7 @@ import com.elfec.cobranza.business_logic.ConceptManager;
 import com.elfec.cobranza.business_logic.CoopReceiptManager;
 import com.elfec.cobranza.business_logic.FineBonusManager;
 import com.elfec.cobranza.business_logic.ReceiptConceptManager;
-import com.elfec.cobranza.business_logic.ReceiptImagesManager;
+import com.elfec.cobranza.business_logic.PrinterImagesManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.SupplyCategoryTypeManager;
 import com.elfec.cobranza.business_logic.SupplyManager;
@@ -121,7 +121,7 @@ public class ZoneRoutesPresenter {
 	 * @return
 	 */
 	private DataAccessResult<?> importAllOnceRequiredData(DataAccessResult<?> result) {
-		ReceiptImagesManager.importReceiptImages();
+		PrinterImagesManager.importReceiptImages();
 		if(!PreferencesManager.instance().isAllOnceReqDataImported())
 		{
 			result = importData(result, R.string.msg_downloading_supply_category_types, new OnceRequiredDataImportCaller(){

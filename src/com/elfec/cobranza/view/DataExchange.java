@@ -97,7 +97,7 @@ public class DataExchange extends Activity implements IDataFlowView {
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				Toast.makeText(DataExchange.this, "Se finalizó la sesión de "+username+"!", Toast.LENGTH_LONG).show();
+				Toast.makeText(DataExchange.this, Html.fromHtml("Se finalizó la sesión de <b>"+username+"</b>!"), Toast.LENGTH_LONG).show();
 			}
 		});
 	}

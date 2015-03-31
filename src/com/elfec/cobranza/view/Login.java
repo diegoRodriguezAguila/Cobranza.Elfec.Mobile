@@ -18,6 +18,8 @@ import android.widget.EditText;
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.business_logic.ReportManager;
+import com.elfec.cobranza.business_logic.printer.CollectionDetailReportGenerator;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
@@ -51,6 +53,8 @@ public class Login extends Activity implements ILoginView {
 		//TEST PRUPOUSES
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
+		
+		//ReportManager.printReport(new CollectionDetailReportGenerator(null, null),  new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"))
 	}
 
 	@Override

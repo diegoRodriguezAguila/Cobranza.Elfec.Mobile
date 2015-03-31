@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import com.elfec.cobranza.business_logic.ConceptManager;
-import com.elfec.cobranza.business_logic.ReceiptImagesManager;
+import com.elfec.cobranza.business_logic.PrinterImagesManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
@@ -101,7 +101,7 @@ public class ReceiptGenerator {
 	private static void assignHeaderData(CPCLCommand command, CoopReceipt receipt)
 	{
 		command.justify(Justify.CENTER)
-		.image(0, receiptHeight, ReceiptImagesManager.HEADER_IMAGE_IN_PRINTER_NAME)
+		.image(0, receiptHeight, PrinterImagesManager.HEADER_IMAGE_IN_PRINTER_NAME)
 		.text("TAHOMA15.CPF", 0, 0, receiptHeight+=4.1, 0.049, 0.076, "FACTURA ORIGINAL");
 		if(!isNewFormat)
 			command.text("TAHOMA8P.CPF", 0, 0, receiptHeight+=0.75, receipt.getAuthorizationDescription());
@@ -345,7 +345,7 @@ public class ReceiptGenerator {
 			command.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*spaces)+0.2), authDesc);
 		receiptHeight+=(isNewFormat?(authDesc.split("\r\n").length*SP_FACTOR):(SP_FACTOR*spaces));
 		generateQR(command, receipt);
-		command.justify(Justify.CENTER).image(0, receiptHeight+=0.3, ReceiptImagesManager.FOOTER_IMAGE_IN_PRINTER_NAME);
+		command.justify(Justify.CENTER).image(0, receiptHeight+=0.3, PrinterImagesManager.FOOTER_IMAGE_IN_PRINTER_NAME);
 		receiptHeight+=5.6;
 	}
 

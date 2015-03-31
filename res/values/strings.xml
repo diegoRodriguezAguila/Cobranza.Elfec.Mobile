@@ -93,6 +93,7 @@
 		<string name="lbl_payment_count">y se imprimirá%1$s %2$s factura%3$s</string>
 		<string name="msg_succesfull_payment">El cobro se realizó exitosamente!</string>
 		<string name="title_print_errors">ERROR AL IMPRIMIR</string>
+		<string name="title_menu_item_pick_printer">Seleccionar impresora</string>
 		
 		<!-- Collection Annulment -->
 		<string name="lbl_collection_annulment">Anulación</string>

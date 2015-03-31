@@ -67,4 +67,9 @@ public interface ICollectionBaseAdapter {
 	 * @return
 	 */
 	public Context getContext();
+	/**
+	 * Indica si se tiene o no que mostrar la opción del menu de elegir una impresora
+	 * @return
+	 */
+	public boolean hasToShowPickPrinter();
 }

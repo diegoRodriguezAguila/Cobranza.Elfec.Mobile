@@ -2,7 +2,7 @@ package com.elfec.cobranza.business_logic.printer;
 
 import org.joda.time.DateTime;
 
-import com.elfec.cobranza.business_logic.ReceiptImagesManager;
+import com.elfec.cobranza.business_logic.PrinterImagesManager;
 import com.elfec.cobranza.model.printer.CPCLCommand;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
 import com.elfec.cobranza.model.printer.CPCLCommand.Unit;
@@ -13,7 +13,7 @@ import com.elfec.cobranza.model.printer.CPCLCommand.Unit;
  * @author drodriguez
  *
  */
-public class CollectionDetailReportGenerator {
+public class CollectionDetailReportGenerator implements IReportGenerator {
 	
 	/**
 	 * El nombre del reporte
@@ -47,7 +47,7 @@ public class CollectionDetailReportGenerator {
 	public CollectionDetailReportGenerator(DateTime startDate, DateTime endDate)
 	{
 		receiptHeight = 0;
-		command = new CPCLCommand(200, 400, 11.5).inUnit(Unit.IN_CENTIMETERS );
+		command = new CPCLCommand(200, 400, 3).inUnit(Unit.IN_CENTIMETERS );
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
@@ -55,8 +55,9 @@ public class CollectionDetailReportGenerator {
 	/**
 	 * Genera el comando cpcl de impresión del reporte
 	 * @param receipt
-	 * @return
+	 * @return el comando cpcl generado
 	 */
+	@Override
 	public CPCLCommand generateCommand()
 	{
 		assignHeader();
@@ -67,9 +68,14 @@ public class CollectionDetailReportGenerator {
 
 	private void assignHeader() {
 		command.justify(Justify.LEFT)
-		.image(0, receiptHeight, ReceiptImagesManager.REP_LOGO_IN_PRINTER_NAME)
+		.image(0.4, receiptHeight, PrinterImagesManager.REP_LOGO_IN_PRINTER_NAME)
 		.justify(Justify.RIGHT, 10.05).setFont("TAHOMA8P.CPF")
 		.text(0, 7, receiptHeight, REPORT_CODE)
 		.justify(Justify.CENTER).text("TAHOMA11.CPF", 0, 0, receiptHeight+=0.4, 0.035, 0.035, REPORT_NAME);
+	}
+
+	@Override
+	public String getReportName() {
+		return REPORT_NAME;
 	}
 }

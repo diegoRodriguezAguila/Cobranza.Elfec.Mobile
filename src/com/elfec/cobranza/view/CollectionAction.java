@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +27,7 @@ import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
 import com.elfec.cobranza.view.animations.HeightAnimation;
 import com.elfec.cobranza.view.controls.SlidingTabLayout;
 import com.elfec.cobranza.view.controls.SlidingTabLayout.TabColorizer;
+import com.elfec.cobranza.view.services.BluetoothDevicePickerService;
 
 public class CollectionAction extends FragmentActivity implements SearchCollectionFragment.Callbacks{
 	
@@ -71,6 +74,31 @@ public class CollectionAction extends FragmentActivity implements SearchCollecti
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.collection, menu);
+		(menu.findItem(R.id.menu_item_pick_printer)).setVisible(collectionAdapter.hasToShowPickPrinter());
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int idItem = item.getItemId();
+		switch(idItem)
+		{
+			case (R.id.menu_item_pick_printer):		
+			{
+				new BluetoothDevicePickerService(this, null, true).show();
+				return true;
+			}
+			default:
+			{
+				return true;
+			}
+		}
+	}
 	
 	@Override
 	public void onBackPressed() {

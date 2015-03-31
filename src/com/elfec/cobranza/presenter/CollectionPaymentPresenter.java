@@ -75,7 +75,6 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 		final OnBluetoothDevicePicked callback = new OnBluetoothDevicePicked() {			
 			@Override
 			public void bluetoothDevicePicked(DiscoveredPrinterBluetooth device) {
-				PreferencesManager.instance().setDefaultPrinter(device);
 				ManagerProcessResult result = CoopReceiptManager.printReceipts(controlCodes, registeredReceipts, device);
 				view.showPrintErrors(result.getErrors());
 			}
@@ -84,7 +83,7 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 			@Override
 			public void run() {
 				DiscoveredPrinterBluetooth defaultPrinter = PreferencesManager.instance().getDefaultPrinter();
-				if(defaultPrinter==null || defaultPrinter.getConnection()==null)
+				if(defaultPrinter==null)
 					view.showBluetoothPrintDialog(callback);
 				else callback.bluetoothDevicePicked(defaultPrinter);
 			}

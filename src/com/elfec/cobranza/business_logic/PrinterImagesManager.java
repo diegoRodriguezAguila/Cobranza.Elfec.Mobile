@@ -21,12 +21,12 @@ import com.zebra.sdk.printer.ZebraPrinter;
 
 /**
  * Maneja las operaciones de negocio relacionadas con las imágenes para las
- * facturas
+ * facturas y reportes
  * la de encabezado y la de pié
  * @author drodriguez
  *
  */
-public class ReceiptImagesManager {
+public class PrinterImagesManager {
 	
 	/**
 	 * El nombre de la imagen del encabezado de la factura

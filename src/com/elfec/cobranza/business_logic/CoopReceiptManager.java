@@ -56,7 +56,7 @@ public class CoopReceiptManager {
 	 * @param internalControlCodes
 	 * @param receipts
 	 * @param printerDevice
-	 * @return
+	 * @return Resultado del proceso
 	 */
 	public static ManagerProcessResult printReceipts(List<Long> internalControlCodes, List<CoopReceipt> receipts, 
 			DiscoveredPrinterBluetooth printerDevice)
@@ -93,8 +93,8 @@ public class CoopReceiptManager {
 			ZebraPrinterExt printer = new ZebraPrinterExt(ZebraPrinterFactory.getInstance(conn));
 			if(printer.getPrinterControlLanguage()!=PrinterLanguage.CPCL)
 				throw new ZebraPrinterLanguageUnknownException(null);
-			ReceiptImagesManager.sendHeaderImageIfNecesary(printer);
-			ReceiptImagesManager.sendFooterImageIfNecesary(printer);
+			PrinterImagesManager.sendHeaderImageIfNecesary(printer);
+			PrinterImagesManager.sendFooterImageIfNecesary(printer);
 			printer.sendCommand(ReceiptGenerator.generateCommand(receipt, internalControlCode));
 			conn.close();
 		} catch (ConnectionException e) {

@@ -1,5 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.elfec.cobranza.CollectionActivity" >
-
+	<item
+        android:id="@+id/menu_item_pick_printer"
+        android:title="@string/title_menu_item_pick_printer" 
+        android:showAsAction="always"
+        android:icon="@drawable/pick_printer_selector"/>
 </menu>

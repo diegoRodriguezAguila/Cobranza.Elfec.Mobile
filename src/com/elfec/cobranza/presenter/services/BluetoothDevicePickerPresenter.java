@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothDevice;
 
 import com.elfec.cobranza.model.printer.ZebraPrinterExt;
 import com.elfec.cobranza.presenter.views.IBluetoothDevicePickerDialog;
+import com.elfec.cobranza.settings.PreferencesManager;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinter;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 import com.zebra.sdk.printer.discovery.DiscoveryHandler;
@@ -84,6 +85,7 @@ public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
 	 */
 	public void processSelectedDevice(DiscoveredPrinterBluetooth printer)
 	{
+		PreferencesManager.instance().setDefaultPrinter(printer);
 		if(bluetoothDevicePickedCallback!=null)
 			bluetoothDevicePickedCallback.bluetoothDevicePicked(printer);
 	}

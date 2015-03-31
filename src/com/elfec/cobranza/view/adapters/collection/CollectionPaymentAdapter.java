@@ -65,4 +65,9 @@ public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 		return R.string.msg_succesfull_payment;
 	}
 
+	@Override
+	public boolean hasToShowPickPrinter() {
+		return true;
+	}
+
 }

@@ -65,4 +65,9 @@ public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
 		return R.string.msg_succesfull_annulment;
 	}
 
+	@Override
+	public boolean hasToShowPickPrinter() {
+		return false;
+	}
+
 }

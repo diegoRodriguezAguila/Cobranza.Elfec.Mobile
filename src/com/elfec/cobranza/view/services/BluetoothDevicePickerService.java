@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
@@ -87,7 +89,9 @@ public class BluetoothDevicePickerService implements IBluetoothDevicePickerDialo
 			public void onItemClick(AdapterView<?> adapter, View view, int position,
 					long id) {
 				dialog.dismiss();
-				presenter.processSelectedDevice((DiscoveredPrinterBluetooth)adapter.getItemAtPosition(position));
+				DiscoveredPrinterBluetooth selectedPrinter = (DiscoveredPrinterBluetooth)adapter.getItemAtPosition(position);
+				Toast.makeText(context, Html.fromHtml("Impresora <b>"+selectedPrinter.friendlyName+"</b> seleccionada!"), Toast.LENGTH_SHORT).show();
+				presenter.processSelectedDevice(selectedPrinter);
 			}
 		};
 		listPairedDevices.setOnItemClickListener(itemCL);
