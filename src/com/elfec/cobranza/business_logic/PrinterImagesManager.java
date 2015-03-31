@@ -49,6 +49,9 @@ public class PrinterImagesManager {
 	 */
 	public static final String FOOTER_IMAGE_IN_PRINTER_NAME = "FOOTER.PCX";
 	
+	private static final int footerWidth = 770;
+	private static final int footerHeight = 440;
+	
 	/**
 	 * Nombre de la imagen de logo que sale en los reportes
 	 */
@@ -58,8 +61,8 @@ public class PrinterImagesManager {
 	 */
 	public static final String REP_LOGO_IN_PRINTER_NAME = "REP_LOGO.PCX";
 	
-	private static final int footerWidth = 770;
-	private static final int footerHeight = 440;
+	private static final int repLogoWidth = 160;
+	private static final int repLogoHeight = 42;
 	
 	/**
 	 * Importa las imagenes para la cebecera y el pié de la factura, solo si es necesario importarlos
@@ -175,7 +178,7 @@ public class PrinterImagesManager {
 		if(!isImageOnPrinter(printer, REP_LOGO_IN_PRINTER_NAME))
 		{
 			Bitmap reportLogo = getReportLogoImage();
-			printer.storeImage(REP_LOGO_IN_PRINTER_NAME, new ZebraImageAndroid(reportLogo), headerWidth, headerHeight);
+			printer.storeImage(REP_LOGO_IN_PRINTER_NAME, new ZebraImageAndroid(reportLogo), repLogoWidth, repLogoHeight);
 			if(reportLogo!=null)
 				reportLogo.recycle();
 		}

@@ -1,12 +1,15 @@
 package com.elfec.cobranza.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.joda.time.DateTime;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 /**
  * Almacena la información de los COBROS
  * @author drodriguez
@@ -140,6 +143,23 @@ public class CollectionPayment extends Model {
 		this.annulmentUser = annulmentUser;
 		this.annulmentTransacNum = annulmentTransacNum;
 		this.annulmentReasonId = annulmentReasonId;
+	}
+	/**
+	 * Obtiene todos los cobros válidos, es decir con estado 1, realizados
+	 * entre las fechas proporcionadas
+	 * @param startDate fecha inicio (inclusiva)
+	 * @param endDate fecha fin (inclusiva)
+	 * @return lista de cobros
+	 */
+	public static List<CollectionPayment> getValidCollectionPayments(DateTime startDate, DateTime endDate)
+	{
+		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
+		return new Select().from(CollectionPayment.class)
+				.where("Status=1")
+				.where("PaymentDate >= ?", serializer.serialize(startDate))
+				.where("PaymentDate <= ?", serializer.serialize(endDate))
+				.orderBy("PaymentDate")
+				.execute();
 	}
 
 	//#region Getters y Setters

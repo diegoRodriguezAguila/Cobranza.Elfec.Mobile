@@ -3,6 +3,8 @@ package com.elfec.cobranza.view;
 import java.util.List;
 import java.util.Locale;
 
+import org.joda.time.DateTime;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
@@ -24,6 +26,7 @@ import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
@@ -54,7 +57,8 @@ public class Login extends Activity implements ILoginView {
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
 		
-		//ReportManager.printReport(new CollectionDetailReportGenerator(null, null),  new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"))
+		ReportManager.printReport(new CollectionDetailReportGenerator(DateTime.now().minusDays(5), DateTime.now()),  
+				new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
 	}
 
 	@Override

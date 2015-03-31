@@ -356,6 +356,19 @@ public class CPCLCommand {
 	}
 	
 	/**
+	 * Agrega un texto para imprimir con la fuente seteada con el método setFont() usando tamaño 0
+	 * @param x posición en la factura en la unidad definida
+	 * @param y posición en la factura en la unidad definida
+	 * @param text el texto que se quiere imprimir
+	 * @return la instancia de este comando
+	 */
+	public CPCLCommand text(double x, double y, String text)
+	{
+		text(0, x, y, text);
+		return this;
+	}
+	
+	/**
 	 * Agrega un texto para imprimir
 	 * @param innerFont la fuente que se usará para el texto, es una fuente interna de zebra
 	 * @param size tamaño de la fuente
