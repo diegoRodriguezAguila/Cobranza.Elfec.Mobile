@@ -22,7 +22,7 @@ public class AnnulmentReasonManager {
 	 * @param password
 	 * @return
 	 */
-	public static DataAccessResult<Boolean> importBankAccounts(final String username, final String password)
+	public static DataAccessResult<Boolean> importAnnulmentReasons(final String username, final String password)
 	{
 		return DataImporter.importOnceRequiredData(new ImportSource<AnnulmentReason>() {
 			@Override

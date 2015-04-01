@@ -43,6 +43,22 @@ public class AmountsCounter {
 	}
 	
 	/**
+	 * Calcula la cantidad total de una lista de objetos con cantidades
+	 * @param receipts
+	 * @return cantidad total
+	 */
+	public static <T>int countQuantities(List<T> objects, AttributePicker<Integer, T> quantityGetter)
+	{
+		int totalQuantity = 0;
+		
+		for(T obj : objects)
+		{
+			totalQuantity+=quantityGetter.pickAttribute(obj);
+		}
+		return totalQuantity;
+	}
+	
+	/**
 	 * Obtiene un bigdecimal y la formatea
 	 * @param amount
 	 * @return el bigdecimal formateado

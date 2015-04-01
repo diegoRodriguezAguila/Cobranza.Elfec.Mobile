@@ -7,7 +7,7 @@ import com.activeandroid.serializer.TypeSerializer;
 public class JodaDateTimeSerializer extends TypeSerializer  {
 
 	@Override
-	public Object deserialize(Object data) {
+	public DateTime deserialize(Object data) {
 		if (data == null) {
 			return null;
 		}
@@ -31,7 +31,7 @@ public class JodaDateTimeSerializer extends TypeSerializer  {
 			return null;
 		}
 
-		return ((DateTime) data).toDate().getTime();
+		return ((DateTime) data).getMillis();
 	}
 
 }

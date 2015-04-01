@@ -50,7 +50,7 @@ public class CollectionDetailReportGenerator extends DateRangeReportGenerator {
 		double nusCol=1.2, accCol = nusCol+1.6, dateCol = accCol+2.4,
 				receiptCol = dateCol+1.6, periodCol = receiptCol+1.5, amountCol = periodCol+1.7;
 		double startYFirstBox = (receiptHeight+=0.6) - 0.15;
-		command.setBold(0.025).setSpacing(0.025)
+		command.setBold(0.025).setSpacing(0.025).setFont("TAHOMA8P.CPF")
 		.justify(Justify.RIGHT, nusCol).text(0.4, receiptHeight, "NUS")
 		.justify(Justify.RIGHT, accCol).text(nusCol, receiptHeight, "Cuenta")
 		.justify(Justify.CENTER, dateCol).text(accCol+0.35, receiptHeight, "Fecha")

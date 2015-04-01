@@ -1,14 +1,20 @@
 package com.elfec.cobranza.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
 
+import android.database.Cursor;
+
+import com.activeandroid.Cache;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
+import com.elfec.cobranza.model.printer.CashDeskResume;
 import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 /**
  * Almacena la información de los COBROS
@@ -181,6 +187,37 @@ public class CollectionPayment extends Model {
 				.where("PaymentDate <= ?", serializer.serialize(endDate))
 				.orderBy("PaymentDate")
 				.execute();
+	}
+	
+	/**
+	 * Obtiene los resúmenes de caja del rango de fechas provisto
+	 * @param startDate
+	 * @param endDate
+	 * @param cashDeskNum
+	 * @return lista de resumenes de caja en el rango de fechas
+	 */
+	public static List<CashDeskResume> getRangedCashDeskResume(DateTime startDate, DateTime endDate, int cashDeskNum)
+	{
+		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
+		From subQuery = new Select("PaymentDate, SUM(Amount) TotalAmount, COUNT(1) TotalCount")
+	    .from(CollectionPayment.class)
+	    .where("Status=1").where("CashDeskNumber = ?", cashDeskNum)
+		.where("PaymentDate >= ?", serializer.serialize(startDate))
+		.where("PaymentDate <= ?", serializer.serialize(endDate))
+		.groupBy("date(PaymentDate/1000, 'unixepoch')");
+		
+		List<CashDeskResume> cashDeskResumes = new ArrayList<CashDeskResume>();
+		Cursor cursor = Cache.openDatabase().rawQuery(subQuery.toSql(), subQuery.getArguments());
+		if(cursor!=null && cursor.moveToFirst())
+		{
+			do{ 	
+				cashDeskResumes.add(new CashDeskResume(
+						serializer.deserialize(cursor.getLong(cursor.getColumnIndex("PaymentDate"))).withTimeAtStartOfDay(), 
+						new BigDecimal(cursor.getString(cursor.getColumnIndex("TotalAmount"))), 
+						cursor.getInt(cursor.getColumnIndex("TotalCount"))));
+			} while(cursor.moveToNext());
+		}
+		return cashDeskResumes;
 	}
 
 	//#region Getters y Setters

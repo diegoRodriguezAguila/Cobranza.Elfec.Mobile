@@ -50,7 +50,7 @@ public class CollectionAnnulmentRerportGenerator extends DateRangeReportGenerato
 		double nusCol=1.2, dateCol = 3.3, annulDateCol = 5.45, 
 				receiptCol = 6.9, periodCol = 7.9, amountCol = 9.25, reasonCol = 10.1;
 		double startYFirstBox = (receiptHeight+=0.6) - 0.15;
-		command.setBold(0.025).setSpacing(0.025)
+		command.setBold(0.025).setSpacing(0.025).setFont("TAHOMA8P.CPF")
 		.justify(Justify.RIGHT, nusCol).text(0.25, receiptHeight, "NUS")
 		.justify(Justify.CENTER, dateCol).text(nusCol, receiptHeight, "Fecha")
 		.justify(Justify.CENTER, annulDateCol).text(dateCol, receiptHeight, "Fecha anul.")
@@ -81,6 +81,14 @@ public class CollectionAnnulmentRerportGenerator extends DateRangeReportGenerato
 	protected void assignFooter()
 	{
 		super.assignFooter();
+		assignAnnulmentReasonsLegend();
+	}
+
+	/**
+	 * Asigna la leyenda de los motivos
+	 * de anulación que salen en el reporte
+	 */
+	private void assignAnnulmentReasonsLegend() {
 		String inClause = ObjectListToSQL.convertToSQL(collectionAnnulments, "AnnulmentReasonRemoteId", 
 				new AttributePicker<String, CollectionPayment>(){
 					@Override

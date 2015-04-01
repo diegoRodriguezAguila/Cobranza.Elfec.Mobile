@@ -224,7 +224,7 @@ public class ZoneRoutesPresenter {
 			result = importData(result, R.string.msg_downloading_annulment_reasons, new OnceRequiredDataImportCaller() {			
 				@Override
 				public DataAccessResult<?> callImport() {
-					return AnnulmentReasonManager.importBankAccounts(username, password);
+					return AnnulmentReasonManager.importAnnulmentReasons(username, password);
 				}			
 				@Override
 				public boolean isAlreadyImported() {
