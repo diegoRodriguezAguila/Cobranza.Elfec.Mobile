@@ -1,11 +1,8 @@
 package com.elfec.cobranza.business_logic.printer;
 
-import java.math.BigDecimal;
-
 import org.joda.time.DateTime;
 
 import com.elfec.cobranza.business_logic.PrinterImagesManager;
-import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.printer.CPCLCommand;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
 import com.elfec.cobranza.model.printer.CPCLCommand.Unit;
@@ -70,13 +67,6 @@ public abstract class BaseReportGenerator implements IReportGenerator{
 	 */
 	protected void assignFooter() {
 		command.setFont("TAHOMA8P.CPF")
-		.setBold(0.025).setSpacing(0.025)
-		.justify(Justify.LEFT)
-		.text(0.4, receiptHeight+=0.2, String.format(getTotalNum(), getTotalReceiptsNum()))
-		.justify(Justify.RIGHT, 10.05)
-		.text(0, receiptHeight, String.format(getTotalAmountNum(), 
-				AmountsCounter.formatBigDecimal(getTotalReceiptsAmount())))
-		.setBold(0).setSpacing(0)
 		.justify(Justify.CENTER, 4.8).text(0, receiptHeight+=0.8, "Preparado por:")
 		.justify(Justify.CENTER, 10).text(5.2, receiptHeight, "Recibido por:")
 		.justify(Justify.LEFT).line(1, receiptHeight+=2.5, 4,receiptHeight, 0.02)
@@ -97,23 +87,5 @@ public abstract class BaseReportGenerator implements IReportGenerator{
 	 * El código del reporte
 	 */
 	protected abstract String getReportCode();
-	
-	/**
-	 * El mensaje que se muestra para cantidades totales
-	 */
-	protected abstract String getTotalNum();
-	/**
-	 * La cantidad total de facturas del reporte
-	 */
-	protected abstract int getTotalReceiptsNum();
-	
-	/**
-	 * El mensaje que se muestra para montos totales
-	 */
-	protected abstract String getTotalAmountNum();
-	/**
-	 * El monto total de las facturas
-	 */
-	protected abstract BigDecimal getTotalReceiptsAmount();
 
 }

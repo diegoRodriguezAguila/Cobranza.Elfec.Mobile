@@ -17,7 +17,7 @@ import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
  * @author drodriguez
  *
  */
-public class CashDeskReportGenerator  extends DateRangeReportGenerator {
+public class CashDeskReportGenerator extends DateRangeReportGenerator {
 
 	/**
 	 * El nombre del reporte
@@ -40,7 +40,7 @@ public class CashDeskReportGenerator  extends DateRangeReportGenerator {
 
 	@Override
 	protected void assignReceipts() {
-		cashDeskResumes = CollectionPayment.getRangedCashDeskResume(startDate, endDate, SessionManager.getLoggedCashdeskNumber());
+		cashDeskResumes = CollectionPayment.getEffectiveCollectionsRangedCashDeskResume(startDate, endDate, SessionManager.getLoggedCashdeskNumber());
 		double dateCol=2.8, countCol = 6, amountCol = 9.4;
 		double startYFirstBox = (receiptHeight+=0.6) - 0.15;
 		command.setBold(0.025).setSpacing(0.025).setFont("TAHOMA8P.CPF")

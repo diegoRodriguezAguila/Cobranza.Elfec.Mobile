@@ -1,5 +1,6 @@
 package com.elfec.cobranza.helpers.text_format;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -63,6 +64,21 @@ public class ObjectListToSQL {
 	public static <T> String convertToSQL(List<T> objectList)
 	{
 		return convertToSQL(objectList, new AttributePicker<String, T>() {
+			@Override
+			public String pickAttribute(T object) {
+				return object.toString();
+			}
+		});
+	}
+	
+	/**
+	 * Convierte la lista de objetos a la cadena utilizable en una consulta IN, utiliza toString para obtener la cadena
+	 * @param objectList
+	 * @return
+	 */
+	public static <T> String convertToSQL(T[] objectList)
+	{
+		return convertToSQL(Arrays.asList(objectList), new AttributePicker<String, T>() {
 			@Override
 			public String pickAttribute(T object) {
 				return object.toString();

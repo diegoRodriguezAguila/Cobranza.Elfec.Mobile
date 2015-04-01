@@ -21,6 +21,7 @@ import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.ReportManager;
+import com.elfec.cobranza.business_logic.printer.CashDeskDailyReportGenerator;
 import com.elfec.cobranza.business_logic.printer.CashDeskReportGenerator;
 import com.elfec.cobranza.business_logic.printer.CollectionAnnulmentRerportGenerator;
 import com.elfec.cobranza.business_logic.printer.CollectionDetailReportGenerator;
@@ -61,7 +62,7 @@ public class Login extends Activity implements ILoginView {
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
 		
-		ReportManager.printReport(new CashDeskReportGenerator(DateTime.now().minusDays(5), DateTime.now().plusDays(5)),  
+		ReportManager.printReport(new CashDeskDailyReportGenerator(DateTime.now()),  
 				new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
 	}
 

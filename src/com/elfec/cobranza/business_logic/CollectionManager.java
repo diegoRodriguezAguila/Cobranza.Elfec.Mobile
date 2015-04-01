@@ -13,6 +13,7 @@ import com.elfec.cobranza.model.WSCollection;
 import com.elfec.cobranza.model.exceptions.AnnulationTimeExpiredException;
 import com.elfec.cobranza.model.exceptions.CollectionException;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
+import com.elfec.cobranza.model.printer.CashDeskDailyResume;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.settings.ParameterSettingsManager;
 import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;
@@ -138,5 +139,25 @@ public class CollectionManager {
 					1, SessionManager.getLoggedCashdeskNumber(), 
 					period.getPeriodNumber(), 
 					DateTime.now());
+	}
+	
+	/**
+	 * Obtiene el resumen diario de caja
+	 * @param date
+	 * @return resumen diario de caja
+	 */
+	public static CashDeskDailyResume generateDailyResume(DateTime date)
+	{
+		CashDeskDailyResume cashDeskDailyResume = new CashDeskDailyResume();
+		int cashDeskNum = SessionManager.getLoggedCashdeskNumber();
+		
+		cashDeskDailyResume.addMultipleCashDeskResumes(
+				CollectionPayment.getRangedCashDeskResume("1. Cobrado", date, date, cashDeskNum, 0, 1));
+		cashDeskDailyResume.addMultipleCashDeskResumes(
+				CollectionPayment.getRangedCashDeskResume("2. Anulado", date, date, cashDeskNum, 0));
+		cashDeskDailyResume.addMultipleCashDeskResumes(
+				CollectionPayment.getRangedCashDeskResume("3. Total", date, date, cashDeskNum, 1));		
+		
+		return cashDeskDailyResume;
 	}
 }

@@ -14,6 +14,7 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
+import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
 import com.elfec.cobranza.model.printer.CashDeskResume;
 import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 /**
@@ -164,8 +165,8 @@ public class CollectionPayment extends Model {
 		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
 		return new Select().from(CollectionPayment.class)
 				.where("Status=1").where("CashDeskNumber = ?", cashDeskNum)
-				.where("PaymentDate >= ?", serializer.serialize(startDate))
-				.where("PaymentDate <= ?", serializer.serialize(endDate))
+				.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
+				.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 0, 0)))
 				.orderBy("PaymentDate")
 				.execute();
 	}
@@ -183,27 +184,47 @@ public class CollectionPayment extends Model {
 		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
 		return new Select().from(CollectionPayment.class)
 				.where("Status=0").where("CashDeskNumber = ?", cashDeskNum)
-				.where("PaymentDate >= ?", serializer.serialize(startDate))
-				.where("PaymentDate <= ?", serializer.serialize(endDate))
+				.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
+				.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 0, 0)))
 				.orderBy("PaymentDate")
 				.execute();
 	}
 	
 	/**
-	 * Obtiene los resúmenes de caja del rango de fechas provisto
+	 * Obtiene los resúmenes de caja del rango de fechas provisto, de aquellos cobros efectivos , es decir que tienen 
+	 * estado 1
 	 * @param startDate
 	 * @param endDate
 	 * @param cashDeskNum
 	 * @return lista de resumenes de caja en el rango de fechas
 	 */
-	public static List<CashDeskResume> getRangedCashDeskResume(DateTime startDate, DateTime endDate, int cashDeskNum)
+	public static List<CashDeskResume> getEffectiveCollectionsRangedCashDeskResume(DateTime startDate, DateTime endDate, int cashDeskNum)
 	{
+		return getRangedCashDeskResume(null, startDate, endDate, cashDeskNum, 1);
+	}
+	
+	/**
+	 * Obtiene los resúmenes de caja del rango de fechas provisto
+	 * @param concept
+	 * @param startDate
+	 * @param endDate
+	 * @param cashDeskNum
+	 * @param la lista de estados que tiene que tener
+	 * @return lista de resumenes de caja en el rango de fechas
+	 */
+	public static List<CashDeskResume> getRangedCashDeskResume(String concept, DateTime startDate, DateTime endDate, int cashDeskNum, Integer... status)
+	{
+		String inClause = ObjectListToSQL.convertToSQL(status);
 		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
 		From subQuery = new Select("PaymentDate, SUM(Amount) TotalAmount, COUNT(1) TotalCount")
-	    .from(CollectionPayment.class)
-	    .where("Status=1").where("CashDeskNumber = ?", cashDeskNum)
-		.where("PaymentDate >= ?", serializer.serialize(startDate))
-		.where("PaymentDate <= ?", serializer.serialize(endDate))
+	    .from(CollectionPayment.class);
+		
+		if(status.length>0)
+			subQuery.where("Status IN ?", inClause);
+		
+	    subQuery.where("CashDeskNumber = ?", cashDeskNum)
+		.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
+		.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 0, 0)))
 		.groupBy("date(PaymentDate/1000, 'unixepoch')");
 		
 		List<CashDeskResume> cashDeskResumes = new ArrayList<CashDeskResume>();
@@ -212,6 +233,7 @@ public class CollectionPayment extends Model {
 		{
 			do{ 	
 				cashDeskResumes.add(new CashDeskResume(
+						concept,
 						serializer.deserialize(cursor.getLong(cursor.getColumnIndex("PaymentDate"))).withTimeAtStartOfDay(), 
 						new BigDecimal(cursor.getString(cursor.getColumnIndex("TotalAmount"))), 
 						cursor.getInt(cursor.getColumnIndex("TotalCount"))));

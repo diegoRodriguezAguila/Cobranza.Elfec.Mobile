@@ -5,14 +5,15 @@ import java.math.BigDecimal;
 import org.joda.time.DateTime;
 
 /**
- * Clase utilizada para los reportes de la impresora
+ * Clase utilizada para los reportes de resumen de caja de la impresora
  * @author drodriguez
  *
  */
 public class CashDeskResume {
-	private DateTime date;
-	private BigDecimal amount;
-	private int collectionPaymentsNum;	
+	private String concept;
+	protected DateTime date;
+	protected BigDecimal amount;
+	protected int collectionPaymentsNum;	
 	
 	public CashDeskResume() {
 		amount = BigDecimal.ZERO;
@@ -20,10 +21,25 @@ public class CashDeskResume {
 
 	public CashDeskResume(DateTime date, BigDecimal amount,
 			int collectionPaymentsNum) {
-		super();
 		this.date = date;
 		this.amount = amount;
 		this.collectionPaymentsNum = collectionPaymentsNum;
+	}
+	
+	public CashDeskResume(String concept, DateTime date, BigDecimal amount,
+			int collectionPaymentsNum) {
+		this.concept = concept;
+		this.date = date;
+		this.amount = amount;
+		this.collectionPaymentsNum = collectionPaymentsNum;
+	}
+
+	public String getConcept() {
+		return concept;
+	}
+
+	public void setConcept(String concept) {
+		this.concept = concept;
 	}
 
 	public DateTime getDate() {
