@@ -1,6 +1,5 @@
-package com.elfec.cobranza.business_logic.printer;
+package com.elfec.cobranza.model.printer;
 
-import com.elfec.cobranza.model.printer.CPCLCommand;
 
 /**
  * Interfaz que define genéricamente un reporte

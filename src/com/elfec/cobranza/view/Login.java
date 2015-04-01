@@ -3,8 +3,6 @@ package com.elfec.cobranza.view;
 import java.util.List;
 import java.util.Locale;
 
-import org.joda.time.DateTime;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
@@ -20,18 +18,10 @@ import android.widget.EditText;
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
-import com.elfec.cobranza.business_logic.ReportManager;
-import com.elfec.cobranza.business_logic.printer.CashDeskDailyReportGenerator;
-import com.elfec.cobranza.business_logic.printer.CashDeskReportGenerator;
-import com.elfec.cobranza.business_logic.printer.CollectionAnnulmentRerportGenerator;
-import com.elfec.cobranza.business_logic.printer.CollectionDetailReportGenerator;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
-import com.elfec.cobranza.model.CollectionPayment;
-import com.elfec.cobranza.model.printer.CashDeskResume;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
-import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
@@ -61,9 +51,6 @@ public class Login extends Activity implements ILoginView {
 		//TEST PRUPOUSES
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
-		
-		ReportManager.printReport(new CashDeskDailyReportGenerator(DateTime.now()),  
-				new DiscoveredPrinterBluetooth("00:22:58:39:A4:38", "zebra"));
 	}
 
 	@Override

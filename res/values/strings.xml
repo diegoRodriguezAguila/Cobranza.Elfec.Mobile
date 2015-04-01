@@ -95,6 +95,8 @@
 		<string name="title_print_errors">ERROR AL IMPRIMIR</string>
 		<string name="title_menu_item_pick_printer">Seleccionar impresora</string>
 		
+		<string name="title_bluetooth_errors">ERROR DE BLUETOOTH</string>
+		
 		<!-- Collection Annulment -->
 		<string name="lbl_collection_annulment">Anulación</string>
 		<string name="btn_annulate">Anular</string>	

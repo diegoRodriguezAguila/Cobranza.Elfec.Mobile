@@ -400,6 +400,23 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 			}
 		});
 	}
+
+	@Override
+	public void showBluetoothErrors(final List<Exception> errors) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(errors.size()>0)
+				{
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
+					builder.setTitle(R.string.title_bluetooth_errors)
+					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+					.setPositiveButton(R.string.btn_ok, null)
+					.show();
+				}
+			}
+		});
+	}
 	
 	//#endregion
 }

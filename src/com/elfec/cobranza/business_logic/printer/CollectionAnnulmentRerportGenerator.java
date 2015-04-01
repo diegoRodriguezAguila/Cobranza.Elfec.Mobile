@@ -24,7 +24,7 @@ public class CollectionAnnulmentRerportGenerator extends DateRangeReportGenerato
 	/**
 	 * El nombre del reporte
 	 */
-	private final String REPORT_NAME = "REPORTE DE ANULACION DE COBRANZA";
+	public static final String REPORT_NAME = "REPORTE DE ANULACION DE COBRANZA";
 	
 	/**
 	 * El código del reporte

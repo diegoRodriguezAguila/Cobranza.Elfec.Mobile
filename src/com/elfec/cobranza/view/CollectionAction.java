@@ -1,5 +1,6 @@
 package com.elfec.cobranza.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -90,7 +91,16 @@ public class CollectionAction extends FragmentActivity implements SearchCollecti
 		{
 			case (R.id.menu_item_pick_printer):		
 			{
-				new BluetoothDevicePickerService(this, null, true).show();
+				try
+				{
+					new BluetoothDevicePickerService(this, null, true).show();
+				}
+				catch(IllegalStateException e)
+				{
+					List<Exception> errors = new ArrayList<Exception>();
+					errors.add(e);
+					paymentView.showBluetoothErrors(errors);
+				}
 				return true;
 			}
 			default:

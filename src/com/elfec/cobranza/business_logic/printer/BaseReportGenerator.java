@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 
 import com.elfec.cobranza.business_logic.PrinterImagesManager;
 import com.elfec.cobranza.model.printer.CPCLCommand;
+import com.elfec.cobranza.model.printer.IReportGenerator;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
 import com.elfec.cobranza.model.printer.CPCLCommand.Unit;
 

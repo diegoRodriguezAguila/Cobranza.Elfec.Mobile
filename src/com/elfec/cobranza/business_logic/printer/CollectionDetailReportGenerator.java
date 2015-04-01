@@ -21,7 +21,7 @@ public class CollectionDetailReportGenerator extends DateRangeReportGenerator {
 	/**
 	 * El nombre del reporte
 	 */
-	private final String REPORT_NAME = "REPORTE DETALLE DE COBRANZA";
+	public static final String REPORT_NAME = "REPORTE DETALLE DE COBRANZA";
 	
 	/**
 	 * El código del reporte

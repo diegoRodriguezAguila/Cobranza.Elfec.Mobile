@@ -1,6 +1,6 @@
 package com.elfec.cobranza.business_logic;
 
-import com.elfec.cobranza.business_logic.printer.IReportGenerator;
+import com.elfec.cobranza.model.printer.IReportGenerator;
 import com.elfec.cobranza.model.printer.ZebraPrinterExt;
 import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.zebra.sdk.comm.Connection;

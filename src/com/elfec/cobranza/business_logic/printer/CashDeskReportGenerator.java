@@ -22,7 +22,7 @@ public class CashDeskReportGenerator extends DateRangeReportGenerator {
 	/**
 	 * El nombre del reporte
 	 */
-	private final String REPORT_NAME = "REPORTE RESUMEN DE CAJA";
+	public static final String REPORT_NAME = "REPORTE RESUMEN DE CAJA";
 	
 	/**
 	 * El código del reporte

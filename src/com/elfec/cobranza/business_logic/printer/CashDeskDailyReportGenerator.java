@@ -20,7 +20,7 @@ public class CashDeskDailyReportGenerator extends BaseReportGenerator{
 	/**
 	 * El nombre del reporte
 	 */
-	private final String REPORT_NAME = "REPORTE RESUMEN DIARIO";
+	public static final String REPORT_NAME = "REPORTE RESUMEN DIARIO";
 	
 	/**
 	 * El código del reporte

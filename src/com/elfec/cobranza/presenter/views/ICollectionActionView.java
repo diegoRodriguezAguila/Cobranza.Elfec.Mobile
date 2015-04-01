@@ -69,6 +69,11 @@ public interface ICollectionActionView {
 	 */
 	public void showPrintErrors(List<Exception> errors);
 	/**
+	 * Muestra errores al conectarse al bluetooth
+	 * @param errors
+	 */
+	public void showBluetoothErrors(List<Exception> errors);
+	/**
 	 * Pide al usuario la confirmación para proceder con un pago
 	 * @param selectedReceipts
 	 * @param paymentCallback
