@@ -10,33 +10,33 @@ import java.util.List;
  */
 public class CashDeskDailyResume{
 	private List<CashDeskResume> cashDeskResumes;
-	private int internalControlCodeStart;
-	private int internalControlCodeEnd;
+	private long longernalControlCodeStart;
+	private long longernalControlCodeEnd;
 	
 	public CashDeskDailyResume() {
 		this.cashDeskResumes = new ArrayList<CashDeskResume>();
 	}
 
-	public CashDeskDailyResume(int internalControlCodeStart, int internalControlCodeEnd) {
+	public CashDeskDailyResume(long longernalControlCodeStart, long longernalControlCodeEnd) {
 		this();
-		this.internalControlCodeStart = internalControlCodeStart;
-		this.internalControlCodeEnd = internalControlCodeEnd;
+		this.longernalControlCodeStart = longernalControlCodeStart;
+		this.longernalControlCodeEnd = longernalControlCodeEnd;
 	}
 
-	public int getInternalControlCodeStart() {
-		return internalControlCodeStart;
+	public long getInternalControlCodeStart() {
+		return longernalControlCodeStart;
 	}
 
-	public void setInternalControlCodeStart(int internalControlCodeStart) {
-		this.internalControlCodeStart = internalControlCodeStart;
+	public void setInternalControlCodeStart(long longernalControlCodeStart) {
+		this.longernalControlCodeStart = longernalControlCodeStart;
 	}
 
-	public int getInternalControlCodeEnd() {
-		return internalControlCodeEnd;
+	public long getInternalControlCodeEnd() {
+		return longernalControlCodeEnd;
 	}
 
-	public void setInternalControlCodeEnd(int internalControlCodeEnd) {
-		this.internalControlCodeEnd = internalControlCodeEnd;
+	public void setInternalControlCodeEnd(long longernalControlCodeEnd) {
+		this.longernalControlCodeEnd = longernalControlCodeEnd;
 	}
 
 	public List<CashDeskResume> getCashDeskResumes() {

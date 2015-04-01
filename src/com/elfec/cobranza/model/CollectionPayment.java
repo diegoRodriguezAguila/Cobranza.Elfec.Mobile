@@ -220,7 +220,7 @@ public class CollectionPayment extends Model {
 	    .from(CollectionPayment.class);
 		
 		if(status.length>0)
-			subQuery.where("Status IN ?", inClause);
+			subQuery.where("Status IN "+inClause);
 		
 	    subQuery.where("CashDeskNumber = ?", cashDeskNum)
 		.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))

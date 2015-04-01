@@ -157,6 +157,10 @@ public class CollectionManager {
 				CollectionPayment.getRangedCashDeskResume("2. Anulado", date, date, cashDeskNum, 0));
 		cashDeskDailyResume.addMultipleCashDeskResumes(
 				CollectionPayment.getRangedCashDeskResume("3. Total", date, date, cashDeskNum, 1));		
+		List<CollectionPayment> payments = CollectionPayment.getValidCollectionPayments(date, date, cashDeskNum);
+		int size = payments.size();
+		cashDeskDailyResume.setInternalControlCodeStart(size==0?0:payments.get(0).getId());
+		cashDeskDailyResume.setInternalControlCodeEnd(payments.get(size==0?0:size-1).getId());
 		
 		return cashDeskDailyResume;
 	}
