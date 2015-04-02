@@ -23,7 +23,7 @@ import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBl
 import com.elfec.cobranza.presenter.views.IMainMenuView;
 import com.elfec.cobranza.view.adapters.collection.CollectionAdapterFactory;
 import com.elfec.cobranza.view.services.BluetoothDevicePickerService;
-import com.elfec.cobranza.view.services.DateRangePickerService;
+import com.elfec.cobranza.view.services.DatesPickerService;
 import com.elfec.cobranza.view.services.bluetooth.BluetoothStateMonitor;
 
 public class MainMenu extends Activity implements IMainMenuView {
@@ -35,6 +35,8 @@ public class MainMenu extends Activity implements IMainMenuView {
 	 * Monitor en los cambios de estado del bluetooth
 	 */
 	private BluetoothStateMonitor bluetoothStateMonitor;
+	
+	private static final int TIME_BETWEEN_CLICKS  = 600;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 	
 	public void btnCollectionPaymentClick(View view)
 	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
 			Intent i = new Intent(MainMenu.this, CollectionAction.class);
 			i.putExtra(CollectionAction.COLLECTION_TYPE, CollectionAdapterFactory.COLLECTION_PAYMENT);
 			startActivity(i);
@@ -104,7 +106,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 	
 	public void btnCollectionAnnulmentClick(View view)
 	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
 			Intent i = new Intent(MainMenu.this, CollectionAction.class);
 			i.putExtra(CollectionAction.COLLECTION_TYPE, CollectionAdapterFactory.COLLECTION_ANNULMENT);
 			startActivity(i);
@@ -115,7 +117,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 	
 	public void btnCollectionDetailsClick(View view)
 	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
 			presenter.processCollectionDetailsReport();
 		}
         lastClickTime = SystemClock.elapsedRealtime();
@@ -123,7 +125,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 	
 	public void btnAnnuledsReportClick(View view)
 	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
 			presenter.processAnnuledsReport();
 		}
         lastClickTime = SystemClock.elapsedRealtime();
@@ -131,7 +133,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 	
 	public void btnDailySummaryClick(View view)
 	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
 			presenter.processDailySummaryReport();
 		}
         lastClickTime = SystemClock.elapsedRealtime();
@@ -139,7 +141,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 	
 	public void btnCashDeskSummaryClick(View view)
 	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
 			presenter.processCashDeskSummaryReport();
 		}
         lastClickTime = SystemClock.elapsedRealtime();
@@ -201,14 +203,15 @@ public class MainMenu extends Activity implements IMainMenuView {
 	}
 
 	@Override
-	public void showDateRangePicker(final String title, final int iconId,
-			final DatePickListener listener) {
-		runOnUiThread(new Runnable() {		
-			@Override
-			public void run() {
-				new DateRangePickerService(MainMenu.this, title, iconId, listener).show();
-			}
-		});
+	public void showDateRangePicker(String title, int iconId,
+			DatePickListener listener) {
+		new DatesPickerService(MainMenu.this, title, iconId, listener, true).show();
+	}
+
+	@Override
+	public void showSingleDatePicker(String title, int iconId,
+			DatePickListener listener) {
+		new DatesPickerService(MainMenu.this, title, iconId, listener, false).show();
 	}
 	
 	//#endregion

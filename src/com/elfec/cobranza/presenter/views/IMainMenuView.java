@@ -13,6 +13,13 @@ import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBl
 public interface IMainMenuView {
 	
 	/**
+	 * Muestra al usuario un dialogo de selección de una fecha simple
+	 * @param title
+	 * @param iconId
+	 * @param listener
+	 */
+	public void showSingleDatePicker(String title, int iconId, DatePickListener listener);
+	/**
 	 * Muestra al usuario un dialogo de selección de un rango de fechas
 	 * @param title
 	 * @param iconId

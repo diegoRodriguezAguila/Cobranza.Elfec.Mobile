@@ -65,6 +65,11 @@
     <string name="btn_annuleds_report">Reporte de anulados</string>
     <string name="btn_daily_summary">Resumen diario</string>
     <string name="btn_cashdesk_summary">Resumen de caja</string>
+    	<!-- MainMenu: DatePickerDialog -->
+    	<string name="lbl_pick_dates">Seleccione un rango de fechas para el reporte:</string>
+    	<string name="lbl_start_date">Fecha inicio:</string>
+    	<string name="lbl_end_date">Fecha fin:</string>
+    	<string name="lbl_pick_single_date">Seleccione la fecha para el reporte:</string>
     
     <!-- Collection -->
     <string name="title_activity_collection">Cobranza</string>

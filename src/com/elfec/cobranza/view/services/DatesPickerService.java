@@ -8,27 +8,35 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.DatePicker;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.model.events.DatePickListener;
 
 /**
- * Provee el servicio de dialogo para la selección de un rango de fechas
+ * Provee el servicio de dialogo para la selección de fechas
  * @author drodriguez
  *
  */
-public class DateRangePickerService {
+public class DatesPickerService {
 	private AlertDialogPro.Builder dialogBuilder;
 	
 	private DatePickListener listener;
 	
+	private DatePicker dateStart;
+	private DatePicker dateEnd;
+	
 	@SuppressLint("InflateParams")
-	public DateRangePickerService(Context context, String title, int iconId, DatePickListener listener)
+	public DatesPickerService(Context context, String title, int iconId, DatePickListener listener, final boolean isDateRange)
 	{
 		this.listener = listener;
 		View rootView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-				.inflate(R.layout.dialog_payment_confirmation, null);
+				.inflate(isDateRange?R.layout.dialog_date_range_picker:R.layout.dialog_single_date_picker, null);
+		
+		dateStart = (DatePicker) rootView.findViewById(R.id.start_date);
+		if(isDateRange)
+			dateEnd = (DatePicker) rootView.findViewById(R.id.end_date);
 		
 		dialogBuilder = new AlertDialogPro.Builder(context);
 		dialogBuilder.setTitle(title).setIcon(iconId)
@@ -37,8 +45,12 @@ public class DateRangePickerService {
 			.setPositiveButton(R.string.btn_ok, new OnClickListener() {				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					if(DateRangePickerService.this.listener!=null)
-						DateRangePickerService.this.listener.onDatePicked(DateTime.now(), DateTime.now());
+					if(DatesPickerService.this.listener!=null)
+					{
+						DateTime start = new DateTime(dateStart.getYear(), dateStart.getMonth()+1, dateStart.getDayOfMonth(), 0, 0);
+						DateTime end = isDateRange?new DateTime(dateEnd.getYear(), dateEnd.getMonth()+1, dateEnd.getDayOfMonth(), 23, 59, 59,999):null;
+						DatesPickerService.this.listener.onDatePicked(start, end);
+					}
 				}
 			});
 	}

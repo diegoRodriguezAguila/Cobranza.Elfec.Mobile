@@ -166,7 +166,7 @@ public class CollectionPayment extends Model {
 		return new Select().from(CollectionPayment.class)
 				.where("Status=1").where("CashDeskNumber = ?", cashDeskNum)
 				.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
-				.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 0, 0)))
+				.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 59, 999)))
 				.orderBy("PaymentDate")
 				.execute();
 	}
@@ -185,7 +185,7 @@ public class CollectionPayment extends Model {
 		return new Select().from(CollectionPayment.class)
 				.where("Status=0").where("CashDeskNumber = ?", cashDeskNum)
 				.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
-				.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 0, 0)))
+				.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 59, 999)))
 				.orderBy("PaymentDate")
 				.execute();
 	}
@@ -224,7 +224,7 @@ public class CollectionPayment extends Model {
 		
 	    subQuery.where("CashDeskNumber = ?", cashDeskNum)
 		.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
-		.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 0, 0)))
+		.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 59, 999)))
 		.groupBy("date(PaymentDate/1000, 'unixepoch')");
 		
 		List<CashDeskResume> cashDeskResumes = new ArrayList<CashDeskResume>();

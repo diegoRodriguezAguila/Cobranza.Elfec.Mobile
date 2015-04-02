@@ -1,5 +1,6 @@
 package com.elfec.cobranza.presenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -8,6 +9,7 @@ import android.bluetooth.BluetoothAdapter;
 
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.ReportManager;
+import com.elfec.cobranza.business_logic.printer.CashDeskDailyReportGenerator;
 import com.elfec.cobranza.business_logic.printer.CashDeskReportGenerator;
 import com.elfec.cobranza.business_logic.printer.CollectionAnnulmentRerportGenerator;
 import com.elfec.cobranza.business_logic.printer.CollectionDetailReportGenerator;
@@ -27,6 +29,7 @@ public class MainMenuPresenter implements BluetoothStateListener {
 
 	public MainMenuPresenter(IMainMenuView view) {
 		this.view = view;
+		bluetoothActionsQueue = new ArrayList<Runnable>();
 		BluetoothAdapter.getDefaultAdapter().enable();
 	}
 	
@@ -37,7 +40,7 @@ public class MainMenuPresenter implements BluetoothStateListener {
 	public void processCollectionDetailsReport()
 	{
 		view.showDateRangePicker(CollectionDetailReportGenerator.REPORT_NAME, 
-			R.drawable.pick_printer, new DatePickListener() {				
+			R.drawable.collection_details_d, new DatePickListener() {				
 				@Override
 				public void onDatePicked(DateTime... dates) {
 					printReport(new CollectionDetailReportGenerator(dates[0], dates[1]));
@@ -52,7 +55,7 @@ public class MainMenuPresenter implements BluetoothStateListener {
 	public void processAnnuledsReport()
 	{
 		view.showDateRangePicker(CollectionAnnulmentRerportGenerator.REPORT_NAME, 
-				R.drawable.pick_printer, new DatePickListener() {				
+				R.drawable.annuleds_report_d, new DatePickListener() {				
 					@Override
 					public void onDatePicked(DateTime... dates) {
 						printReport(new CollectionAnnulmentRerportGenerator(dates[0], dates[1]));
@@ -66,7 +69,13 @@ public class MainMenuPresenter implements BluetoothStateListener {
 	 */
 	public void processDailySummaryReport()
 	{
-		
+		view.showSingleDatePicker(CashDeskReportGenerator.REPORT_NAME, 
+				R.drawable.daily_summary_d, new DatePickListener() {				
+					@Override
+					public void onDatePicked(DateTime... dates) {
+						printReport(new CashDeskDailyReportGenerator(dates[0]));
+					}
+				});
 	}
 	
 	/**
@@ -76,7 +85,7 @@ public class MainMenuPresenter implements BluetoothStateListener {
 	public void processCashDeskSummaryReport()
 	{
 		view.showDateRangePicker(CashDeskReportGenerator.REPORT_NAME, 
-				R.drawable.pick_printer, new DatePickListener() {				
+				R.drawable.cashdesk_summary_d, new DatePickListener() {				
 					@Override
 					public void onDatePicked(DateTime... dates) {
 						printReport(new CashDeskReportGenerator(dates[0], dates[1]));

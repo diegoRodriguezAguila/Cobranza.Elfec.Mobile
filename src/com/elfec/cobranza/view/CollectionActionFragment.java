@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -110,6 +111,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	 * no para anulaciones
 	 */
 	private BluetoothStateMonitor bluetoothStateMonitor;
+	private Runnable attachBluetoothMonitor;
 	
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -125,6 +127,14 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
         croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
 				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
     }
+	
+	@Override
+	public void onAttach(Activity activity)
+	{
+		super.onAttach(activity);
+		if(bluetoothStateMonitor==null && attachBluetoothMonitor!=null)
+			attachBluetoothMonitor.run();
+	}
 	
 	@Override
 	public void onDestroy(){
@@ -320,8 +330,15 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	public void setCollectionAdapter(ICollectionBaseAdapter collectionAdapter) {
 		this.collectionAdapter = collectionAdapter;
 		presenter = collectionAdapter.getCollectionPresenter(this);
-		if(presenter instanceof BluetoothStateListener)
-			bluetoothStateMonitor = new BluetoothStateMonitor(getActivity(),(BluetoothStateListener)presenter);
+		attachBluetoothMonitor = new Runnable() {			
+			@Override
+			public void run() {
+				if(presenter instanceof BluetoothStateListener)
+					bluetoothStateMonitor = new BluetoothStateMonitor(getActivity(),(BluetoothStateListener)presenter);
+			}
+		};
+		if(this.isAdded())
+			attachBluetoothMonitor.run();
 		this.defaultCollectionAdapterEvent.collectionAdapterSet(this.collectionAdapter, getView());
 	}
 

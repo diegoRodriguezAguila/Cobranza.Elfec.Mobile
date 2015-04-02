@@ -11,4 +11,5 @@
     <item name="activity_collection" type="layout">@layout/activity_collection_twopane</item>
 	<item name="square_button_text_appererance" type="style">@style/TextAppearance.CustomFont.Light</item>
 	<item name="list_item_orientation" type="integer">0</item>
+	<item name="date_picker_scale" type="fraction">1</item>
 </resources>
