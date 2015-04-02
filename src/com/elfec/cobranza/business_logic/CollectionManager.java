@@ -10,6 +10,7 @@ import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.PeriodBankAccount;
 import com.elfec.cobranza.model.WSCollection;
+import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.model.exceptions.AnnulationTimeExpiredException;
 import com.elfec.cobranza.model.exceptions.CollectionException;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
@@ -63,7 +64,7 @@ public class CollectionManager {
 					SessionManager.getLoggedInUsername(), receipt.getReceiptId(), receipt.getTotalAmount(), 
 					1, transactionNumber, receipt.getSupplyId(), 
 					receipt.getSupplyNumber(), receipt.getReceiptNumber(), receipt.getYear(), 
-					receipt.getPeriodNumber(), SessionManager.getLoggedCashdeskDesc()).save());
+					receipt.getPeriodNumber(), SessionManager.getLoggedCashdeskDesc(), ExportStatus.NOT_EXPORTED).save());
 		}
 		catch(SQLException e)
 		{ 
@@ -138,7 +139,7 @@ public class CollectionManager {
 		return new WSCollection(type, receipt.getReceiptId(), "P", 
 					1, SessionManager.getLoggedCashdeskNumber(), 
 					period.getPeriodNumber(), 
-					DateTime.now());
+					DateTime.now(), ExportStatus.NOT_EXPORTED);
 	}
 	
 	/**

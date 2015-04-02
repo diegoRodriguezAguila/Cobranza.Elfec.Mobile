@@ -68,6 +68,9 @@ public class DataImporter {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			result.addError(e);
+		}catch (Exception e) {
+			e.printStackTrace();
+			result.addError(e);
 		}
 		finally{
 			ActiveAndroid.endTransaction();

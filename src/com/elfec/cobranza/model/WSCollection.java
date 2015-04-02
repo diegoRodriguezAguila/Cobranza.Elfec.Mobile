@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.elfec.cobranza.model.enums.ExportStatus;
 
 /**
  * Contiene los datos de la tabla COB_WS
@@ -50,12 +51,16 @@ public class WSCollection extends Model{
 	@Column(name = "PaymentDate", notNull=true)
 	private DateTime paymentDate;
 	
+	//ATRIBUTO EXTRA
+	@Column(name = "ExportStatus", notNull=true)
+	private short exportStatus;
+	
 	public WSCollection() {
 		super();
 	}
 
 	public WSCollection(String action, int receiptId, String status, int bankId,
-			int bankAccountId, int periodNumber, DateTime paymentDate) {
+			int bankAccountId, int periodNumber, DateTime paymentDate, ExportStatus exportStatus) {
 		super();
 		this.action = action;
 		this.receiptId = receiptId;
@@ -64,6 +69,7 @@ public class WSCollection extends Model{
 		this.bankAccountId = bankAccountId;
 		this.periodNumber = periodNumber;
 		this.paymentDate = paymentDate;
+		this.exportStatus = exportStatus.toShort();
 	}
 
 	//#region Getters y Setters
@@ -121,6 +127,14 @@ public class WSCollection extends Model{
 
 	public void setPaymentDate(DateTime paymentDate) {
 		this.paymentDate = paymentDate;
+	}
+
+	public ExportStatus getExportStatus() {
+		return ExportStatus.get(exportStatus);
+	}
+
+	public void setExportStatus(ExportStatus exportStatus) {
+		this.exportStatus = exportStatus.toShort();
 	}
 	
 	//#endregion

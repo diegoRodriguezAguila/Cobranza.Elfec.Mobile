@@ -255,7 +255,7 @@ public class ZoneRoutesPresenter {
 				return CoopReceiptManager.importCoopReceipts(username, password, selectedRoutesString);
 			}
 		});
-		if(receiptsResult.getResult().size()==0)
+		if(!receiptsResult.hasErrors() && receiptsResult.getResult().size()==0)
 			receiptsResult.addError(new RouteWithNoReceiptException());
 		if(receiptsResult.hasErrors())
 		{
