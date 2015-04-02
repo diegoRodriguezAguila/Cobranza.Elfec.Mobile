@@ -5,7 +5,6 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +35,8 @@ public class MainMenu extends Activity implements IMainMenuView {
 	 */
 	private BluetoothStateMonitor bluetoothStateMonitor;
 	
+	private boolean isDestroyed;
+	
 	private static final int TIME_BETWEEN_CLICKS  = 600;
 	
 	@Override
@@ -44,6 +45,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 		setContentView(R.layout.activity_main_menu);
 		presenter = new MainMenuPresenter(this);	
 		bluetoothStateMonitor = new BluetoothStateMonitor(this, presenter);
+		isDestroyed = false;
 	}
 	
 	@Override
@@ -56,6 +58,13 @@ public class MainMenu extends Activity implements IMainMenuView {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.collection, menu);
 		return true;
+	}
+	
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		isDestroyed = true;
 	}
 	
 	@Override
@@ -89,7 +98,6 @@ public class MainMenu extends Activity implements IMainMenuView {
 	    finish();//go back to the previous Activity
 	    if(bluetoothStateMonitor!=null)
 	    	bluetoothStateMonitor.removeListener();
-	    BluetoothAdapter.getDefaultAdapter().disable();
 	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 	}
 	
@@ -151,6 +159,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 	
 	@Override
 	public void showBluetoothErrors(final List<Exception> errors) {
+		if(!isDestroyed)
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
@@ -168,6 +177,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 
 	@Override
 	public void showPrintErrors(final List<Exception> errors) {
+		if(!isDestroyed)
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {

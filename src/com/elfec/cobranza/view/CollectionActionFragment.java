@@ -355,6 +355,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 
 	@Override
 	public void showActionErrors(final List<Exception> errors) {
+		if(getActivity()!=null)
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
@@ -403,6 +404,7 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 
 	@Override
 	public void showPrintErrors(final List<Exception> errors) {
+		if(getActivity()!=null)
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
