@@ -6,6 +6,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.elfec.cobranza.model.enums.ExportStatus;
+import com.elfec.cobranza.model.interfaces.IExportable;
 
 /**
  * Contiene los datos de la tabla COB_WS
@@ -13,7 +14,7 @@ import com.elfec.cobranza.model.enums.ExportStatus;
  *
  */
 @Table(name = "WSCollections")
-public class WSCollection extends Model{
+public class WSCollection extends Model implements IExportable{
 	
 	/**
 	 * ACCION en Oracle
@@ -128,13 +129,19 @@ public class WSCollection extends Model{
 	public void setPaymentDate(DateTime paymentDate) {
 		this.paymentDate = paymentDate;
 	}
-
+	
 	public ExportStatus getExportStatus() {
 		return ExportStatus.get(exportStatus);
 	}
-
+	
+	@Override
 	public void setExportStatus(ExportStatus exportStatus) {
 		this.exportStatus = exportStatus.toShort();
+	}
+
+	@Override
+	public String getRegistryResume() {
+		return "COB_WS - Transación No.: "+getId()+", IDCBTE: "+receiptId;
 	}
 	
 	//#endregion

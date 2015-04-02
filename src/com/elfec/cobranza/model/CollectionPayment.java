@@ -16,6 +16,7 @@ import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
 import com.elfec.cobranza.model.enums.ExportStatus;
+import com.elfec.cobranza.model.interfaces.IExportable;
 import com.elfec.cobranza.model.printer.CashDeskResume;
 import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 /**
@@ -24,7 +25,7 @@ import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
  *
  */
 @Table(name = "CollectionPayments")
-public class CollectionPayment extends Model {
+public class CollectionPayment extends Model implements IExportable{
 	/**
 	 * CAJA en Oracle Número de caja
 	 */
@@ -389,9 +390,14 @@ public class CollectionPayment extends Model {
 	public ExportStatus getExportStatus() {
 		return ExportStatus.get(exportStatus);
 	}
-
+	@Override
 	public void setExportStatus(ExportStatus exportStatus) {
 		this.exportStatus = exportStatus.toShort();
+	}
+
+	@Override
+	public String getRegistryResume() {
+		return "COBRO - Control interno: "+getId()+", IDCBTE: "+receiptId;
 	}
 	
 	//#endregion

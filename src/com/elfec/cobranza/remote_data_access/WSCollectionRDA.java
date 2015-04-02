@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.elfec.cobranza.model.WSCollection;
-import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
@@ -26,18 +25,14 @@ public class WSCollectionRDA {
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */
-	public static void insertWSCollection(String username, String password, WSCollection wSCollection) throws ConnectException, SQLException
+	public static int insertWSCollection(String username, String password, WSCollection wSCollection) throws ConnectException, SQLException
 	{
 		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
 		int result = stmt.executeUpdate(String.format(INSERT_QUERY, wSCollection.getId(), wSCollection.getId(),
 				wSCollection.getAction(), wSCollection.getReceiptId(), wSCollection.getStatus(), 
 				wSCollection.getBankId(), wSCollection.getBankAccountId(), wSCollection.getPeriodNumber(),
 				wSCollection.getPaymentDate().toString("dd/MM/yyyy")));
-		if(result==1) //se insertó existosamente
-		{
-			wSCollection.setExportStatus(ExportStatus.EXPORTED);
-			wSCollection.save();
-		}
 		stmt.close();
+		return result;
 	}
 }

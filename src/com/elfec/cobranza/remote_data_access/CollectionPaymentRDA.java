@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.elfec.cobranza.model.CollectionPayment;
-import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
@@ -25,7 +24,7 @@ public class CollectionPaymentRDA {
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */
-	public static void insertCollectionPayment(String username, String password, CollectionPayment collectionPayment) throws ConnectException, SQLException
+	public static int insertCollectionPayment(String username, String password, CollectionPayment collectionPayment) throws ConnectException, SQLException
 	{
 		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
 		int result = stmt.executeUpdate(String.format(INSERT_QUERY, collectionPayment.getId(), collectionPayment.getCashDeskNumber(),
@@ -41,11 +40,7 @@ public class CollectionPaymentRDA {
 				collectionPayment.getYear(), collectionPayment.getPeriodNumber(), collectionPayment.getCashDeskDescription(),
 				collectionPayment.getAnnulmentReasonId()==null?"NULL":collectionPayment.getAnnulmentReasonId().toString(),
 				collectionPayment.getPaymentDate().toString("dd/MM/yyyy hh:mm:ss")));
-		if(result==1) //se insertó existosamente
-		{
-			collectionPayment.setExportStatus(ExportStatus.EXPORTED);
-			collectionPayment.save();
-		}
 		stmt.close();
+		return result;
 	}
 }

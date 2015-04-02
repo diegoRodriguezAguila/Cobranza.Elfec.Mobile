@@ -1,5 +1,6 @@
 package com.elfec.cobranza.business_logic;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,21 +9,22 @@ import org.joda.time.Hours;
 
 import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.PeriodBankAccount;
-import com.elfec.cobranza.model.WSCollection;
+import com.elfec.cobranza.model.downloaders.DataExporter;
+import com.elfec.cobranza.model.downloaders.DataExporter.ExportSpecs;
 import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.model.exceptions.AnnulationTimeExpiredException;
 import com.elfec.cobranza.model.exceptions.CollectionException;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
 import com.elfec.cobranza.model.printer.CashDeskDailyResume;
 import com.elfec.cobranza.model.results.DataAccessResult;
+import com.elfec.cobranza.remote_data_access.CollectionPaymentRDA;
 import com.elfec.cobranza.settings.ParameterSettingsManager;
 import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;
 
 import android.database.SQLException;
 
 /**
- * Maneja las operaciones de negocio de COBROS y COB_WS
+ * Maneja las operaciones de negocio de COBROS
  * @author drodriguez
  *
  */
@@ -58,7 +60,7 @@ public class CollectionManager {
 		DataAccessResult<Long> result = new DataAccessResult<Long>();
 		try
 		{
-			long transactionNumber = generateWSCollection(receipt, "COBRANZA").save();
+			long transactionNumber = WSCollectionManager.generateWSCollection(receipt, "COBRANZA").save();
 			
 			result.setResult(new CollectionPayment(SessionManager.getLoggedCashdeskNumber(), DateTime.now(), 
 					SessionManager.getLoggedInUsername(), receipt.getReceiptId(), receipt.getTotalAmount(), 
@@ -107,7 +109,7 @@ public class CollectionManager {
 			if(Hours.hoursBetween(payment.getPaymentDate(),DateTime.now()).getHours()>maxDif)
 				throw new AnnulationTimeExpiredException(receipt.getReceiptNumber(), receipt.getId());
 			
-			long transactionNumber = generateWSCollection(receipt, "ANULACION_COBRANZA").save();			
+			long transactionNumber = WSCollectionManager.generateWSCollection(receipt, "ANULACION_COBRANZA").save();			
 			if(payment !=null)
 			{
 				payment.setAnnulated(SessionManager.getLoggedInUsername(), transactionNumber, annulmentReasonId);
@@ -125,23 +127,6 @@ public class CollectionManager {
 		return result;
 	}
 
-	/**
-	 * Genera el COB_WS para el cobro realizado
-	 * @param receipt
-	 * @param type COBRANZA o ANULACION_COBRANZA
-	 * @return WSCollection
-	 * @throws NoPeriodBankAccountException 
-	 */
-	private static WSCollection generateWSCollection(CoopReceipt receipt, String type) throws NoPeriodBankAccountException {
-		PeriodBankAccount period = PeriodBankAccount.findByCashdeskNumberAndDate(SessionManager.getLoggedCashdeskNumber());
-		if(period==null)
-			throw new NoPeriodBankAccountException(SessionManager.getLoggedCashdeskNumber());
-		return new WSCollection(type, receipt.getReceiptId(), "P", 
-					1, SessionManager.getLoggedCashdeskNumber(), 
-					period.getPeriodNumber(), 
-					DateTime.now(), ExportStatus.NOT_EXPORTED);
-	}
-	
 	/**
 	 * Obtiene el resumen diario de caja
 	 * @param date
@@ -164,5 +149,26 @@ public class CollectionManager {
 		cashDeskDailyResume.setInternalControlCodeEnd(payments.get(size==0?0:size-1).getId());
 		
 		return cashDeskDailyResume;
+	}
+	
+	/**
+	 * Exporta todos los COBROS
+	 * @return resultado del acceso remoto a datos
+	 */
+	public static DataAccessResult<Boolean> exportAllCollectionPayments(final String username, final String password)
+	{
+		return DataExporter.exportData(new ExportSpecs<CollectionPayment>() {
+
+			@Override
+			public List<CollectionPayment> requestExportData() {
+				return CollectionPayment.getAll(CollectionPayment.class);
+			}
+
+			@Override
+			public int exportData(CollectionPayment collectionPayment) throws ConnectException,
+					java.sql.SQLException {
+				return CollectionPaymentRDA.insertCollectionPayment(username, password, collectionPayment);
+			}
+		});
 	}
 }
