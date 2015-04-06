@@ -14,7 +14,7 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
  */
 public class WSCollectionRDA {
 	
-	private static final String INSERT_QUERY = "INSERT INTO ERP_ELFEC.COB_WS VALUES (%d, %d, 'TEST:%s', %d, '%s', %d, %d, %d, "
+	private static final String INSERT_QUERY = "INSERT INTO ERP_ELFEC.COB_WS VALUES (%d, %d, 'T:%s', %d, '%s', %d, %d, %d, "
 			+ "NULL, NULL, NULL, NULL, TO_DATE('%s', 'dd/mm/yyyy'))";
 	
 	/**

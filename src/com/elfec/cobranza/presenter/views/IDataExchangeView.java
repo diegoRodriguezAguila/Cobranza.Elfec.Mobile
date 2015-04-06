@@ -25,15 +25,28 @@ public interface IDataExchangeView {
 	public void showWaiting();
 	/**
 	 * Acualiza el mensaje de espera del usuario
+	 * @param strId
+	 * @param totalData
 	 */
-	public void updateWaiting(int strId);
+	public void updateWaiting(int strId, int totalData);
+	/**
+	 * Acualiza el mensaje de la barra de progreso
+	 * @param dataCount
+	 * @param totalData
+	 */
+	public void updateProgress(int dataCount, int totalData);
 	/**
 	 * Borra el mensaje de espera
 	 */
 	public void hideWaiting();
 	/**
-	 * Muestra al usuario errores en la validación para exportación de datos
+	 * Muestra al usuario errores en la exportación de datos
 	 * @param errors
 	 */
-	public void showExportValidationErrors(List<Exception> errors);
+	public void showExportationErrors(List<Exception> errors);
+	
+	/**
+	 * Informa al usuario que se completó exitosamente la descarga
+	 */
+	public void showSuccessfulDataExportation();
 }

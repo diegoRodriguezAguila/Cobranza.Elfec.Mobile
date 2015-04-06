@@ -73,7 +73,7 @@ public class ZoneRoutesPresenter {
 	 */
 	public void importRoutesData(final List<Route> selectedRoutes)
 	{
-		Thread thread = new Thread(new Runnable() {			
+		new Thread(new Runnable() {			
 			@Override
 			public void run() {	
 				view.showWaiting();
@@ -96,8 +96,7 @@ public class ZoneRoutesPresenter {
 					}
 				});				
 			}
-		});
-		thread.start();
+		}).start();
 	}
 	
 	/**

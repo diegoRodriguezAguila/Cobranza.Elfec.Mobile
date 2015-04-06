@@ -52,7 +52,7 @@ public class WSCollectionManager {
 
 			@Override
 			public List<WSCollection> requestExportData() {
-				return WSCollection.getAll(WSCollection.class);
+				return WSCollection.getExportPendingWSCollections();
 			}
 
 			@Override

@@ -10,14 +10,14 @@ public interface DataExportListener {
 	/**
 	 * Se ejecuta el momento en que se obtuvieron todos los datos para exportar
 	 * y se esta por empezar la exportación
-	 * @param totalElements
+	 * @param totalElements total de datos a exportar
 	 */
-	public void onExportInitializing(int totalElements);
+	public void onExportInitialized(int totalElements);
 	
 	/**
 	 * Se ejecuta cada que se exporta una fila
-	 * @param exportCount
-	 * @param totalElements
+	 * @param exportCount datos exportados hasta el momento
+	 * @param totalElements total de datos a exportar
 	 */
 	public void onExporting(int exportCount, int totalElements);
 	

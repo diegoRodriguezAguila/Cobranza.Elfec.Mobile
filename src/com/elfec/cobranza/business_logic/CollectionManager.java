@@ -162,7 +162,7 @@ public class CollectionManager {
 
 			@Override
 			public List<CollectionPayment> requestExportData() {
-				return CollectionPayment.getAll(CollectionPayment.class);
+				return CollectionPayment.getExportPendingCollections();
 			}
 
 			@Override

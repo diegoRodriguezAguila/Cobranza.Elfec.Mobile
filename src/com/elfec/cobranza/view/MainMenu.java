@@ -167,14 +167,12 @@ public class MainMenu extends Activity implements IMainMenuView {
 	{
 		if(!isDestroyed && errors.size()>0)
 		{
-			final AlertDialogPro.Builder builder = new AlertDialogPro.Builder(MainMenu.this);
-			builder.setTitle(titleId)
-			.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
-			.setPositiveButton(R.string.btn_ok, null);
 			runOnUiThread(new Runnable() {			
 				@Override
 				public void run() {
-					builder.show();
+					new AlertDialogPro.Builder(MainMenu.this).setTitle(titleId)
+					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+					.setPositiveButton(R.string.btn_ok, null).show();
 				}
 			});
 		}

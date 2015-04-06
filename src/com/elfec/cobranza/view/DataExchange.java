@@ -7,7 +7,9 @@ import org.joda.time.DateTime;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.Html;
@@ -96,7 +98,16 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	public void btnUploadDataClick(View view)
 	{
 		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
-			presenter.handleUpload();
+			new AlertDialogPro.Builder(this).setTitle(R.string.title_exportation_confirm)
+			.setIcon(R.drawable.export_to_server_d)
+			.setMessage(R.string.msg_exportation_confirm)
+			.setNegativeButton(R.string.btn_cancel, null)
+			.setPositiveButton(R.string.btn_ok, new OnClickListener() {					
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					presenter.handleUpload();
+				}
+			}).show();
 		}
         lastClickTime = SystemClock.elapsedRealtime();
 	}
@@ -120,14 +131,12 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	{
 		if(!isDestroyed && errors.size()>0)
 		{
-			final AlertDialogPro.Builder builder = new AlertDialogPro.Builder(this);
-			builder.setTitle(titleId)
-			.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
-			.setPositiveButton(R.string.btn_ok, null);
 			runOnUiThread(new Runnable() {			
 				@Override
 				public void run() {
-					builder.show();
+					new AlertDialogPro.Builder(DataExchange.this).setTitle(titleId)
+					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+					.setPositiveButton(R.string.btn_ok, null).show();
 				}
 			});
 		}
@@ -157,24 +166,31 @@ public class DataExchange extends Activity implements IDataExchangeView {
 
 	@Override
 	public void showWaiting() {
-		waitingDialog = new ProgressDialogPro(this, R.style.Theme_FlavoredMaterialLight);
-		waitingDialog.setMessage(getResources().getString(R.string.msg_export_validation));
-		waitingDialog.setCancelable(false);
-		waitingDialog.setCanceledOnTouchOutside(false);
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {			
+				waitingDialog = new ProgressDialogPro(DataExchange.this, R.style.Theme_FlavoredMaterialLight);
+				waitingDialog.setMessage(getResources().getString(R.string.msg_export_validation));
+				waitingDialog.setCancelable(false);
+				waitingDialog.setIndeterminate(true);
+				waitingDialog.setIcon(R.drawable.export_to_server_d);
+				waitingDialog.setTitle(R.string.title_upload_waiting);
+				waitingDialog.setProgressDrawable(getResources().getDrawable(R.drawable.progress_horizontal_cobranza));
+				waitingDialog.setProgressStyle(ProgressDialogPro.STYLE_HORIZONTAL);
+				waitingDialog.setCanceledOnTouchOutside(false);
 				waitingDialog.show();
 			}
 		});
 	}
 
 	@Override
-	public void updateWaiting(final int strId) {
+	public void updateWaiting(final int strId, final int totalData) {
 		if(waitingDialog!=null)
 			runOnUiThread(new Runnable() {			
 				@Override
 				public void run() {
+					waitingDialog.setIndeterminate(false);
+					waitingDialog.setMax(totalData);
 					waitingDialog.setMessage(getResources().getString(strId));
 				}
 			});
@@ -192,8 +208,29 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	}
 
 	@Override
-	public void showExportValidationErrors(List<Exception> errors) {
-		showErrors(R.string.title_export_validation_errors,errors);
+	public void showExportationErrors(List<Exception> errors) {
+		showErrors(R.string.title_exportation_errors,errors);
+	}
+
+	@Override
+	public void updateProgress(final int dataCount, int totalData) {
+		if(waitingDialog!=null)
+			runOnUiThread(new Runnable() {			
+				@Override
+				public void run() {
+					waitingDialog.setProgress(dataCount);
+				}
+			});
+	}
+
+	@Override
+	public void showSuccessfulDataExportation() {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				Toast.makeText(DataExchange.this, Html.fromHtml("Se descargó la información al servidor exitosamente!"), Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 	
 	//#endregion

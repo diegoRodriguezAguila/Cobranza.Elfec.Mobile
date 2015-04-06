@@ -204,6 +204,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 				waitingDialog = new ProgressDialogPro(getActivity(), R.style.Theme_FlavoredMaterialLight);
 				waitingDialog.setMessage(getResources().getString(R.string.msg_waiting));
 				waitingDialog.setTitle(R.string.title_waiting);
+				waitingDialog.setIcon(R.drawable.import_from_server_d);
 				waitingDialog.setCancelable(false);
 				waitingDialog.setCanceledOnTouchOutside(false);
 				waitingDialog.show();

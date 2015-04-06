@@ -1,8 +1,10 @@
 package com.elfec.cobranza.presenter;
 
+import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.CollectionManager;
 import com.elfec.cobranza.business_logic.DataExportManager;
 import com.elfec.cobranza.business_logic.SessionManager;
+import com.elfec.cobranza.business_logic.WSCollectionManager;
 import com.elfec.cobranza.helpers.security.AES;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.events.DataExportListener;
@@ -57,13 +59,13 @@ public class DataExchangePresenter {
 				username = SessionManager.getLoggedInUsername();
 				User user = User.findByUserName(username);
 				password = AES.decrypt(user.generateUserKey(), user.getEncryptedPassword());
-				ManagerProcessResult validationResult = DataExportManager.validateExportation();
-				if(validationResult.hasErrors())
-				{
-					exportCollectionPayments();
-				}
-				else view.hideWaiting();
-				view.showExportValidationErrors(validationResult.getErrors());
+				ManagerProcessResult result = DataExportManager.validateExportation();
+				result = exportCollectionPayments(result);
+				result = exportWSCollections(result);
+				view.hideWaiting();
+				view.showExportationErrors(result.getErrors());
+				if(!result.hasErrors())
+					view.showSuccessfulDataExportation();
 			}
 		}).start();
 	}
@@ -71,24 +73,46 @@ public class DataExchangePresenter {
 	/**
 	 * Invoca a los metodos necesarios para la exportación de COBROS
 	 */
-	protected void exportCollectionPayments() {
-		CollectionManager.exportAllCollectionPayments(username, password, new DataExportListener() {			
-			@Override
-			public void onExporting(int exportCount, int totalElements) {
-				// TODO Auto-generated method stub
+	protected ManagerProcessResult exportCollectionPayments(ManagerProcessResult result) {
+		if(!result.hasErrors())
+		{
+			result = CollectionManager.exportAllCollectionPayments(username, password, new DataExportListener() {			
+				@Override
+				public void onExporting(int exportCount, int totalElements) {
+					view.updateProgress(exportCount, totalElements);
+				}			
+				@Override
+				public void onExportInitialized(int totalElements) {
+					view.updateWaiting(R.string.msg_uploading_collection_payments, totalElements);
+				}
 				
-			}			
-			@Override
-			public void onExportInitializing(int totalElements) {
-				// TODO Auto-generated method stub
+				@Override
+				public void onExportFinalized() {}
+			});
+		}
+		return result;
+	}
+	
+	/**
+	 * Invoca a los metodos necesarios para la exportación de COB_WS
+	 */
+	protected ManagerProcessResult exportWSCollections(ManagerProcessResult result) {
+		if(!result.hasErrors())
+		{
+			result = WSCollectionManager.exportAllWSCollections(username, password, new DataExportListener() {			
+				@Override
+				public void onExporting(int exportCount, int totalElements) {
+					view.updateProgress(exportCount, totalElements);
+				}			
+				@Override
+				public void onExportInitialized(int totalElements) {
+					view.updateWaiting(R.string.msg_uploading_ws_collections, totalElements);
+				}
 				
-			}
-			
-			@Override
-			public void onExportFinalized() {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+				@Override
+				public void onExportFinalized() {}
+			});
+		}
+		return result;
 	}
 }

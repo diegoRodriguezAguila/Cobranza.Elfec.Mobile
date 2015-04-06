@@ -41,7 +41,7 @@ public class LoginPresenter {
 	 * Realiza las validaciones respectivas para poder logear al usuario, todo en un hilo
 	 */
 	private void startThreadedUserValidation() {
-		Thread thread = new Thread(new Runnable() {				
+		new Thread(new Runnable() {				
 			@Override
 			public void run() {
 				Looper.prepare();
@@ -61,8 +61,7 @@ public class LoginPresenter {
 				view.showLoginErrors(result.getErrors());
 				Looper.loop();
 			}
-		});
-		thread.start();
+		}).start();
 	}
 
 	/**
