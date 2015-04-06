@@ -7,13 +7,13 @@ import android.os.Looper;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.ElfecUserManager;
 import com.elfec.cobranza.business_logic.FieldValidator;
+import com.elfec.cobranza.business_logic.ParameterSettingsImporter;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.ZonesManager;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
-import com.elfec.cobranza.settings.ParameterSettingsManager;
 
 public class LoginPresenter {
 
@@ -76,7 +76,7 @@ public class LoginPresenter {
 		if(!result.hasErrors() && result.isRemoteDataAccess())
 		{
 			view.updateWaiting(R.string.msg_login_sync_param_settings);
-			result = ParameterSettingsManager.importParameterSettings(result.getResult(), password);
+			result = ParameterSettingsImporter.importParameterSettings(result.getResult(), password);
 		}
 		return result;
 	}

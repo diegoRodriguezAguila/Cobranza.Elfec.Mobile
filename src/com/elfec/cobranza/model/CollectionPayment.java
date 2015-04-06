@@ -114,9 +114,9 @@ public class CollectionPayment extends Model implements IExportable{
 	private Integer annulmentReasonId;
 	
 	//ATRIBUTO EXTRA
-		@Column(name = "ExportStatus", notNull=true)
-		private short exportStatus;
-	
+	@Column(name = "ExportStatus", notNull=true)
+	private short exportStatus;
+
 	public CollectionPayment() {
 		super();
 	}
@@ -142,6 +142,8 @@ public class CollectionPayment extends Model implements IExportable{
 		this.cashDeskDescription = cashDeskDescription;
 		this.exportStatus = exportStatus.toShort();
 	}
+	
+	
 
 	/**
 	 * Anula el cobro, poniendo su estado en cero y llenando los campos de
@@ -150,7 +152,7 @@ public class CollectionPayment extends Model implements IExportable{
 	 * @param annulmentTransacNum
 	 * @param annulmentReasonId
 	 */
-	public void setAnnulated(String annulmentUser, long annulmentTransacNum, int annulmentReasonId)
+	public void setAnnulled(String annulmentUser, long annulmentTransacNum, int annulmentReasonId)
 	{
 		status = 0;
 		annulmentDate = DateTime.now();
@@ -167,7 +169,8 @@ public class CollectionPayment extends Model implements IExportable{
 	 * @param cashDeskNum
 	 * @return lista de cobros
 	 */
-	public static List<CollectionPayment> getValidCollectionPayments(DateTime startDate, DateTime endDate, int cashDeskNum)
+	public static List<CollectionPayment> getValidCollectionPayments(DateTime startDate, 
+			DateTime endDate, int cashDeskNum)
 	{
 		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
 		return new Select().from(CollectionPayment.class)
@@ -186,7 +189,8 @@ public class CollectionPayment extends Model implements IExportable{
 	 * @param cashDeskNum
 	 * @return lista de cobros
 	 */
-	public static List<CollectionPayment> getAnnuledCollectionPayments(DateTime startDate, DateTime endDate, int cashDeskNum)
+	public static List<CollectionPayment> getAnnuledCollectionPayments(DateTime startDate, 
+			DateTime endDate, int cashDeskNum)
 	{
 		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
 		return new Select().from(CollectionPayment.class)
@@ -205,7 +209,8 @@ public class CollectionPayment extends Model implements IExportable{
 	 * @param cashDeskNum
 	 * @return lista de resumenes de caja en el rango de fechas
 	 */
-	public static List<CashDeskResume> getEffectiveCollectionsRangedCashDeskResume(DateTime startDate, DateTime endDate, int cashDeskNum)
+	public static List<CashDeskResume> getEffectiveCollectionsRangedCashDeskResume(DateTime startDate, 
+			DateTime endDate, int cashDeskNum)
 	{
 		return getRangedCashDeskResume(null, startDate, endDate, cashDeskNum, 1);
 	}
@@ -219,7 +224,8 @@ public class CollectionPayment extends Model implements IExportable{
 	 * @param la lista de estados que tiene que tener
 	 * @return lista de resumenes de caja en el rango de fechas
 	 */
-	public static List<CashDeskResume> getRangedCashDeskResume(String concept, DateTime startDate, DateTime endDate, int cashDeskNum, Integer... status)
+	public static List<CashDeskResume> getRangedCashDeskResume(String concept, DateTime startDate, 
+			DateTime endDate, int cashDeskNum, Integer... status)
 	{
 		String inClause = ObjectListToSQL.convertToSQL(status);
 		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
@@ -247,6 +253,16 @@ public class CollectionPayment extends Model implements IExportable{
 			} while(cursor.moveToNext());
 		}
 		return cashDeskResumes;
+	}
+	
+	/**
+	 * Obtiene todos los COBROS pendientes de exportación
+	 * @return
+	 */
+	public static List<CollectionPayment> getExportPendingCollections()
+	{
+		return new Select().from(CollectionPayment.class)
+				.where("ExportStatus = ?", ExportStatus.NOT_EXPORTED.toShort()).execute();
 	}
 
 	//#region Getters y Setters

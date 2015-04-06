@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.elfec.cobranza.model.AnnulmentReason;
-import com.elfec.cobranza.model.downloaders.DataImporter;
-import com.elfec.cobranza.model.downloaders.DataImporter.ImportSource;
+import com.elfec.cobranza.model.data_exchange.DataImporter;
+import com.elfec.cobranza.model.data_exchange.DataImporter.ImportSource;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.AnnulmentReasonRDA;
 

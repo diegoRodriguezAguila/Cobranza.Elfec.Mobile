@@ -7,8 +7,8 @@ import java.util.List;
 
 import com.elfec.cobranza.model.Concept;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.downloaders.DataImporter;
-import com.elfec.cobranza.model.downloaders.DataImporter.ImportSource;
+import com.elfec.cobranza.model.data_exchange.DataImporter;
+import com.elfec.cobranza.model.data_exchange.DataImporter.ImportSource;
 import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.ConceptRDA;

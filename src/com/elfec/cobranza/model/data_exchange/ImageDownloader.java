@@ -1,4 +1,4 @@
-package com.elfec.cobranza.model.downloaders;
+package com.elfec.cobranza.model.data_exchange;
 
 import java.io.IOException;
 import java.io.InputStream;

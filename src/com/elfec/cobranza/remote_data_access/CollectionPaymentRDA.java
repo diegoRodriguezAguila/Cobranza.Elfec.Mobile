@@ -13,7 +13,7 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
  * @author drodriguez
  */
 public class CollectionPaymentRDA {
-	private static final String INSERT_QUERY = "INSERT INTO COBRANZA.COBROS VALUES (%d, %d, TO_DATE('%s', 'dd/mm/yyyy'), '%s', %d, %f, %d, %d, USER, "
+	private static final String INSERT_QUERY = "INSERT INTO COBRANZA.COBROS VALUES (%d, %d, TO_DATE('%s', 'dd/mm/yyyy'), 'TEST:%s', %d, %f, %d, %d, USER, "
 			+ "TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss'), %s, %s, %d, %s, %d, %s, %d, %d, %d, '%s', 'F', %s, 1, TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss'))";
 	
 	/**

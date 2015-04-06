@@ -9,9 +9,10 @@ import org.joda.time.Hours;
 
 import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.downloaders.DataExporter;
-import com.elfec.cobranza.model.downloaders.DataExporter.ExportSpecs;
+import com.elfec.cobranza.model.data_exchange.DataExporter;
+import com.elfec.cobranza.model.data_exchange.DataExporter.ExportSpecs;
 import com.elfec.cobranza.model.enums.ExportStatus;
+import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.exceptions.AnnulationTimeExpiredException;
 import com.elfec.cobranza.model.exceptions.CollectionException;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
@@ -112,7 +113,7 @@ public class CollectionManager {
 			long transactionNumber = WSCollectionManager.generateWSCollection(receipt, "ANULACION_COBRANZA").save();			
 			if(payment !=null)
 			{
-				payment.setAnnulated(SessionManager.getLoggedInUsername(), transactionNumber, annulmentReasonId);
+				payment.setAnnulled(SessionManager.getLoggedInUsername(), transactionNumber, annulmentReasonId);
 				payment.save();
 				receipt.clearActiveCollectionPayment();
 			}
@@ -155,7 +156,7 @@ public class CollectionManager {
 	 * Exporta todos los COBROS
 	 * @return resultado del acceso remoto a datos
 	 */
-	public static DataAccessResult<Boolean> exportAllCollectionPayments(final String username, final String password)
+	public static DataAccessResult<Boolean> exportAllCollectionPayments(final String username, final String password, DataExportListener exportListener)
 	{
 		return DataExporter.exportData(new ExportSpecs<CollectionPayment>() {
 
@@ -169,6 +170,6 @@ public class CollectionManager {
 					java.sql.SQLException {
 				return CollectionPaymentRDA.insertCollectionPayment(username, password, collectionPayment);
 			}
-		});
+		}, exportListener);
 	}
 }

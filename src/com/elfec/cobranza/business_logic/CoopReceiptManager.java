@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.elfec.cobranza.business_logic.printer.ReceiptGenerator;
 import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.downloaders.DataImporter;
-import com.elfec.cobranza.model.downloaders.DataImporter.ImportSpecs;
+import com.elfec.cobranza.model.data_exchange.DataImporter;
+import com.elfec.cobranza.model.data_exchange.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.printer.ZebraPrinterExt;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.model.results.ManagerProcessResult;

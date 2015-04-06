@@ -16,12 +16,15 @@
     <string name="msg_login_sync_param_settings">Sincronizando configuraciones parametrizables&#8230;</string>
     <string name="title_login_errors">ERROR DE INGRESO AL SISTEMA</string>
 
-    <!-- Data Flow -->
+    <!-- Data Exchange -->
     <string name="title_activity_data_exchange">Inicio</string>
     <string name="btn_main_menu">Menú principal</string>
     <string name="lbl_main_menu_info">Presione menu principal para ingresar a las opciones de cobranza</string>
     <string name="btn_download_data">Cargar datos</string>
     <string name="btn_upload_data">Descargar datos</string>
+    	<!-- Data upload -->
+    	<string name="title_export_validation_errors">ERROR DE VALIDACIÓN DE EXPORTACIÓN</string>
+    	<string name="msg_export_validation">Validando requisitos para la exportación de datos&#8230;</string>
 
     <!-- Dialog Buttons -->
     <string name="btn_ok">Aceptar</string>

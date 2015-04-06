@@ -1,17 +1,10 @@
 package com.elfec.cobranza.settings;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.elfec.cobranza.model.User;
-import com.elfec.cobranza.model.downloaders.DataImporter;
-import com.elfec.cobranza.model.downloaders.DataImporter.ImportSource;
-import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.model.settings.ParameterSetting;
-import com.elfec.cobranza.remote_data_access.ParameterSettingsRDA;
 
 /**
  * Controla los parámetros que se descargan de la tabla de parámetros
@@ -34,34 +27,13 @@ public class ParameterSettingsManager {
 	/**
 	 * Carga los parámetros de la tabla de parámetros
 	 */
-	private static void loadParameters(List<ParameterSetting> parameters)
+	public static void loadParameters(List<ParameterSetting> parameters)
 	{
 		parametersTable.clear();
 		for(ParameterSetting parameter : parameters)
 		{
 			parametersTable.put(parameter.getKey(), parameter);
 		}
-	}
-	
-	/**
-	 * Importa la tabla de parámetros COBRANZA.COBRANZA_MOVIL_PARAM
-	 * @param username
-	 * @param password
-	 * @return resultado del acceso remoto
-	 */
-	public static DataAccessResult<User> importParameterSettings(final User user, final String password)
-	{
-		DataAccessResult<User> result = new DataAccessResult<User>(true, user);
-		DataAccessResult<Boolean> res = DataImporter.importOnceRequiredData(new ImportSource<ParameterSetting>() {
-			@Override
-			public List<ParameterSetting> requestData() throws ConnectException, SQLException {
-				List<ParameterSetting> parameters = ParameterSettingsRDA.requestParameterSettings(user.getUsername(), password);
-				loadParameters(parameters);
-				return parameters;
-			}
-		});
-		result.addErrors(res.getErrors());
-		return result;
 	}
 	
 	/**

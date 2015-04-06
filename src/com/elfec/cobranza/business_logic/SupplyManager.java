@@ -8,8 +8,8 @@ import org.joda.time.DateTime;
 
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
-import com.elfec.cobranza.model.downloaders.DataImporter;
-import com.elfec.cobranza.model.downloaders.DataImporter.ImportSpecs;
+import com.elfec.cobranza.model.data_exchange.DataImporter;
+import com.elfec.cobranza.model.data_exchange.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.exceptions.SupplyNotFoundException;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.SupplyRDA;

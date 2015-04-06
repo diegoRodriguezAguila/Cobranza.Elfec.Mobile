@@ -1,5 +1,7 @@
 package com.elfec.cobranza.view;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -14,24 +16,38 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alertdialogpro.AlertDialogPro;
+import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.presenter.DataExchangePresenter;
-import com.elfec.cobranza.presenter.views.IDataFlowView;
+import com.elfec.cobranza.presenter.views.IDataExchangeView;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
-public class DataExchange extends Activity implements IDataFlowView {
+public class DataExchange extends Activity implements IDataExchangeView {
 
 	public static final String IMEI = "IMEI";
 	private long lastClickTime = 0;
 	private DataExchangePresenter presenter;
+	private ProgressDialogPro waitingDialog;
+	
+	/**
+	 * Indica si la actividad fue destruida o no
+	 */
+	private boolean isDestroyed;
+	
+	private static final int TIME_BETWEEN_CLICKS  = 600;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_data_exchange);
+		OracleDatabaseConnector.initializeContext(this);
 		presenter = new DataExchangePresenter(this);
 		((TextView) findViewById(R.id.txt_device_imei)).setText(getIntent().getExtras().getString(IMEI));
 		presenter.setFields();
+		isDestroyed = false;
 	}
 
 	@Override
@@ -54,6 +70,13 @@ public class DataExchange extends Activity implements IDataFlowView {
 	}
 	
 	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		isDestroyed = true;
+	}
+	
+	@Override
 	public void onResume()
 	{
 		super.onResume();
@@ -62,7 +85,7 @@ public class DataExchange extends Activity implements IDataFlowView {
 	
 	public void btnDownloadDataClick(View view)
 	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
 			Intent i = new Intent(DataExchange.this, ZoneListActivity.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
@@ -70,14 +93,44 @@ public class DataExchange extends Activity implements IDataFlowView {
         lastClickTime = SystemClock.elapsedRealtime();
 	}
 	
+	public void btnUploadDataClick(View view)
+	{
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
+			presenter.handleUpload();
+		}
+        lastClickTime = SystemClock.elapsedRealtime();
+	}
+	
 	public void btnMainMenuClick(View view)
 	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
 			Intent i = new Intent(DataExchange.this, MainMenu.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 		}
         lastClickTime = SystemClock.elapsedRealtime();
+	}
+	
+	/**
+	 * Muestra errores con el titulo indicado
+	 * @param titleId
+	 * @param errors
+	 */
+	public void showErrors(final int titleId, final List<Exception> errors)
+	{
+		if(!isDestroyed && errors.size()>0)
+		{
+			final AlertDialogPro.Builder builder = new AlertDialogPro.Builder(this);
+			builder.setTitle(titleId)
+			.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+			.setPositiveButton(R.string.btn_ok, null);
+			runOnUiThread(new Runnable() {			
+				@Override
+				public void run() {
+					builder.show();
+				}
+			});
+		}
 	}
 	
 	//#region Interface Methods
@@ -100,6 +153,47 @@ public class DataExchange extends Activity implements IDataFlowView {
 				Toast.makeText(DataExchange.this, Html.fromHtml("Se finalizó la sesión de <b>"+username+"</b>!"), Toast.LENGTH_LONG).show();
 			}
 		});
+	}
+
+	@Override
+	public void showWaiting() {
+		waitingDialog = new ProgressDialogPro(this, R.style.Theme_FlavoredMaterialLight);
+		waitingDialog.setMessage(getResources().getString(R.string.msg_export_validation));
+		waitingDialog.setCancelable(false);
+		waitingDialog.setCanceledOnTouchOutside(false);
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {			
+				waitingDialog.show();
+			}
+		});
+	}
+
+	@Override
+	public void updateWaiting(final int strId) {
+		if(waitingDialog!=null)
+			runOnUiThread(new Runnable() {			
+				@Override
+				public void run() {
+					waitingDialog.setMessage(getResources().getString(strId));
+				}
+			});
+	}
+
+	@Override
+	public void hideWaiting() {
+		if(waitingDialog!=null)
+			runOnUiThread(new Runnable() {			
+				@Override
+				public void run() {
+					waitingDialog.dismiss();
+				}
+			});
+	}
+
+	@Override
+	public void showExportValidationErrors(List<Exception> errors) {
+		showErrors(R.string.title_export_validation_errors,errors);
 	}
 	
 	//#endregion

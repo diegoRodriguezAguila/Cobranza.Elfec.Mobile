@@ -9,7 +9,7 @@ import org.joda.time.Days;
 import android.graphics.Bitmap;
 
 import com.elfec.cobranza.helpers.ImageInternalAccess;
-import com.elfec.cobranza.model.downloaders.ImageDownloader;
+import com.elfec.cobranza.model.data_exchange.ImageDownloader;
 import com.elfec.cobranza.model.events.OnImageDownloadFinished;
 import com.elfec.cobranza.settings.ParameterSettingsManager;
 import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;

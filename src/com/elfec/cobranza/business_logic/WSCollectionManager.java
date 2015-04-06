@@ -9,9 +9,10 @@ import org.joda.time.DateTime;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.PeriodBankAccount;
 import com.elfec.cobranza.model.WSCollection;
-import com.elfec.cobranza.model.downloaders.DataExporter;
-import com.elfec.cobranza.model.downloaders.DataExporter.ExportSpecs;
+import com.elfec.cobranza.model.data_exchange.DataExporter;
+import com.elfec.cobranza.model.data_exchange.DataExporter.ExportSpecs;
 import com.elfec.cobranza.model.enums.ExportStatus;
+import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.WSCollectionRDA;
@@ -44,7 +45,8 @@ public class WSCollectionManager {
 	 * Exporta todos los COB_WS
 	 * @return resultado del acceso remoto a datos
 	 */
-	public static DataAccessResult<Boolean> exportAllWSCollections(final String username, final String password)
+	public static DataAccessResult<Boolean> exportAllWSCollections(final String username, final String password, 
+			DataExportListener exportListener)
 	{
 		return DataExporter.exportData(new ExportSpecs<WSCollection>() {
 
@@ -58,7 +60,7 @@ public class WSCollectionManager {
 					SQLException {
 				return WSCollectionRDA.insertWSCollection(username, password, wSCollection);
 			}
-		});
+		}, exportListener);
 	}
 
 }

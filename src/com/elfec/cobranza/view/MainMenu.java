@@ -35,6 +35,9 @@ public class MainMenu extends Activity implements IMainMenuView {
 	 */
 	private BluetoothStateMonitor bluetoothStateMonitor;
 	
+	/**
+	 * Indica si la actividad fue destruida o no
+	 */
 	private boolean isDestroyed;
 	
 	private static final int TIME_BETWEEN_CLICKS  = 600;
@@ -154,43 +157,39 @@ public class MainMenu extends Activity implements IMainMenuView {
 		}
         lastClickTime = SystemClock.elapsedRealtime();
 	}
+	
+	/**
+	 * Muestra errores con el titulo indicado
+	 * @param titleId
+	 * @param errors
+	 */
+	public void showErrors(final int titleId, final List<Exception> errors)
+	{
+		if(!isDestroyed && errors.size()>0)
+		{
+			final AlertDialogPro.Builder builder = new AlertDialogPro.Builder(MainMenu.this);
+			builder.setTitle(titleId)
+			.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+			.setPositiveButton(R.string.btn_ok, null);
+			runOnUiThread(new Runnable() {			
+				@Override
+				public void run() {
+					builder.show();
+				}
+			});
+		}
+	}
 
 	//#region Interface Methods
 	
 	@Override
-	public void showBluetoothErrors(final List<Exception> errors) {
-		if(!isDestroyed)
-		runOnUiThread(new Runnable() {			
-			@Override
-			public void run() {
-				if(errors.size()>0)
-				{
-					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(MainMenu.this);
-					builder.setTitle(R.string.title_bluetooth_errors)
-					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
-					.setPositiveButton(R.string.btn_ok, null)
-					.show();
-				}
-			}
-		});
+	public void showBluetoothErrors(List<Exception> errors) {
+		showErrors(R.string.title_bluetooth_errors, errors);
 	}
 
 	@Override
 	public void showPrintErrors(final List<Exception> errors) {
-		if(!isDestroyed)
-		runOnUiThread(new Runnable() {			
-			@Override
-			public void run() {
-				if(errors.size()>0)
-				{
-					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(MainMenu.this);
-					builder.setTitle(R.string.title_print_errors)
-					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
-					.setPositiveButton(R.string.btn_ok, null)
-					.show();
-				}
-			}
-		});
+		showErrors(R.string.title_print_errors, errors);
 	}
 
 	@Override

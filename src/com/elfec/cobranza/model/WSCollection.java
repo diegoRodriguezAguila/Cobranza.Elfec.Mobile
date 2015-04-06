@@ -1,10 +1,13 @@
 package com.elfec.cobranza.model;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.model.interfaces.IExportable;
 
@@ -71,6 +74,16 @@ public class WSCollection extends Model implements IExportable{
 		this.periodNumber = periodNumber;
 		this.paymentDate = paymentDate;
 		this.exportStatus = exportStatus.toShort();
+	}
+	
+	/**
+	 * Obtiene todos los COB_WS pendientes de exportación
+	 * @return
+	 */
+	public static List<WSCollection> getExportPendingWSCollections()
+	{
+		return new Select().from(WSCollection.class)
+				.where("ExportStatus = ?", ExportStatus.NOT_EXPORTED.toShort()).execute();
 	}
 
 	//#region Getters y Setters

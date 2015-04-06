@@ -1,4 +1,4 @@
-package com.elfec.cobranza.model.downloaders;
+package com.elfec.cobranza.model.data_exchange;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.activeandroid.Model;
 import com.elfec.cobranza.model.enums.ExportStatus;
+import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.exceptions.ExportationException;
 import com.elfec.cobranza.model.interfaces.IExportable;
 import com.elfec.cobranza.model.results.DataAccessResult;
@@ -16,17 +17,30 @@ import com.elfec.cobranza.model.results.DataAccessResult;
  *
  */
 public class DataExporter {
+
 	/**
 	 * Importa cualquier tipo de información que debe ser importada una sola vez
 	 * @param importSource
 	 * @return
 	 */
-	public static <T extends Model & IExportable> DataAccessResult<Boolean> exportData(ExportSpecs<T> exportSpecs)
+	public static <T extends Model & IExportable> DataAccessResult<Boolean> exportData(ExportSpecs<T> exportSpecs, DataExportListener exportListener)
 	{
 		DataAccessResult<Boolean> result = new DataAccessResult<Boolean>(true);
+		if(exportListener==null)
+			exportListener = new DataExportListener() {//DUMMY Listener
+			@Override
+				public void onExporting(int exportCount, int totalElements) {}
+				@Override
+				public void onExportInitializing(int totalElements) {}				
+				@Override
+				public void onExportFinalized() {}
+			};//DUMMY Listener
+			
 		try {
 				List<T> dataList = exportSpecs.requestExportData();
-				int rowRes;
+				int size = dataList.size();
+				exportListener.onExportInitializing(size);
+				int rowRes, count = 0;
 				for(T data : dataList)
 				{
 					rowRes = exportSpecs.exportData(data);
@@ -34,6 +48,8 @@ public class DataExporter {
 					{
 						data.setExportStatus(ExportStatus.EXPORTED);
 						data.save();
+						count++;
+						exportListener.onExporting(count, size);
 					}
 					else throw new ExportationException(data.getRegistryResume());
 				}
@@ -47,6 +63,7 @@ public class DataExporter {
 			e.printStackTrace();
 			result.addError(e);
 		}
+		exportListener.onExportFinalized();
 		return result;
 	}
 	
