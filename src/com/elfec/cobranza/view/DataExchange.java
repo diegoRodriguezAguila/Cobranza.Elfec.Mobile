@@ -185,26 +185,28 @@ public class DataExchange extends Activity implements IDataExchangeView {
 
 	@Override
 	public void updateWaiting(final int strId, final int totalData) {
-		if(waitingDialog!=null)
-			runOnUiThread(new Runnable() {			
-				@Override
-				public void run() {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(waitingDialog!=null)
+				{
 					waitingDialog.setIndeterminate(false);
 					waitingDialog.setMax(totalData);
 					waitingDialog.setMessage(getResources().getString(strId));
 				}
-			});
+			}
+		});
 	}
 
 	@Override
 	public void hideWaiting() {
-		if(waitingDialog!=null)
-			runOnUiThread(new Runnable() {			
-				@Override
-				public void run() {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(waitingDialog!=null)
 					waitingDialog.dismiss();
-				}
-			});
+			}
+		});
 	}
 
 	@Override
@@ -214,21 +216,38 @@ public class DataExchange extends Activity implements IDataExchangeView {
 
 	@Override
 	public void updateProgress(final int dataCount, int totalData) {
-		if(waitingDialog!=null)
-			runOnUiThread(new Runnable() {			
-				@Override
-				public void run() {
-					waitingDialog.setProgress(dataCount);
-				}
-			});
-	}
-
-	@Override
-	public void showSuccessfulDataExportation() {
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				Toast.makeText(DataExchange.this, Html.fromHtml("Se descargó la información al servidor exitosamente!"), Toast.LENGTH_LONG).show();
+				if(waitingDialog!=null)
+					waitingDialog.setProgress(dataCount);
+			}
+		});
+	}
+
+	@Override
+	public void processSuccessfulDataExportation(final String username) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				Toast.makeText(DataExchange.this, Html.fromHtml("Se descargó la información al servidor exitosamente! Se cerró "
+						+ "la sesión de <b>"+username+"</b>!"), Toast.LENGTH_LONG).show();
+				 finish();//go back to the previous Activity
+				 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
+			}
+		});
+	}
+
+	@Override
+	public void updateWaiting(final int strId) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(waitingDialog!=null)
+				{
+					waitingDialog.setIndeterminate(true);
+					waitingDialog.setMessage(getResources().getString(strId));
+				}
 			}
 		});
 	}

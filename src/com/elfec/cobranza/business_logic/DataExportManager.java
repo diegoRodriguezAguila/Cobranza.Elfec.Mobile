@@ -1,10 +1,16 @@
 package com.elfec.cobranza.business_logic;
 
+import java.io.File;
+
+import android.database.sqlite.SQLiteDatabase;
+
+import com.activeandroid.ActiveAndroid;
 import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.WSCollection;
 import com.elfec.cobranza.model.exceptions.NoPaidCollectionsException;
 import com.elfec.cobranza.model.exceptions.NoPendingExportDataException;
 import com.elfec.cobranza.model.results.ManagerProcessResult;
+import com.elfec.cobranza.settings.PreferencesManager;
 
 /**
  * Capa de lógica de negocio para la exportación de datos
@@ -32,6 +38,32 @@ public class DataExportManager {
 		{ result.addError(e); } 
 		catch (NoPendingExportDataException e) 
 		{ result.addError(e); }
+		
+		return result;
+	}
+	
+	/**
+	 * Elimina toda la información de la aplicación que se debe eliminar del dispositivo
+	 * @return
+	 */
+	public static ManagerProcessResult wipeAllData()
+	{
+		ManagerProcessResult result = new ManagerProcessResult();	
+		try
+		{
+			ActiveAndroid.getDatabase().close();
+			SQLiteDatabase.deleteDatabase(new File(ActiveAndroid.getDatabase().getPath()));
+			ActiveAndroid.dispose();
+			ActiveAndroid.initialize(PreferencesManager.getApplicationContext());
+			PreferencesManager.instance().wipeOnceRequiredDataPreferences();
+			SessionManager.finishSession();
+		}
+		catch(Exception e)
+		{
+			result.addError(new RuntimeException("Ocurrió un error al eliminar la información local! "
+					+ "Es probable que la información se haya corrompido, porfavor elimine los datos desde el "
+					+ "administrador de aplicaciones de Android! Info. adicional: "+e.getMessage()));
+		}
 		
 		return result;
 	}

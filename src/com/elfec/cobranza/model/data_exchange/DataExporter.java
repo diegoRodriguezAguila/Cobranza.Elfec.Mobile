@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.activeandroid.Model;
+import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.exceptions.ExportationException;
 import com.elfec.cobranza.model.interfaces.IExportable;
@@ -45,8 +46,8 @@ public class DataExporter {
 					rowRes = exportSpecs.exportData(data);
 					if(rowRes==1) //se insertó existosamente
 					{
-						//data.setExportStatus(ExportStatus.EXPORTED);
-						//data.save();
+						data.setExportStatus(ExportStatus.EXPORTED);
+						data.save();
 						count++;
 						exportListener.onExporting(count, size);
 					}

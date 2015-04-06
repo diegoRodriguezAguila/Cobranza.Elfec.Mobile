@@ -393,4 +393,20 @@ public class PreferencesManager {
 		return this;
 	}
 	
+	/**
+	 * Borra las preferencias guardadas de la información que se debe importar
+	 * solo una vez 
+	 */
+	public void wipeOnceRequiredDataPreferences()
+	{
+		preferences.edit().remove(ALL_ONCE_REQUIRED_DATA_IMPORTED)
+						  .remove(SUPPLY_CATEGORY_TYPES_IMPORTED)
+						  .remove(CPT_CALCULATION_BASES_IMPORTED)
+						  .remove(PRNT_CALCULATION_BASES_IMPORTED)
+						  .remove(CATEGORIES_IMPORTED)
+						  .remove(CONCEPTS_IMPORTED)
+						  .remove(BANK_ACCOUNTS_IMPORTED)
+						  .remove(PERIOD_BANK_ACCOUNTS_IMPORTED)
+						  .remove(ANNULMENT_REASONS_IMPORTED).commit();
+	}
 }

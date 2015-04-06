@@ -28,6 +28,12 @@ public interface IDataExchangeView {
 	 * @param strId
 	 * @param totalData
 	 */
+	public void updateWaiting(int strId);
+	/**
+	 * Acualiza el mensaje de espera del usuario a un mensaje de carga con porcentaje total de datos
+	 * @param strId
+	 * @param totalData
+	 */
 	public void updateWaiting(int strId, int totalData);
 	/**
 	 * Acualiza el mensaje de la barra de progreso
@@ -48,5 +54,5 @@ public interface IDataExchangeView {
 	/**
 	 * Informa al usuario que se completó exitosamente la descarga
 	 */
-	public void showSuccessfulDataExportation();
+	public void processSuccessfulDataExportation(String username);
 }

@@ -62,10 +62,11 @@ public class DataExchangePresenter {
 				ManagerProcessResult result = DataExportManager.validateExportation();
 				result = exportCollectionPayments(result);
 				result = exportWSCollections(result);
+				result = wipeData(result);
 				view.hideWaiting();
 				view.showExportationErrors(result.getErrors());
 				if(!result.hasErrors())
-					view.showSuccessfulDataExportation();
+					view.processSuccessfulDataExportation(username);
 			}
 		}).start();
 	}
@@ -112,6 +113,20 @@ public class DataExchangePresenter {
 				@Override
 				public void onExportFinalized() {}
 			});
+		}
+		return result;
+	}
+	
+	/**
+	 * Llama a los metodos necesarios para eliminar toda la información
+	 * @param result
+	 * @return
+	 */
+	protected ManagerProcessResult wipeData(ManagerProcessResult result) {
+		if(!result.hasErrors())
+		{
+			view.updateWaiting(R.string.msg_wiping_all_data);
+			result = DataExportManager.wipeAllData();
 		}
 		return result;
 	}
