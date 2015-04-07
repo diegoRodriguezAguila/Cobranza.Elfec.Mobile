@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.elfec.cobranza.settings.PreferencesManager;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,9 +25,9 @@ public class ImageInternalAccess {
 	 * @return el path completo del archivo
 	 * @throws IOException 
 	 */
-	public static String saveToInternalSorage(Bitmap bitmapImage, String fileName) throws IOException{      
+	public static String saveToInternalSorage(Context context, Bitmap bitmapImage, String fileName) throws IOException{      
         // path to /data/data/yourapp/app_data/images
-        File directory = PreferencesManager.getApplicationContext().getDir("images", Context.MODE_PRIVATE);     
+        File directory = context.getDir("images", Context.MODE_PRIVATE);     
         // Create images
         File path = new File(directory, fileName);
         FileOutputStream fos = null;     
@@ -44,11 +42,11 @@ public class ImageInternalAccess {
 	 * Obtiene la imagen de almacenamiento interno
 	 * @param path
 	 */
-	public static Bitmap loadImageFromStorage(String fileName)
+	public static Bitmap loadImageFromStorage(Context context, String fileName)
 	{
 	    try {
 	    	// path to /data/data/yourapp/app_data/images
-	        File directory = PreferencesManager.getApplicationContext().getDir("images", Context.MODE_PRIVATE);
+	        File directory = context.getDir("images", Context.MODE_PRIVATE);
 	        File path = new File(directory, fileName);
 	        return BitmapFactory.decodeStream(new FileInputStream(path));
 	    } 
@@ -62,10 +60,10 @@ public class ImageInternalAccess {
 	 * Obtiene la imagen de la carpetaAssets
 	 * @param path
 	 */
-	public static Bitmap loadImageFromAssets(String fileName)
+	public static Bitmap loadImageFromAssets(Context context, String fileName)
 	{
 	    try {
-	        return BitmapFactory.decodeStream(PreferencesManager.getApplicationContext().getAssets().open(fileName));
+	        return BitmapFactory.decodeStream(context.getAssets().open(fileName));
 	    } 
 	    catch (FileNotFoundException e) {
 	        e.printStackTrace();

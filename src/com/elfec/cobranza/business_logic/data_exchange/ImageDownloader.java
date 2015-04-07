@@ -1,4 +1,4 @@
-package com.elfec.cobranza.model.data_exchange;
+package com.elfec.cobranza.business_logic.data_exchange;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +11,9 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.elfec.cobranza.helpers.ImageInternalAccess;
+import com.elfec.cobranza.model.data_exchange.DownloadedBitmap;
 import com.elfec.cobranza.model.events.OnImageDownloadFinished;
+import com.elfec.cobranza.settings.PreferencesManager;
 
 /**
  * Descarga una o más imágenes de internet y las guarda en la memoria interna
@@ -65,7 +67,7 @@ public class ImageDownloader extends AsyncTask<String, Void, List<DownloadedBitm
     	try {
 	    	for(DownloadedBitmap downBitmap : result)
 	    	{
-				ImageInternalAccess.saveToInternalSorage(downBitmap.getImage(), downBitmap.getImageName());			
+				ImageInternalAccess.saveToInternalSorage(PreferencesManager.getApplicationContext(), downBitmap.getImage(), downBitmap.getImageName());			
 	    	}
     	} catch (IOException e) {
 			e.printStackTrace();

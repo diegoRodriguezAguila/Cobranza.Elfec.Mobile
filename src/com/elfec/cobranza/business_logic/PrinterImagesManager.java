@@ -8,8 +8,8 @@ import org.joda.time.Days;
 
 import android.graphics.Bitmap;
 
+import com.elfec.cobranza.business_logic.data_exchange.ImageDownloader;
 import com.elfec.cobranza.helpers.ImageInternalAccess;
-import com.elfec.cobranza.model.data_exchange.ImageDownloader;
 import com.elfec.cobranza.model.events.OnImageDownloadFinished;
 import com.elfec.cobranza.settings.ParameterSettingsManager;
 import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;
@@ -146,7 +146,7 @@ public class PrinterImagesManager {
 	 */
 	public static Bitmap getHeaderImage()
 	{
-		return ImageInternalAccess.loadImageFromStorage(HEADER_IMAGE_NAME);
+		return ImageInternalAccess.loadImageFromStorage(PreferencesManager.getApplicationContext(), HEADER_IMAGE_NAME);
 	}
 	
 	/**
@@ -155,7 +155,7 @@ public class PrinterImagesManager {
 	 */
 	public static Bitmap getFooterImage()
 	{
-		return ImageInternalAccess.loadImageFromStorage(FOOTER_IMAGE_NAME);
+		return ImageInternalAccess.loadImageFromStorage(PreferencesManager.getApplicationContext(), FOOTER_IMAGE_NAME);
 	}
 	
 	/**
@@ -164,7 +164,7 @@ public class PrinterImagesManager {
 	 */
 	public static Bitmap getReportLogoImage()
 	{
-		return ImageInternalAccess.loadImageFromAssets(REP_LOGO_NAME);
+		return ImageInternalAccess.loadImageFromAssets(PreferencesManager.getApplicationContext(), REP_LOGO_NAME);
 	}
 	
 	/**

@@ -10,6 +10,7 @@ import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.elfec.cobranza.presenter.views.IDataExchangeView;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 public class DataExchangePresenter {
 
@@ -127,6 +128,7 @@ public class DataExchangePresenter {
 		{
 			view.updateWaiting(R.string.msg_wiping_all_data);
 			result = DataExportManager.wipeAllData();
+			OracleDatabaseConnector.disposeInstance();
 		}
 		return result;
 	}

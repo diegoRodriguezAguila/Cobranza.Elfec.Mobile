@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.elfec.cobranza.business_logic.data_exchange.DataExporter;
+import com.elfec.cobranza.business_logic.data_exchange.DataExporter.ExportSpecs;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.PeriodBankAccount;
 import com.elfec.cobranza.model.WSCollection;
-import com.elfec.cobranza.model.data_exchange.DataExporter;
-import com.elfec.cobranza.model.data_exchange.DataExporter.ExportSpecs;
 import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;

@@ -1,4 +1,4 @@
-package com.elfec.cobranza.model.data_exchange;
+package com.elfec.cobranza.business_logic.data_exchange;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
