@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+import com.elfec.cobranza.view.services.ChangeDatabaseSettingsService;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
@@ -59,6 +61,21 @@ public class Login extends Activity implements ILoginView {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int idItem = item.getItemId();
+		switch(idItem)
+		{
+			case (R.id.menu_config_server):	{
+				new ChangeDatabaseSettingsService(this).show();
+				return true;
+			}
+			default:{
+				return true;
+			}
+		}
+	}
 
 	
 	@Override
@@ -79,7 +96,7 @@ public class Login extends Activity implements ILoginView {
      */
     public void setOnFocusChangedListeners()
     {
-    	Thread thread = new Thread(new Runnable() {			
+    	new Thread(new Runnable() {			
 			@Override
 			public void run() {
 				txtUsername.setOnFocusChangeListener(new OnFocusChangeListener() {		
@@ -101,8 +118,7 @@ public class Login extends Activity implements ILoginView {
 					}
 				});
 			}
-		});
-    	thread.start();
+		}).start();
     }
 	
 	

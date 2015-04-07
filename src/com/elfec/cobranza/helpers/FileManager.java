@@ -105,7 +105,8 @@ public class FileManager {
 	public static FileInputStream getFileInputStream(File file)
 	{
 		try {
-			return new FileInputStream(file);
+			if(file!=null)
+				return new FileInputStream(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -120,7 +121,8 @@ public class FileManager {
 	public static FileOutputStream getFileOutputStream(File file)
 	{
 		try {
-			return new FileOutputStream(file);
+			if(file!=null)
+				return new FileOutputStream(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

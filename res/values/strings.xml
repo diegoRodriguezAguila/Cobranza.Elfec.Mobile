@@ -34,6 +34,7 @@
     	<string name="msg_wiping_all_data">Eliminando toda la información local&#8230;</string>
 
     <!-- Dialog Buttons -->
+    <string name="btn_save">Guardar</string>
     <string name="btn_ok">Aceptar</string>
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_yes">Si</string>
@@ -140,6 +141,18 @@
 	<string name="lbl_no_paired_printers">No existen impresoras vinculadas</string>
 	<string name="lbl_no_devices_found">No se encontraron más dispositivos</string>
 	<string name="lbl_discovering_printers">Buscando dispositivos&#8230;</string>
+	
+	<!-- Change Database Settings -->
+	<string name="title_change_database_settings">CONFIGURAR SERVIDOR DE BASE DE DATOS</string>
+	<string name="btn_config_server">Configurar servidor de base de datos</string>
+	<string name="lbl_ip">Ip:</string>
+	<string name="lbl_port">Puerto:</string>
+	<string name="lbl_service">Servicio:</string>
+	<string name="lbl_role">Rol:</string>
+	<string name="lbl_role_password">Contraseña rol:</string>
+	<string name="lbl_role_password_info">Si no desea cambiar la contraseña del rol deje en blanco este campo</string>
+	<string name="msg_settings_saved_successully">Se guardó exitosamente la configuración de conexión al servidor de base
+	    de datos!</string>
 		
 	<!-- Samples -->
     <string name="sample_welcome_user">Bienvenido <b>drodriguezd</b>!</string>

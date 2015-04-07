@@ -18,6 +18,7 @@ public class ValidationRulesFactory {
 		registeredValidations.put("MinLenght", MinLenghtValidationRule.class);
 		registeredValidations.put("NotNullOrEmpty", NotNullOrEmptyValidationRule.class);
 		registeredValidations.put("Numeric", NumericValidationRule.class);
+		registeredValidations.put("IpString", IpStringValidationRule.class);
 	}
 	
 	public static IValidationRule<?> getValidationRule(String key)
