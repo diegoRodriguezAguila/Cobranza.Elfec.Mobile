@@ -8,9 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
         <TextView 
-            android:layout_width="wrap_content"
+            android:layout_width="68dp"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
             android:textSize="18sp"
@@ -18,11 +19,8 @@
             android:text="@string/lbl_ip" />
         <EditText
             android:id="@+id/txt_ip"
-            android:layout_width="wrap_content"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
-            android:ems="15"
             android:tag="NotNullOrEmpty; IpString"
             android:maxLength="15"
             android:textAppearance="@style/TextAppearance.CustomFont.EditText"
@@ -32,9 +30,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
         <TextView 
-            android:layout_width="wrap_content"
+            android:layout_width="68dp"
             android:layout_height="wrap_content" 
             android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
             android:textSize="18sp"
@@ -42,22 +41,21 @@
             android:text="@string/lbl_port"/>
         <EditText 
             android:id="@+id/txt_port"
-            android:layout_width="wrap_content"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
-			android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
             android:tag="NotNullOrEmpty"
             android:textAppearance="@style/TextAppearance.CustomFont.EditText"
             android:inputType="number"
-            android:maxLength="5"
-            android:ems="5"/>
+            android:maxLength="5"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
         <TextView 
-            android:layout_width="wrap_content"
+            android:layout_width="68dp"
             android:layout_height="wrap_content" 
             android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
             android:textSize="18sp"
@@ -65,23 +63,21 @@
             android:text="@string/lbl_service"/>
         <EditText 
             android:id="@+id/txt_service"
-            android:layout_width="wrap_content"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
             android:tag="NotNullOrEmpty"
             android:maxLength="20"
             android:textAppearance="@style/TextAppearance.CustomFont.EditText"
             android:digits="0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ.-_" 
-            android:inputType="textNoSuggestions"
-            android:ems="15"/>
+            android:inputType="textNoSuggestions"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
         <TextView 
-            android:layout_width="wrap_content"
+            android:layout_width="68dp"
             android:layout_height="wrap_content" 
             android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
             android:textSize="18sp"
@@ -89,20 +85,18 @@
             android:text="@string/lbl_role"/>
         <EditText 
             android:id="@+id/txt_role"
-            android:layout_width="wrap_content"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
             android:tag="NotNullOrEmpty"
             android:maxLength="20"
             android:textAppearance="@style/TextAppearance.CustomFont.EditText"
             android:digits="0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ.-_" 
-            android:inputType="textNoSuggestions"
-            android:ems="15"/>
+            android:inputType="textNoSuggestions"/>
     </LinearLayout>
-    <LinearLayout
+   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
         <TextView 
             android:layout_width="wrap_content"
@@ -113,19 +107,18 @@
             android:text="@string/lbl_role_password" />
         <EditText 
             android:id="@+id/txt_role_password"
-            android:layout_width="wrap_content"
+            android:layout_width="132dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
             android:textAppearance="@style/TextAppearance.CustomFont.EditText"
             android:inputType="textPassword"
             android:maxLength="15"
-            android:hint="@string/hint_password"
-            android:ems="15"/>
+            android:hint="@string/hint_password"/>
     </LinearLayout>
     
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lbl_role_password_info"
         android:textColor="@color/text_gray_color"

@@ -12,4 +12,7 @@
 	<item name="square_button_text_appererance" type="style">@style/TextAppearance.CustomFont.Light</item>
 	<item name="list_item_orientation" type="integer">0</item>
 	<item name="date_picker_scale" type="fraction">1</item>
+	<item name="database_settings_dialog_weight_1" type="fraction">0.245</item>
+    <item name="database_settings_dialog_weight_2" type="fraction">0.4</item>
+    <item name="database_settings_dialog_weight_3" type="fraction">0.46</item>
 </resources>
