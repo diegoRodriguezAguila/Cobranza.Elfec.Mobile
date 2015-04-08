@@ -3,6 +3,7 @@ package com.elfec.cobranza.model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 
@@ -26,6 +27,14 @@ import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
  */
 @Table(name = "CollectionPayments")
 public class CollectionPayment extends Model implements IExportable{
+	
+	public static final String INSERT_QUERY = "INSERT INTO COBRANZA.COBROS VALUES (%d, %d, TO_DATE('%s', 'dd/mm/yyyy'), 'TEST:%s', %d, %f, %d, %d, USER, "
+			+ "TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss'), %s, %s, %d, %s, %d, %s, %d, %d, %d, '%s', 'F', %s, 1, TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss'))";
+	
+	public static final String UPDATE_QUERY = "UPDATE COBRANZA.COBROS SET ESTADO=%d, FECHA_BAJA=%s, USUARIO_BAJA=%s, "
+			+ "NROTRANSACCION_A=%s, IDMOTIVO_ANULA=%s"
+			+ "WHERE CI=%d AND IDCBTE=%d AND ANIO=%d AND NROPER=%d";
+	
 	/**
 	 * CAJA en Oracle Número de caja
 	 */
@@ -265,6 +274,43 @@ public class CollectionPayment extends Model implements IExportable{
 				.where("ExportStatus = ?", ExportStatus.NOT_EXPORTED.toShort()).execute();
 	}
 
+	/**
+	 * Convierte esta transaccion en la consulta INSERT de Oracle
+	 * @return INSERT query
+	 */
+	public String toInsertSQL()
+	{
+		return String.format(Locale.getDefault(), INSERT_QUERY, getId(), getCashDeskNumber(),
+				getPaymentDate().toString("dd/MM/yyyy"), getUser(), getReceiptId(), 
+				getAmount().doubleValue(), getId(), getStatus(), 
+				getPaymentDate().toString("dd/MM/yyyy hh:mm:ss"), 
+				(getAnnulmentUser()==null?"NULL":"'"+getAnnulmentUser()+"'"),
+				(getAnnulmentDate()==null?"NULL":String.format("TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss')", 
+						getAnnulmentDate().toString("dd/MM/yyyy hh:mm:ss"))),
+				getTransactionNumber(), 
+				(getAnnulmentTransacNum()==0?"NULL":""+getAnnulmentTransacNum()),
+				getSupplyId(), getSupplyNumber(), getReceiptNumber(),
+				getYear(), getPeriodNumber(), getCashDeskDescription(),
+				getAnnulmentReasonId()==null?"NULL":getAnnulmentReasonId().toString(),
+				getPaymentDate().toString("dd/MM/yyyy hh:mm:ss"));
+	}
+	
+	/**
+	 * Convierte esta transaccion en la consulta UPDATE de Oracle,
+	 * se uliliza para obtener la consulta de actualización en caso de anulación
+	 * @return UPDATE query
+	 */
+	public String toUpdateSQL()
+	{
+		return String.format(Locale.getDefault(), UPDATE_QUERY, getStatus(), 
+				(getAnnulmentDate()==null?"NULL":String.format("TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss')",
+						getAnnulmentDate().toString("dd/MM/yyyy hh:mm:ss"))),
+				(getAnnulmentUser()==null?"NULL":"'"+getAnnulmentUser()+"'"),
+				(getAnnulmentTransacNum()==0?"NULL":""+getAnnulmentTransacNum()),
+				getAnnulmentReasonId()==null?"NULL":getAnnulmentReasonId().toString(),
+				getId(), getReceiptId(), getYear(), getPeriodNumber());
+	}
+	
 	//#region Getters y Setters
 
 	public int getCashDeskNumber() {

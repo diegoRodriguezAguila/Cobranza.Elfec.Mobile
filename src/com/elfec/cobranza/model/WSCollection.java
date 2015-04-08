@@ -1,6 +1,7 @@
 package com.elfec.cobranza.model;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 
@@ -18,7 +19,8 @@ import com.elfec.cobranza.model.interfaces.IExportable;
  */
 @Table(name = "WSCollections")
 public class WSCollection extends Model implements IExportable{
-	
+	public static final String INSERT_QUERY = "INSERT INTO ERP_ELFEC.COB_WS VALUES (%d, %d, 'T:%s', %d, '%s', %d, %d, %d, "
+			+ "NULL, NULL, NULL, NULL, TO_DATE('%s', 'dd/mm/yyyy'))";
 	/**
 	 * ACCION en Oracle
 	 */
@@ -74,6 +76,18 @@ public class WSCollection extends Model implements IExportable{
 		this.periodNumber = periodNumber;
 		this.paymentDate = paymentDate;
 		this.exportStatus = exportStatus.toShort();
+	}
+	
+	/**
+	 * Convierte esta transaccion en la consulta INSERT de Oracle
+	 * @return INSERT query
+	 */
+	public String toInsertSQL()
+	{
+		return String.format(Locale.getDefault(), INSERT_QUERY, getId(), getId(),
+				getAction(), getReceiptId(), getStatus(), 
+				getBankId(), getBankAccountId(), getPeriodNumber(),
+				getPaymentDate().toString("dd/MM/yyyy"));
 	}
 	
 	/**

@@ -14,9 +14,6 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
  */
 public class WSCollectionRDA {
 	
-	private static final String INSERT_QUERY = "INSERT INTO ERP_ELFEC.COB_WS VALUES (%d, %d, 'T:%s', %d, '%s', %d, %d, %d, "
-			+ "NULL, NULL, NULL, NULL, TO_DATE('%s', 'dd/mm/yyyy'))";
-	
 	/**
 	 * Inserta remotamente un ERP_ELFEC.COB_WS de oracle
 	 * @param username
@@ -28,10 +25,7 @@ public class WSCollectionRDA {
 	public static int insertWSCollection(String username, String password, WSCollection wSCollection) throws ConnectException, SQLException
 	{
 		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
-		int result = stmt.executeUpdate(String.format(INSERT_QUERY, wSCollection.getId(), wSCollection.getId(),
-				wSCollection.getAction(), wSCollection.getReceiptId(), wSCollection.getStatus(), 
-				wSCollection.getBankId(), wSCollection.getBankAccountId(), wSCollection.getPeriodNumber(),
-				wSCollection.getPaymentDate().toString("dd/MM/yyyy")));
+		int result = stmt.executeUpdate(wSCollection.toInsertSQL());
 		stmt.close();
 		return result;
 	}

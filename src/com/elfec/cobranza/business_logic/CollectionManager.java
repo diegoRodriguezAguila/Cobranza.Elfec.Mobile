@@ -11,6 +11,7 @@ import com.elfec.cobranza.business_logic.data_exchange.DataExporter;
 import com.elfec.cobranza.business_logic.data_exchange.DataExporter.ExportSpecs;
 import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.CoopReceipt;
+import com.elfec.cobranza.model.WSCollection;
 import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.exceptions.AnnulationTimeExpiredException;
@@ -61,13 +62,17 @@ public class CollectionManager {
 		DataAccessResult<Long> result = new DataAccessResult<Long>();
 		try
 		{
-			long transactionNumber = WSCollectionManager.generateWSCollection(receipt, "COBRANZA").save();
+			WSCollection transaction = WSCollectionManager.generateWSCollection(receipt, "COBRANZA");
+			long transactionNumber = transaction.save();
 			
-			result.setResult(new CollectionPayment(SessionManager.getLoggedCashdeskNumber(), DateTime.now(), 
+			CollectionPayment payment = new CollectionPayment(SessionManager.getLoggedCashdeskNumber(), DateTime.now(), 
 					SessionManager.getLoggedInUsername(), receipt.getReceiptId(), receipt.getTotalAmount(), 
 					1, transactionNumber, receipt.getSupplyId(), 
 					receipt.getSupplyNumber(), receipt.getReceiptNumber(), receipt.getYear(), 
-					receipt.getPeriodNumber(), SessionManager.getLoggedCashdeskDesc(), ExportStatus.NOT_EXPORTED).save());
+					receipt.getPeriodNumber(), SessionManager.getLoggedCashdeskDesc(), ExportStatus.NOT_EXPORTED);			
+			
+			result.setResult(payment.save());
+			CollectionBackupManager.backupCollecionAction(payment, transaction, true);
 		}
 		catch(SQLException e)
 		{ 
@@ -110,13 +115,16 @@ public class CollectionManager {
 			if(Hours.hoursBetween(payment.getPaymentDate(),DateTime.now()).getHours()>maxDif)
 				throw new AnnulationTimeExpiredException(receipt.getReceiptNumber(), receipt.getId());
 			
-			long transactionNumber = WSCollectionManager.generateWSCollection(receipt, "ANULACION_COBRANZA").save();			
+			WSCollection transaction = WSCollectionManager.generateWSCollection(receipt, "ANULACION_COBRANZA");
+			long transactionNumber = transaction.save();			
 			if(payment !=null)
 			{
 				payment.setAnnulled(SessionManager.getLoggedInUsername(), transactionNumber, annulmentReasonId);
 				payment.save();
 				receipt.clearActiveCollectionPayment();
 			}
+			CollectionBackupManager.backupCollecionAction(payment, transaction, false);
+			
 		}
 		catch(SQLException e){ 
 			result.addError(new CollectionException(receipt.getReceiptNumber()));
