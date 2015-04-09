@@ -136,7 +136,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 						}
 					}
 					if(selectedRoutes.size()>0)
-						presenter.importRoutesData(selectedRoutes);
+						presenter.starDataImportation(selectedRoutes);
 					else warnUserNotSelectedRoutes();
 				}
 		        lastClickTime = SystemClock.elapsedRealtime();

@@ -9,6 +9,7 @@ import com.elfec.cobranza.business_logic.CalculationBaseManager;
 import com.elfec.cobranza.business_logic.CategoryManager;
 import com.elfec.cobranza.business_logic.ConceptManager;
 import com.elfec.cobranza.business_logic.CoopReceiptManager;
+import com.elfec.cobranza.business_logic.DataExchangeControlManager;
 import com.elfec.cobranza.business_logic.FineBonusManager;
 import com.elfec.cobranza.business_logic.ReceiptConceptManager;
 import com.elfec.cobranza.business_logic.PrinterImagesManager;
@@ -25,6 +26,7 @@ import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
 import com.elfec.cobranza.model.events.OnImportFinished;
+import com.elfec.cobranza.model.events.OnRoutesImportConfirmed;
 import com.elfec.cobranza.model.exceptions.RouteWithNoReceiptException;
 import com.elfec.cobranza.model.interfaces.ImportCaller;
 import com.elfec.cobranza.model.interfaces.OnceRequiredDataImportCaller;
@@ -36,6 +38,7 @@ import com.elfec.cobranza.settings.PreferencesManager;
 public class ZoneRoutesPresenter {
 
 	private IZoneRoutesView view;
+	private  List<Route> selectedRoutes;
 	private String selectedRoutesString;
 	private String coopReceiptIdsString;
 	private String supplyIdsString;
@@ -71,7 +74,7 @@ public class ZoneRoutesPresenter {
 	 * Invoca a los metodos necesarios para importar la información de las rutas
 	 * @param selectedRoutes
 	 */
-	public void importRoutesData(final List<Route> selectedRoutes)
+	public void starDataImportation(final List<Route> selectedRoutes)
 	{
 		new Thread(new Runnable() {			
 			@Override
@@ -79,7 +82,8 @@ public class ZoneRoutesPresenter {
 				view.showWaiting();
 				initializeDataImport(selectedRoutes);				
 				DataAccessResult<?> result = new DataAccessResult<Boolean>();
-				result = importAllOnceRequiredData(result);				
+				result = importAllOnceRequiredData(result);	
+				DataAccessResult<Boolean> res= verifyRoutesDisponibility(result);
 				importRoutesData(result, new OnImportFinished() {					
 					@Override
 					public void importCallback(DataAccessResult<?> result) {
@@ -94,21 +98,51 @@ public class ZoneRoutesPresenter {
 						if(!hasErrors)	
 							view.successfullyImportation();
 					}
-				});				
+				});
 			}
 		}).start();
 	}
 	
 	/**
-	 * Inicializa los atributos para la importación de datos
-	 * @param selectedRoutes
+	 * Verifica la disponibilidad de ser cargadas de las rutas
 	 */
-	private void initializeDataImport(final List<Route> selectedRoutes) {
+	protected DataAccessResult<Boolean> verifyRoutesDisponibility(DataAccessResult<?> result) {
+		DataAccessResult<Boolean> funcResult = new DataAccessResult<Boolean>(true);
+		if(!result.hasErrors())
+		{
+			view.addWaitingMessage(R.string.msg_verifying_route_availability, true);
+			DataAccessResult<List<Route>> res = DataExchangeControlManager
+					.filterLockedRoutes(username, password, selectedRoutes);
+			view.showImportErrors(result.getErrors());
+			if(!res.hasErrors())
+			{
+				selectedRoutes.removeAll(res.getResult());
+				convertSelectedRoutesToString();			
+			}
+			funcResult.setResult(!res.hasErrors() && res.getResult().size()>0);
+		}
+		return funcResult;
+	}
+	
+	/**
+	 * Convierte las rutas seleccionadas a una cadena usable en consulta IN
+	 */
+	private void convertSelectedRoutesToString()
+	{
 		selectedRoutesString = ObjectListToSQL.convertToSQL(selectedRoutes, new AttributePicker<String, Route>() {
 			@Override
 			public String pickAttribute(Route route) {
 				return ""+route.getRouteRemoteId();
 			}});
+	}
+
+	/**
+	 * Inicializa los atributos para la importación de datos
+	 * @param selectedRoutes
+	 */
+	private void initializeDataImport(final List<Route> selectedRoutes) {
+		this.selectedRoutes = selectedRoutes;		
+		convertSelectedRoutesToString();
 		username = SessionManager.getLoggedInUsername();
 		cashdeskNumber = SessionManager.getLoggedCashdeskNumber();
 		User user = User.findByUserName(username);

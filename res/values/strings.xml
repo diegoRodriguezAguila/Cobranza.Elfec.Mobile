@@ -61,8 +61,9 @@
     <string name="msg_downloading_bank_accounts">Cargando cuentas de banco (BAN_CTAS)&#8230;</string>
     <string name="msg_downloading_period_bank_accounts">Cargando periodos de cuentas de banco (BAN_CTAS_PER)&#8230;</string>
     <string name="msg_downloading_annulment_reasons">Cargando motivos de anulación (MOTIVOS_ANULACION)&#8230;</string>
+    <string name="msg_verifying_route_availability">Verificando disponibilidad de rutas&#8230;</string>
     <string name="msg_downloading_coop_receipts">Cargando comprobantes (CBTES_COOP)&#8230;</string>
-     <string name="msg_downloading_supplies">Cargando suministros (SUMINISTROS)&#8230;</string>
+    <string name="msg_downloading_supplies">Cargando suministros (SUMINISTROS)&#8230;</string>
     <string name="msg_downloading_supply_status">Cargando estados suministros (SUMIN_ESTADOS)&#8230;</string>
     <string name="msg_downloading_receipt_concepts">Cargando conceptos de comprobantes (CBTES_CPTOS)&#8230;</string>
     <string name="msg_downloading_fine_bonusess">Cargando bonificaciones de multas (BONIF_MULTAS y BONIF_MULTAS_IT)&#8230;</string>

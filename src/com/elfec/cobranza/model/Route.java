@@ -21,6 +21,9 @@ public class Route extends Model {
 	
 	@Column(name = "IsLoaded")
 	private boolean isLoaded;
+	
+	@Column(name = "LockRemoteId")
+	private long lockRemoteId;
 
 	public Route() {
 		super();
@@ -66,6 +69,16 @@ public class Route extends Model {
 	public void setLoaded(boolean isLoaded) {
 		this.isLoaded = isLoaded;
 	}
+
+	public long getLockRemoteId() {
+		return lockRemoteId;
+	}
+
+	public void setLockRemoteId(long lockRemoteId) {
+		this.lockRemoteId = lockRemoteId;
+	}
+	
+	
 	
 	//#endregion
 	

@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.elfec.cobranza.settings.remote_data_access.OracleDatabaseSettings;
-
 import android.content.Context;
+
+import com.elfec.cobranza.settings.remote_data_access.OracleDatabaseSettings;
 
 /**
  * Se encarga de conectar remotamente a la base de datos oracle de la empresa
