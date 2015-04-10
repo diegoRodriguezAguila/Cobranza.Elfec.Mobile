@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.view.Menu;
 import android.view.View;
@@ -250,6 +251,11 @@ public class DataExchange extends Activity implements IDataExchangeView {
 				}
 			}
 		});
+	}
+	
+	@Override
+	public String getIMEI() {
+		return ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
 	}
 	
 	//#endregion

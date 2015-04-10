@@ -1,5 +1,7 @@
 package com.elfec.cobranza.model;
 
+import java.util.List;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -36,6 +38,16 @@ public class Route extends Model {
 		this.routeRemoteId = routeRemoteId;
 		this.description = description;
 		this.isLoaded = false;
+	}
+	
+	/**
+	 * Obtiene todas las rutas cargadas en el dipositivo
+	 * @return Lista de rutas cargadas en el dispositivo
+	 */
+	public static List<Route> getAllLoadedRoutes()
+	{
+		return new Select().from(Route.class)
+				.where("IsLoaded=1").execute();
 	}
 	
 	/**

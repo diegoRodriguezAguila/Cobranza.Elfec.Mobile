@@ -53,24 +53,6 @@ public class Login extends Activity implements ILoginView {
 		//TEST PRUPOUSES
 		txtUsername.setText("ototora");
 		txtPassword.setText("E1206");	
-		/*new Thread(new Runnable() {			
-			@Override
-			public void run() {
-				try {
-					long remoteId = DataExchangeControlRDA.registerDataImportControl("drodriguezd", "elfec2015", 
-							new DataExchangeControl(2222, "drodriguezd", DateTime.now(), getIMEI(), DataExchangeStatus.IMPORTED));
-					DataExchangeControlRDA.registerDataExportControl("drodriguezd", "elfec2015", remoteId, 
-							new DataExchangeControl("drodriguezd", DateTime.now().plusDays(2), getIMEI(), DataExchangeStatus.EXPORTED));
-					System.out.println("REMOTE ID: "+remoteId);
-				} catch (ConnectException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}).start();*/
 	}
 
 	@Override

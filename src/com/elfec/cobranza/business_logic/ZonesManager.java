@@ -9,7 +9,9 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
+import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.results.DataAccessResult;
+import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.elfec.cobranza.remote_data_access.RouteRDA;
 import com.elfec.cobranza.remote_data_access.ZoneRDA;
 
@@ -71,6 +73,44 @@ public class ZonesManager {
 			if(res.hasErrors())
 				break;
 		}
+		return result;
+	}
+	/**
+	 *  Asigna el valor de descargadas a las rutas requeridas remotamente.
+	 *  Se conecta remotamente al servidor Oracle para desbloquear las rutas
+	 * @param username
+	 * @param password
+	 * @param IMEI
+	 * @param dataExportListener
+	 * @return resultado de acceso a datos
+	 */
+	public static ManagerProcessResult setRemoteZoneRoutesUnlocked(String username, String password, 
+			String IMEI, DataExportListener exportListener)
+	{
+		if(exportListener==null)
+			exportListener = new DataExportListener() {//DUMMY Listener
+			@Override
+				public void onExporting(int exportCount, int totalElements) {}
+				@Override
+				public void onExportInitialized(int totalElements) {}				
+				@Override
+				public void onExportFinalized() {}
+			};//DUMMY Listener
+		List<Route> routes = Route.getAllLoadedRoutes();
+		int size = routes.size(), count=0;
+		exportListener.onExportInitialized(size);
+		ManagerProcessResult result = new ManagerProcessResult();
+		DataAccessResult<Void> res;
+		for(Route route : routes)
+		{
+			res = DataExchangeControlManager.unlockRoute(username, password, IMEI, route);
+			count++;
+			exportListener.onExporting(count, size);
+			result.addErrors(res.getErrors());
+			if(res.hasErrors())
+				break;
+		}
+		exportListener.onExportFinalized();
 		return result;
 	}
 	

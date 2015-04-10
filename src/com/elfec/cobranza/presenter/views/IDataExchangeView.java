@@ -15,6 +15,11 @@ public interface IDataExchangeView {
 	 */
 	public void setCashdeskNumber(int cashdeskNumber);
 	/**
+	 * Obtiene el IMEI del dispositivo
+	 * @return
+	 */
+	public String getIMEI();
+	/**
 	 * Notifica al usuario que se cerró la sesión
 	 * @param username
 	 */

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.activeandroid.ActiveAndroid;
 import com.elfec.cobranza.model.CollectionPayment;
+import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.WSCollection;
 import com.elfec.cobranza.model.exceptions.NoPaidCollectionsException;
 import com.elfec.cobranza.model.exceptions.NoPendingExportDataException;
@@ -31,7 +32,8 @@ public class DataExportManager {
 			if(CollectionPayment.getAll(CollectionPayment.class).size()==0)
 				throw new NoPaidCollectionsException();
 			if(CollectionPayment.getExportPendingCollections().size()==0 &&
-					WSCollection.getExportPendingWSCollections().size()==0)
+					WSCollection.getExportPendingWSCollections().size()==0 &&
+					Route.getAllLoadedRoutes().size()==0)
 				throw new NoPendingExportDataException();
 		} 
 		catch (NoPaidCollectionsException e) 

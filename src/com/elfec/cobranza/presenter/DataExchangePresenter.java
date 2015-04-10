@@ -5,6 +5,7 @@ import com.elfec.cobranza.business_logic.CollectionManager;
 import com.elfec.cobranza.business_logic.DataExportManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.WSCollectionManager;
+import com.elfec.cobranza.business_logic.ZonesManager;
 import com.elfec.cobranza.helpers.security.AES;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.events.DataExportListener;
@@ -63,6 +64,7 @@ public class DataExchangePresenter {
 				ManagerProcessResult result = DataExportManager.validateExportation();
 				result = exportCollectionPayments(result);
 				result = exportWSCollections(result);
+				result = unlockRemoteRoutes(result);
 				result = wipeData(result);
 				view.hideWaiting();
 				view.showExportationErrors(result.getErrors());
@@ -70,6 +72,33 @@ public class DataExchangePresenter {
 					view.processSuccessfulDataExportation(username);
 			}
 		}).start();
+	}
+
+	/**
+	 * Invoca a los metodos necesarios para desbloquear
+	 * remotamente las rutas descargadas
+	 * @param result
+	 * @return
+	 */
+	protected ManagerProcessResult unlockRemoteRoutes(
+			ManagerProcessResult result) {
+		if(!result.hasErrors())
+		{
+			result = ZonesManager.setRemoteZoneRoutesUnlocked(username, password, view.getIMEI(), new DataExportListener() {			
+				@Override
+				public void onExporting(int exportCount, int totalElements) {
+					view.updateProgress(exportCount, totalElements);
+				}			
+				@Override
+				public void onExportInitialized(int totalElements) {
+					view.updateWaiting(R.string.msg_unlocking_remote_routes, totalElements);
+				}
+				
+				@Override
+				public void onExportFinalized() {}
+			});
+		}
+		return result;
 	}
 
 	/**

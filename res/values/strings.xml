@@ -31,6 +31,7 @@
     	<string name="msg_export_validation">Validando requisitos para la exportación de datos&#8230;</string>
     	<string name="msg_uploading_collection_payments">Descargando cobros (COBROS)&#8230;</string>
     	<string name="msg_uploading_ws_collections">Descargando transacciones (COB_WS)&#8230;</string>
+    	<string name="msg_unlocking_remote_routes">Desbloqueando rutas remotamente&#8230;</string>
     	<string name="msg_wiping_all_data">Eliminando toda la información local&#8230;</string>
 
     <!-- Dialog Buttons -->

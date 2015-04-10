@@ -47,6 +47,7 @@ public class SupplyManager {
 	
 	/**
 	 * Obtiene el suministro que coincide con el nus o el numero de cuenta proporcionados, o ambos
+	 * También verifica que la ruta a la que pertenece el suministro se haya cargado
 	 * @param nus
 	 * @param accountNumber
 	 * @return Suministro que coinicida con los parámetros

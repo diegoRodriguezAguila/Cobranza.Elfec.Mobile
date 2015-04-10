@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.data_exchange.DataExchangeControl;
 import com.elfec.cobranza.model.enums.DataExchangeStatus;
+import com.elfec.cobranza.model.exceptions.UnableToChangeRouteStateException;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.DataExchangeControlRDA;
 
@@ -83,13 +84,43 @@ public class DataExchangeControlManager {
 		 try {
 			long lockRemoteId = DataExchangeControlRDA.registerDataImportControl(username, password, 
 						new DataExchangeControl(route.getRouteRemoteId(), username, DateTime.now(), IMEI, DataExchangeStatus.IMPORTED));
+			if(lockRemoteId==-1)
+				throw new UnableToChangeRouteStateException(route.getRouteRemoteId(), true);
 			route.setLockRemoteId(lockRemoteId);
 			route.save();
 		 } catch (ConnectException e) {
 			result.addError(e);
+		 } catch (SQLException e) {
+			result.addError(e);
+		 }catch(UnableToChangeRouteStateException e){
+			result.addError(e);
+		 }
+		 return result;
+	}
+	
+	/**
+	 * Desbloquea una ruta para que ningún otro dispositivo la pueda cargar
+	 * @param username
+	 * @param password
+	 * @param IMEI
+	 * @param route
+	 * @return resultado del acceso remoto a datos
+	 */
+	public static DataAccessResult<Void> unlockRoute(String username, String password, String IMEI, Route route)
+	{
+		 DataAccessResult<Void> result = new DataAccessResult<Void>(true);
+		 try {
+			 int rowInserted = DataExchangeControlRDA.registerDataExportControl(username, password, route.getLockRemoteId(), 
+						new DataExchangeControl(username, DateTime.now(), IMEI, DataExchangeStatus.EXPORTED));
+			 if(rowInserted==0)
+					throw new UnableToChangeRouteStateException(route.getRouteRemoteId(), false);
+		 } catch (ConnectException e) {
+			result.addError(e);
 		} catch (SQLException e) {
 			result.addError(e);
-		}
+		 }catch(UnableToChangeRouteStateException e){
+				result.addError(e);
+			 }
 		 return result;
 	}
 }
