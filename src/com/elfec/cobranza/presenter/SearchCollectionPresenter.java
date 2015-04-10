@@ -31,8 +31,8 @@ public class SearchCollectionPresenter {
 				public void run() {
 					view.notifySearchStarted();
 					try {
-						Supply suplly = SupplyManager.getSupplyByNUSOrAccount(nus, accountNumber);
-						view.showFoundSupply(suplly);
+						Supply supply = SupplyManager.getSupplyByNUSOrAccount(nus, accountNumber);
+						view.showFoundSupply(supply);
 					} catch (SupplyNotFoundException e) {
 						List<Exception> errors = new ArrayList<Exception>();
 						errors.add(e);

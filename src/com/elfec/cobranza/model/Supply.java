@@ -44,6 +44,9 @@ public class Supply extends Model {
 	@Column(name = "ClientAddress")
 	private String clientAddress;
 	
+	@Column(name = "RouteRemoteId")
+	private int routeRemoteId;
+	
 	/**
 	 * Las facturas relacionadas con el suministro
 	 */
@@ -54,13 +57,14 @@ public class Supply extends Model {
 	}
 
 	public Supply(int clientId, String clientName, int supplyId,
-			String supplyNumber, String clientAddress) {
+			String supplyNumber, String clientAddress, int routeRemoteId) {
 		super();
 		this.clientId = clientId;
 		this.clientName = clientName;
 		this.supplyId = supplyId;
 		this.supplyNumber = supplyNumber;
 		this.clientAddress = clientAddress;
+		this.routeRemoteId = routeRemoteId;
 	}
 	/**
 	 * Busca al suministro que coincida con alguno de los parámetros
@@ -174,6 +178,16 @@ public class Supply extends Model {
 	public void setClientAddress(String clientAddress) {
 		this.clientAddress = clientAddress;
 	}
+
+	public int getRouteRemoteId() {
+		return routeRemoteId;
+	}
+
+	public void setRouteRemoteId(int routeRemoteId) {
+		this.routeRemoteId = routeRemoteId;
+	}
+	
+	
 	
 	//#endregion
 }

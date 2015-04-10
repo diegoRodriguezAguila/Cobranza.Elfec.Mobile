@@ -3,6 +3,7 @@ package com.elfec.cobranza.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 /**
  * Almacena las rutas 
  * @author drodriguez
@@ -35,6 +36,17 @@ public class Route extends Model {
 		this.routeRemoteId = routeRemoteId;
 		this.description = description;
 		this.isLoaded = false;
+	}
+	
+	/**
+	 * Busca una ruta por su Id Remoto
+	 * @param routeRemoteId
+	 * @return la ruta encontrada o NULL
+	 */
+	public static Route findRouteByRemoteId(int routeRemoteId)
+	{
+		return new Select().from(Route.class)
+				.where("RouteRemoteId=?",routeRemoteId).executeSingle();
 	}
 
 	//#region Getters y Setters

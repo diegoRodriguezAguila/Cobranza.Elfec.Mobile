@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter;
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.CoopReceipt;
+import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.model.exceptions.SupplyNotFoundException;
 import com.elfec.cobranza.model.results.DataAccessResult;
@@ -57,9 +58,13 @@ public class SupplyManager {
 		try{nusInt = Integer.parseInt(nus);}
 		catch(NumberFormatException e){nusInt = -1;}
 		Supply foundSupply = Supply.findSupplyByNUSOrAccount(nusInt, accountNumber);
-		if(foundSupply==null)
-			throw new SupplyNotFoundException(nus, accountNumber);
-		return foundSupply;
+		if(foundSupply!=null)
+		{
+			Route loadedRoute = Route.findRouteByRemoteId(foundSupply.getRouteRemoteId());
+			if(loadedRoute!=null && loadedRoute.isLoaded())
+				return foundSupply;
+		}
+		throw new SupplyNotFoundException(nus, accountNumber);
 	}
 	/**
 	 * Obtiene las facturas pendientes de un suministro

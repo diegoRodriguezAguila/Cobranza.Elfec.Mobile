@@ -1,11 +1,7 @@
 package com.elfec.cobranza.view;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
-
-import org.joda.time.DateTime;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
@@ -24,11 +20,8 @@ import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
-import com.elfec.cobranza.model.data_exchange.DataExchangeControl;
-import com.elfec.cobranza.model.enums.DataExchangeStatus;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
-import com.elfec.cobranza.remote_data_access.DataExchangeControlRDA;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 import com.elfec.cobranza.view.services.ChangeDatabaseSettingsService;
 

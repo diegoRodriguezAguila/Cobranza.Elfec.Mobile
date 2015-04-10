@@ -39,6 +39,7 @@ public class ZoneRoutesPresenter {
 
 	private IZoneRoutesView view;
 	private  List<Route> selectedRoutes;
+	private  List<Route> lockedRoutes;
 	private String selectedRoutesString;
 	private String coopReceiptIdsString;
 	private String supplyIdsString;
@@ -83,22 +84,28 @@ public class ZoneRoutesPresenter {
 				initializeDataImport(selectedRoutes);				
 				DataAccessResult<?> result = new DataAccessResult<Boolean>();
 				result = importAllOnceRequiredData(result);	
-				DataAccessResult<Boolean> res= verifyRoutesDisponibility(result);
-				importRoutesData(result, new OnImportFinished() {					
+				final DataAccessResult<Boolean> res = verifyRoutesDisponibility(result);
+				OnRoutesImportConfirmed event = new OnRoutesImportConfirmed() {					
 					@Override
-					public void importCallback(DataAccessResult<?> result) {
-						OracleDatabaseConnector.disposeInstance();
-						boolean hasErrors = result.hasErrors();
-						if(!hasErrors)	
-						{
-							ZonesManager.setZoneRoutesLoaded(selectedRoutes);
-							loadZoneRoutes(zoneRemoteId);
-						}
-						view.hideWaiting();
-						if(!hasErrors)	
-							view.successfullyImportation();
+					public void importConfirmed() {
+						importRoutesData(res, new OnImportFinished() {					
+							@Override
+							public void importCallback(DataAccessResult<?> result) {
+								OracleDatabaseConnector.disposeInstance();
+								result = lockRoutes(result);
+								setLoadedRoutes(result.hasErrors());
+								view.hideWaiting();
+								if(!result.hasErrors())	
+									view.successfullyImportation();
+							}
+						});
 					}
-				});
+				};		
+				if(res.getResult())
+				{
+					view.warnLockedRoutes(lockedRoutes, event, selectedRoutes.size()==0);
+				}
+				else event.importConfirmed();
 			}
 		}).start();
 	}
@@ -113,6 +120,7 @@ public class ZoneRoutesPresenter {
 			view.addWaitingMessage(R.string.msg_verifying_route_availability, true);
 			DataAccessResult<List<Route>> res = DataExchangeControlManager
 					.filterLockedRoutes(username, password, selectedRoutes);
+			lockedRoutes = res.getResult();
 			view.showImportErrors(result.getErrors());
 			if(!res.hasErrors())
 			{
@@ -141,6 +149,7 @@ public class ZoneRoutesPresenter {
 	 * @param selectedRoutes
 	 */
 	private void initializeDataImport(final List<Route> selectedRoutes) {
+		lockedRoutes = null;
 		this.selectedRoutes = selectedRoutes;		
 		convertSelectedRoutesToString();
 		username = SessionManager.getLoggedInUsername();
@@ -458,5 +467,35 @@ public class ZoneRoutesPresenter {
 		DataAccessResult<?> result = caller.callImport();
 		view.deleteWaitingMessage(loadingMessageResId);
 		return result;
+	}
+
+	/**
+	 * Bloquea las rutas en el servidor
+	 * @param selectedRoutes
+	 * @param result
+	 * @param hasErrors
+	 * @return
+	 */
+	public DataAccessResult<?> lockRoutes(DataAccessResult<?> result) {
+		if(!result.hasErrors())	
+		{
+			result = ZonesManager.setRemoteZoneRoutesLocked(selectedRoutes, 
+					username, password, view.getIMEI());
+			view.showImportErrors(result.getErrors());
+		}
+		return result;
+	}
+	
+	/**
+	 * Marca las rutas localmente como cargadas
+	 * @param hasErrors
+	 */
+	public void setLoadedRoutes(boolean hasErrors)
+	{
+		if(!hasErrors)	
+		{
+			ZonesManager.setZoneRoutesLoaded(selectedRoutes);
+			loadZoneRoutes(zoneRemoteId);
+		}
 	}
 }

@@ -56,6 +56,25 @@ public class ZonesManager {
 	}
 	
 	/**
+	 * Asigna el valor de ya cargadas a las rutas requeridas remotamente.
+	 * Se conecta remotamente al servidor Oracle para bloquear las rutas
+	 * @param zoneRoutes
+	 */
+	public static DataAccessResult<Void> setRemoteZoneRoutesLocked(List<Route> zoneRoutes, String username, String password, String IMEI)
+	{
+		DataAccessResult<Void> result = new DataAccessResult<Void>(true);
+		DataAccessResult<Void> res;
+		for(Route route : zoneRoutes)
+		{
+			res = DataExchangeControlManager.lockRoute(username, password, IMEI, route);
+			result.addErrors(res.getErrors());
+			if(res.hasErrors())
+				break;
+		}
+		return result;
+	}
+	
+	/**
 	 * Asigna el valor de ya cargadas a las rutas requeridas
 	 * @param zoneRoutes
 	 */

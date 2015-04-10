@@ -10,7 +10,7 @@ public interface AttributePicker<RT, OT> {
 	/**
 	 * Obtiene un atributo especifico del objeto
 	 * @param object
-	 * @return
+	 * @return El atributo elegido del objeto
 	 */
 	public RT pickAttribute(OT object);
 }

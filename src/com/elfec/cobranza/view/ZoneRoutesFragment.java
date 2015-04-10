@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.telephony.TelephonyManager;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +25,12 @@ import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.model.Route;
+import com.elfec.cobranza.model.events.OnRoutesImportConfirmed;
 import com.elfec.cobranza.presenter.ZoneRoutesPresenter;
 import com.elfec.cobranza.presenter.views.IZoneRoutesView;
 import com.elfec.cobranza.view.adapters.RouteAdapter;
+import com.elfec.cobranza.view.services.LockedRoutesWarningService;
+import com.elfec.cobranza.view.services.LockedRoutesWarningService.OnServiceCanceled;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
@@ -284,6 +289,29 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 				}
 			}
 		});
+	}
+
+	@Override
+	public void warnLockedRoutes(final List<Route> lockedRoutes,
+			final OnRoutesImportConfirmed callback, final boolean noMoreRoutes) {
+		getActivity().runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				new LockedRoutesWarningService(getActivity(), lockedRoutes, 
+						callback, noMoreRoutes, 
+						new OnServiceCanceled() {							
+							@Override
+							public void onServiceCanceled() {
+								hideWaiting();
+							}
+						}).show();
+			}
+		});
+	}
+
+	@Override
+	public String getIMEI() {
+		return ((TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
 	}
 	
 	//#endregion

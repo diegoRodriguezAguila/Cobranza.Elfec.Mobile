@@ -31,6 +31,24 @@ public class MessageListFormatter {
 	}
 	
 	/**
+	 * Formatea una lista de objetos una lista (en cadena) en html
+	 * @param objects
+	 * @return
+	 */
+	public static <T> String fotmatHTMLStringFromObjectList(List<T> objects, AttributePicker<String, T> attributePicker)
+	{
+		StringBuilder str = new StringBuilder();
+		int size = objects.size();
+		if(size==1)
+			return str.append(attributePicker.pickAttribute(objects.get(0))).toString();
+		for (int i = 0; i < size; i++) {
+			str.append("● ").append(attributePicker.pickAttribute(objects.get(i)));
+			str.append((i<size-1?"<br/>":""));
+		}
+		return str.toString();
+	}
+	
+	/**
 	 * Formatea una lista de mensajes una lista (en cadena) en html
 	 * @param messages
 	 * @return

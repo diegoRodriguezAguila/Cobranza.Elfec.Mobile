@@ -30,13 +30,13 @@ public class SupplyRDA {
 		List<Supply> supplies = new ArrayList<Supply>();
 		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
 		ResultSet rs = stmt.executeQuery("SELECT  /*+CHOOSE*/ DISTINCT  G.IDCLIENTE, H.RAZON_SOCIAL NOMBRE, G.IDSUMINISTRO,"
-				+ "G.NROSUM, MOVILES.FCOBRA_OBTENER_DIRECCION(G.IDSUMINISTRO) AS DIRECCION "
+				+ "G.NROSUM, G.IDRUTA, MOVILES.FCOBRA_OBTENER_DIRECCION(G.IDSUMINISTRO) AS DIRECCION "
 				+ "FROM ERP_ELFEC.SUMINISTROS G, ERP_ELFEC.CLIENTES H "
 				+ "WHERE G.IDCLIENTE=H.IDCLIENTE AND G.IDSUMINISTRO IN "+supplyIds);
 		while(rs.next())
 		{
 			supplies.add(new Supply(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getInt("IDSUMINISTRO"), 
-					rs.getString("NROSUM"), rs.getString("DIRECCION")));
+					rs.getString("NROSUM"), rs.getString("DIRECCION"), rs.getInt("IDRUTA")));
 		}
 		rs.close();
 		stmt.close();
