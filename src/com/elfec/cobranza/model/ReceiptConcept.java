@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 /**
  * Almacena los CBTES_CPTOS
  * @author drodriguez
@@ -105,7 +106,14 @@ public class ReceiptConcept extends Model{
 		super();
 	}
 	
-	
+	/**
+	 * Elimina todos los CBTES_CPTOS que se encuentren en la lista de facturas provista
+	 * @param supplyIdsString lista de facturas en forma de clausula IN
+	 */
+	public static void cleanReceiptConcepts(String coopReceiptIdsString)
+	{
+		new Delete().from(ReceiptConcept.class).where("ReceiptId IN "+coopReceiptIdsString).execute();
+	}
 	
 	//#region Getters y Setters
 	

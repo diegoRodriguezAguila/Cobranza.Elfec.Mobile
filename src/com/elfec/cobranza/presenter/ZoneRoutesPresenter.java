@@ -22,7 +22,11 @@ import com.elfec.cobranza.helpers.security.AES;
 import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
 import com.elfec.cobranza.model.CoopReceipt;
+import com.elfec.cobranza.model.FineBonus;
+import com.elfec.cobranza.model.ReceiptConcept;
 import com.elfec.cobranza.model.Route;
+import com.elfec.cobranza.model.Supply;
+import com.elfec.cobranza.model.SupplyStatus;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
 import com.elfec.cobranza.model.events.OnImportFinished;
@@ -293,7 +297,8 @@ public class ZoneRoutesPresenter {
 		DataAccessResult<List<CoopReceipt>> receiptsResult = (DataAccessResult<List<CoopReceipt>>) importData(result, R.string.msg_downloading_coop_receipts,
 		new ImportCaller() {			
 			@Override
-			public DataAccessResult<?> callImport() {
+			public DataAccessResult<?> callImport() {				
+				CoopReceipt.cleanRoutesCoopReceipts(selectedRoutesString);
 				return CoopReceiptManager.importCoopReceipts(username, password, selectedRoutesString);
 			}
 		});
@@ -355,6 +360,7 @@ public class ZoneRoutesPresenter {
 				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_supplies, new ImportCaller() {		
 					@Override
 					public DataAccessResult<?> callImport() {
+						Supply.cleanSupplies(supplyIdsString.replaceAll("IDSUMINISTRO", "SupplyId"));
 						return SupplyManager.importSupplies(username, password, supplyIdsString);
 					}
 				});
@@ -376,6 +382,7 @@ public class ZoneRoutesPresenter {
 				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_supply_status, new ImportCaller() {		
 					@Override
 					public DataAccessResult<?> callImport() {
+						SupplyStatus.cleanSupplyStatuses(coopReceiptIdsString.replaceAll("IDCBTE", "ReceiptId"));
 						return SupplyStatusManager.importSupplyStatuses(username, password, coopReceiptIdsString);
 					}
 				});
@@ -397,6 +404,7 @@ public class ZoneRoutesPresenter {
 				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_receipt_concepts, new ImportCaller() {			
 					@Override
 					public DataAccessResult<?> callImport() {
+						ReceiptConcept.cleanReceiptConcepts(coopReceiptIdsString.replaceAll("IDCBTE", "ReceiptId"));
 						return ReceiptConceptManager.importCoopReceipts(username, password, coopReceiptIdsString);
 						}
 				});
@@ -418,6 +426,7 @@ public class ZoneRoutesPresenter {
 				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_fine_bonusess, new ImportCaller() {			
 					@Override
 					public DataAccessResult<?> callImport() {
+						FineBonus.cleanFineBonuses(coopReceiptIdsString.replaceAll("IDCBTE", "ReceiptId"));
 						return FineBonusManager.importFineBonuses(username, password, coopReceiptIdsString);
 					}
 				});	

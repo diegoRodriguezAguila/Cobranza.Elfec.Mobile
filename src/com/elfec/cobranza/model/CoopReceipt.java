@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 /**
  * Almacena los CBTES_COOP
@@ -300,12 +301,22 @@ public class CoopReceipt extends Model {
 					.executeSingle();
 		return collectionPayment;
 	}
+
 	/**
 	 * Limpia la variable que sirve de caché para la consulta de obtención del cobro  actual activo (estado 1)
 	 */
 	public void clearActiveCollectionPayment()
 	{
 		collectionPayment = null;
+	}
+	
+	/**
+	 * Elimina todas las facturas que pertenecen a la lista de rutas provista
+	 * @param routesString lista de rutas en forma de clausula IN
+	 */
+	public static void cleanRoutesCoopReceipts(String routesString)
+	{
+		new Delete().from(CoopReceipt.class).where("RouteId IN "+routesString).execute();
 	}
 
 	//#region Getters y Setters

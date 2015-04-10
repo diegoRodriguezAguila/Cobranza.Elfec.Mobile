@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 /**
  * De SUMIN_ESTADOS
  * @author drodriguez
@@ -138,7 +139,15 @@ public class SupplyStatus extends Model {
 		this.billedConsume = billedConsume;
 		this.deltaOutstandingConsume = deltaOutstandingConsume;
 	}
-
+	
+	/**
+	 * Elimina todos los sumin estados que se encuentren en la lista de facturas provista
+	 * @param supplyIdsString lista de facturas en forma de clausula IN
+	 */
+	public static void cleanSupplyStatuses(String coopReceiptIdsString)
+	{
+		new Delete().from(SupplyStatus.class).where("ReceiptId IN "+coopReceiptIdsString).execute();
+	}
 
 
 	//#region Getters y Setters

@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
@@ -135,6 +136,15 @@ public class Supply extends Model {
 	        		+ "WHERE r.ReceiptId = c.ReceiptId AND c.PaymentDate >= ? AND Status=1)", supplyId,
 	        		serializer.serialize(fromDate.withTimeAtStartOfDay()))
 	        		.orderBy("Year DESC, PeriodNumber DESC").execute();
+	}
+	
+	/**
+	 * Elimina todos los suministros que se encuentren en la lista provista
+	 * @param supplyIdsString lista de suministros en forma de clausula IN
+	 */
+	public static void cleanSupplies(String supplyIdsString)
+	{
+		new Delete().from(Supply.class).where("SupplyId IN "+supplyIdsString).execute();
 	}
 	
 	//#region Getters y Setters

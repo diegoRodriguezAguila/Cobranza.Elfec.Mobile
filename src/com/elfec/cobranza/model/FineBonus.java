@@ -5,9 +5,10 @@ import java.math.BigDecimal;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 
 /**
- * Almacena los BONIF_MULTAS y BONIF_MULTAS_IT
+ * Almacena las BONIF_MULTAS y BONIF_MULTAS_IT
  * @author drodriguez
  *
  */
@@ -52,6 +53,15 @@ public class FineBonus extends Model {
 		this.description = description;
 		this.amount = amount;
 		this.printArea = printArea;
+	}
+	
+	/**
+	 * Elimina todos las BONIF_MULTAS y BONIF_MULTAS_IT que se encuentren en la lista de facturas provista
+	 * @param supplyIdsString lista de facturas en forma de clausula IN
+	 */
+	public static void cleanFineBonuses(String coopReceiptIdsString)
+	{
+		new Delete().from(FineBonus.class).where("ReceiptId IN "+coopReceiptIdsString).execute();
 	}
 
 	//#region Getters y Setters
