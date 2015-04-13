@@ -30,7 +30,7 @@ public class RoleAccessManager {
 	public static DataAccessResult<Void> enableMobileCollectionRole(String username, String password)
 	{
 		DataAccessResult<Void> result = new DataAccessResult<Void>(true);
-		String errorWhileEnablingRole = "Error al activar el rol <b>MOVIL_COBRANZA</b>: ";
+		String errorWhileEnablingRole = "Error al activar el rol: ";
 		JSONObject settings;
 		try {
 			settings = OracleDatabaseSettings.getJSONConnectionSettings(PreferencesManager.getApplicationContext());

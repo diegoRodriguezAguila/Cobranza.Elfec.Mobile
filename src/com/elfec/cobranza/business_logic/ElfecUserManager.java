@@ -55,7 +55,8 @@ public class ElfecUserManager {
 	private static void validateRemoteUser(String username, String password,
 			String IMEI, DataAccessResult<User> result) {
 		result.setRemoteDataAccess(true);
-		try {
+		try { 
+			result.addErrors(RoleAccessManager.enableMobileCollectionRole(username, password).getErrors());//habilitando el rol			
 			User remoteUser = UserRDA.requestUser(username, password);
 			if(remoteUser==null || remoteUser.getStatus()!=UserStatus.ACTIVE)
 				result.addError(new UnactiveUserException(username));
