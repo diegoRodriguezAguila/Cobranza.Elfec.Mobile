@@ -30,6 +30,7 @@ public class RoleAccessManager {
 	public static DataAccessResult<Void> enableMobileCollectionRole(String username, String password)
 	{
 		DataAccessResult<Void> result = new DataAccessResult<Void>(true);
+		String errorWhileEnablingRole = "Error al activar el rol <b>MOVIL_COBRANZA</b>: ";
 		JSONObject settings;
 		try {
 			settings = OracleDatabaseSettings.getJSONConnectionSettings(PreferencesManager.getApplicationContext());
@@ -37,12 +38,12 @@ public class RoleAccessManager {
 					settings.getString(ConnectionParam.ROLE.toString()), 
 					settings.getString(ConnectionParam.PASSWORD.toString()));
 		} catch (JSONException e) {
-			result.addError(new FormatException("Los parámetros de la configuración de conexión a la base de datos tienen un formato incorrecto!"));
+			result.addError(new FormatException(errorWhileEnablingRole+"Los parámetros de la configuración de conexión a la base de datos tienen un formato incorrecto!"));
 			e.printStackTrace();
 		} catch (ConnectException e) {
-			result.addError(e);
+			result.addError(new ConnectException(errorWhileEnablingRole+e.getMessage()));
 		} catch (SQLException e) {
-			result.addError(e);
+			result.addError(new SQLException(errorWhileEnablingRole+e.getMessage()));
 		}
 		return result;
 	}
