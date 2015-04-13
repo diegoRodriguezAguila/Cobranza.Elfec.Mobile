@@ -133,6 +133,19 @@ public class OracleDatabaseConnector {
 	}
 	
 	/**
+	 * Ejecuta una consulta de tipo insert/update
+	 * @param selectQuery
+	 * @return the count of updated rows, or 0 for a statement that returns nothing
+	 * @throws SQLException 
+	 */
+	public int executeUpdate(String updateQuery) throws SQLException
+	{		
+		closeQuerier();
+		stmt = conn.createStatement();
+		return stmt.executeUpdate(updateQuery);
+	}
+	
+	/**
 	 * Elimina la instancia del conector actual
 	 */
 	public static void disposeInstance()
@@ -140,6 +153,7 @@ public class OracleDatabaseConnector {
 		try {
 			if(dbConnectorInstance!=null)
 			{
+				dbConnectorInstance.stmt.close();
 				if(!dbConnectorInstance.conn.isClosed())
 					dbConnectorInstance.conn.close();
 			}

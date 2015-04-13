@@ -2,7 +2,6 @@ package com.elfec.cobranza.remote_data_access;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
@@ -26,10 +25,8 @@ public class RoleAccessRDA {
 	 */
 	public static void enableRole(String username, String password, String rolename, String rolepassword) throws ConnectException, SQLException
 	{
-		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
-		stmt.executeUpdate("SET ROLE "+rolename+(rolepassword==null||rolepassword.isEmpty()?"":
-			(" IDENTIFIED BY \""+rolepassword+"\"")));
-		stmt.close();
+		OracleDatabaseConnector.instance(username, password).executeUpdate("SET ROLE "+rolename+(rolepassword==null||rolepassword.isEmpty()?"":
+			(" IDENTIFIED BY "+rolepassword)));
 	}
 }
                                                                                                                                             

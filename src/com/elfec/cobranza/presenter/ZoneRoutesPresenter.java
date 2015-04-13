@@ -97,9 +97,9 @@ public class ZoneRoutesPresenter {
 						importRoutesData(res, new OnImportFinished() {					
 							@Override
 							public void importCallback(DataAccessResult<?> result) {
-								OracleDatabaseConnector.disposeInstance();
 								result = lockRoutes(result);
 								setLoadedRoutes(result.hasErrors());
+								OracleDatabaseConnector.disposeInstance();
 								view.hideWaiting();
 								if(!result.hasErrors())	
 									view.successfullyImportation();
@@ -123,7 +123,7 @@ public class ZoneRoutesPresenter {
 	 * @return
 	 */
 	private DataAccessResult<?> enableRole(DataAccessResult<?> result) {
-		if(!result.hasErrors() && result.isRemoteDataAccess())
+		if(!result.hasErrors())
 		{
 			result = RoleAccessManager.enableMobileCollectionRole(username, password);
 		}

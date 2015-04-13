@@ -49,7 +49,6 @@ public class UserRDA {
 	 */
 	public static int requestUserCashDeskNumber(String username, String password, int cashierId) throws ConnectException, SQLException
 	{
-		OracleDatabaseConnector.disposeInstance();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
 				executeSelect("SELECT  /*+CHOOSE*/  CAJA FROM COBRANZA.CAJERO_CAJA "
 						+ "WHERE CAJERO="+cashierId+" AND PERFIL='OFFLINE' AND ESTADO=1");
@@ -73,7 +72,6 @@ public class UserRDA {
 	 */
 	public static String requestUserCashDeskDesc(String username, String password, int cashierId) throws ConnectException, SQLException
 	{
-		OracleDatabaseConnector.disposeInstance();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
 				executeSelect("SELECT  /*+CHOOSE*/  DESCRIPCION FROM COBRANZA.CAJERO_CAJA "
 						+ "WHERE CAJERO="+cashierId+" AND PERFIL='OFFLINE' AND ESTADO=1");
