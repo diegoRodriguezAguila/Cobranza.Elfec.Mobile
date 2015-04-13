@@ -29,6 +29,10 @@ public interface IDataExchangeView {
 	 */
 	public void showWaiting();
 	/**
+	 * Indica al usuario que debe esperar a que se eliminen los datos
+	 */
+	public void showWipingDataWait();
+	/**
 	 * Acualiza el mensaje de espera del usuario
 	 * @param strId
 	 * @param totalData
@@ -55,9 +59,19 @@ public interface IDataExchangeView {
 	 * @param errors
 	 */
 	public void showExportationErrors(List<Exception> errors);
+	/**
+	 * Muestra al usuario errores en la eliminación de todos los datos
+	 * @param errors
+	 */
+	public void showWipeAllDataErrors(List<Exception> errors);
 	
 	/**
 	 * Informa al usuario que se completó exitosamente la descarga
 	 */
-	public void processSuccessfulDataExportation(String username);
+	public void notifySuccessfulDataExportation();
+	
+	/**
+	 * Informa al usuario que se eliminaron los datos exitosamente
+	 */
+	public void notifySuccessfulDataWipe();
 }

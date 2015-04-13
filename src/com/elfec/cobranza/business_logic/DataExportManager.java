@@ -58,7 +58,6 @@ public class DataExportManager {
 			ActiveAndroid.dispose();
 			ActiveAndroid.initialize(PreferencesManager.getApplicationContext());
 			PreferencesManager.instance().wipeOnceRequiredDataPreferences();
-			SessionManager.finishSession();
 		}
 		catch(Exception e)
 		{

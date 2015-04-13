@@ -20,8 +20,16 @@
     <string name="title_activity_data_exchange">Inicio</string>
     <string name="btn_main_menu">Menú principal</string>
     <string name="lbl_main_menu_info">Presione menu principal para ingresar a las opciones de cobranza</string>
+    <string name="msg_exportation_finished_successfully">Se descargó la información al servidor exitosamente!</string>
     <string name="btn_download_data">Cargar datos</string>
     <string name="btn_upload_data">Descargar datos</string>
+    	<!-- Data Wipe -->
+	    <string name="menu_wipe_all_data">Eliminar todos los datos</string>
+	    <string name="title_wipe_all_data">ELIMINAR TODOS LOS DATOS</string>
+	    <string name="msg_wipe_all_data_confirm">Se procederá a eliminar toda la información local y se cerrará su sesión, confirme si desea continuar!</string>
+	    <string name="msg_cannot_wipe_all_data">No puede eliminar la información porque ya se realizaron cobros!</string>
+    	<string name="title_wipe_all_data_errors">ERROR EN LA ELIMINACIÓN DE DATOS</string>
+    	<string name="msg_all_data_wiped_successfully">Se eliminaron todos los datos locales exitosamente!</string>
     	<!-- Data upload -->
     	<string name="title_exportation_confirm">CONFIRMACIÓN DE DESCARGA</string>
     	<string name="msg_exportation_confirm">Se procederá a realizar la descarga de los cobros y las transacciones realizadas, 

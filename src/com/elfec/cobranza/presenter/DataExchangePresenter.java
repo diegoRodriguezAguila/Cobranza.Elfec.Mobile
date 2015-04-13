@@ -65,11 +65,14 @@ public class DataExchangePresenter {
 				result = exportCollectionPayments(result);
 				result = exportWSCollections(result);
 				result = unlockRemoteRoutes(result);
-				result = wipeData(result);
+				result = wipeAllData(result);
 				view.hideWaiting();
 				view.showExportationErrors(result.getErrors());
 				if(!result.hasErrors())
-					view.processSuccessfulDataExportation(username);
+				{
+					view.notifySuccessfulDataExportation();
+					 closeCurrentSession();
+				}
 			}
 		}).start();
 	}
@@ -150,15 +153,37 @@ public class DataExchangePresenter {
 	/**
 	 * Llama a los metodos necesarios para eliminar toda la información
 	 * @param result
-	 * @return
+	 * @return result
 	 */
-	protected ManagerProcessResult wipeData(ManagerProcessResult result) {
-		if(!result.hasErrors())
+	protected ManagerProcessResult wipeAllData(ManagerProcessResult result) {
+		if(result==null || !result.hasErrors())
 		{
 			view.updateWaiting(R.string.msg_wiping_all_data);
 			result = DataExportManager.wipeAllData();
 			OracleDatabaseConnector.disposeInstance();
 		}
 		return result;
+	}
+	
+	/**
+	 * Se utiliza en la opción de eliminación de datos
+	 * toma las acciones necesarias de la interfaz para realizarlo
+	 */
+	public void processDataWipe()
+	{
+		new Thread(new Runnable() {		
+			@Override
+			public void run() {
+				view.showWipingDataWait();
+				ManagerProcessResult result = wipeAllData(null);
+				view.hideWaiting();
+				view.showWipeAllDataErrors(result.getErrors());
+				if(!result.hasErrors())
+				{
+					view.notifySuccessfulDataWipe();
+					closeCurrentSession();
+				}
+			}
+		}).start();	
 	}
 }

@@ -8,13 +8,14 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,8 @@ import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.presenter.DataExchangePresenter;
 import com.elfec.cobranza.presenter.views.IDataExchangeView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+import com.elfec.cobranza.view.services.WipeAllDataDialogService;
+import com.elfec.cobranza.presenter.services.WipeAllDataServicePresenter.WipeConfirmationListener;
 
 public class DataExchange extends Activity implements IDataExchangeView {
 
@@ -56,8 +59,28 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.data_flow, menu);
+		getMenuInflater().inflate(R.menu.data_exchange, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int idItem = item.getItemId();
+		switch(idItem)
+		{
+			case (R.id.menu_wipe_all_data):	{
+				new WipeAllDataDialogService(this, new WipeConfirmationListener() {					
+					@Override
+					public void onWipeConfirmed() {
+						presenter.processDataWipe();
+					}
+				}).show();
+				return true;
+			}
+			default:{
+				return true;
+			}
+		}
 	}
 	
 	@Override
@@ -68,8 +91,6 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	@Override
 	public void onBackPressed() {
 		presenter.closeCurrentSession();
-	    finish();//go back to the previous Activity
-	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 	}
 	
 	@Override
@@ -142,6 +163,19 @@ public class DataExchange extends Activity implements IDataExchangeView {
 			});
 		}
 	}
+	/**
+	 * Notifica al usuario un mensaje
+	 * @param msgId
+	 */
+	public void notifyUser(final int msgId)
+	{
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				Toast.makeText(DataExchange.this, msgId, Toast.LENGTH_LONG).show();
+			}
+		});
+	}
 	
 	//#region Interface Methods
 
@@ -161,6 +195,8 @@ public class DataExchange extends Activity implements IDataExchangeView {
 			@Override
 			public void run() {
 				Toast.makeText(DataExchange.this, Html.fromHtml("Se finalizó la sesión de <b>"+username+"</b>!"), Toast.LENGTH_LONG).show();
+				finish();//go back to the previous Activity
+				overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 			}
 		});
 	}
@@ -227,16 +263,8 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	}
 
 	@Override
-	public void processSuccessfulDataExportation(final String username) {
-		runOnUiThread(new Runnable() {			
-			@Override
-			public void run() {
-				Toast.makeText(DataExchange.this, Html.fromHtml("Se descargó la información al servidor exitosamente! Se cerró "
-						+ "la sesión de <b>"+username+"</b>!"), Toast.LENGTH_LONG).show();
-				 finish();//go back to the previous Activity
-				 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
-			}
-		});
+	public void notifySuccessfulDataExportation() {
+		notifyUser(R.string.msg_exportation_finished_successfully);
 	}
 
 	@Override
@@ -256,6 +284,32 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	@Override
 	public String getIMEI() {
 		return ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+	}
+
+	@Override
+	public void showWipingDataWait() {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {		
+			waitingDialog = new ProgressDialogPro(DataExchange.this, R.style.Theme_FlavoredMaterialLight);
+			waitingDialog.setMessage(getResources().getString(R.string.msg_wiping_all_data));
+			waitingDialog.setCancelable(false);
+			waitingDialog.setIcon(R.drawable.wipe_all_data_d);
+			waitingDialog.setTitle(R.string.title_wipe_all_data);
+			waitingDialog.setCanceledOnTouchOutside(false);
+			waitingDialog.show();
+			}
+		});
+	}
+
+	@Override
+	public void showWipeAllDataErrors(List<Exception> errors) {
+		showErrors(R.string.title_wipe_all_data_errors, errors);
+	}
+
+	@Override
+	public void notifySuccessfulDataWipe() {
+		notifyUser(R.string.msg_all_data_wiped_successfully);
 	}
 	
 	//#endregion
