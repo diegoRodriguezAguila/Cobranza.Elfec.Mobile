@@ -68,7 +68,7 @@ public class OracleDatabaseConnector {
 		{
 			try {
 				if(context==null)
-					throw new IllegalStateException("Debe llamar a instance pasandole los parámetros por lo menos una vez");
+					throw new IllegalStateException("Debe llamar a instance() pasandole los parámetros por lo menos una vez");
 				else dbConnectorInstance =  new OracleDatabaseConnector(
 						OracleDatabaseSettings.getConnectionString(context), user, password);
 			} catch (ClassNotFoundException e) {

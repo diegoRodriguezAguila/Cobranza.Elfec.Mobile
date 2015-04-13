@@ -3,6 +3,7 @@ package com.elfec.cobranza.presenter;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.CollectionManager;
 import com.elfec.cobranza.business_logic.DataExportManager;
+import com.elfec.cobranza.business_logic.RoleAccessManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.WSCollectionManager;
 import com.elfec.cobranza.business_logic.ZonesManager;
@@ -62,6 +63,7 @@ public class DataExchangePresenter {
 				User user = User.findByUserName(username);
 				password = AES.decrypt(user.generateUserKey(), user.getEncryptedPassword());
 				ManagerProcessResult result = DataExportManager.validateExportation();
+				result = enableRole(result);
 				result = exportCollectionPayments(result);
 				result = exportWSCollections(result);
 				result = unlockRemoteRoutes(result);
@@ -75,6 +77,20 @@ public class DataExchangePresenter {
 				}
 			}
 		}).start();
+	}
+	
+	/**
+	 * Invoca a los metodos necesarios para habilitar el rol MOVIL_COBRANZA
+	 * @param result
+	 * @return
+	 */
+	protected ManagerProcessResult enableRole(
+			ManagerProcessResult result) {
+		if(!result.hasErrors())
+		{
+			result = RoleAccessManager.enableMobileCollectionRole(username, password);
+		}
+		return result;
 	}
 
 	/**

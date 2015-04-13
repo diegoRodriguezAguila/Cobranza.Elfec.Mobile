@@ -8,6 +8,7 @@ import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.ElfecUserManager;
 import com.elfec.cobranza.business_logic.FieldValidator;
 import com.elfec.cobranza.business_logic.ParameterSettingsImporter;
+import com.elfec.cobranza.business_logic.RoleAccessManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.ZonesManager;
 import com.elfec.cobranza.model.User;
@@ -48,6 +49,7 @@ public class LoginPresenter {
 				view.showWaiting();
 				String password = view.getPassword();
 				DataAccessResult<User> result = ElfecUserManager.validateUser(view.getUsername(), password, view.getIMEI());
+				result = enableRole(password, result);
 				result = importUserZones(password, result);
 				result = importParameterSettings(password, result);
 				view.hideWaiting();
@@ -76,6 +78,23 @@ public class LoginPresenter {
 		{
 			view.updateWaiting(R.string.msg_login_sync_param_settings);
 			result = ParameterSettingsImporter.importParameterSettings(result.getResult(), password);
+		}
+		return result;
+	}
+	
+	/**
+	 * Llama a los métodos necesarios para habilitar el rol de MOVIL_COBRANZA
+	 * @param password
+	 * @param result
+	 * @return
+	 */
+	private DataAccessResult<User> enableRole(String password,
+			DataAccessResult<User> result) {
+		if(!result.hasErrors() && result.isRemoteDataAccess())
+		{
+			result.addErrors(RoleAccessManager
+					.enableMobileCollectionRole(result.getResult().getUsername(), 
+					password).getErrors());
 		}
 		return result;
 	}

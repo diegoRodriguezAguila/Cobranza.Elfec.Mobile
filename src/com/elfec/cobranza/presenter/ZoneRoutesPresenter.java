@@ -13,6 +13,7 @@ import com.elfec.cobranza.business_logic.DataExchangeControlManager;
 import com.elfec.cobranza.business_logic.FineBonusManager;
 import com.elfec.cobranza.business_logic.ReceiptConceptManager;
 import com.elfec.cobranza.business_logic.PrinterImagesManager;
+import com.elfec.cobranza.business_logic.RoleAccessManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.SupplyCategoryTypeManager;
 import com.elfec.cobranza.business_logic.SupplyManager;
@@ -87,6 +88,7 @@ public class ZoneRoutesPresenter {
 				view.showWaiting();
 				initializeDataImport(selectedRoutes);				
 				DataAccessResult<?> result = new DataAccessResult<Boolean>();
+				result = enableRole(result);
 				result = importAllOnceRequiredData(result);	
 				final DataAccessResult<Boolean> res = verifyRoutesDisponibility(result);
 				OnRoutesImportConfirmed event = new OnRoutesImportConfirmed() {					
@@ -112,6 +114,20 @@ public class ZoneRoutesPresenter {
 				else event.importConfirmed();
 			}
 		}).start();
+	}
+	
+	/**
+	 * Llama a los métodos necesarios para habilitar el rol de MOVIL_COBRANZA
+	 * @param password
+	 * @param result
+	 * @return
+	 */
+	private DataAccessResult<?> enableRole(DataAccessResult<?> result) {
+		if(!result.hasErrors() && result.isRemoteDataAccess())
+		{
+			result = RoleAccessManager.enableMobileCollectionRole(username, password);
+		}
+		return result;
 	}
 	
 	/**
