@@ -99,7 +99,7 @@ public class ReceiptConcept extends Model{
 	/**
 	 * IDCBTE Identificador unico de comprobantes
 	 */
-	@Column(name = "ReceiptId")
+	@Column(name = "ReceiptId", index=true)
 	private int receiptId;
 	
 	public ReceiptConcept() {

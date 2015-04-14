@@ -44,7 +44,7 @@ public class SupplyStatus extends Model {
 	 * 34 Cargo por Potencia Pico, 35 Cargo por Potencia Resto, 36 Cargo por Potencia  Valle, 
 	 * 44 Exceso Potencia Pico, 45  Exceso Potencia Resto, 60 Reactiva, O.S.		
 	 */
-	@Column(name = "ConceptId", notNull=true)
+	@Column(name = "ConceptId", notNull=true, index=true)
 	private int conceptId;	
 	/**
 	 * IDSUBCONCEPTO en Oracle
@@ -88,7 +88,7 @@ public class SupplyStatus extends Model {
 	/**
 	 * IDCBTE Identificador unico de Cbtes_Coop
 	 */
-	@Column(name = "ReceiptId")
+	@Column(name = "ReceiptId", index=true)
 	private int receiptId;
 	/**
 	 * IDCBTE_SIM Identificador unico de Sim_Cbtes,(Facturacion Provisoria).

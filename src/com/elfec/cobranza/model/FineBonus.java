@@ -17,7 +17,7 @@ public class FineBonus extends Model {
 	/**
 	 * IDCBTE Identificador unico de comprobantes
 	 */
-	@Column(name = "ReceiptId", notNull=true)
+	@Column(name = "ReceiptId", notNull=true, index=true)
 	private int receiptId;
 	/**
 	 * IDCONCEPTO en Oracle

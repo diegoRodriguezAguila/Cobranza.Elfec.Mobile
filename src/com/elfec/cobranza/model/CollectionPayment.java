@@ -53,7 +53,7 @@ public class CollectionPayment extends Model implements IExportable{
 	/**
 	 * IDCBTE Identificador unico de comprobantes
 	 */
-	@Column(name = "ReceiptId", notNull=true)
+	@Column(name = "ReceiptId", notNull=true, index=true)
 	private int receiptId;
 	/**
 	 * MONTO en Oracle
@@ -63,7 +63,7 @@ public class CollectionPayment extends Model implements IExportable{
 	/**
 	 * ESTADO 1 cobrado, 0 anulado
 	 */
-	@Column(name = "Status", notNull=true)
+	@Column(name = "Status", notNull=true, index=true)
 	private int status;	
 	/**
 	 * NROTRANSACCION en Oracle
@@ -89,7 +89,7 @@ public class CollectionPayment extends Model implements IExportable{
 	 * IDSUMINISTRO
 	 * Identificador del suministros, tabla de referencia suministros	
 	 */
-	@Column(name = "SupplyId")
+	@Column(name = "SupplyId", index=true)
 	private int supplyId;	
 	/**
 	 * NROSUM en Oracle
@@ -123,7 +123,7 @@ public class CollectionPayment extends Model implements IExportable{
 	private Integer annulmentReasonId;
 	
 	//ATRIBUTO EXTRA
-	@Column(name = "ExportStatus", notNull=true)
+	@Column(name = "ExportStatus", index=true, notNull=true)
 	private short exportStatus;
 
 	public CollectionPayment() {

@@ -14,7 +14,7 @@ public class SupplyCategoryType extends Model {
 	/**
 	 * IDTIPO_CATEG en Oracle
 	 */
-	@Column(name = "CategoryTypeId", notNull=true)
+	@Column(name = "CategoryTypeId", notNull=true, index=true)
 	private int categoryTypeId;	
 	/**
 	 * IDTIPO_SRV en Oracle

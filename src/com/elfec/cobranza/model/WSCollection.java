@@ -58,7 +58,7 @@ public class WSCollection extends Model implements IExportable{
 	private DateTime paymentDate;
 	
 	//ATRIBUTO EXTRA
-	@Column(name = "ExportStatus", notNull=true)
+	@Column(name = "ExportStatus", notNull=true, index=true)
 	private short exportStatus;
 	
 	public WSCollection() {

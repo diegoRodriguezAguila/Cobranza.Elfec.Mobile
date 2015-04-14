@@ -32,12 +32,12 @@ public class Supply extends Model {
 	 * IDSUMINISTRO
 	 * Identificador del suministros, tabla de referencia suministros	
 	 */
-	@Column(name = "SupplyId")
+	@Column(name = "SupplyId", index=true)
 	private int supplyId;		
 	/**
 	 * NROSUM en Oracle
 	 */
-	@Column(name = "SupplyNumber")
+	@Column(name = "SupplyNumber", index=true)
 	private String supplyNumber;
 	/**
 	 * DIRECCION sacada de funcion MOVILES.FCOBRA_OBTENER_DIRECCION(IDSUMINISTRO)

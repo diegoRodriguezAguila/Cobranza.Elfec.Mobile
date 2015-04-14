@@ -20,7 +20,7 @@ public class Category extends Model {
 	/**
 	 * IDCATEGORIA en Oracle
 	 */
-	@Column(name = "CategoryId", notNull=true)
+	@Column(name = "CategoryId", notNull=true, index=true)
 	private String categoryId;	
 	/**
 	 * IDTIPO_SRV en Oracle
@@ -35,7 +35,7 @@ public class Category extends Model {
 	/**
 	 * IDTIPO_CATEG en Oracle
 	 */
-	@Column(name = "CategoryTypeId", notNull=true)
+	@Column(name = "CategoryTypeId", notNull=true, index=true)
 	private int categoryTypeId;		
 	/**
 	 * CTROL_IVAS en Oracle

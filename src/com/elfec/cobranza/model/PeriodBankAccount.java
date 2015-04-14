@@ -23,12 +23,12 @@ public class PeriodBankAccount extends Model {
 	/**
 	 * IDBAN_CTA en Oracle
 	 */
-	@Column(name = "BankAccountId", notNull=true)
+	@Column(name = "BankAccountId", notNull=true, index=true)
 	private int bankAccountId;	
 	/**
 	 * NROPERIODO en Oracle
 	 */
-	@Column(name = "PeriodNumber", notNull=true)
+	@Column(name = "PeriodNumber", notNull=true, index=true)
 	private int periodNumber;	
 	/**
 	 * IDCAJERO en Oracle

@@ -17,12 +17,12 @@ public class BankAccount extends Model{
 	/**
 	 * IDBANCO en Oracle
 	 */
-	@Column(name = "BankId", notNull=true)
+	@Column(name = "BankId", notNull=true, index=true)
 	private int bankId;	
 	/**
 	 * IDBAN_CTA en Oracle
 	 */
-	@Column(name = "BankAccountId", notNull=true)
+	@Column(name = "BankAccountId", notNull=true, index=true)
 	private int bankAccountId;	
 	/**
 	 * NROCUENTA en Oracle

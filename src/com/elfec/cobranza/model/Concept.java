@@ -25,7 +25,7 @@ public class Concept extends Model {
 	/**
 	 * IDCONCEPTO en Oracle
 	 */
-	@Column(name = "ConceptId", notNull=true)
+	@Column(name = "ConceptId", notNull=true, index=true)
 	private int conceptId;	
 	/**
 	 * IDSUBCONCEPTO en Oracle
