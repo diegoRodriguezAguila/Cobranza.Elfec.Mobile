@@ -6,13 +6,17 @@ package com.elfec.cobranza.model.enums;
  */
 public enum DataExchangeStatus {
 	/**
-	 * Estado que indica que una ruta ha sido importada del servidor al teléfono
+	 * Estado que indica que una ruta ha sido importada del servidor al dispositivo
 	 */
 	IMPORTED,
 	/**
-	 * Estado que indica que una ruta ya ha sido exportada del telefono al servidor
+	 * Estado que indica que una ruta ya ha sido exportada del dispositivo al servidor
 	 */
-	EXPORTED;
+	EXPORTED,
+	/**
+	 * Estado que indica que una ruta ha sido eliminada del dispositivo
+	 */
+	DELETED;
 	/**
 	 * Obtiene el estado de carga/descarga de datos, equivalente al short provisto
 	 * @param status

@@ -9,6 +9,7 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
+import com.elfec.cobranza.model.enums.DataExchangeStatus;
 import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.model.results.ManagerProcessResult;
@@ -81,11 +82,13 @@ public class ZonesManager {
 	 * @param username
 	 * @param password
 	 * @param IMEI
-	 * @param dataExportListener
+	 * @param exportListener
+	 * @param unlockType el tipo de desbloqueo si por eliminación o descarga, no se 
+	 * puede enviar {@link DataExchangeStatus}.IMPORTED da excepción
 	 * @return resultado de acceso a datos
 	 */
 	public static ManagerProcessResult setRemoteZoneRoutesUnlocked(String username, String password, 
-			String IMEI, DataExportListener exportListener)
+			String IMEI, DataExchangeStatus unlockType, DataExportListener exportListener)
 	{
 		if(exportListener==null)
 			exportListener = new DataExportListener() {//DUMMY Listener
@@ -103,7 +106,7 @@ public class ZonesManager {
 		DataAccessResult<Void> res;
 		for(Route route : routes)
 		{
-			res = DataExchangeControlManager.unlockRoute(username, password, IMEI, route);
+			res = DataExchangeControlManager.unlockRoute(username, password, IMEI, route, unlockType);
 			count++;
 			exportListener.onExporting(count, size);
 			result.addErrors(res.getErrors());

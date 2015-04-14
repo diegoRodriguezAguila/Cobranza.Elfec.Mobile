@@ -108,23 +108,32 @@ public class DataExchangeControlManager {
 	 * @param password
 	 * @param IMEI
 	 * @param route
+	 * @param unlockType el tipo de desbloqueo si por eliminación o descarga, no se 
+	 * puede enviar {@link DataExchangeStatus}.IMPORTED da excepción
 	 * @return resultado del acceso remoto a datos
 	 */
-	public static DataAccessResult<Void> unlockRoute(String username, String password, String IMEI, Route route)
-	{
-		 DataAccessResult<Void> result = new DataAccessResult<Void>(true);
-		 try {
-			 int rowInserted = DataExchangeControlRDA.registerDataExportControl(username, password, route.getLockRemoteId(), 
-						new DataExchangeControl(username, DateTime.now(), IMEI, DataExchangeStatus.EXPORTED));
-			 if(rowInserted==0)
-					throw new UnableToChangeRouteStateException(route.getRouteRemoteId(), false);
-		 } catch (ConnectException e) {
+	public static DataAccessResult<Void> unlockRoute(String username,
+			String password, String IMEI, Route route,
+			DataExchangeStatus unlockType) {
+		DataAccessResult<Void> result = new DataAccessResult<Void>(true);
+		try {
+			if(unlockType==DataExchangeStatus.IMPORTED)
+				throw new IllegalArgumentException("No se puede pasar el parámetro de estado "
+						+ "importada (DataExchangeStatus.IMPORTED) para desbloquear remotamente una ruta");
+			int rowInserted = DataExchangeControlRDA.registerDataExportControl(
+					username, password, route.getLockRemoteId(),
+					new DataExchangeControl(username, DateTime.now(), IMEI,
+							unlockType));
+			if (rowInserted == 0)
+				throw new UnableToChangeRouteStateException(
+						route.getRouteRemoteId(), false);
+		} catch (ConnectException e) {
 			result.addError(e);
 		} catch (SQLException e) {
 			result.addError(e);
-		 }catch(UnableToChangeRouteStateException e){
-				result.addError(e);
-			 }
-		 return result;
+		} catch (UnableToChangeRouteStateException e) {
+			result.addError(e);
+		}
+		return result;
 	}
 }

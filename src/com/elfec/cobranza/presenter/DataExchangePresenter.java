@@ -9,6 +9,7 @@ import com.elfec.cobranza.business_logic.WSCollectionManager;
 import com.elfec.cobranza.business_logic.ZonesManager;
 import com.elfec.cobranza.helpers.security.AES;
 import com.elfec.cobranza.model.User;
+import com.elfec.cobranza.model.enums.DataExchangeStatus;
 import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.elfec.cobranza.presenter.views.IDataExchangeView;
@@ -66,7 +67,7 @@ public class DataExchangePresenter {
 				result = enableRole(result);
 				result = exportCollectionPayments(result);
 				result = exportWSCollections(result);
-				result = unlockRemoteRoutes(result);
+				result = unlockRemoteRoutes(result, DataExchangeStatus.EXPORTED);
 				result = wipeAllData(result);
 				view.hideWaiting();
 				view.showExportationErrors(result.getErrors());
@@ -97,13 +98,16 @@ public class DataExchangePresenter {
 	 * Invoca a los metodos necesarios para desbloquear
 	 * remotamente las rutas descargadas
 	 * @param result
-	 * @return
+	 * @param unlockType el tipo de desbloqueo si por eliminación o descarga, no se 
+	 * puede enviar {@link DataExchangeStatus}.IMPORTED da excepción
+	 * @return resultado del manejador
 	 */
 	protected ManagerProcessResult unlockRemoteRoutes(
-			ManagerProcessResult result) {
+			ManagerProcessResult result,  DataExchangeStatus unlockType) {
 		if(!result.hasErrors())
 		{
-			result = ZonesManager.setRemoteZoneRoutesUnlocked(username, password, view.getIMEI(), new DataExportListener() {			
+			result = ZonesManager.setRemoteZoneRoutesUnlocked(username, password, view.getIMEI(), 
+					unlockType, new DataExportListener() {			
 				@Override
 				public void onExporting(int exportCount, int totalElements) {
 					view.updateProgress(exportCount, totalElements);
@@ -172,7 +176,7 @@ public class DataExchangePresenter {
 	 * @return result
 	 */
 	protected ManagerProcessResult wipeAllData(ManagerProcessResult result) {
-		if(result==null || !result.hasErrors())
+		if(!result.hasErrors())
 		{
 			view.updateWaiting(R.string.msg_wiping_all_data);
 			result = DataExportManager.wipeAllData();
@@ -191,7 +195,9 @@ public class DataExchangePresenter {
 			@Override
 			public void run() {
 				view.showWipingDataWait();
-				ManagerProcessResult result = wipeAllData(null);
+				ManagerProcessResult result = new ManagerProcessResult();
+				result = unlockRemoteRoutes(result, DataExchangeStatus.DELETED);
+				result = wipeAllData(result);
 				view.hideWaiting();
 				view.showWipeAllDataErrors(result.getErrors());
 				if(!result.hasErrors())

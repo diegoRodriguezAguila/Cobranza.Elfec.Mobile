@@ -292,7 +292,7 @@ public class DataExchange extends Activity implements IDataExchangeView {
 			@Override
 			public void run() {		
 			waitingDialog = new ProgressDialogPro(DataExchange.this, R.style.Theme_FlavoredMaterialLight);
-			waitingDialog.setMessage(getResources().getString(R.string.msg_wiping_all_data));
+			waitingDialog.setMessage(getResources().getString(R.string.msg_unlocking_remote_routes));
 			waitingDialog.setCancelable(false);
 			waitingDialog.setIcon(R.drawable.wipe_all_data_d);
 			waitingDialog.setTitle(R.string.title_wipe_all_data);
