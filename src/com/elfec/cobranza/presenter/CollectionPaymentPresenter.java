@@ -74,9 +74,14 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 	private void printReceipts(final List<Long> controlCodes, final List<CoopReceipt> registeredReceipts) {
 		final OnBluetoothDevicePicked callback = new OnBluetoothDevicePicked() {			
 			@Override
-			public void bluetoothDevicePicked(DiscoveredPrinterBluetooth device) {
-				ManagerProcessResult result = CoopReceiptManager.printReceipts(controlCodes, registeredReceipts, device);
-				view.showPrintErrors(result.getErrors());
+			public void bluetoothDevicePicked(final DiscoveredPrinterBluetooth device) {
+				new Thread(new Runnable() {					
+					@Override
+					public void run() {
+						ManagerProcessResult result = CoopReceiptManager.printReceipts(controlCodes, registeredReceipts, device);
+						view.showPrintErrors(result.getErrors());
+					}
+				}).start();			
 			}
 		};
 		Runnable runnable = new Runnable() {			

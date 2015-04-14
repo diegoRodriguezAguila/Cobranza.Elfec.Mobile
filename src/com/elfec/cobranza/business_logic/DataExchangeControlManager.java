@@ -55,21 +55,25 @@ public class DataExchangeControlManager {
 	 * @param route
 	 * @return resultado
 	 */
-	public static DataAccessResult<Boolean> isRouteLocked(String username, String password, Route route)
-	{
+	public static DataAccessResult<Boolean> isRouteLocked(String username,
+			String password, Route route) {
 		DataAccessResult<Boolean> result = new DataAccessResult<Boolean>(true);
-		 try {
-			 DataExchangeControl dataExchangeControl = 
-					 DataExchangeControlRDA.requestDataExchangeControl(username, password, route.getRouteRemoteId(), DateTime.now());
-			 result.setResult(dataExchangeControl!=null);
-		 } catch (ConnectException e) {
+		try {
+			DataExchangeControl dataExchangeControl = DataExchangeControlRDA
+					.requestDataExchangeControl(username, password,
+							route.getRouteRemoteId(), DateTime.now());
+			result.setResult(dataExchangeControl != null);
+		} catch (ConnectException e) {
 			result.addError(e);
 		} catch (SQLException e) {
 			result.addError(e);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.addError(e);
 		}
-		 return result;
+		return result;
 	}
-	
+
 	/**
 	 * Bloquea una ruta para que ningún otro dispositivo la pueda cargar
 	 * @param username

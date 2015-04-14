@@ -69,7 +69,7 @@ public class MainMenuPresenter implements BluetoothStateListener {
 	 */
 	public void processDailySummaryReport()
 	{
-		view.showSingleDatePicker(CashDeskReportGenerator.REPORT_NAME, 
+		view.showSingleDatePicker(CashDeskDailyReportGenerator.REPORT_NAME, 
 				R.drawable.daily_summary_d, new DatePickListener() {				
 					@Override
 					public void onDatePicked(DateTime... dates) {
@@ -104,9 +104,14 @@ public class MainMenuPresenter implements BluetoothStateListener {
 			public void run() {
 				final OnBluetoothDevicePicked callback = new OnBluetoothDevicePicked() {			
 					@Override
-					public void bluetoothDevicePicked(DiscoveredPrinterBluetooth device) {
-						ManagerProcessResult result = ReportManager.printReport(generator, device);
-						view.showPrintErrors(result.getErrors());
+					public void bluetoothDevicePicked(final DiscoveredPrinterBluetooth device) {
+						new Thread(new Runnable() {							
+							@Override
+							public void run() {
+								ManagerProcessResult result = ReportManager.printReport(generator, device);
+								view.showPrintErrors(result.getErrors());
+							}
+						}).start();
 					}
 				};
 				Runnable runnable = new Runnable() {			
