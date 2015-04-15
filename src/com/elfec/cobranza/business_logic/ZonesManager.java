@@ -123,15 +123,20 @@ public class ZonesManager {
 	 */
 	public static void setZoneRoutesLoaded(List<Route> zoneRoutes)
 	{
-		List<CoopReceipt> routeReceipts;
 		for(Route route : zoneRoutes)
 		{
-			routeReceipts = CoopReceipt.findRouteReceipts(route.getRouteRemoteId());
-			if(routeReceipts.size()>0)
-			{
-				route.setLoaded(true);
-				route.save();
-			}
+			route.setLoaded(true);
+			route.save();
 		}
+	}
+	
+	/**
+	 * Valida si es que la ruta tiene alguna factura y por ende debe marcarse como cargada y/o bloqueada
+	 * @param route
+	 * @return true si es que la ruta tiene alguna factura
+	 */
+	public static boolean hasRouteReceipts(Route route)
+	{
+		return CoopReceipt.findRouteReceipts(route.getRouteRemoteId()).size()>0;
 	}
 }

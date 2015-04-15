@@ -45,7 +45,7 @@ public class Supply extends Model {
 	@Column(name = "ClientAddress")
 	private String clientAddress;
 	
-	@Column(name = "RouteRemoteId")
+	@Column(name = "RouteRemoteId", index=true)
 	private int routeRemoteId;
 	
 	/**
@@ -140,11 +140,11 @@ public class Supply extends Model {
 	
 	/**
 	 * Elimina todos los suministros que se encuentren en la lista provista
-	 * @param supplyIdsString lista de suministros en forma de clausula IN
+	 * @param routeIdsString lista de rutas en forma de clausula IN
 	 */
-	public static void cleanSupplies(String supplyIdsString)
+	public static void cleanSupplies(String routeIdsString)
 	{
-		new Delete().from(Supply.class).where("SupplyId IN "+supplyIdsString).execute();
+		new Delete().from(Supply.class).where("RouteRemoteId IN "+routeIdsString).execute();
 	}
 	
 	//#region Getters y Setters

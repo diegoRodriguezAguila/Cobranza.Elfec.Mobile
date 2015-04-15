@@ -1,5 +1,7 @@
 package com.elfec.cobranza.model;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.activeandroid.Model;
@@ -84,7 +86,15 @@ public class Zone extends Model {
 	public List<Route> getZoneRoutes()
 	{
 		if(zoneRoutes==null)
+		{
 			zoneRoutes = getMany(Route.class, "Zone");	
+			Collections.sort(zoneRoutes, new Comparator<Route>() {
+				@Override
+				public int compare(Route lhs, Route rhs) {
+					return Integer.valueOf(lhs.getRouteRemoteId()).compareTo(rhs.getRouteRemoteId());
+				}
+			});
+		}
 		return zoneRoutes;
 	}
 }

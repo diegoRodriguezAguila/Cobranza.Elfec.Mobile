@@ -120,18 +120,13 @@ public class DataExchangeControlManager {
 			if(unlockType==DataExchangeStatus.IMPORTED)
 				throw new IllegalArgumentException("No se puede pasar el parámetro de estado "
 						+ "importada (DataExchangeStatus.IMPORTED) para desbloquear remotamente una ruta");
-			int rowInserted = DataExchangeControlRDA.registerDataExportControl(
+			DataExchangeControlRDA.registerDataExportControl(
 					username, password, route.getLockRemoteId(),
 					new DataExchangeControl(username, DateTime.now(), IMEI,
 							unlockType));
-			if (rowInserted == 0)
-				throw new UnableToChangeRouteStateException(
-						route.getRouteRemoteId(), false);
 		} catch (ConnectException e) {
 			result.addError(e);
 		} catch (SQLException e) {
-			result.addError(e);
-		} catch (UnableToChangeRouteStateException e) {
 			result.addError(e);
 		}
 		return result;

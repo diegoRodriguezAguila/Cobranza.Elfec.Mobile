@@ -39,7 +39,7 @@ public class CollectionAnnulmentDialogPresenter {
 	public void loadReceiptInfo()
 	{
 		view.setPeriod(annulmentReceipt.getYear(), annulmentReceipt.getPeriodNumber());
-		view.setReceiptNumber(annulmentReceipt.getReceiptNumber()+"/"+annulmentReceipt.getActiveCollectionPayment().getId());
+		view.setReceiptNumber(""+annulmentReceipt.getReceiptNumber());
 	}
 	
 	/**

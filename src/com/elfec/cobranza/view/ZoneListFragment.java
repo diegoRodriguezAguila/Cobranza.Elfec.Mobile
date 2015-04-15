@@ -5,10 +5,12 @@ import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.text.Html;
 import android.view.View;
 import android.widget.ListView;
 
 import com.elfec.cobranza.R;
+import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.model.Zone;
 import com.elfec.cobranza.presenter.ZoneListPresenter;
 import com.elfec.cobranza.presenter.views.IZoneListView;
@@ -161,7 +163,10 @@ public class ZoneListFragment extends ListFragment implements IZoneListView{
 		getActivity().runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				setListAdapter(new ZoneAdapter(getActivity(), R.layout.zone_list_item, zones));
+				if(zones.size()>0)
+					setListAdapter(new ZoneAdapter(getActivity(), R.layout.zone_list_item, zones));
+				else setEmptyText(Html.fromHtml("El usuario <b>"+SessionManager.getLoggedInUsername()+"</b> no tiene ninguna zona asignada!"));
+				
 			}
 		});
 	}

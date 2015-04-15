@@ -47,7 +47,6 @@ public class ZoneRoutesPresenter {
 	private  List<Route> lockedRoutes;
 	private String selectedRoutesString;
 	private String coopReceiptIdsString;
-	private String supplyIdsString;
 	private String username;
 	private String password;
 	private int cashdeskNumber;
@@ -331,11 +330,6 @@ public class ZoneRoutesPresenter {
 				public String pickAttribute(CoopReceipt object) {
 					return ""+object.getReceiptId();
 				}});
-			supplyIdsString =  ObjectListToSQL.convertToSQL(receiptsResult.getResult(), "IDSUMINISTRO", new AttributePicker<String, CoopReceipt>(){
-				@Override
-				public String pickAttribute(CoopReceipt object) {
-					return ""+object.getSupplyId();
-				}});
 			importFinished = supplyFinished = supplyStatusFinished = receiptConceptFinished = fineBonusFinished = false;
 			OnImportFinished dataImportCallback = new OnImportFinished() {				
 				@Override
@@ -370,21 +364,20 @@ public class ZoneRoutesPresenter {
 	 * @param importCallback
 	 */
 	private void threadedImportSupplies(final OnImportFinished importCallback) {
-		Thread thread = new Thread(new Runnable() {			
+		new Thread(new Runnable() {			
 			@Override
 			public void run() {
 				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_supplies, new ImportCaller() {		
 					@Override
 					public DataAccessResult<?> callImport() {
-						Supply.cleanSupplies(supplyIdsString.replaceAll("IDSUMINISTRO", "SupplyId"));
-						return SupplyManager.importSupplies(username, password, supplyIdsString);
+						Supply.cleanSupplies(selectedRoutesString);
+						return SupplyManager.importSupplies(username, password, selectedRoutesString);
 					}
 				});
 				supplyFinished = true;
 				importCallback.importCallback(result);
 			}
-		});
-		thread.start();
+		}, "ImportSupplies").start();
 	}
 	/**
 	 * Llama a la importación de SUMIN_ESTADOS en un hilo aparte
@@ -392,7 +385,7 @@ public class ZoneRoutesPresenter {
 	 * @param importCallback
 	 */
 	private void threadedImportSupplyStatuses(final OnImportFinished importCallback) {
-		Thread thread = new Thread(new Runnable() {			
+		new Thread(new Runnable() {			
 			@Override
 			public void run() {
 				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_supply_status, new ImportCaller() {		
@@ -405,8 +398,7 @@ public class ZoneRoutesPresenter {
 				supplyStatusFinished = true;
 				importCallback.importCallback(result);
 			}
-		});
-		thread.start();
+		}, "ImportSupplyStatuses").start();
 	}
 	/**
 	 * Llama a la importación de CBTES_CPTOS en un hilo aparte
@@ -414,7 +406,7 @@ public class ZoneRoutesPresenter {
 	 * @param importCallback
 	 */
 	private void threadedImportReceiptConcepts(final OnImportFinished importCallback) {
-		Thread thread = new Thread(new Runnable() {			
+		new Thread(new Runnable() {			
 			@Override
 			public void run() {
 				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_receipt_concepts, new ImportCaller() {			
@@ -427,8 +419,7 @@ public class ZoneRoutesPresenter {
 				receiptConceptFinished = true;
 				importCallback.importCallback(result);
 			}
-		});
-		thread.start();
+		}, "ImportReceiptConcepts").start();
 	}
 	/**
 	 * Llama a la importación de BONIF_MULTAS en un hilo aparte
@@ -436,7 +427,7 @@ public class ZoneRoutesPresenter {
 	 * @param importCallback
 	 */
 	private void threadedImportFineBonuses(final OnImportFinished importCallback) {
-		Thread thread = new Thread(new Runnable() {			
+		new Thread(new Runnable() {			
 			@Override
 			public void run() {
 				DataAccessResult<?> result = threadImportData(R.string.msg_downloading_fine_bonusess, new ImportCaller() {			
@@ -449,8 +440,7 @@ public class ZoneRoutesPresenter {
 				fineBonusFinished = true;
 				importCallback.importCallback(result);
 			}
-		});
-		thread.start();
+		}, "ImportFineBonuses").start();
 	}
 
 	/**

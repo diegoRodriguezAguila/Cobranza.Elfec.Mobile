@@ -25,22 +25,20 @@ public class SupplyManager {
 	 * Importa los SUMINISTROS de oracle y los guarda
 	 * @param username
 	 * @param password
-	 * @param coopReceiptIds
-	 * @return
+	 * @param routeIds
+	 * @return resultado del acceso remoto a datos
 	 */
-	public static DataAccessResult<Boolean> importSupplies(final String username, final String password, final String supplyIds)
+	public static DataAccessResult<Boolean> importSupplies(final String username, final String password, final String routeIds)
 	{
 		return DataImporter.importData(new ImportSpecs<Supply, Boolean>() {
 			@Override
 			public List<Supply> requestData() throws ConnectException,
 					SQLException {
-				return SupplyRDA.requestSupplies(username, password, supplyIds);
+				return SupplyRDA.requestSupplies(username, password, routeIds);
 			}
 			@Override
 			public Boolean resultHandle(List<Supply> importList) {
-				if(importList==null)
-					return false;
-				return importList.size()>0;
+				return (importList==null)?false:importList.size()>0;
 			}
 		});
 	}

@@ -30,7 +30,7 @@ public class ReceiptConceptRDA {
 	{
 		List<ReceiptConcept> receiptConcepts = new ArrayList<ReceiptConcept>();
 		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
-		ResultSet rs = stmt.executeQuery("SELECT  /*+CHOOSE*/  * FROM ERP_ELFEC.CBTES_CPTOS WHERE IDCBTE IN "+coopReceiptIds);
+		ResultSet rs = stmt.executeQuery("SELECT  /*+CHOOSE*/  * FROM ERP_ELFEC.CBTES_CPTOS WHERE (IDCBTE IN "+coopReceiptIds+")");
 		while(rs.next())
 		{
 			receiptConcepts.add(new ReceiptConcept(rs.getInt("IDEMPRESA"), rs.getInt("IDSUCURSAL"), rs.getString("TIPO_CBTE"), 

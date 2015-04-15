@@ -14,6 +14,7 @@ import com.elfec.cobranza.model.results.DataAccessResult;
  *
  */
 public class DataImporter {
+	
 	/**
 	 * Importa cualquier tipo de información que debe ser importada una sola vez
 	 * @param importSource
@@ -22,9 +23,9 @@ public class DataImporter {
 	public static <T extends Model> DataAccessResult<Boolean> importOnceRequiredData(ImportSource<T> importSource)
 	{
 		DataAccessResult<Boolean> result = new DataAccessResult<Boolean>(true);
-		ActiveAndroid.beginTransaction();
 		try {
 				List<T> dataList = importSource.requestData();
+				ActiveAndroid.beginTransaction();
 				for(T data : dataList)
 				{
 					data.save();
@@ -54,9 +55,9 @@ public class DataImporter {
 	public static <T extends Model, TResult> DataAccessResult<TResult> importData(ImportSpecs<T, TResult> importSpecs)
 	{
 		DataAccessResult<TResult> result = new DataAccessResult<TResult>(true);
-		ActiveAndroid.beginTransaction();
 		try {
 				List<T> dataList = importSpecs.requestData();
+				ActiveAndroid.beginTransaction();
 				for(T data : dataList)
 				{
 					data.save();
@@ -73,6 +74,7 @@ public class DataImporter {
 			result.addError(e);
 		}
 		finally{
+			if(ActiveAndroid.inTransaction())
 			ActiveAndroid.endTransaction();
 		}
 		return result;

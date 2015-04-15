@@ -60,9 +60,7 @@ public class DataExchangePresenter {
 			@Override
 			public void run() {
 				view.showWaiting();
-				username = SessionManager.getLoggedInUsername();
-				User user = User.findByUserName(username);
-				password = AES.decrypt(user.generateUserKey(), user.getEncryptedPassword());
+				setUserAndPasswordVariables();
 				ManagerProcessResult result = DataExportManager.validateExportation();
 				result = enableRole(result);
 				result = exportCollectionPayments(result);
@@ -76,8 +74,17 @@ public class DataExchangePresenter {
 					view.notifySuccessfulDataExportation();
 					 closeCurrentSession();
 				}
-			}
+			}	
 		}).start();
+	}
+	
+	/**
+	 * Asigna las variables de usuario y password
+	 */
+	public void setUserAndPasswordVariables() {
+		username = SessionManager.getLoggedInUsername();
+		User user = User.findByUserName(username);
+		password = AES.decrypt(user.generateUserKey(), user.getEncryptedPassword());
 	}
 	
 	/**
@@ -195,7 +202,9 @@ public class DataExchangePresenter {
 			@Override
 			public void run() {
 				view.showWipingDataWait();
+				setUserAndPasswordVariables();
 				ManagerProcessResult result = new ManagerProcessResult();
+				result = enableRole(result);
 				result = unlockRemoteRoutes(result, DataExchangeStatus.DELETED);
 				result = wipeAllData(result);
 				view.hideWaiting();

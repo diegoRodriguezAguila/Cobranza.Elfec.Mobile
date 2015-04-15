@@ -30,7 +30,7 @@ public class RouteRDA {
 	{
 		List<Route> routes = new ArrayList<Route>();
 		ResultSet rs = OracleDatabaseConnector.instance(username, password).
-				executeSelect("SELECT IDRUTA, DESCRIPCION FROM ERP_ELFEC.RUTAS WHERE IDZONA="+zone.getZoneRemoteId());
+				executeSelect("SELECT IDRUTA, DESCRIPCION FROM ERP_ELFEC.RUTAS WHERE ESTADO=1 AND IDZONA="+zone.getZoneRemoteId());
 		while(rs.next())
 		{
 			routes.add(new Route(zone, rs.getInt("IDRUTA"),rs.getString("DESCRIPCION")));

@@ -1,5 +1,7 @@
 package com.elfec.cobranza.model;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -175,7 +177,14 @@ public class User extends Model{
 	 */
 	public List<Zone> getAssignedZones()
 	{
-		return getMany(Zone.class, "User");
+		List<Zone> zones = getMany(Zone.class, "User");
+		Collections.sort(zones, new Comparator<Zone>() {
+			@Override
+			public int compare(Zone lhs, Zone rhs) {
+				return Integer.valueOf(lhs.getZoneRemoteId()).compareTo(rhs.getZoneRemoteId());
+			}
+		});
+		return zones;
 	}
 	
 	/**
