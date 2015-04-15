@@ -57,14 +57,17 @@ public class ElfecUserManager {
 		result.setRemoteDataAccess(true);
 		try { 
 			result.addErrors(RoleAccessManager.enableMobileCollectionRole(username, password).getErrors());//habilitando el rol			
-			User remoteUser = UserRDA.requestUser(username, password);
-			if(remoteUser==null || remoteUser.getStatus()!=UserStatus.ACTIVE)
-				result.addError(new UnactiveUserException(username));
-			validateCashDeskNumber(username, password, result, remoteUser);
-			if(DeviceRDA.requestDeviceStatus(username, password, IMEI)==DeviceStatus.UNABLED)
-				result.addError(new UnabledDeviceException());
 			if(!result.hasErrors())
-				result.setResult(remoteUser.synchronizeUser(password));
+			{
+				User remoteUser = UserRDA.requestUser(username, password);
+				if(remoteUser==null || remoteUser.getStatus()!=UserStatus.ACTIVE)
+					result.addError(new UnactiveUserException(username));
+				validateCashDeskNumber(username, password, result, remoteUser);
+				if(DeviceRDA.requestDeviceStatus(username, password, IMEI)==DeviceStatus.UNABLED)
+					result.addError(new UnabledDeviceException());
+				if(!result.hasErrors())
+					result.setResult(remoteUser.synchronizeUser(password));
+			}		
 		} catch (ConnectException e) {
 			result.addError(e);
 		} catch (SQLException e) {

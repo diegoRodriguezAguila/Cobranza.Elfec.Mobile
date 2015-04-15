@@ -164,7 +164,9 @@ public class ZoneListFragment extends ListFragment implements IZoneListView{
 			@Override
 			public void run() {
 				if(zones.size()>0)
+				{
 					setListAdapter(new ZoneAdapter(getActivity(), R.layout.zone_list_item, zones));
+				}
 				else setEmptyText(Html.fromHtml("El usuario <b>"+SessionManager.getLoggedInUsername()+"</b> no tiene ninguna zona asignada!"));
 				
 			}

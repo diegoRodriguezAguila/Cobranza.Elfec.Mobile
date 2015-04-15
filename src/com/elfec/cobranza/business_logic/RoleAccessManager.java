@@ -41,7 +41,7 @@ public class RoleAccessManager {
 			result.addError(new FormatException(errorWhileEnablingRole+"Los parámetros de la configuración de conexión a la base de datos tienen un formato incorrecto!"));
 			e.printStackTrace();
 		} catch (ConnectException e) {
-			result.addError(new ConnectException(errorWhileEnablingRole+e.getMessage()));
+			result.addError(e);
 		} catch (SQLException e) {
 			result.addError(new SQLException(errorWhileEnablingRole+e.getMessage()));
 		}
