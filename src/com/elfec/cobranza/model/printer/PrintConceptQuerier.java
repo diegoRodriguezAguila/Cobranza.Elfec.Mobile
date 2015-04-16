@@ -30,7 +30,7 @@ public class PrintConceptQuerier {
 	public PrintConceptQuerier(int receiptId, int... printAreas)
 	{
 		this.printAreas = printAreas;
-		String query = "SELECT %1$s Description, SUM(Amount) Amount FROM (";
+		String query = "SELECT %1$s Description, ifnull(SUM(Amount), 0) Amount FROM (";
 		String groupBy = ") %2$s";
 		subQuery = new Select("A.ReceiptId,A.EnterpriseId, A.BranchOfficeId, A.ReceiptType, A.ReceiptGroup, A.ReceiptLetter,"
 				+ "A.ReceiptNumber, A.ConceptId, A.Description Desc, A.Amount, B.PrintArea, C.ClaculationBaseId, D.Description")

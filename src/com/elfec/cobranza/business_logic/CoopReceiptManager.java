@@ -1,5 +1,6 @@
 package com.elfec.cobranza.business_logic;
 
+import java.io.IOException;
 import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.List;
@@ -106,6 +107,12 @@ public class CoopReceiptManager {
 			result.addError(new SettingsException("La impresora no está configurada adecuadamente para ser utilizada por la aplicación!"));
 		} catch (ZebraIllegalArgumentException e) {
 			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+			if(e instanceof IOException)
+				result.addError(new ConnectionException("Error al conectar con la impresora, "
+					+ "asegurese de que esté encendida o que no se encuentre imprimiendo actualmente!"));
+			else result.addError(e);
 		}
 		return result;
 	}
