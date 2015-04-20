@@ -230,7 +230,7 @@ public class CollectionPayment extends Model implements IExportable{
 	 * @param startDate
 	 * @param endDate
 	 * @param cashDeskNum
-	 * @param la lista de estados que tiene que tener
+	 * @param status la lista de estados que tiene que tener
 	 * @return lista de resumenes de caja en el rango de fechas
 	 */
 	public static List<CashDeskResume> getRangedCashDeskResume(String concept, DateTime startDate, 

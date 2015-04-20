@@ -35,7 +35,6 @@ public interface IDataExchangeView {
 	/**
 	 * Acualiza el mensaje de espera del usuario
 	 * @param strId
-	 * @param totalData
 	 */
 	public void updateWaiting(int strId);
 	/**

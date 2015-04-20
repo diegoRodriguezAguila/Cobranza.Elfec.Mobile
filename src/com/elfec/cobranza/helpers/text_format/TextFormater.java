@@ -40,7 +40,6 @@ public class TextFormater {
 	 * Capitalizes one single word
 	 * @param minSize
 	 * @param result
-	 * @param words
 	 * @param word
 	 */
 	private static void capitalizeWord(int minSize, StringBuilder result, String word) {
@@ -65,8 +64,7 @@ public class TextFormater {
 	 * Convierte una cadena a su versión con la primera mayuscula y luego minúsculas para cada palabra, sin importar su tamaño
 	 * se las ignora
 	 * @param line
-	 * @param minSize
-	 * @return
+	 * @return cadena formateada
 	 */
 	public static String capitalize(String line)
 	{

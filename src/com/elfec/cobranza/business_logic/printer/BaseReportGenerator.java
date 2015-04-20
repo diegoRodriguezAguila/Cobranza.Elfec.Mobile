@@ -37,7 +37,6 @@ public abstract class BaseReportGenerator implements IReportGenerator{
 	
 	/**
 	 * Genera el comando cpcl de impresión del reporte
-	 * @param receipt
 	 * @return el comando cpcl generado
 	 */
 	@Override

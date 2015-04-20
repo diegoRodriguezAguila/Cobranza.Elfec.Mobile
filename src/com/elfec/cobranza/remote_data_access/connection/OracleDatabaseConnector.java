@@ -122,7 +122,7 @@ public class OracleDatabaseConnector {
 	/**
 	 * Ejecuta una consulta de tipo select
 	 * @param selectQuery
-	 * @return
+	 * @return ResultSet
 	 * @throws SQLException 
 	 */
 	public ResultSet executeSelect(String selectQuery) throws SQLException
@@ -134,7 +134,7 @@ public class OracleDatabaseConnector {
 	
 	/**
 	 * Ejecuta una consulta de tipo insert/update
-	 * @param selectQuery
+	 * @param updateQuery
 	 * @return the count of updated rows, or 0 for a statement that returns nothing
 	 * @throws SQLException 
 	 */

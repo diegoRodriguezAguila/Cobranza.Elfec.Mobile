@@ -57,7 +57,7 @@ public class FineBonus extends Model {
 	
 	/**
 	 * Elimina todos las BONIF_MULTAS y BONIF_MULTAS_IT que se encuentren en la lista de facturas provista
-	 * @param supplyIdsString lista de facturas en forma de clausula IN
+	 * @param coopReceiptIdsString lista de facturas en forma de clausula IN
 	 */
 	public static void cleanFineBonuses(String coopReceiptIdsString)
 	{

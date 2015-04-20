@@ -117,9 +117,8 @@ public class ZoneRoutesPresenter {
 	
 	/**
 	 * Llama a los métodos necesarios para habilitar el rol de MOVIL_COBRANZA
-	 * @param password
 	 * @param result
-	 * @return
+	 * @return Resultado del acceso a datos
 	 */
 	private DataAccessResult<?> enableRole(DataAccessResult<?> result) {
 		if(!result.hasErrors())
@@ -360,7 +359,6 @@ public class ZoneRoutesPresenter {
 
 	/**
 	 * Llama a la importación de SUMINISTROS en un hilo aparte
-	 * @param lastResult
 	 * @param importCallback
 	 */
 	private void threadedImportSupplies(final OnImportFinished importCallback) {
@@ -381,7 +379,6 @@ public class ZoneRoutesPresenter {
 	}
 	/**
 	 * Llama a la importación de SUMIN_ESTADOS en un hilo aparte
-	 * @param lastResult
 	 * @param importCallback
 	 */
 	private void threadedImportSupplyStatuses(final OnImportFinished importCallback) {
@@ -402,7 +399,6 @@ public class ZoneRoutesPresenter {
 	}
 	/**
 	 * Llama a la importación de CBTES_CPTOS en un hilo aparte
-	 * @param lastResult
 	 * @param importCallback
 	 */
 	private void threadedImportReceiptConcepts(final OnImportFinished importCallback) {
@@ -423,7 +419,6 @@ public class ZoneRoutesPresenter {
 	}
 	/**
 	 * Llama a la importación de BONIF_MULTAS en un hilo aparte
-	 * @param lastResult
 	 * @param importCallback
 	 */
 	private void threadedImportFineBonuses(final OnImportFinished importCallback) {
@@ -449,7 +444,7 @@ public class ZoneRoutesPresenter {
 	 * @param lastResult
 	 * @param loadingMessageResId
 	 * @param caller
-	 * @return
+	 * @return Resultado del acceso remoto a datos
 	 */
 	private DataAccessResult<?> importData(DataAccessResult<?> lastResult, int loadingMessageResId, ImportCaller caller)
 	{
@@ -471,7 +466,6 @@ public class ZoneRoutesPresenter {
 	
 	/**
 	 * Llama a los métodos para realizar una importación y también actualiza el mensaje de espera
-	 * @param lastResult
 	 * @param loadingMessageResId
 	 * @param caller
 	 * @return
@@ -486,10 +480,8 @@ public class ZoneRoutesPresenter {
 
 	/**
 	 * Bloquea las rutas en el servidor
-	 * @param selectedRoutes
 	 * @param result
-	 * @param hasErrors
-	 * @return
+	 * @return resultado del acceso remoto a datos
 	 */
 	public DataAccessResult<?> lockRoutes(DataAccessResult<?> result) {
 		if(!result.hasErrors())	

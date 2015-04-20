@@ -26,9 +26,8 @@ public class DataExchangeControlManager {
 	 * el resultado tiene una lista vacia de rutas.
 	 * @param username
 	 * @param password
-	 * @param IMEI
 	 * @param routes
-	 * @return Lista de rutas bloqueadas y lista de errores en caso de haber ocurrido
+	 * @return la lista de rutas
 	 */
 	public static DataAccessResult<List<Route>> filterLockedRoutes(String username, 
 			String password, List<Route> routes)
@@ -51,7 +50,6 @@ public class DataExchangeControlManager {
 	 * Verifica si es que una ruta está bloqueada de carga
 	 * @param username
 	 * @param password
-	 * @param IMEI
 	 * @param route
 	 * @return resultado
 	 */

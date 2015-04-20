@@ -20,8 +20,9 @@ public class DataExporter {
 
 	/**
 	 * Importa cualquier tipo de información que debe ser importada una sola vez
-	 * @param importSource
-	 * @return
+	 * @param exportSpecs
+	 * @param exportListener
+	 * @return Resultado del acceso remoto a datos
 	 */
 	public static <T extends Model & IExportable> DataAccessResult<Boolean> exportData(ExportSpecs<T> exportSpecs, DataExportListener exportListener)
 	{

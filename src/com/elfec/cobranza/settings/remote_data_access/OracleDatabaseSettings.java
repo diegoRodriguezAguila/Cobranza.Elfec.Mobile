@@ -123,8 +123,8 @@ public class OracleDatabaseSettings {
 	
 	/**
 	 * Obtiene una cadena de conexión a partir de una configuración json
-	 * @param jsonString
-	 * @return
+	 * @param dbSettings
+	 * @return Cadena de conexión JDBC
 	 * @throws JSONException
 	 */
 	public static String getConnectionStringFromJSON(JSONObject dbSettings) throws JSONException

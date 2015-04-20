@@ -26,10 +26,12 @@ public class AmountsCounter {
 		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
 		nf.setGroupingUsed(true);
 	}
+	
 	/**
 	 * Calcula el monto total de una lista de recibos
-	 * @param receipts
-	 * @return
+	 * @param objects
+	 * @param amountGetter
+	 * @return Monto total
 	 */
 	public static <T>BigDecimal countTotalAmount(List<T> objects, AttributePicker<BigDecimal, T> amountGetter)
 	{
@@ -44,8 +46,9 @@ public class AmountsCounter {
 	
 	/**
 	 * Calcula la cantidad total de una lista de objetos con cantidades
-	 * @param receipts
-	 * @return cantidad total
+	 * @param objects
+	 * @param quantityGetter
+	 * @return Cantidad total
 	 */
 	public static <T>int countQuantities(List<T> objects, AttributePicker<Integer, T> quantityGetter)
 	{

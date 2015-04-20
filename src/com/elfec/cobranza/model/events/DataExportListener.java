@@ -24,7 +24,6 @@ public interface DataExportListener {
 	/**
 	 * Se ejecuta el momento en que se finaliza la exportación, ya sea exitosa o fallidamente
 	 * y se esta por empezar la exportación
-	 * @param totalElements
 	 */
 	public void onExportFinalized();
 }

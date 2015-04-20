@@ -367,7 +367,7 @@ public class ReceiptGenerator {
 	/**
 	 * Wrapea la cadena del literal tomando en cuenta los 7.3 de limite que se tiene
 	 * subsecuente
-	 * @param footerMsg
+	 * @param literal
 	 * @return la cadena con lineas de salto respentando el LITERAL_WRAP_LIMIT
 	 */
 	private static String wrapLiteral(String literal)

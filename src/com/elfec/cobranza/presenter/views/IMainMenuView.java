@@ -28,8 +28,7 @@ public interface IMainMenuView {
 	public void showDateRangePicker(String title, int iconId, DatePickListener listener);
 	/**
 	 * Pide al usuario que seleccione un dispositivo bluetooth para la impresión
-	 * @param selectedReceipts
-	 * @param paymentCallback
+	 * @param callback
 	 */
 	public void showBluetoothPrintDialog(OnBluetoothDevicePicked callback);
 	/**

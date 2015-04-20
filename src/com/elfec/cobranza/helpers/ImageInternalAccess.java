@@ -40,7 +40,9 @@ public class ImageInternalAccess {
 	
 	/**
 	 * Obtiene la imagen de almacenamiento interno
-	 * @param path
+	 * @param context
+	 * @param fileName
+	 * @return El bitmap de la imagen
 	 */
 	public static Bitmap loadImageFromStorage(Context context, String fileName)
 	{
@@ -58,7 +60,9 @@ public class ImageInternalAccess {
 	
 	/**
 	 * Obtiene la imagen de la carpetaAssets
-	 * @param path
+	 * @param context
+	 * @param fileName
+	 * @return el Bitmap
 	 */
 	public static Bitmap loadImageFromAssets(Context context, String fileName)
 	{

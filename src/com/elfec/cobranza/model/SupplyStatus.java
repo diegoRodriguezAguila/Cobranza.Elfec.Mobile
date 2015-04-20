@@ -142,7 +142,7 @@ public class SupplyStatus extends Model {
 	
 	/**
 	 * Elimina todos los sumin estados que se encuentren en la lista de facturas provista
-	 * @param supplyIdsString lista de facturas en forma de clausula IN
+	 * @param coopReceiptIdsString lista de facturas en forma de clausula IN
 	 */
 	public static void cleanSupplyStatuses(String coopReceiptIdsString)
 	{

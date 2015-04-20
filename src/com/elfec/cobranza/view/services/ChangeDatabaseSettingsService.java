@@ -157,7 +157,7 @@ public class ChangeDatabaseSettingsService implements IChangeDatabaseSettingsDia
 	
 	/**
 	 * Muestra errores en el campo especificado
-	 * @param field
+	 * @param txtField
 	 * @param errors
 	 */
 	private void setFieldErrors(final TextView txtField, final List<String> errors)

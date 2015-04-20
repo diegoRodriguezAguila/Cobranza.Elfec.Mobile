@@ -81,8 +81,7 @@ public interface ICollectionActionView {
 	public void showPaymentConfirmation(List<CoopReceipt> selectedReceipts, OnPaymentConfirmedCallback paymentCallback);
 	/**
 	 * Pide al usuario que seleccione un dispositivo bluetooth para la impresión
-	 * @param selectedReceipts
-	 * @param paymentCallback
+	 * @param callback
 	 */
 	public void showBluetoothPrintDialog(OnBluetoothDevicePicked callback);
 	/**

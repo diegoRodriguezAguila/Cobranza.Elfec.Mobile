@@ -68,8 +68,7 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 	
 	/**
 	 * Invoca a los métodos necesarios para realizar la impresión de las facturas
-	 * @param controlCodes
-	 * @param RegisteredReceipts
+	 * @param registeredReceipts
 	 */
 	private void printReceipts(final List<Long> controlCodes, final List<CoopReceipt> registeredReceipts) {
 		final OnBluetoothDevicePicked callback = new OnBluetoothDevicePicked() {			

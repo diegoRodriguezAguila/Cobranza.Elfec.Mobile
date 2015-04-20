@@ -20,7 +20,7 @@ import com.elfec.cobranza.settings.ParameterSettingsManager;
 public class ParameterSettingsImporter {
 	/**
 	 * Importa la tabla de parámetros COBRANZA.COBRANZA_MOVIL_PARAM
-	 * @param username
+	 * @param user
 	 * @param password
 	 * @return resultado del acceso remoto
 	 */
