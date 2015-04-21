@@ -28,7 +28,7 @@ import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 @Table(name = "CollectionPayments")
 public class CollectionPayment extends Model implements IExportable{
 	
-	public static final String INSERT_QUERY = "INSERT INTO COBRANZA.COBROS VALUES (%d, %d, TO_DATE('%s', 'dd/mm/yyyy'), 'TEST:%s', %d, %f, %d, %d, USER, "
+	public static final String INSERT_QUERY = "INSERT INTO COBRANZA.COBROS VALUES (%d, %d, TO_DATE('%s', 'dd/mm/yyyy'), '%s', %d, %f, %d, %d, USER, "
 			+ "TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss'), %s, %s, %d, %s, %d, %s, %d, %d, %d, '%s', 'F', %s, 1, TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss'))";
 	
 	public static final String UPDATE_QUERY = "UPDATE COBRANZA.COBROS SET ESTADO=%d, FECHA_BAJA=%s, USUARIO_BAJA=%s, "

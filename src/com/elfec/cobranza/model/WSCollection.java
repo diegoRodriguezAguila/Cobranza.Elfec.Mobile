@@ -19,7 +19,7 @@ import com.elfec.cobranza.model.interfaces.IExportable;
  */
 @Table(name = "WSCollections")
 public class WSCollection extends Model implements IExportable{
-	public static final String INSERT_QUERY = "INSERT INTO ERP_ELFEC.COB_WS VALUES (%d, %d, 'T:%s', %d, '%s', %d, %d, %d, "
+	public static final String INSERT_QUERY = "INSERT INTO ERP_ELFEC.COB_WS VALUES (%d, %d, '%s', %d, '%s', %d, %d, %d, "
 			+ "NULL, NULL, NULL, NULL, TO_DATE('%s', 'dd/mm/yyyy'))";
 	/**
 	 * ACCION en Oracle
