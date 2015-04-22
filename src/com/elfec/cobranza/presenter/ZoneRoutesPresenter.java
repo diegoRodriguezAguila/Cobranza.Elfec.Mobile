@@ -124,6 +124,7 @@ public class ZoneRoutesPresenter {
 		if(!result.hasErrors())
 		{
 			result = RoleAccessManager.enableMobileCollectionRole(username, password);
+			view.showImportErrors(result.getErrors());
 		}
 		return result;
 	}
@@ -132,7 +133,9 @@ public class ZoneRoutesPresenter {
 	 * Verifica la disponibilidad de ser cargadas de las rutas
 	 */
 	protected DataAccessResult<Boolean> verifyRoutesDisponibility(DataAccessResult<?> result) {
-		DataAccessResult<Boolean> funcResult = new DataAccessResult<Boolean>(true);
+		DataAccessResult<Boolean> funcResult = new DataAccessResult<Boolean>(true)
+				.setResult(false);
+		funcResult.addErrors(result.getErrors());
 		if(!result.hasErrors())
 		{
 			view.addWaitingMessage(R.string.msg_verifying_route_availability, true);

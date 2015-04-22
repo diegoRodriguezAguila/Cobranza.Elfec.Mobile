@@ -45,6 +45,9 @@ public class RoleAccessManager {
 		} catch (SQLException e) {
 			result.addError(new SQLException(errorWhileEnablingRole+e.getMessage()));
 		}
+		catch (Exception e) {
+			result.addError(new SQLException(errorWhileEnablingRole+e.getMessage()));
+		}
 		return result;
 	}
 }

@@ -72,9 +72,9 @@ public class OracleDatabaseConnector {
 				else dbConnectorInstance =  new OracleDatabaseConnector(
 						OracleDatabaseSettings.getConnectionString(context), user, password);
 			} catch (ClassNotFoundException e) {
-				throw new ConnectException("No se pudo establecer conexión con el servidor, revise su nombre de usuario y contraseña");
+				throw new ConnectException("No se pudo establecer conexión con el servidor, revise su nombre de usuario y contraseña. ¡Asegurese que esté conectado a la red de la empresa!");
 			} catch (SQLException e) {
-				throw new ConnectException("No se pudo establecer conexión con el servidor, revise su nombre de usuario y contraseña");
+				throw new ConnectException("No se pudo establecer conexión con el servidor, revise su nombre de usuario y contraseña. ¡Asegurese que esté conectado a la red de la empresa!");
 			}
 		}
 		return dbConnectorInstance;

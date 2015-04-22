@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 /**
  * Almacena la información de la tabla COBRANZA.MOTIVOS_ANULACION
  * @author drodriguez
  *
  */
-import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Select;
 @Table(name = "AnnulmentReasons")
 public class AnnulmentReason extends Model {
 	/**
