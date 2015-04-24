@@ -181,13 +181,29 @@ public class CollectionPayment extends Model implements IExportable{
 	public static List<CollectionPayment> getValidCollectionPayments(DateTime startDate, 
 			DateTime endDate, int cashDeskNum)
 	{
+		return getCollectionPayments(1, startDate, endDate, cashDeskNum);
+	}
+	
+	/**
+	 * Obtiene todos los cobros realizados
+	 * entre las fechas proporcionadas realizadas por el cajero
+	 * @param status si se pasa -1 se omite esta condición
+	 * @param startDate fecha inicio (inclusiva)
+	 * @param endDate fecha fin (inclusiva)
+	 * @param cashDeskNum
+	 * @return lista de cobros
+	 */
+	public static List<CollectionPayment> getCollectionPayments(int status, DateTime startDate, 
+			DateTime endDate, int cashDeskNum)
+	{
 		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
-		return new Select().from(CollectionPayment.class)
-				.where("Status=1").where("CashDeskNumber = ?", cashDeskNum)
-				.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
-				.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 59, 999)))
-				.orderBy("PaymentDate")
-				.execute();
+		From query = new Select().from(CollectionPayment.class);
+		if(status!=-1)
+			query.where("Status=?", status).where("CashDeskNumber = ?", cashDeskNum);
+		query.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
+			.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 59, 999)))
+			.orderBy("PaymentDate");
+		return query.execute();
 	}
 	
 	/**
@@ -201,13 +217,7 @@ public class CollectionPayment extends Model implements IExportable{
 	public static List<CollectionPayment> getAnnuledCollectionPayments(DateTime startDate, 
 			DateTime endDate, int cashDeskNum)
 	{
-		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
-		return new Select().from(CollectionPayment.class)
-				.where("Status=0").where("CashDeskNumber = ?", cashDeskNum)
-				.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
-				.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 59, 999)))
-				.orderBy("PaymentDate")
-				.execute();
+		return getCollectionPayments(0, startDate, endDate, cashDeskNum);
 	}
 	
 	/**
