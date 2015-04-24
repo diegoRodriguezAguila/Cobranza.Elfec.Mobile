@@ -199,8 +199,9 @@ public class CollectionPayment extends Model implements IExportable{
 		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
 		From query = new Select().from(CollectionPayment.class);
 		if(status!=-1)
-			query.where("Status=?", status).where("CashDeskNumber = ?", cashDeskNum);
-		query.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
+			query.where("Status=?", status);
+		query.where("CashDeskNumber = ?", cashDeskNum)
+			.where("PaymentDate >= ?", serializer.serialize(startDate.withTimeAtStartOfDay()))
 			.where("PaymentDate <= ?", serializer.serialize(endDate.withTime(23, 59, 59, 999)))
 			.orderBy("PaymentDate");
 		return query.execute();

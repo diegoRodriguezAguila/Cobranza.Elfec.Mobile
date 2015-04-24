@@ -71,7 +71,7 @@ public abstract class BaseReportGenerator implements IReportGenerator{
 		.justify(Justify.CENTER, 10).text(5.2, receiptHeight, "Recibido por:")
 		.justify(Justify.LEFT).line(1, receiptHeight+=2.5, 4,receiptHeight, 0.02)
 		.line(6, receiptHeight, 9, receiptHeight, 0.02)
-		.text("TAHOMA6P.CPF", 0, 0.4, receiptHeight+=0.8, "FECHA: "+DateTime.now().toString("dd/MM/yyyy :ss"));
+		.text("TAHOMA6P.CPF", 0, 0.4, receiptHeight+=0.8, "FECHA: "+DateTime.now().toString("dd/MM/yyyy HH:mm:ss"));
 	}
 	
 	/**
