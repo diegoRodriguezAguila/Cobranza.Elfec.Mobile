@@ -10,6 +10,7 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.elfec.cobranza.business_logic.SupplyStatusSet;
 /**
  * Almacena los CBTES_COOP
  * @author drodriguez
@@ -200,7 +201,7 @@ public class CoopReceipt extends Model {
 	private String authorizationDescription;
 	
 	//EXTRA ATTRIBUTES
-	private SupplyStatus supplyStatus;
+	private SupplyStatusSet supplyStatusSet;
 	/**
 	 * Sirve de caché de la consulta, debe actualizarse al realizar una anulación
 	 */
@@ -265,17 +266,27 @@ public class CoopReceipt extends Model {
 		return new Select().from(CoopReceipt.class).where("RouteId=?",routeId).execute();
 	}
 	/**
-	 * Obtiene el SUMIN_ESTADOS (De consumo energia activa) de este comprobante
+	 * Obtiene la lista de SUMIN_ESTADOS (De consumo energia activa) de este comprobante
 	 * @return supplyStatus
 	 */
-	public SupplyStatus getSupplyStatus()
+	public SupplyStatusSet getSupplyStatusSet()
 	{
-		if(supplyStatus==null)
-			supplyStatus = new Select().from(SupplyStatus.class)
-							.where("ReceiptId = ?", this.receiptId)
-							.where("ConceptId IN (10010, 10080, 10090, 10100)").executeSingle();
-		return supplyStatus;
+		if(supplyStatusSet==null)
+			supplyStatusSet = new SupplyStatusSet(getRelatedSupplyStatus());
+		return supplyStatusSet;
 	}
+	
+	/**
+	 * Obtiene los SUMIN_ESTADOS de energia activa relacionados al comprobante
+	 * @return lista SUMIN_ESTADOS
+	 */
+	public List<SupplyStatus> getRelatedSupplyStatus()
+	{
+		return new Select().from(SupplyStatus.class)
+				.where("ReceiptId = ?", this.receiptId)
+				.where("ConceptId IN (10010, 10080, 10090, 10100)").execute();
+	}
+	
 	/**
 	 * Obtiene el SUMIN_ESTADOS (De consumo de potencia) de este comprobante
 	 * @return supplyStatus

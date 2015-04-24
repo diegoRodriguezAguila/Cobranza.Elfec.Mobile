@@ -105,7 +105,7 @@ public class Supply extends Model {
 			        .orderBy("Year, PeriodNumber").execute();
 		if(cacheSupplyStatus)
 			for(CoopReceipt receipt : allReceipts)
-				receipt.getSupplyStatus();
+				receipt.getSupplyStatusSet();
 		return allReceipts;
 	}
 	

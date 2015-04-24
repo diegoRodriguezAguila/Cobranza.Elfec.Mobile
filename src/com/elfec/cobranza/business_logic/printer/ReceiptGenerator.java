@@ -18,10 +18,10 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.model.SupplyStatus;
 import com.elfec.cobranza.model.printer.CPCLCommand;
-import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
 import com.elfec.cobranza.model.printer.CPCLCommand.QRQuality;
 import com.elfec.cobranza.model.printer.CPCLCommand.Unit;
+import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.settings.ParameterSettingsManager;
 import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;
 
@@ -124,9 +124,9 @@ public class ReceiptGenerator {
 	{
 		double boxStartY = receiptHeight-0.02;
 		double startY = receiptHeight+=0.15;
-		assignReceiptRightData(command, receipt, startY);
+		double extraSP = assignReceiptRightData(command, receipt, startY);
 		assignReceiptLeftData(command, receipt);
-		receiptHeight = Math.max((startY+3.8), (receiptHeight+0.15))+rcptDataExtraSpacing;
+		receiptHeight = Math.max((startY+extraSP), (receiptHeight+0.15))+rcptDataExtraSpacing;
 		command.justify(Justify.LEFT)
 		.box(0.4, boxStartY, 10.05, receiptHeight, 0.02); 
 	}
@@ -164,31 +164,55 @@ public class ReceiptGenerator {
 	 * Asigna la información de la columna derecha de la factura al 
 	 * segundo sector de la factura en el comando de la impresora
 	 * @param command
+	 * @return extraSpacing
 	 */
-	private static void assignReceiptRightData(CPCLCommand command, CoopReceipt receipt, double startY)
+	private static double assignReceiptRightData(CPCLCommand command, CoopReceipt receipt, double startY)
 	{
 		SupplyStatus powerSupplyStatus = receipt.getPowerSupplyStatus();
 		DateTime period = new DateTime(receipt.getYear(), receipt.getPeriodNumber(),1,0,0);
 		int daysPastDue = Days.daysBetween(receipt.getExpirationDate(), DateTime.now()).getDays();
+		String readings = getReadings(receipt.getSupplyStatusSet().getSupplyStatusList());
+		double extraSpacing = (readings.split("\r\n").length+8)*SP_FACTOR;
 		
 		command.justify(Justify.LEFT, 4.6)
 		.setFont("TAHOMA8P.CPF")
 		.multilineText(SP_FACTOR, 0, 5.6, startY, 
-				"CONSUMO (kWh): "+receipt.getSupplyStatus().getBilledConsume(),
+				"CONSUMO (kWh): "+receipt.getSupplyStatusSet().getBilledConsume(),
 				"POTENCIA: "+(powerSupplyStatus==null?0:powerSupplyStatus.getBilledConsume()),
 				"PERIODO: "+period.toString("MMM/yyyy").toUpperCase(Locale.getDefault()),
-				"DE: "+receipt.getSupplyStatus().getLastReadingDate().toString("dd/MM/yyyy")
-				+"  A: "+receipt.getSupplyStatus().getDate().toString("dd/MM/yyyy"),
-				"LECTURA ANTERIOR: "+receipt.getSupplyStatus().getLastReading(),
-				"LECTURA ACTUAL: "+receipt.getSupplyStatus().getReading(),
+				"DE: "+receipt.getSupplyStatusSet().getLastReadingDate().toString("dd/MM/yyyy")
+				+"  A: "+receipt.getSupplyStatusSet().getDate().toString("dd/MM/yyyy"),
+				readings,
 				"FECHA PAGO: "+(DateTime.now().toString("dd/MM/yyyy HH:mm")),
 				"VENCIMIENTO: "+receipt.getExpirationDate().toString("dd/MM/yyyy"),
 				"DIAS MOROSIDAD: "+(daysPastDue<0?0:daysPastDue),
 				"PRÓXIMA EMISIÓN: "+receipt.getIssueDate().plusDays(33).toString("dd/MM/yyyy"));
+		return extraSpacing;
 	}
 	
 	/**
-	 * Asigna los concetos y sus importes de la factura
+	 * Obtiene las lecturas anteriores y actuales de los medidores del suministro de la factura
+	 * @param supplyStatuses
+	 * @return lecturas anteriores y actuales
+	 */
+	private static String getReadings(List<SupplyStatus> supplyStatuses)
+	{
+		StringBuilder str = new StringBuilder();
+		int count = 0;
+		int size = supplyStatuses.size();
+		for (SupplyStatus supplyStatus : supplyStatuses) 
+		{
+			count++;
+			str.append("LECTURA ANTERIOR: ").append(supplyStatus.getLastReading()).append("\r\n")
+				.append("LECTURA ACTUAL: ").append(supplyStatus.getReading());
+			if(count<size)
+				str.append("\r\n");
+		}
+		return str.toString();
+	}
+	
+	/**
+	 * Asigna los conceptos y sus importes de la factura
 	 * @param command
 	 * @param receipt
 	 */

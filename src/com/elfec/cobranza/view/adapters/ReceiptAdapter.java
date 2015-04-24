@@ -69,7 +69,7 @@ public class ReceiptAdapter extends ArrayAdapter<CoopReceipt> {
 		((TextView)convertView.findViewById(R.id.txt_expiration_date)).setText(receipt.getExpirationDate().toString("dd/MM/yyyy"));
 		((TextView)convertView.findViewById(R.id.txt_receipt_number)).setText("N°: "+receipt.getReceiptNumber());
 		((TextView)convertView.findViewById(R.id.txt_category)).setText("Categoría: "+receipt.getCategoryId());
-		((TextView)convertView.findViewById(R.id.txt_consume)).setText(AmountsCounter.formatInteger(receipt.getSupplyStatus().getConsume()));
+		((TextView)convertView.findViewById(R.id.txt_consume)).setText(AmountsCounter.formatInteger(receipt.getSupplyStatusSet().getBilledConsume()));
 		return convertView;
 	}
 }
