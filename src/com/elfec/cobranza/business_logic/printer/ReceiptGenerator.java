@@ -181,7 +181,7 @@ public class ReceiptGenerator {
 				+"  A: "+receipt.getSupplyStatus().getDate().toString("dd/MM/yyyy"),
 				"LECTURA ANTERIOR: "+receipt.getSupplyStatus().getLastReading(),
 				"LECTURA ACTUAL: "+receipt.getSupplyStatus().getReading(),
-				"FECHA PAGO: "+(DateTime.now().toString("dd/MM/yyyy hh:mm")),
+				"FECHA PAGO: "+(DateTime.now().toString("dd/MM/yyyy HH:mm")),
 				"VENCIMIENTO: "+receipt.getExpirationDate().toString("dd/MM/yyyy"),
 				"DIAS MOROSIDAD: "+(daysPastDue<0?0:daysPastDue),
 				"PRÓXIMA EMISIÓN: "+receipt.getIssueDate().plusDays(33).toString("dd/MM/yyyy"));
@@ -283,13 +283,15 @@ public class ReceiptGenerator {
 		.setBold(0).setSpacing(0);
 		
 		spacing = (conceptDescs[1].split("\r\n").length)*SP_FACTOR;
+		receiptHeight+=spacing;
+		assignFineBonusConcepts(command, receipt);
+		
 		command.justify(Justify.LEFT, 6.7)
-		.multilineText(SP_FACTOR, 0, 1, receiptHeight+=spacing, conceptDescs[2])
+		.multilineText(SP_FACTOR, 0, 1, receiptHeight, conceptDescs[2])
 		.justify(Justify.RIGHT, 9)
 		.multilineText(SP_FACTOR, 0, 7.4, receiptHeight, conceptAmounts[2]);
-		
-		receiptHeight = startY+((size+totalExtraRows)*SP_FACTOR);
-		assignFineBonusConcepts(command, receipt);
+		spacing = (conceptDescs[2].split("\r\n").length)*SP_FACTOR;
+		receiptHeight = startY+((size+totalExtraRows)*SP_FACTOR)+spacing;	
 	}
 	
 	/**

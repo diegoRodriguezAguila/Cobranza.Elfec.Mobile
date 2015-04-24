@@ -146,7 +146,10 @@ public class PrinterImagesManager {
 	 */
 	public static Bitmap getHeaderImage()
 	{
-		return ImageInternalAccess.loadImageFromStorage(PreferencesManager.getApplicationContext(), HEADER_IMAGE_NAME);
+		Bitmap headerImg = ImageInternalAccess.loadImageFromStorage(PreferencesManager.getApplicationContext(), HEADER_IMAGE_NAME);
+		if(headerImg==null)
+			headerImg = ImageInternalAccess.loadImageFromAssets(PreferencesManager.getApplicationContext(), HEADER_IMAGE_NAME);
+		return headerImg;
 	}
 	
 	/**
@@ -155,7 +158,10 @@ public class PrinterImagesManager {
 	 */
 	public static Bitmap getFooterImage()
 	{
-		return ImageInternalAccess.loadImageFromStorage(PreferencesManager.getApplicationContext(), FOOTER_IMAGE_NAME);
+		Bitmap footerImg = ImageInternalAccess.loadImageFromStorage(PreferencesManager.getApplicationContext(), FOOTER_IMAGE_NAME);
+		if(footerImg==null)
+			footerImg = ImageInternalAccess.loadImageFromAssets(PreferencesManager.getApplicationContext(), FOOTER_IMAGE_NAME);
+		return footerImg;
 	}
 	
 	/**

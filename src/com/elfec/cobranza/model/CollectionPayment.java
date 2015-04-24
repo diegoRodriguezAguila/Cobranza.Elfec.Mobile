@@ -28,7 +28,7 @@ import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 @Table(name = "CollectionPayments")
 public class CollectionPayment extends Model implements IExportable{
 	
-	public static final String INSERT_QUERY = "INSERT INTO COBRANZA.COBROS VALUES (%d, %d, TO_DATE('%s', 'dd/mm/yyyy'), '%s', %d, %f, %d, %d, USER, "
+	public static final String INSERT_QUERY = "INSERT INTO COBRANZA.COBROS VALUES (%d, %d, TO_DATE('%s', 'dd/mm/yyyy'), '%s', %d, %s, %d, %d, USER, "
 			+ "TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss'), %s, %s, %d, %s, %d, %s, %d, %d, %d, '%s', 'F', %s, 1, TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss'))";
 	
 	public static final String UPDATE_QUERY = "UPDATE COBRANZA.COBROS SET ESTADO=%d, FECHA_BAJA=%s, USUARIO_BAJA=%s, "
@@ -282,17 +282,17 @@ public class CollectionPayment extends Model implements IExportable{
 	{
 		return String.format(Locale.getDefault(), INSERT_QUERY, getId(), getCashDeskNumber(),
 				getPaymentDate().toString("dd/MM/yyyy"), getUser(), getReceiptId(), 
-				getAmount().doubleValue(), getId(), getStatus(), 
-				getPaymentDate().toString("dd/MM/yyyy hh:mm:ss"), 
+				getAmount().toPlainString(), getId(), getStatus(), 
+				getPaymentDate().toString("dd/MM/yyyy HH:mm:ss"), 
 				(getAnnulmentUser()==null?"NULL":"'"+getAnnulmentUser()+"'"),
 				(getAnnulmentDate()==null?"NULL":String.format("TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss')", 
-						getAnnulmentDate().toString("dd/MM/yyyy hh:mm:ss"))),
+						getAnnulmentDate().toString("dd/MM/yyyy HH:mm:ss"))),
 				getTransactionNumber(), 
 				(getAnnulmentTransacNum()==0?"NULL":""+getAnnulmentTransacNum()),
 				getSupplyId(), getSupplyNumber(), getReceiptNumber(),
 				getYear(), getPeriodNumber(), getCashDeskDescription(),
 				getAnnulmentReasonId()==null?"NULL":getAnnulmentReasonId().toString(),
-				getPaymentDate().toString("dd/MM/yyyy hh:mm:ss"));
+				getPaymentDate().toString("dd/MM/yyyy HH:mm:ss"));
 	}
 	
 	/**
@@ -304,7 +304,7 @@ public class CollectionPayment extends Model implements IExportable{
 	{
 		return String.format(Locale.getDefault(), UPDATE_QUERY, getStatus(), 
 				(getAnnulmentDate()==null?"NULL":String.format("TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss')",
-						getAnnulmentDate().toString("dd/MM/yyyy hh:mm:ss"))),
+						getAnnulmentDate().toString("dd/MM/yyyy HH:mm:ss"))),
 				(getAnnulmentUser()==null?"NULL":"'"+getAnnulmentUser()+"'"),
 				(getAnnulmentTransacNum()==0?"NULL":""+getAnnulmentTransacNum()),
 				getAnnulmentReasonId()==null?"NULL":getAnnulmentReasonId().toString(),

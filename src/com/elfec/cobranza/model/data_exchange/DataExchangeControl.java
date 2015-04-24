@@ -62,10 +62,10 @@ public class DataExchangeControl {
 	{
 		return String.format(Locale.getDefault(), INSERT_QUERY, 666, routeRemoteId,
 				DateTime.now().getYear(), DateTime.now().getMonthOfYear(), importationUser, 
-				importationDate.toString("dd/MM/yyyy hh:mm:ss"), importationIMEI,
+				importationDate.toString("dd/MM/yyyy HH:mm:ss"), importationIMEI,
 				(exportationUser==null?"NULL":"'"+exportationUser+"'"),
 				(exportationDate==null?"NULL": String.format("TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss')", 
-						exportationDate.toString("dd/MM/yyyy hh:mm:ss"))),
+						exportationDate.toString("dd/MM/yyyy HH:mm:ss"))),
 				(exportationIMEI==null?"NULL":"'"+exportationIMEI+"'"), status);
 	}
 	
@@ -79,7 +79,7 @@ public class DataExchangeControl {
 		return String.format(Locale.getDefault(), UPDATE_QUERY,
 				(exportationUser==null?"NULL":"'"+exportationUser+"'"),
 				(exportationDate==null?"NULL": String.format("TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss')", 
-						exportationDate.toString("dd/MM/yyyy hh:mm:ss"))),
+						exportationDate.toString("dd/MM/yyyy HH:mm:ss"))),
 				(exportationIMEI==null?"NULL":"'"+exportationIMEI+"'"), status, dataExchangeControlId);
 	}
 
