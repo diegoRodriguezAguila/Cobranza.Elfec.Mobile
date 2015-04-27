@@ -13,6 +13,7 @@ import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.Category;
+import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.Concept;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
@@ -173,6 +174,7 @@ public class ReceiptGenerator {
 		int daysPastDue = Days.daysBetween(receipt.getExpirationDate(), DateTime.now()).getDays();
 		String readings = getReadings(receipt.getSupplyStatusSet().getSupplyStatusList());
 		double extraSpacing = (readings.split("\r\n").length+8)*SP_FACTOR;
+		CollectionPayment payment = receipt.getActiveCollectionPayment();
 		
 		command.justify(Justify.LEFT, 4.6)
 		.setFont("TAHOMA8P.CPF")
@@ -183,7 +185,7 @@ public class ReceiptGenerator {
 				"DE: "+receipt.getSupplyStatusSet().getLastReadingDate().toString("dd/MM/yyyy")
 				+"  A: "+receipt.getSupplyStatusSet().getDate().toString("dd/MM/yyyy"),
 				readings,
-				"FECHA PAGO: "+(DateTime.now().toString("dd/MM/yyyy HH:mm")),
+				"FECHA PAGO: "+((payment==null?DateTime.now(): payment.getPaymentDate()).toString("dd/MM/yyyy HH:mm")),
 				"VENCIMIENTO: "+receipt.getExpirationDate().toString("dd/MM/yyyy"),
 				"DIAS MOROSIDAD: "+(daysPastDue<0?0:daysPastDue),
 				"PRÓXIMA EMISIÓN: "+receipt.getIssueDate().plusDays(33).toString("dd/MM/yyyy"));
