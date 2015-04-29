@@ -383,12 +383,13 @@ public class ReceiptGenerator {
 	 * @param receipt
 	 */
 	private static void generateQR(CPCLCommand command, CoopReceipt receipt) {
+		String notSubjectToTaxCredit = AmountsCounter.formatBigDecimal(Concept
+				.getNotSubjectToTaxCreditConcept(receipt.getReceiptId()).getAmount());
 		String textToCode = ELFEC_NIT+"|"+receipt.getReceiptNumber()+"|"+
 				receipt.getAuthorizationNumber()+"|"+receipt.getIssueDate().toString("dd/MM/yyyy")+"|"+
 				AmountsCounter.formatBigDecimal(receipt.getTotalAmount())+"|"+
 				AmountsCounter.formatBigDecimal(Concept.getSubjectToTaxCreditConcept(receipt.getReceiptId()).getAmount())+"|"+
-				receipt.getControlCode()+"|"+receipt.getNIT()+"|0|0|"+
-				AmountsCounter.formatBigDecimal(Concept.getNotSubjectToTaxCreditConcept(receipt.getReceiptId()).getAmount())+"|0";
+				receipt.getControlCode()+"|"+receipt.getNIT()+"|"+notSubjectToTaxCredit+"|0|"+notSubjectToTaxCredit+"|0";
 		command.QR(5, 7.5, receiptHeight-2.5, QRQuality.M, textToCode);
 	}
 

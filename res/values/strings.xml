@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Elfec Cobranza</string>
-    <string name="app_full_name">Elfec Cobranza Móvil</string>
+    <string name="app_full_name">Elfec Cobranza Móvil v. 1.15.04.29</string>
     <string name="action_settings">Settings</string>
 
     <!-- Login -->
@@ -101,6 +101,8 @@
     	<string name="hint_nus">ej. 261724</string>
     	<string name="desc_nus">NUS del suministro</string>
     	<string name="hint_account_number">ej. 34&#8211;453&#8211;321&#8211;65</string>
+    	<string name="hint_client_name">ej. Pedro Suarez</string>
+    	<string name="hint_nit">ej. 4537563</string>
     	<string name="desc_account_number">Número de cuenta del suministro</string>
     	<string name="mask_account_number">##-###-###-##</string>
 		<string name="btn_search">Buscar</string>

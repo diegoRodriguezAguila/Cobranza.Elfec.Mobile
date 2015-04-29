@@ -44,11 +44,11 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
-	    android:textColor="@color/gray_contrast_color"
-	    android:gravity="end"
+	    android:textColor="@color/cobranza_color"
+	    android:gravity="start"
 	    android:lineSpacingExtra="-3sp"
 	    android:text="@string/lbl_select_annulment_reason"
-	    android:textSize="14sp" />
+	    android:textSize="18sp" />
 
     <Spinner
         android:id="@+id/spinner_annulment_reason"

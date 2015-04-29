@@ -1,5 +1,9 @@
 package com.elfec.cobranza.model.enums;
-
+/**
+ * Define los estados de la exportación de datos
+ * @author drodriguez
+ *
+ */
 public enum ExportStatus {
 	/**
 	 * Estado de que NO se realizó la exportación

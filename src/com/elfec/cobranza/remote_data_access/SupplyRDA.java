@@ -29,14 +29,15 @@ public class SupplyRDA {
 	{
 		List<Supply> supplies = new ArrayList<Supply>();
 		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
-		ResultSet rs = stmt.executeQuery("SELECT  /*+CHOOSE*/ G.IDCLIENTE, H.RAZON_SOCIAL NOMBRE, G.IDSUMINISTRO,"
-				+ "G.NROSUM, G.IDRUTA, MOVILES.FCOBRA_OBTENER_DIRECCION(G.IDSUMINISTRO) AS DIRECCION "
+		ResultSet rs = stmt.executeQuery("SELECT  /*+CHOOSE*/ G.IDCLIENTE, H.RAZON_SOCIAL NOMBRE, G.CUIT NIT, G.IDSUMINISTRO,"
+				+ "G.NROSUM, G.IDRUTA, MOVILES.FCOBRA_OBTENER_DIRECCION(G.IDSUMINISTRO) AS DIRECCION, G.IDSTATUS "
 				+ "FROM ERP_ELFEC.SUMINISTROS G, ERP_ELFEC.CLIENTES H "
 				+ "WHERE G.IDCLIENTE=H.IDCLIENTE AND (G.IDRUTA IN "+routeIds+")");
 		while(rs.next())
 		{
-			supplies.add(new Supply(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getInt("IDSUMINISTRO"), 
-					rs.getString("NROSUM"), rs.getString("DIRECCION"), rs.getInt("IDRUTA")));
+			supplies.add(new Supply(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("NIT"),
+					rs.getInt("IDSUMINISTRO"), rs.getString("NROSUM"), rs.getString("DIRECCION"), 
+					rs.getInt("IDRUTA"), rs.getShort("IDSTATUS")));
 		}
 		rs.close();
 		stmt.close();

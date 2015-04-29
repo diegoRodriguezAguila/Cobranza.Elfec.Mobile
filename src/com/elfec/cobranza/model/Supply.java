@@ -10,6 +10,7 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
+import com.elfec.cobranza.model.enums.EnergySupplyStatus;
 import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
 /**
  * Contiene la información del suministro, cliente y medidor
@@ -26,8 +27,13 @@ public class Supply extends Model {
 	/**
 	 * RAZON_SOCIAL en Oracle
 	 */
-	@Column(name = "ClientName")
+	@Column(name = "ClientName", index=true)
 	private String clientName;
+	/**
+	 * CUIT en Oracle
+	 */
+	@Column(name = "ClientNIT", index=true)
+	private String clientNIT;
 	/**
 	 * IDSUMINISTRO
 	 * Identificador del suministros, tabla de referencia suministros	
@@ -49,6 +55,15 @@ public class Supply extends Model {
 	private int routeRemoteId;
 	
 	/**
+	 * Estado del suministro {@link SupplyStatus} , 
+	 * 1 Normal 2 Pendiente Conexion 3 Pendiente de desconexion 
+	 * 4 Suspendido 5 Baja 6 Incobrable 
+	 * 7 Desconectado, tabla de referencia status_sumin con el tipo de servicio
+	 */
+	@Column(name = "Status")
+	private short status;
+	
+	/**
 	 * Las facturas relacionadas con el suministro
 	 */
 	private List<CoopReceipt> allReceipts;
@@ -57,15 +72,17 @@ public class Supply extends Model {
 		super();
 	}
 
-	public Supply(int clientId, String clientName, int supplyId,
-			String supplyNumber, String clientAddress, int routeRemoteId) {
+	public Supply(int clientId, String clientName, String clientNIT, int supplyId,
+			String supplyNumber, String clientAddress, int routeRemoteId, short status) {
 		super();
 		this.clientId = clientId;
 		this.clientName = clientName;
+		this.clientNIT = clientNIT;
 		this.supplyId = supplyId;
 		this.supplyNumber = supplyNumber;
 		this.clientAddress = clientAddress;
 		this.routeRemoteId = routeRemoteId;
+		this.status = status;
 	}
 	/**
 	 * Busca al suministro que coincida con alguno de los parámetros
@@ -164,6 +181,14 @@ public class Supply extends Model {
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
 	}
+	
+	public String getClientNIT() {
+		return clientNIT;
+	}
+
+	public void setClientNIT(String clientNIT) {
+		this.clientNIT = clientNIT;
+	}
 
 	public int getSupplyId() {
 		return supplyId;
@@ -196,8 +221,14 @@ public class Supply extends Model {
 	public void setRouteRemoteId(int routeRemoteId) {
 		this.routeRemoteId = routeRemoteId;
 	}
-	
-	
+
+	public EnergySupplyStatus getStatus() {
+		return EnergySupplyStatus.get(status);
+	}
+
+	public void setStatus(EnergySupplyStatus status) {
+		this.status = status.toShort();
+	}
 	
 	//#endregion
 }
