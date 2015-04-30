@@ -217,6 +217,18 @@ public class CollectionAction extends FragmentActivity implements SearchCollecti
 		});
 	}
 	
+	@Override
+	public void onSearchCanceled() {
+		runOnUiThread(new Runnable() {	
+			@Override
+			public void run() {
+				if(mIsTwoPane)
+					paymentView.showNoSearchedSupplies();
+				hideSearchingMessage();
+			}
+		});
+	}
+	
 	//#endregion
 	
 	/**

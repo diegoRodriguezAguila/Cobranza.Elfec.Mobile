@@ -14,4 +14,5 @@
 	<dimen name="date_picker_margin_top">-35dp</dimen>
 	<dimen name="date_picker_text_margin_top">-40dp</dimen>
 	<dimen name="date_picker_range_text_margin_top">-2dp</dimen>
+	<dimen name="dialog_list_height">250dp</dimen>
 </resources>

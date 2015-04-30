@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Elfec Cobranza</string>
-    <string name="app_full_name">Elfec Cobranza Móvil v. 1.15.04.29</string>
+    <string name="app_full_name">Elfec Cobranza Móvil v. 1.15.04.30</string>
     <string name="action_settings">Settings</string>
 
     <!-- Login -->
@@ -108,8 +108,9 @@
 		<string name="btn_search">Buscar</string>
 		<string name="msg_atleast_one_filed">Debe proporcionar al menos un término de búsqueda!</string>
 		<string name="msg_searching">Buscando suministro&#8230;</string>
-		<string name="msg_no_supplies_found">Actualmente no se buscó ningún suministro o las búsquedas realizadas no produjeron ningún resultado</string>
-		<string name="msg_no_receipts_selected">Seleccione por lo menos una factura para proceder!</string>
+		<string name="msg_no_supplies_found">Actualmente no se buscó ningún suministro o las búsquedas realizadas no produjeron ningún resultado</string>		
+		<string name="title_select_supply_search_result">RESULTADOS DE LA BÚSQUEDA</string>
+		<string name="msg_select_supply_search_result">Se encontrarón los siguientes suministros que coinciden con los términos de búsqueda. Seleccione uno para proceder: </string>
 		
 		<!-- Collection Payment -->
 		<string name="lbl_collection_payment">Cobranza</string>
@@ -123,6 +124,7 @@
 		<string name="msg_succesfull_payment">El cobro se realizó exitosamente!</string>
 		<string name="title_print_errors">ERROR AL IMPRIMIR</string>
 		<string name="title_menu_item_pick_printer">Seleccionar impresora</string>
+		<string name="msg_no_receipts_selected">Seleccione por lo menos una factura para proceder!</string>
 		
 		<string name="title_bluetooth_errors">ERROR DE BLUETOOTH</string>
 		

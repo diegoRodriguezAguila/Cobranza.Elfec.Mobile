@@ -88,8 +88,9 @@ public class Supply extends Model {
 	 * Busca al suministro que coincida con alguno de los parámetros
 	 * @param nus
 	 * @param accountNumber
+	 * @return lista de suministros que coinciden con los términos de búsqueda
 	 */
-	public static Supply findSupplyByNUSOrAccount(int nus, String accountNumber)
+	public static List<Supply> findSupply(int nus, String accountNumber, String clientName, long nit)
 	{
 		From query = new Select()
         .from(Supply.class);
@@ -97,7 +98,22 @@ public class Supply extends Model {
 			query.where("SupplyId=?",nus);
 		if(accountNumber!=null && !accountNumber.isEmpty())
 			query.where("SupplyNumber=?",accountNumber);
-        return query.executeSingle();
+		if(nit!=-1)
+			query.where("ClientNIT=?",nit);
+		if(clientName!=null && !clientName.isEmpty())
+			query.where("ClientName LIKE '%"+clientName+"%'");
+        return query.execute();
+	}
+	
+	/**
+	 * Busca un suministro por nus y número de cuenta
+	 * @param nus
+	 * @param accountNumber
+	 * @return el suministro encontrado / null si no se encontró
+	 */
+	public static Supply findSupplyByNUSOrAccount(int nus, String accountNumber) {
+		List<Supply> foundSupplies = findSupply(nus, accountNumber, "", -1);
+		return foundSupplies.size()>0 ? foundSupplies.get(0) : null;
 	}
 	
 	/**

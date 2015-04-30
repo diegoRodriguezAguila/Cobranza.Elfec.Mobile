@@ -3,6 +3,7 @@ package com.elfec.cobranza.presenter.views;
 import java.util.List;
 
 import com.elfec.cobranza.model.Supply;
+import com.elfec.cobranza.model.events.SupplyResultPickedListener;
 
 /**
  * Abstracción de la vista de busqueda de facturas
@@ -22,6 +23,16 @@ public interface ISearchCollectionView {
 	 */
 	public String getAccountNumber();
 	/**
+	 * Obtiene el nombre del cliente
+	 * @return
+	 */
+	public String getClientName();
+	/**
+	 * Obtiene el NIT del cliente
+	 * @return
+	 */
+	public String getNIT();
+	/**
 	 * Notifica al usuario que debe al menos poner un término de búsqueda
 	 */
 	public void notifyAtleastOneField();
@@ -29,6 +40,12 @@ public interface ISearchCollectionView {
 	 * Notifica a la vista que se inició la búsqueda
 	 */
 	public void notifySearchStarted();
+	/**
+	 * Pide al usuario que seleccione un resultado de los obtenidos
+	 * @param foundSupplies
+	 * @param supplyResultPickedListener
+	 */
+	public void pickSupplyResult(List<Supply> foundSupplies, SupplyResultPickedListener supplyResultPickedListener);
 	/**
 	 * Muestra al usuario el suministro encontrado
 	 * @param foundSupply
@@ -39,4 +56,8 @@ public interface ISearchCollectionView {
 	 * @param errors
 	 */
 	public void showSearchErrors(List<Exception> errors);
+	/**
+	 * Oculta el mensaje de espera
+	 */
+	public void cancelSearch();
 }

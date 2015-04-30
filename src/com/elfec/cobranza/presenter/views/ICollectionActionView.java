@@ -27,6 +27,10 @@ public interface ICollectionActionView {
 	 */
 	public void hideNoSearchedSupplies();
 	/**
+	 * Muestra el mensaje de que no se realizó ninguna búsqueda
+	 */
+	public void showNoSearchedSupplies();
+	/**
 	 * Muestra un mensaje de espera de búsqueda
 	 */
 	public void showSearchingMessage();

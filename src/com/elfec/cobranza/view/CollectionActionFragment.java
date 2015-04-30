@@ -309,6 +309,11 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 	public void hideNoSearchedSupplies() {
 		txtNoSuppliesFound.setVisibility(View.GONE);
 	}
+	
+	@Override
+	public void showNoSearchedSupplies() {
+		txtNoSuppliesFound.setVisibility(View.VISIBLE);
+	}
 
 	@Override
 	public void showReceipts(final List<CoopReceipt> receipts) {

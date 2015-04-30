@@ -1,9 +1,11 @@
 package com.elfec.cobranza.view;
 
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +17,10 @@ import android.widget.EditText;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.model.Supply;
+import com.elfec.cobranza.model.events.SupplyResultPickedListener;
 import com.elfec.cobranza.presenter.SearchCollectionPresenter;
 import com.elfec.cobranza.presenter.views.ISearchCollectionView;
+import com.elfec.cobranza.view.services.SupplyResultPickerService;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 /**
@@ -43,6 +47,10 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 		 * @param errors
 		 */
 		public void onSearchErrors(List<Exception> errors);
+		/**
+		 * Callback para cuando se canceló la búsqueda realizada
+		 */
+		public void onSearchCanceled();
 	}
 	
 	/**
@@ -63,7 +71,10 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 		}
 		@Override
 		public void onSearchStarted() {
-		}};
+		}
+		@Override
+		public void onSearchCanceled() {}
+		};
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -72,9 +83,13 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 	}
 	
 	private SearchCollectionPresenter presenter;
+	
+	private Handler mHandler;
 	private Button btnSearch;
 	private EditText txtNUS;
 	private EditText txtAccountNumber;
+	private EditText txtClientName;
+	private EditText txtNIT;
 	
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
     
@@ -82,6 +97,7 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		presenter = new SearchCollectionPresenter(this);
+		this.mHandler = new Handler();
 		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
 				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
 	}
@@ -94,6 +110,8 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
         txtNUS = (EditText) view.findViewById(R.id.txt_nus);
         // txtNUS.setText("425154");//420588 425154 (con hartas deudas)
         txtAccountNumber = (EditText) view.findViewById(R.id.txt_account_number);
+        txtClientName = (EditText) view.findViewById(R.id.txt_client_name);
+        txtNIT = (EditText) view.findViewById(R.id.txt_nit);
         btnSearch.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {				
@@ -149,6 +167,8 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 			public void run() {
 				txtNUS.setText(null);
 				txtAccountNumber.setText(null);
+				txtClientName.setText(null);
+				txtNIT.setText(null);
 			}
 		});
 	}
@@ -161,6 +181,33 @@ public class SearchCollectionFragment extends Fragment implements ISearchCollect
 	@Override
 	public void notifySearchStarted() {
 		mCallbacks.onSearchStarted();
+	}
+
+	@Override
+	public String getClientName() {
+		return txtClientName.getText().toString().trim().toUpperCase(Locale.getDefault());
+	}
+
+	@Override
+	public String getNIT() {
+		return txtNIT.getText().toString().trim();
+	}
+
+	@Override
+	public void pickSupplyResult(final List<Supply> foundSupplies,
+			final SupplyResultPickedListener supplyResultPickedListener) {
+		mHandler.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				new SupplyResultPickerService(getActivity(), foundSupplies, supplyResultPickedListener).show();
+			}
+		});
+	}
+
+	@Override
+	public void cancelSearch() {
+		mCallbacks.onSearchCanceled();
 	}
 	
 	//#endregion

@@ -10,23 +10,33 @@ public class SupplyNotFoundException extends Exception{
 	private static final long serialVersionUID = 9140053834055215880L;
 	private String nus;
 	private String accountNumber;
+	private String clientName;
+	private String nit;
 	
-	public SupplyNotFoundException(String nus, String accountNumber) {
+	public SupplyNotFoundException(String nus, String accountNumber, String clientName, String nit) {
 		super();
 		this.nus = nus;
 		this.accountNumber = accountNumber;
+		this.clientName = clientName;
+		this.nit = nit;
 	}
 
 	@Override
 	public String getMessage()
 	{
-		StringBuilder str = new StringBuilder("No se encontró ningún suministro ");
-		if((nus!=null && !nus.isEmpty()) && (accountNumber!=null && !accountNumber.isEmpty()))
-			str.append("con el NUS: <b>").append(nus).append("</b> y la cuenta: <b>").append(AccountFormatter.formatAccountNumber(accountNumber)).append("</b> ");
-		if((nus!=null && !nus.isEmpty()) && (accountNumber==null || accountNumber.isEmpty()))
-			str.append("con el NUS: <b>").append(nus).append("</b> ");
-		if((nus==null || nus.isEmpty()) && (accountNumber!=null && !accountNumber.isEmpty()))
-			str.append("con la cuenta: <b>").append(AccountFormatter.formatAccountNumber(accountNumber)).append("</b> ");
-		return str.append("que coincida con los términos de búsqueda!").toString();
+		StringBuilder str = new StringBuilder("No se encontró ningún suministro con");
+		if(nus!=null && !nus.isEmpty())
+			str.append(" NUS: <b>").append(nus).append("</b>,");
+		if(accountNumber!=null && !accountNumber.isEmpty())
+			str.append(" cuenta: <b>").append(AccountFormatter.formatAccountNumber(accountNumber)).append("</b>,");
+		if(clientName!=null && !clientName.isEmpty())
+			str.append(" nombre igual o similar a: <b>").append(clientName).append("</b>,");
+		if(nit!=null && !nit.isEmpty())
+			str.append(" NIT: <b>").append(nit).append("</b>,");
+		str = new StringBuilder(str.substring(0, str.length()-1));
+		int lastIndex = str.lastIndexOf(",");
+		if(lastIndex!=-1)
+			str.replace(lastIndex, lastIndex+1, " y");
+		return str.toString();
 	}
 }

@@ -31,6 +31,7 @@
 	  <item name="android:background">@drawable/cobranza_edit_text_holo_dark</item>
 	  <item name="android:textColor">@color/text_blue_color</item>
 	  <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
+	  <item name="android:textColorHint">@color/text_gray_color</item>
 	  <item name="android:minHeight">40dip</item>
   </style>
     

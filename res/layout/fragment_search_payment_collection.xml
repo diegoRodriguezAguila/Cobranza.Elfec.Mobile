@@ -67,7 +67,6 @@
             android:id="@+id/client_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
@@ -86,7 +85,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_client_name"
-                android:inputType="number"
+                android:inputType="textPersonName"
+                android:maxLength="60"
+                android:digits="aAbBcCdDeEfFgGhHiIjJkKlLmMnNñÑoOpPqQrRsStTuUvVwWxXyYzZ"
                 android:textAppearance="@style/TextAppearance.CustomFont.EditText"/>
         </LinearLayout>
         <LinearLayout
@@ -95,7 +96,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
-            android:visibility="gone"
             android:orientation="horizontal" >
 
             <ImageView
@@ -105,7 +105,7 @@
                 android:background="@color/cobranza_color"
                 android:contentDescription="@string/desc_account_number"
                 android:padding="8dp"
-                android:src="@drawable/account_mini" />
+                android:src="@drawable/nit_mini" />
 
             <EditText
                 android:id="@+id/txt_nit"
@@ -113,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_nit"
                 android:inputType="number"
+                android:maxLength="10"
                 android:textAppearance="@style/TextAppearance.CustomFont.EditText" />
         </LinearLayout>
 

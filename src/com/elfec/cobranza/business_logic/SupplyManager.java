@@ -2,6 +2,7 @@ package com.elfec.cobranza.business_logic;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -48,22 +49,31 @@ public class SupplyManager {
 	 * También verifica que la ruta a la que pertenece el suministro se haya cargado
 	 * @param nus
 	 * @param accountNumber
-	 * @return Suministro que coinicida con los parámetros
+	 * @return Suministros que coinicidan con los parámetros
 	 * @throws SupplyNotFoundException 
 	 */
-	public static Supply getSupplyByNUSOrAccount(String nus, String accountNumber) throws SupplyNotFoundException
+	public static List<Supply> searchSupply(String nus, String accountNumber, String clientName, String nit) throws SupplyNotFoundException
 	{
 		int nusInt;
+		long nitLong;
 		try{nusInt = Integer.parseInt(nus);}
 		catch(NumberFormatException e){nusInt = -1;}
-		Supply foundSupply = Supply.findSupplyByNUSOrAccount(nusInt, accountNumber);
-		if(foundSupply!=null)
+		try{nitLong = Long.parseLong(nit);}
+		catch(NumberFormatException e){nitLong = -1;}
+		List<Supply> foundSupplies = Supply.findSupply(nusInt, accountNumber, clientName, nitLong);
+		if(foundSupplies.size()>0)
 		{
-			Route loadedRoute = Route.findRouteByRemoteId(foundSupply.getRouteRemoteId());
-			if(loadedRoute!=null && loadedRoute.isLoaded())
-				return foundSupply;
+			List<Supply> foundFilteredSupplies = new ArrayList<Supply>();
+			for (Supply foundSupply : foundSupplies) {
+				Route loadedRoute = Route.findRouteByRemoteId(foundSupply.getRouteRemoteId());
+				if(loadedRoute!=null && loadedRoute.isLoaded())
+					foundFilteredSupplies.add(foundSupply);
+			}
+			if(foundFilteredSupplies.size()>0)
+				return foundFilteredSupplies;
+			
 		}
-		throw new SupplyNotFoundException(nus, accountNumber);
+		throw new SupplyNotFoundException(nus, accountNumber, clientName, nit);
 	}
 	/**
 	 * Obtiene las facturas pendientes de un suministro
