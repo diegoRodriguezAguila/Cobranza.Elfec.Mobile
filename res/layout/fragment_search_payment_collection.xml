@@ -87,7 +87,7 @@
                 android:hint="@string/hint_client_name"
                 android:inputType="textPersonName"
                 android:maxLength="60"
-                android:digits="aAbBcCdDeEfFgGhHiIjJkKlLmMnNñÑoOpPqQrRsStTuUvVwWxXyYzZ"
+                android:digits="a AbBcCdDeEfFgGhHiIjJkKlLmMnNñÑoOpPqQrRsStTuUvVwWxXyYzZ"
                 android:textAppearance="@style/TextAppearance.CustomFont.EditText"/>
         </LinearLayout>
         <LinearLayout
