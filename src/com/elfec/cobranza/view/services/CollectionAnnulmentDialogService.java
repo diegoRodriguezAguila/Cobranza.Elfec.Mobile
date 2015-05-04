@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
 import com.elfec.cobranza.presenter.services.CollectionAnnulmentDialogPresenter;
 import com.elfec.cobranza.presenter.views.ICollectionAnnulmentDialog;
+import com.elfec.cobranza.view.adapters.AnnulmentReasonAdapter;
 
 /**
  * Esta clase provee de un servicio de dialogo para confirmar y realizar la anulación de un cobro
@@ -38,12 +40,13 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 	private AlertDialogPro dialog;
 	private Context context;
 	private Handler mHandler;
-	
+	private AnnulmentReasonAdapter adapter;
+
 	private CollectionAnnulmentDialogPresenter presenter;
 	//components
 	private View annulmentView;
 	private Spinner spinnerAnnulmentReason;
-	private TextView txtInternalControlCode;
+	private EditText txtInternalControlCode;
 	
 	@SuppressLint("InflateParams")
 	public CollectionAnnulmentDialogService(Context context, List<CoopReceipt> annulmentReceipts, OnCollectionAnnulmentCallback annulmentCallback)
@@ -59,7 +62,7 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 		spinnerAnnulmentReason = (Spinner) annulmentView.findViewById(R.id.spinner_annulment_reason);
 		presenter.loadAnnulmentReasons();
 		setItemClickListener();		
-		txtInternalControlCode = (TextView) annulmentView.findViewById(R.id.txt_internal_control_code);
+		txtInternalControlCode = (EditText) annulmentView.findViewById(R.id.txt_internal_control_code);
 		
 		presenter.loadReceiptInfo();
 		
@@ -84,7 +87,8 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 			@Override
 			public void onItemSelected(AdapterView<?> adapter, View v,
 					int pos, long id) {
-				presenter.processSelectedAnnulmentReason();
+				if(pos!=0)
+					presenter.processSelectedAnnulmentReason();
 			}
 			@Override public void onNothingSelected(AdapterView<?> adapter) {}
 		});
@@ -126,8 +130,12 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 		mHandler.post(new Runnable() {			
 			@Override
 			public void run() {
-				spinnerAnnulmentReason.setAdapter(new ArrayAdapter<AnnulmentReason>(context, 
-						R.layout.simple_spinner_row, annulmentReasons));
+				adapter = new AnnulmentReasonAdapter(
+						new ArrayAdapter<AnnulmentReason>(context, 
+								R.layout.simple_spinner_row, annulmentReasons),
+								context, 
+						R.layout.nothing_selected_spinner_row);
+				spinnerAnnulmentReason.setAdapter(adapter);
 			}
 		});
 	}
@@ -151,7 +159,8 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 
 	@Override
 	public int getSelectedAnnulmentReasonId() {
-		return ((AnnulmentReason)spinnerAnnulmentReason.getSelectedItem()).getAnnulmentReasonRemoteId();
+		AnnulmentReason selectedReason = (AnnulmentReason)spinnerAnnulmentReason.getSelectedItem();
+		return (selectedReason!=null)? selectedReason.getAnnulmentReasonRemoteId():-1;
 	}
 
 	@Override
@@ -183,7 +192,24 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 		mHandler.post(new Runnable() {		
 			@Override
 			public void run() {
-				txtInternalControlCode.setText(internalControlCode==-1?null:""+internalControlCode);
+				String controlCodeStr = ""+internalControlCode;
+				txtInternalControlCode.setText(internalControlCode==-1?null:controlCodeStr);
+				if(internalControlCode!=-1)
+					txtInternalControlCode.setSelection(controlCodeStr.length());
+			}
+		});
+	}
+
+
+	@Override
+	public void setAnnulmentReasonError(final int strErrorId) {
+		mHandler.post(new Runnable() {		
+			@Override
+			public void run() {
+				if(adapter!=null)
+					adapter.setError(spinnerAnnulmentReason.getSelectedView(), 
+							strErrorId==-1?null:
+							context.getResources().getString(strErrorId));
 			}
 		});
 	}

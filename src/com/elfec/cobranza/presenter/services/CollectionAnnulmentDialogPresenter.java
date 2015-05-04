@@ -48,23 +48,47 @@ public class CollectionAnnulmentDialogPresenter {
 	 */
 	public void verifyAnnulation()
 	{
-		new Thread(new Runnable() {			
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				String internalCode = view.getInternalControlCode();
-	        	  if(!internalCode.isEmpty())
-	        	  {
-		        	  if(internalCode.equals(annulmentReceipt.getActiveCollectionPayment().getId().toString()))
-						{
-							view.closeView();
-							if(annulmentCallback!=null)
-								annulmentCallback.collectionAnnuled(view.getSelectedAnnulmentReasonId());					
-						}
-						else view.setInternalControlCodeError(R.string.error_internal_control_code);;
-					}
-	        	  else view.setInternalControlCodeError(R.string.error_empty_internal_control_code);
+				boolean isAnnulmentReasonValid = validateAnnulmentReason();
+				boolean isInternalControlCodeValid = validateInteralControlCode();
+				if (isAnnulmentReasonValid && isInternalControlCodeValid) {
+					view.closeView();
+					if (annulmentCallback != null)
+						annulmentCallback.collectionAnnuled(view.getSelectedAnnulmentReasonId());
+				}
 			}
 		}).start();
+	}
+	
+	/**
+	 * Valida que se haya seleccionado el motivo de anulación
+	 * @return
+	 */
+	public boolean validateAnnulmentReason()
+	{
+		int annulmentReasonId = view.getSelectedAnnulmentReasonId();
+		boolean isValid = (annulmentReasonId!=-1);
+		view.setAnnulmentReasonError(isValid?-1:R.string.errors_in_fields);
+		return isValid;
+	}
+	
+	/**
+	 * Valida el código de control interno
+	 * @return
+	 */
+	public boolean validateInteralControlCode() {
+		String internalCode = view.getInternalControlCode();
+		int errorMsg = R.string.error_empty_internal_control_code;
+		if (!internalCode.isEmpty()) {
+			if (internalCode.equals(annulmentReceipt
+					.getActiveCollectionPayment().getId().toString())) 
+				return true;
+			errorMsg  = R.string.error_internal_control_code;
+		}
+		view.setInternalControlCodeError(errorMsg);
+		return false;
 	}
 	
 	/**
@@ -80,6 +104,7 @@ public class CollectionAnnulmentDialogPresenter {
 						(annulmentReasonId==2 || annulmentReasonId==3)?
 						annulmentReceipt.getActiveCollectionPayment().getId():-1);
 				view.setInternalControlCodeError(-1);
+				validateAnnulmentReason();
 			}
 		}).start();
 	}

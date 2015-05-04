@@ -39,6 +39,11 @@ public interface ICollectionAnnulmentDialog {
 	 */
 	public int getSelectedAnnulmentReasonId();
 	/**
+	 * Muestra un error en el mótivo de anulación
+	 * @param strErrorId
+	 */
+	public void setAnnulmentReasonError(int strErrorId);
+	/**
 	 * Asigna los datos del periodo de la factura
 	 * @param year
 	 * @param month
