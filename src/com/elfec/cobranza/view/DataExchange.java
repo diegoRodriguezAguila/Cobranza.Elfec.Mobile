@@ -137,9 +137,7 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	public void btnMainMenuClick(View view)
 	{
 		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
-			Intent i = new Intent(DataExchange.this, MainMenu.class);
-			startActivity(i);
-			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+			presenter.validateMainMenuOption();
 		}
         lastClickTime = SystemClock.elapsedRealtime();
 	}
@@ -310,6 +308,33 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	@Override
 	public void notifySuccessfulDataWipe() {
 		notifyUser(R.string.msg_all_data_wiped_successfully);
+	}
+
+	@Override
+	public void goToMainMenu() {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				Intent i = new Intent(DataExchange.this, MainMenu.class);
+				startActivity(i);
+				overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+			}
+		});
+	}
+
+	@Override
+	public void showMainMenuAccessLocked() {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(DataExchange.this);
+				builder.setTitle(R.string.title_main_menu_locked)
+				.setIcon(R.drawable.main_menu_locked)
+				.setMessage(Html.fromHtml(getString(R.string.msg_main_menu_locked)))
+				.setPositiveButton(R.string.btn_ok, null)
+				.show();
+			}
+		});
 	}
 	
 	//#endregion

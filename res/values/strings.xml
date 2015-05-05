@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Elfec Cobranza</string>
-    <string name="app_full_name">Elfec Cobranza Móvil v. 1.15.04.30</string>
+    <string name="app_full_name">Elfec Cobranza Móvil v. 1.15.05.05</string>
     <string name="action_settings">Settings</string>
 
     <!-- Login -->
@@ -23,6 +23,9 @@
     <string name="msg_exportation_finished_successfully">Se descargó la información al servidor exitosamente!</string>
     <string name="btn_download_data">Cargar datos</string>
     <string name="btn_upload_data">Descargar datos</string>
+    <string name="title_main_menu_locked">MENÚ PRINCIPAL NO DISPONIBLE</string>
+    <string name="msg_main_menu_locked"><![CDATA[No puede acceder a las opciones del menú principal, debido a que aún no cargó ninguna ruta al dispositivo. 
+        Utilize la opción de <b>Cargar datos</b> para cargar rutas.]]></string>
     	<!-- Data Wipe -->
 	    <string name="menu_wipe_all_data">Eliminar todos los datos</string>
 	    <string name="title_wipe_all_data">ELIMINAR TODOS LOS DATOS</string>

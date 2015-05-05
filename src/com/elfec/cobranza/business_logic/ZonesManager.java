@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.activeandroid.ActiveAndroid;
-import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.Zone;
@@ -128,15 +127,5 @@ public class ZonesManager {
 			route.setLoaded(true);
 			route.save();
 		}
-	}
-	
-	/**
-	 * Valida si es que la ruta tiene alguna factura y por ende debe marcarse como cargada y/o bloqueada
-	 * @param route
-	 * @return true si es que la ruta tiene alguna factura
-	 */
-	public static boolean hasRouteReceipts(Route route)
-	{
-		return CoopReceipt.findRouteReceipts(route.getRouteRemoteId()).size()>0;
 	}
 }

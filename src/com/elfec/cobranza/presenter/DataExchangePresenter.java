@@ -14,6 +14,7 @@ import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.elfec.cobranza.presenter.views.IDataExchangeView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+import com.elfec.cobranza.settings.PreferencesManager;
 
 public class DataExchangePresenter {
 
@@ -216,5 +217,20 @@ public class DataExchangePresenter {
 				}
 			}
 		}).start();	
+	}
+	
+	/**
+	 * Valida si es que se puede ingresar al menú principal
+	 */
+	public void validateMainMenuOption()
+	{
+		new Thread(new Runnable() {		
+			@Override
+			public void run() {
+				if(PreferencesManager.instance().isAllOnceReqDataImported())
+					view.goToMainMenu();
+				else view.showMainMenuAccessLocked();
+			}
+		}).start();
 	}
 }

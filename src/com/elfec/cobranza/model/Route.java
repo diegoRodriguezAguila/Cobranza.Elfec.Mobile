@@ -51,6 +51,16 @@ public class Route extends Model {
 	}
 	
 	/**
+	 * Obtiene una ruta cargada en el dipositivo
+	 * @return La primera ruta cargada
+	 */
+	public static Route getFirstLoadedRoute()
+	{
+		return new Select().from(Route.class)
+				.where("IsLoaded=1").executeSingle();
+	}
+	
+	/**
 	 * Busca una ruta por su Id Remoto
 	 * @param routeRemoteId
 	 * @return la ruta encontrada o NULL

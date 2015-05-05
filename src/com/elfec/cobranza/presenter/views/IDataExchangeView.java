@@ -73,4 +73,13 @@ public interface IDataExchangeView {
 	 * Informa al usuario que se eliminaron los datos exitosamente
 	 */
 	public void notifySuccessfulDataWipe();
+	/**
+	 * Lleva al menú principal
+	 */
+	public void goToMainMenu();
+	/**
+	 * Indica al usuario que se bloqueó el acceso al menú principal
+	 * por no haber cargado los datos
+	 */
+	public void showMainMenuAccessLocked();
 }
