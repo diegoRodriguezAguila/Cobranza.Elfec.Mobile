@@ -11,6 +11,7 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.presenter.views.ICollectionPaymentView;
 import com.elfec.cobranza.view.adapters.ReceiptAdapter;
 
 public class CollectionPaymentAdapter extends CollectionBaseAdapter{
@@ -52,7 +53,7 @@ public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 	@Override
 	public CollectionActionPresenter getCollectionPresenter(
 			ICollectionActionView view) {
-		return new CollectionPaymentPresenter(view);
+		return new CollectionPaymentPresenter((ICollectionPaymentView) view);
 	}
 
 	@Override

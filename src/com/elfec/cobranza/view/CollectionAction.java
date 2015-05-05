@@ -21,7 +21,7 @@ import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.model.Supply;
-import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.presenter.views.ICollectionPaymentView;
 import com.elfec.cobranza.view.adapters.CollectionPagerAdapter;
 import com.elfec.cobranza.view.adapters.collection.CollectionAdapterFactory;
 import com.elfec.cobranza.view.adapters.collection.CollectionBaseAdapter;
@@ -44,7 +44,7 @@ public class CollectionAction extends FragmentActivity implements SearchCollecti
 	private boolean mIsTwoPane;
 	private int searchCollectionHeight;
 	private boolean searchCollectionCollapsed;
-	private ICollectionActionView paymentView;
+	private ICollectionPaymentView paymentView;
 
 	
 	@Override
@@ -60,11 +60,11 @@ public class CollectionAction extends FragmentActivity implements SearchCollecti
         if(!mIsTwoPane)
         {
         	initializeTabs();
-        	paymentView = (ICollectionActionView)adapter.getItem(1);
+        	paymentView = (ICollectionPaymentView)adapter.getItem(1);
         }
         else 
     	{
-        	paymentView = (ICollectionActionView)getSupportFragmentManager().findFragmentById(R.id.f_payment_collection);
+        	paymentView = (ICollectionPaymentView)getSupportFragmentManager().findFragmentById(R.id.f_payment_collection);
         	fSearchCollection = getSupportFragmentManager().findFragmentById(R.id.f_search_collection);
         	setActionTitle();
     	}

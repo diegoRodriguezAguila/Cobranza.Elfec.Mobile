@@ -7,9 +7,10 @@ import com.elfec.cobranza.business_logic.SupplyManager;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.model.results.DataAccessResult;
-import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.presenter.views.ICollectionAnnulmentView;
 
 public class CollectionAnnulmentPresenter extends CollectionActionPresenter{
+	protected ICollectionAnnulmentView view;
 	/**
 	 * Interfaz que sirve para llamarse cuando una factura se anula
 	 * @author drodriguez
@@ -20,8 +21,9 @@ public class CollectionAnnulmentPresenter extends CollectionActionPresenter{
 		public void collectionAnnuled(int annulmentReasonRemoteId);
 	}
 	
-	public CollectionAnnulmentPresenter(ICollectionActionView view) {
+	public CollectionAnnulmentPresenter(ICollectionAnnulmentView view) {
 		super(view);
+		this.view = view;
 	}
 
 	@Override

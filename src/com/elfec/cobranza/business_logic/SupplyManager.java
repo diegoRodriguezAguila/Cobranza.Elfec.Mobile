@@ -12,6 +12,7 @@ import com.elfec.cobranza.business_logic.data_exchange.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.Supply;
+import com.elfec.cobranza.model.enums.EnergySupplyStatus;
 import com.elfec.cobranza.model.exceptions.SupplyNotFoundException;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.SupplyRDA;
@@ -92,5 +93,21 @@ public class SupplyManager {
 	public static List<CoopReceipt> getTodayPaidReceipts(Supply supply)
 	{
 		return supply.getDatePaidReceipts(DateTime.now());		
+	}
+	
+	/**
+	 * Verifica si es que un suministro tiene que ser reconectado
+	 * @param supply
+	 * @return <b>true</b> si es que debe ser reconectado
+	 */
+	public static boolean hasToReconnectSupply(Supply supply)
+	{
+		if(supply!=null
+				&& (supply.getStatus()==EnergySupplyStatus.SUSPENDED 
+				|| supply.getStatus()==EnergySupplyStatus.DISCONNECTED))
+		{
+			return supply.getExpiredPendingReceipts().size()==0;
+		}
+		return false;
 	}
 }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,8 @@ import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnn
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 import com.elfec.cobranza.presenter.adapter_interfaces.ICollectionBaseAdapter;
 import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBluetoothDevicePicked;
-import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.presenter.views.ICollectionAnnulmentView;
+import com.elfec.cobranza.presenter.views.ICollectionPaymentView;
 import com.elfec.cobranza.view.services.BluetoothDevicePickerService;
 import com.elfec.cobranza.view.services.CollectionAnnulmentDialogService;
 import com.elfec.cobranza.view.services.PaymentConfirmationDialogService;
@@ -51,7 +53,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
  * @author drodriguez
  *
  */
-public class CollectionActionFragment extends Fragment implements ICollectionActionView {
+public class CollectionActionFragment extends Fragment implements ICollectionPaymentView, ICollectionAnnulmentView {
 
 	private ICollectionBaseAdapter collectionAdapter;
 	private CollectionActionPresenter presenter;
@@ -438,6 +440,22 @@ public class CollectionActionFragment extends Fragment implements ICollectionAct
 					.setPositiveButton(R.string.btn_ok, null)
 					.show();
 				}
+			}
+		});
+	}
+
+	@Override
+	public void showReconnectionMessage(final String supplyNumber) {
+		getActivity().runOnUiThread(new Runnable() {		
+			@Override
+			public void run() {
+				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
+				builder.setTitle(R.string.title_inform_reconnection)
+				.setIcon(R.drawable.reconnection_info)
+				.setMessage(Html.fromHtml(
+						String.format(getResources().getString(R.string.msg_inform_reconnection), "<b>"+supplyNumber+"</b>")))
+				.setPositiveButton(R.string.btn_ok, null)
+				.show();
 			}
 		});
 	}

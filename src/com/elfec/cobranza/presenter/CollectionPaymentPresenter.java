@@ -14,7 +14,7 @@ import com.elfec.cobranza.model.events.BluetoothStateListener;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBluetoothDevicePicked;
-import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.presenter.views.ICollectionPaymentView;
 import com.elfec.cobranza.settings.PreferencesManager;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
@@ -29,11 +29,12 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 	{
 		public void paymentConfirmed();
 	}
-	
+	protected ICollectionPaymentView view;
 	private List<Runnable> bluetoothActionsQueue;
 	
-	public CollectionPaymentPresenter(ICollectionActionView view) {
+	public CollectionPaymentPresenter(ICollectionPaymentView view) {
 		super(view);
+		this.view = view;
 		bluetoothActionsQueue = new ArrayList<Runnable>();
 		BluetoothAdapter.getDefaultAdapter().enable();
 	}
@@ -57,6 +58,7 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 						if(!result.hasErrors())
 						{
 							view.informActionSuccessfullyFinished();
+							evaluateSupplyStatus();
 							printReceipts(result.getResult(), selectedReceipts);
 						}
 						view.showActionErrors(result.getErrors());
@@ -64,6 +66,17 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 				}).start();
 			}
 		});	
+	}
+	
+	/**
+	 * Evalua el estado del suministro y si es que se debe proceder a su reconexión
+	 */
+	private void evaluateSupplyStatus()
+	{
+		if(SupplyManager.hasToReconnectSupply(currentSupply))
+		{
+			view.showReconnectionMessage(""+currentSupply.getSupplyId());
+		}
 	}
 	
 	/**

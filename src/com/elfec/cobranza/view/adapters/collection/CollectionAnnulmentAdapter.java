@@ -11,6 +11,7 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
+import com.elfec.cobranza.presenter.views.ICollectionAnnulmentView;
 import com.elfec.cobranza.view.adapters.AnnulationReceiptAdapter;
 
 public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
@@ -52,7 +53,7 @@ public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
 	@Override
 	public CollectionActionPresenter getCollectionPresenter(
 			ICollectionActionView view) {
-		return new CollectionAnnulmentPresenter(view);
+		return new CollectionAnnulmentPresenter((ICollectionAnnulmentView) view);
 	}
 
 	@Override

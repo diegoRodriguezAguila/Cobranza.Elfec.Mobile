@@ -156,6 +156,23 @@ public class Supply extends Model {
 	}
 	
 	/**
+	 * Obtiene todas las facturas pendientes del suministro cuya fecha
+	 * de vencimiento es más antigua a la fecha actual
+	 * @return lista de comprobantes
+	 */
+	public List<CoopReceipt> getExpiredPendingReceipts()
+	{
+		JodaDateTimeSerializer serializer = new JodaDateTimeSerializer();
+		return new Select()
+        .from(CoopReceipt.class).as("r").where("SupplyId = ? "
+        		+ " AND ExpirationDate < ? AND NOT EXISTS "
+        		+ "(SELECT 0 FROM CollectionPayments AS c "
+        		+ "WHERE r.ReceiptId = c.ReceiptId AND Status=1)", supplyId, 
+        		serializer.serialize(DateTime.now().withTime(23, 59, 59, 0)))
+        		.orderBy("Year, PeriodNumber").execute();
+	}
+	
+	/**
 	 * Obtiene todas las facturas  del suministro que ya fueron pagadas, a partir de la fecha proporcionada
 	 * @param fromDate
 	 * @return lista de comprobantes

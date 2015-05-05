@@ -2,13 +2,13 @@ package com.elfec.cobranza.presenter.adapter_interfaces;
 
 import java.util.List;
 
-import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.presenter.CollectionActionPresenter;
-import com.elfec.cobranza.presenter.views.ICollectionActionView;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.widget.ArrayAdapter;
+
+import com.elfec.cobranza.model.CoopReceipt;
+import com.elfec.cobranza.presenter.CollectionActionPresenter;
+import com.elfec.cobranza.presenter.views.ICollectionActionView;
 
 /**
  * Provee de una abstracción del adapter para cobranzas

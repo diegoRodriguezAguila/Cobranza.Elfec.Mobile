@@ -128,10 +128,13 @@
 		
 		<string name="title_bluetooth_errors">ERROR DE BLUETOOTH</string>
 		
+		<string name="title_inform_reconnection">RECONEXIÓN DE SUMINISTRO</string>
+		<string name="msg_inform_reconnection">¡El suministro %s ya no tiene deudas pendientes y se debe proceder a su reconexión!</string>
+		
 		<!-- Collection Annulment -->
 		<string name="lbl_collection_annulment">Anulación</string>
 		<string name="btn_annulate">Anular</string>	
-		<string name="lbl_paid_receipt_list_title">Facturas cobradas</string>
+		<string name="lbl_paid_receipt_list_title">Facturas cobradas anulables</string>
 		<string name="title_annulment_errors">ERROR AL ANULAR COBRO</string>
 		<string name="title_collection_annulment">ANULACIÓN DE COBRO</string>
 		<string name="lbl_annulment_confirmation">Se procederá con la anulación de la factura:</string>
