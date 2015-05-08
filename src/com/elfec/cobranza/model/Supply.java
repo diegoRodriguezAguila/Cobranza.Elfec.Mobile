@@ -108,11 +108,10 @@ public class Supply extends Model {
 	/**
 	 * Busca un suministro por nus y número de cuenta
 	 * @param nus
-	 * @param accountNumber
 	 * @return el suministro encontrado / null si no se encontró
 	 */
-	public static Supply findSupplyByNUSOrAccount(int nus, String accountNumber) {
-		List<Supply> foundSupplies = findSupply(nus, accountNumber, "", -1);
+	public static Supply findSupplyByNUS(int nus) {
+		List<Supply> foundSupplies = findSupply(nus, null, null, -1);
 		return foundSupplies.size()>0 ? foundSupplies.get(0) : null;
 	}
 	

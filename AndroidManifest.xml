@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elfec.cobranza"
     android:versionCode="3"
-    android:versionName="1.15.05.05" >
+    android:versionName="1.15.05.08" >
 
     <uses-sdk
         android:minSdkVersion="16"

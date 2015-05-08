@@ -139,7 +139,7 @@ public class ReceiptGenerator {
 	 */
 	private static void assignReceiptLeftData(CPCLCommand command, CoopReceipt receipt)
 	{
-		String clientName = wrapName(Supply.findSupplyByNUSOrAccount(receipt.getSupplyId(), receipt.getSupplyNumber()).getClientName());
+		String clientName = wrapName(Supply.findSupplyByNUS(receipt.getSupplyId()).getClientName());
 		String clientAddress = wrapAddress("DIRECCIÓN: "+receipt.getClientAddress());
 		double extraSpacing = ((clientName.split("\r\n").length-1)*SP_FACTOR);
 		
