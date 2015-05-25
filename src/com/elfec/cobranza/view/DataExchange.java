@@ -26,10 +26,10 @@ import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.presenter.DataExchangePresenter;
+import com.elfec.cobranza.presenter.services.WipeAllDataServicePresenter.WipeConfirmationListener;
 import com.elfec.cobranza.presenter.views.IDataExchangeView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 import com.elfec.cobranza.view.services.WipeAllDataDialogService;
-import com.elfec.cobranza.presenter.services.WipeAllDataServicePresenter.WipeConfirmationListener;
 
 public class DataExchange extends Activity implements IDataExchangeView {
 

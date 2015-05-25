@@ -7,6 +7,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
@@ -50,6 +53,13 @@ public class Login extends Activity implements ILoginView {
 		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
 				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
 		setOnFocusChangedListeners();
+		PackageInfo pinfo;
+		try {
+			pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			((TextView)findViewById(R.id.title_login)).setText(
+					String.format(getString(R.string.app_full_name),pinfo.versionName));  
+		} catch (NameNotFoundException e) {			
+		}  
 		//TEST PRUPOUSES
 		//txtUsername.setText("ototora");
 		//txtPassword.setText("E1206");	
