@@ -64,8 +64,9 @@ public class DataExchangePresenter {
 				setUserAndPasswordVariables();
 				ManagerProcessResult result = DataExportManager.validateExportation();
 				result = enableRole(result);
-				result = exportCollectionPayments(result);
-				result = exportWSCollections(result);
+				result = exportWSCollections(result);/* NECESARIO primero llamar a ws 
+				para que se asignen los números de transacción remotos */
+				result = exportCollectionPayments(result);				
 				result = unlockRemoteRoutes(result, DataExchangeStatus.EXPORTED);
 				result = wipeAllData(result);
 				view.hideWaiting();

@@ -13,6 +13,7 @@ import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.WSCollection;
 import com.elfec.cobranza.model.enums.ExportStatus;
+import com.elfec.cobranza.model.enums.TransactionAction;
 import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.exceptions.AnnulationTimeExpiredException;
 import com.elfec.cobranza.model.exceptions.CollectionException;
@@ -62,7 +63,7 @@ public class CollectionManager {
 		DataAccessResult<Long> result = new DataAccessResult<Long>();
 		try
 		{
-			WSCollection transaction = WSCollectionManager.generateWSCollection(receipt, "COBRANZA");
+			WSCollection transaction = WSCollectionManager.generateWSCollection(receipt, TransactionAction.PAYMENT);
 			long transactionNumber = transaction.save();
 			
 			CollectionPayment payment = new CollectionPayment(SessionManager.getLoggedCashdeskNumber(), DateTime.now(), 
@@ -115,7 +116,7 @@ public class CollectionManager {
 			if(Hours.hoursBetween(payment.getPaymentDate(),DateTime.now()).getHours()>maxDif)
 				throw new AnnulationTimeExpiredException(receipt.getReceiptNumber(), receipt.getId());
 			
-			WSCollection transaction = WSCollectionManager.generateWSCollection(receipt, "ANULACION_COBRANZA");
+			WSCollection transaction = WSCollectionManager.generateWSCollection(receipt, TransactionAction.ANNULMENT);
 			long transactionNumber = transaction.save();			
 			if(payment !=null)
 			{

@@ -10,6 +10,7 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.elfec.cobranza.model.enums.ExportStatus;
+import com.elfec.cobranza.model.enums.TransactionAction;
 import com.elfec.cobranza.model.interfaces.IExportable;
 
 /**
@@ -20,7 +21,7 @@ import com.elfec.cobranza.model.interfaces.IExportable;
 @Table(name = "WSCollections")
 public class WSCollection extends Model implements IExportable{
 	public static final String INSERT_QUERY = "INSERT INTO ERP_ELFEC.COB_WS VALUES (%d, %d, '%s', %d, '%s', %d, %d, %d, "
-			+ "NULL, NULL, NULL, NULL, TO_DATE('%s', 'dd/mm/yyyy'))";
+			+ "NULL, NULL, NULL, 1, TO_DATE('%s', 'dd/mm/yyyy'))";
 	/**
 	 * ACCION en Oracle
 	 */
@@ -61,14 +62,21 @@ public class WSCollection extends Model implements IExportable{
 	@Column(name = "ExportStatus", notNull=true, index=true)
 	private short exportStatus;
 	
+	/**
+	 * El numero de transacción obtenido remotamente con la secuencia
+	 * COBRANZA.SEQ_COB_WS
+	 */
+	@Column(name = "RemoteTransactionNumber", index=true)
+	private Long remoteTransactionNumber;
+	
 	public WSCollection() {
 		super();
 	}
 
-	public WSCollection(String action, int receiptId, String status, int bankId,
+	public WSCollection(TransactionAction action, int receiptId, String status, int bankId,
 			int bankAccountId, int periodNumber, DateTime paymentDate, ExportStatus exportStatus) {
 		super();
-		this.action = action;
+		this.action = action.toString();
 		this.receiptId = receiptId;
 		this.status = status;
 		this.bankId = bankId;
@@ -84,10 +92,31 @@ public class WSCollection extends Model implements IExportable{
 	 */
 	public String toInsertSQL()
 	{
-		return String.format(Locale.getDefault(), INSERT_QUERY, getId(), getId(),
+		return toInsertSQL(getId());
+	}
+	
+	/**
+	 * Convierte esta transaccion en la consulta INSERT de Oracle, utilizando el parametro de transactionNumber
+	 * como número de transacción en la consulta INSERT
+	 * @param trNumber
+	 * @return INSERT query
+	 */
+	public String toInsertSQL(long trNumber)
+	{
+		return String.format(Locale.getDefault(), INSERT_QUERY, getId(), trNumber,
 				getAction(), getReceiptId(), getStatus(), 
 				getBankId(), getBankAccountId(), getPeriodNumber(),
 				getPaymentDate().toString("dd/MM/yyyy"));
+	}
+	
+	/**
+	 * Convierte esta transaccion en la consulta INSERT de Oracle, utilizando el remoteTransactionNumber
+	 * como número de transacción en la consulta INSERT
+	 * @return INSERT query
+	 */
+	public String toRemoteInsertSQL()
+	{
+		return toInsertSQL(remoteTransactionNumber);
 	}
 	
 	/**
@@ -101,12 +130,12 @@ public class WSCollection extends Model implements IExportable{
 	}
 
 	//#region Getters y Setters
-	public String getAction() {
-		return action;
+	public TransactionAction getAction() {
+		return TransactionAction.get(action);
 	}
 
-	public void setAction(String action) {
-		this.action = action;
+	public void setAction(TransactionAction action) {
+		this.action = action.toString();
 	}
 
 	public int getReceiptId() {
@@ -159,6 +188,14 @@ public class WSCollection extends Model implements IExportable{
 	
 	public ExportStatus getExportStatus() {
 		return ExportStatus.get(exportStatus);
+	}
+	
+	public Long getRemoteTransactionNumber() {
+		return remoteTransactionNumber;
+	}
+
+	public void setRemoteTransactionNumber(Long remoteTransactionNumber) {
+		this.remoteTransactionNumber = remoteTransactionNumber;
 	}
 	
 	@Override

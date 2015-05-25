@@ -25,7 +25,7 @@ public class CollectionPaymentRDA {
 	public static int insertCollectionPayment(String username, String password, CollectionPayment collectionPayment) throws ConnectException, SQLException
 	{
 		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
-		int result = stmt.executeUpdate(collectionPayment.toInsertSQL());
+		int result = stmt.executeUpdate(collectionPayment.toRemoteInsertSQL());
 		stmt.close();
 		return result;
 	}

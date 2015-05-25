@@ -1,6 +1,7 @@
 package com.elfec.cobranza.remote_data_access;
 
 import java.net.ConnectException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -25,8 +26,22 @@ public class WSCollectionRDA {
 	public static int insertWSCollection(String username, String password, WSCollection wSCollection) throws ConnectException, SQLException
 	{
 		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
-		int result = stmt.executeUpdate(wSCollection.toInsertSQL());
+		int result = stmt.executeUpdate(wSCollection.toRemoteInsertSQL());
 		stmt.close();
 		return result;
+	}
+	
+	public static Long requestRemoteTransactionNumber(String username, String password) throws ConnectException, SQLException
+	{
+		Long remoteTransactionNumber = null;
+		Statement stmt = OracleDatabaseConnector.instance(username, password).getNewQuerier();
+		ResultSet rs = stmt.executeQuery("SELECT COBRANZA.SEQ_COB_WS.NEXTVAL NUMERO_TRANSACCION FROM DUAL");
+		while(rs.next())
+		{
+			remoteTransactionNumber = rs.getLong("NUMERO_TRANSACCION");
+		}
+		rs.close();
+		stmt.close();
+		return remoteTransactionNumber;
 	}
 }

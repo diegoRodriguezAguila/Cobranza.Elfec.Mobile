@@ -284,12 +284,59 @@ public class CollectionPayment extends Model implements IExportable{
 		return new Select().from(CollectionPayment.class)
 				.where("ExportStatus = ?", ExportStatus.NOT_EXPORTED.toShort()).execute();
 	}
+	
+	/**
+	 * Obtiene la transacción (WScollection) relacionada con este cobro
+	 * @return WSCollection
+	 */
+	public WSCollection getRelatedTransaction()
+	{
+		if(transactionNumber!=0)
+			return WSCollection.load(WSCollection.class, transactionNumber);
+		return null;
+	}
+	
+	/**
+	 * Obtiene la transacción (WScollection) de anulación relacionada con este cobro
+	 * @return WSCollection, NULL si es que no existe una anulación
+	 */
+	public WSCollection getRelatedAnnulmentTransaction()
+	{
+		if(annulmentTransacNum!=0)
+			return WSCollection.load(WSCollection.class, annulmentTransacNum);
+		return null;
+	}
 
+	/**
+	 * Convierte esta transaccion en la consulta INSERT de Oracle asignandole los numeros 
+	 * de transacción remotos respectivos. 
+	 * @return INSERT query
+	 */
+	public String toRemoteInsertSQL()
+	{
+		return toInsertSQL(getRelatedTransaction().getRemoteTransactionNumber(), 
+				annulmentTransacNum==0?
+					annulmentTransacNum:
+					getRelatedAnnulmentTransaction().getRemoteTransactionNumber());
+	}
+	
 	/**
 	 * Convierte esta transaccion en la consulta INSERT de Oracle
 	 * @return INSERT query
 	 */
 	public String toInsertSQL()
+	{
+		return toInsertSQL(getTransactionNumber(), getAnnulmentTransacNum());
+	}
+	
+	/**
+	 * Convierte esta transaccion en la consulta INSERT de Oracle utilizando los
+	 * números de transaccion de los parámetros
+	 * @param transactionNumber
+	 * @param annulmentTransactionNumber , pasar 0 para NULL
+	 * @return INSERT query
+	 */
+	public String toInsertSQL(long transactionNumber, long annulmentTransactionNumber)
 	{
 		return String.format(Locale.getDefault(), INSERT_QUERY, getId(), getCashDeskNumber(),
 				getPaymentDate().toString("dd/MM/yyyy"), getUser(), getReceiptId(), 
@@ -298,8 +345,8 @@ public class CollectionPayment extends Model implements IExportable{
 				(getAnnulmentUser()==null?"NULL":"'"+getAnnulmentUser()+"'"),
 				(getAnnulmentDate()==null?"NULL":String.format("TO_DATE('%s', 'dd/mm/yyyy hh24:mi:ss')", 
 						getAnnulmentDate().toString("dd/MM/yyyy HH:mm:ss"))),
-				getTransactionNumber(), 
-				(getAnnulmentTransacNum()==0?"NULL":""+getAnnulmentTransacNum()),
+						transactionNumber, 
+				(annulmentTransactionNumber==0?"NULL":""+annulmentTransactionNumber),
 				getSupplyId(), getSupplyNumber(), getReceiptNumber(),
 				getYear(), getPeriodNumber(), getCashDeskDescription(),
 				getAnnulmentReasonId()==null?"NULL":getAnnulmentReasonId().toString(),

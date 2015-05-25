@@ -12,6 +12,7 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.PeriodBankAccount;
 import com.elfec.cobranza.model.WSCollection;
 import com.elfec.cobranza.model.enums.ExportStatus;
+import com.elfec.cobranza.model.enums.TransactionAction;
 import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
 import com.elfec.cobranza.model.results.DataAccessResult;
@@ -31,7 +32,7 @@ public class WSCollectionManager {
 	 * @return WSCollection
 	 * @throws NoPeriodBankAccountException 
 	 */
-	public static WSCollection generateWSCollection(CoopReceipt receipt, String type) throws NoPeriodBankAccountException {
+	public static WSCollection generateWSCollection(CoopReceipt receipt, TransactionAction type) throws NoPeriodBankAccountException {
 		PeriodBankAccount period = PeriodBankAccount.findByCashdeskNumberAndDate(SessionManager.getLoggedCashdeskNumber());
 		if(period==null)
 			throw new NoPeriodBankAccountException(SessionManager.getLoggedCashdeskNumber());
@@ -58,9 +59,30 @@ public class WSCollectionManager {
 			@Override
 			public int exportData(WSCollection wSCollection) throws ConnectException,
 					SQLException {
-				return WSCollectionRDA.insertWSCollection(username, password, wSCollection);
+				return WSCollectionRDA.insertWSCollection(username, password, 
+						getWSCollectionWithRemoteTransactionNumber(username, password, wSCollection));
 			}
 		}, exportListener);
+	}
+	
+	/**
+	 * Solicita y asigna un numero de transacción remoto para el WSCollection
+	 * @param username
+	 * @param password
+	 * @param wSCollection
+	 * @return la misma instancia del wSCollection con el numero de transacción remoto asignado
+	 * @throws ConnectException
+	 * @throws SQLException
+	 */
+	public static WSCollection getWSCollectionWithRemoteTransactionNumber(String username, String password, WSCollection wSCollection) throws ConnectException, SQLException
+	{
+		if(wSCollection.getRemoteTransactionNumber()==null)			
+		{
+			wSCollection.setRemoteTransactionNumber(
+					WSCollectionRDA.requestRemoteTransactionNumber(username, password));
+			wSCollection.save();
+		}
+		return wSCollection;
 	}
 
 }
