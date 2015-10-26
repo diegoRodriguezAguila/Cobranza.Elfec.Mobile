@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.widget.ArrayAdapter;
 
 import com.elfec.cobranza.R;
@@ -14,7 +15,7 @@ import com.elfec.cobranza.presenter.views.ICollectionActionView;
 import com.elfec.cobranza.presenter.views.ICollectionPaymentView;
 import com.elfec.cobranza.view.adapters.ReceiptAdapter;
 
-public class CollectionPaymentAdapter extends CollectionBaseAdapter{
+public class CollectionPaymentAdapter extends CollectionBaseAdapter {
 
 	public CollectionPaymentAdapter(Context context) {
 		super(context);
@@ -22,7 +23,8 @@ public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 
 	@Override
 	public String getActionTitle() {
-		return getContext().getResources().getString(R.string.lbl_collection_payment);
+		return getContext().getResources().getString(
+				R.string.lbl_collection_payment);
 	}
 
 	@Override
@@ -37,12 +39,13 @@ public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 
 	@Override
 	public Drawable getButtonDrawable() {
-		return getContext().getResources().getDrawable(R.drawable.collect);
+		return ContextCompat.getDrawable(getContext(), R.drawable.collect);
 	}
 
 	@Override
 	public String getReceiptListTitle() {
-		return getContext().getResources().getString(R.string.lbl_pending_receipt_list_title);
+		return getContext().getResources().getString(
+				R.string.lbl_pending_receipt_list_title);
 	}
 
 	@Override
@@ -57,8 +60,10 @@ public class CollectionPaymentAdapter extends CollectionBaseAdapter{
 	}
 
 	@Override
-	public ArrayAdapter<CoopReceipt> getReceiptAdapter(List<CoopReceipt> receipts) {
-		return new ReceiptAdapter(getContext(), R.layout.receipt_list_item, receipts);
+	public ArrayAdapter<CoopReceipt> getReceiptAdapter(
+			List<CoopReceipt> receipts) {
+		return new ReceiptAdapter(getContext(), R.layout.receipt_list_item,
+				receipts);
 	}
 
 	@Override

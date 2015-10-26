@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -39,7 +40,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
  * contained in a {@link ZoneListActivity} in two-pane mode (on tablets) or a
  * {@link ZoneRoutesActivity} on handsets.
  */
-public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
+public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView {
 	/**
 	 * The fragment argument representing the item ID that this fragment
 	 * represents.
@@ -48,24 +49,23 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 	/**
 	 * La clave para recuperar la propiedad is two pane
 	 */
-	public static final String IS_TWO_PANE ="is_two_pane";
+	public static final String IS_TWO_PANE = "is_two_pane";
 
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
-	
+
 	private ZoneRoutesPresenter presenter;
 	private boolean isTwoPane;
-	
+
 	private boolean areAllItemsSelected;
-	
+
 	private ListView listViewZoneRoutes;
 	private Button btnSelectAllRoutes;
 	private Button btnDownloadRoutes;
 	private ProgressDialogPro waitingDialog;
 	private Handler mHandler;
 	private List<String> waitingMessages;
-	
+
 	private long lastClickTime = 0;
-	
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -84,11 +84,15 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 			// to load content from a content provider.
 			presenter.loadZoneRoutes(getArguments().getInt(ARG_ITEM_ID));
 		}
-		if(getArguments().containsKey(IS_TWO_PANE))
+		if (getArguments().containsKey(IS_TWO_PANE))
 			isTwoPane = getArguments().getBoolean(IS_TWO_PANE);
 		this.mHandler = new Handler();
-		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
-				.setBackgroundColorValue(getResources().getColor(R.color.cobranza_color)).build();
+		croutonStyle = new de.keyboardsurfer.android.widget.crouton.Style.Builder()
+				.setFontName("fonts/segoe_ui_semilight.ttf")
+				.setTextSize(16)
+				.setBackgroundColorValue(
+						ContextCompat.getColor(getActivity(),
+								R.color.cobranza_color)).build();
 		waitingMessages = new ArrayList<String>();
 	}
 
@@ -97,117 +101,135 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_zone_routes,
 				container, false);
-		if(!isTwoPane)
-			((TextView)rootView.findViewById(R.id.txt_routes)).setVisibility(View.GONE);
-		listViewZoneRoutes = ((ListView)rootView.findViewById(R.id.listview_zone_routes));
+		if (!isTwoPane)
+			((TextView) rootView.findViewById(R.id.txt_routes))
+					.setVisibility(View.GONE);
+		listViewZoneRoutes = ((ListView) rootView
+				.findViewById(R.id.listview_zone_routes));
 		listViewZoneRoutes.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> adapter, View view, int position,
-					long id) {
-				if(areAllItemsSelected && !view.isActivated())
-				{
+			public void onItemClick(AdapterView<?> adapter, View view,
+					int position, long id) {
+				if (areAllItemsSelected && !view.isActivated()) {
 					areAllItemsSelected = false;
 					setButtonSelectAllName();
 				}
-				if(listViewZoneRoutes.getCheckedItemCount()==((RouteAdapter)listViewZoneRoutes.getAdapter()).getEnabledItemsCount())
-				{
+				if (listViewZoneRoutes.getCheckedItemCount() == ((RouteAdapter) listViewZoneRoutes
+						.getAdapter()).getEnabledItemsCount()) {
 					areAllItemsSelected = true;
 					setButtonSelectAllName();
 				}
 			}
 		});
-		btnSelectAllRoutes = ((Button)rootView.findViewById(R.id.btn_select_all_routes));
-		btnSelectAllRoutes.setOnClickListener(new OnClickListener() {			
+		btnSelectAllRoutes = ((Button) rootView
+				.findViewById(R.id.btn_select_all_routes));
+		btnSelectAllRoutes.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				areAllItemsSelected=!areAllItemsSelected;
+				areAllItemsSelected = !areAllItemsSelected;
 				btnSelectAllRoutesClick(areAllItemsSelected);
 				setButtonSelectAllName();
 			}
 		});
-		btnDownloadRoutes = ((Button)rootView.findViewById(R.id.btn_download_routes));
-		btnDownloadRoutes.setOnClickListener(new OnClickListener() {			
+		btnDownloadRoutes = ((Button) rootView
+				.findViewById(R.id.btn_download_routes));
+		btnDownloadRoutes.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+				if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
 					List<Route> selectedRoutes = new ArrayList<Route>();
-					SparseBooleanArray sparseBooleanArray = listViewZoneRoutes.getCheckedItemPositions();
+					SparseBooleanArray sparseBooleanArray = listViewZoneRoutes
+							.getCheckedItemPositions();
 					int size = listViewZoneRoutes.getAdapter().getCount();
 					for (int i = 0; i < size; i++) {
-						if(sparseBooleanArray.get(i))
-						{
-							selectedRoutes.add((Route)listViewZoneRoutes.getItemAtPosition(i));
+						if (sparseBooleanArray.get(i)) {
+							selectedRoutes.add((Route) listViewZoneRoutes
+									.getItemAtPosition(i));
 						}
 					}
-					if(selectedRoutes.size()>0)
+					if (selectedRoutes.size() > 0)
 						presenter.starDataImportation(selectedRoutes);
-					else warnUserNotSelectedRoutes();
+					else
+						warnUserNotSelectedRoutes();
 				}
-		        lastClickTime = SystemClock.elapsedRealtime();
+				lastClickTime = SystemClock.elapsedRealtime();
 			}
 		});
 		return rootView;
 	}
-	
+
 	/**
 	 * Asigna el nombre y drawable del boton de seleccionar todos
 	 */
 	private void setButtonSelectAllName() {
-		btnSelectAllRoutes.setText(areAllItemsSelected?R.string.btn_unselect_all_routes:R.string.btn_select_all_routes);
-		btnSelectAllRoutes.setCompoundDrawablesWithIntrinsicBounds(
-				getResources().getDrawable(areAllItemsSelected?R.drawable.list_unselect_all:R.drawable.list_select_all)
-				, null, null, null);
+		btnSelectAllRoutes
+				.setText(areAllItemsSelected ? R.string.btn_unselect_all_routes
+						: R.string.btn_select_all_routes);
+		btnSelectAllRoutes
+				.setCompoundDrawablesWithIntrinsicBounds(
+						ContextCompat
+								.getDrawable(
+										getActivity(),
+										areAllItemsSelected ? R.drawable.list_unselect_all
+												: R.drawable.list_select_all),
+						null, null, null);
 	}
-	
-	public void btnSelectAllRoutesClick(final boolean select)
-	{
+
+	public void btnSelectAllRoutesClick(final boolean select) {
 		new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < listViewZoneRoutes.getAdapter().getCount(); i++) {
-                    final int pos = i;
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                        	if(listViewZoneRoutes.getAdapter().isEnabled(pos))
-                        		listViewZoneRoutes.setItemChecked(pos, select);  
-                        }
-                    });
-                }
-            }
-        }).start();     
+			@Override
+			public void run() {
+				for (int i = 0; i < listViewZoneRoutes.getAdapter().getCount(); i++) {
+					final int pos = i;
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							if (listViewZoneRoutes.getAdapter().isEnabled(pos))
+								listViewZoneRoutes.setItemChecked(pos, select);
+						}
+					});
+				}
+			}
+		}).start();
 	}
 
 	/**
-	 * Muestra un mensaje al usuario de que no se seleccionaron rutas para cargar
+	 * Muestra un mensaje al usuario de que no se seleccionaron rutas para
+	 * cargar
 	 */
-	public void warnUserNotSelectedRoutes()
-	{
+	public void warnUserNotSelectedRoutes() {
 		Crouton.clearCroutonsForActivity(getActivity());
-		Crouton.makeText(getActivity(), R.string.msg_no_routes_selected, croutonStyle).show();
+		Crouton.makeText(getActivity(), R.string.msg_no_routes_selected,
+				croutonStyle).show();
 	}
-	
-	//#region Interface Methods
-	
+
+	// #region Interface Methods
+
 	@Override
 	public void setZoneRoutes(final List<Route> zoneRoutes) {
-		getActivity().runOnUiThread(new Runnable() {			
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				listViewZoneRoutes.setAdapter(new RouteAdapter(getActivity(), R.layout.route_list_item, zoneRoutes));
+				listViewZoneRoutes.setAdapter(new RouteAdapter(getActivity(),
+						R.layout.route_list_item, zoneRoutes));
 			}
 		});
 	}
 
 	@Override
 	public void showWaiting() {
-		getActivity().runOnUiThread(new Runnable() {			
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				getActivity().getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-				waitingDialog = new ProgressDialogPro(getActivity(), R.style.Theme_FlavoredMaterialLight);
-				waitingDialog.setMessage(getResources().getString(R.string.msg_waiting));
+				getActivity()
+						.getWindow()
+						.addFlags(
+								android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+				waitingDialog = new ProgressDialogPro(getActivity(),
+						R.style.Theme_FlavoredMaterialLight);
+				waitingDialog.setMessage(getResources().getString(
+						R.string.msg_waiting));
 				waitingDialog.setTitle(R.string.title_waiting);
 				waitingDialog.setIcon(R.drawable.import_from_server_d);
 				waitingDialog.setCancelable(false);
@@ -217,15 +239,16 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 		});
 	}
 
-	
-
 	@Override
 	public void hideWaiting() {
-		getActivity().runOnUiThread(new Runnable() {			
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				getActivity().getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-				if(waitingDialog!=null)
+				getActivity()
+						.getWindow()
+						.clearFlags(
+								android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+				if (waitingDialog != null)
 					waitingDialog.dismiss();
 			}
 		});
@@ -233,16 +256,17 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 
 	@Override
 	public void showImportErrors(final List<Exception> errors) {
-		getActivity().runOnUiThread(new Runnable() {			
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(errors.size()>0)
-				{
-					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
+				if (errors.size() > 0) {
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+							getActivity());
 					builder.setTitle(R.string.title_download_errors)
-					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
-					.setPositiveButton(R.string.btn_ok, null)
-					.show();
+							.setMessage(
+									MessageListFormatter
+											.fotmatHTMLFromErrors(errors))
+							.setPositiveButton(R.string.btn_ok, null).show();
 				}
 			}
 		});
@@ -250,28 +274,32 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 
 	@Override
 	public void successfullyImportation() {
-		getActivity().runOnUiThread(new Runnable() {			
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				areAllItemsSelected = false;
 				setButtonSelectAllName();
 				Crouton.clearCroutonsForActivity(getActivity());
-				Crouton.makeText(getActivity(), R.string.msg_routes_downloaded_successfully, croutonStyle).show();
+				Crouton.makeText(getActivity(),
+						R.string.msg_routes_downloaded_successfully,
+						croutonStyle).show();
 			}
 		});
 	}
 
 	@Override
-	public void addWaitingMessage(final int messageResource, final boolean replaceAll) {
-		getActivity().runOnUiThread(new Runnable() {			
+	public void addWaitingMessage(final int messageResource,
+			final boolean replaceAll) {
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(waitingDialog!=null)
-				{
-					if(replaceAll)
+				if (waitingDialog != null) {
+					if (replaceAll)
 						waitingMessages.clear();
-					waitingMessages.add(getResources().getString(messageResource));
-					waitingDialog.setMessage(MessageListFormatter.fotmatHTMLFromStringList(waitingMessages));
+					waitingMessages.add(getResources().getString(
+							messageResource));
+					waitingDialog.setMessage(MessageListFormatter
+							.fotmatHTMLFromStringList(waitingMessages));
 				}
 			}
 		});
@@ -279,13 +307,14 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 
 	@Override
 	public void deleteWaitingMessage(final int messageResource) {
-		getActivity().runOnUiThread(new Runnable() {			
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(waitingDialog!=null)
-				{
-					waitingMessages.remove(getResources().getString(messageResource));
-					waitingDialog.setMessage(MessageListFormatter.fotmatHTMLFromStringList(waitingMessages));
+				if (waitingDialog != null) {
+					waitingMessages.remove(getResources().getString(
+							messageResource));
+					waitingDialog.setMessage(MessageListFormatter
+							.fotmatHTMLFromStringList(waitingMessages));
 				}
 			}
 		});
@@ -294,12 +323,11 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 	@Override
 	public void warnLockedRoutes(final List<Route> lockedRoutes,
 			final OnRoutesImportConfirmed callback, final boolean noMoreRoutes) {
-		getActivity().runOnUiThread(new Runnable() {			
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				new LockedRoutesWarningService(getActivity(), lockedRoutes, 
-						callback, noMoreRoutes, 
-						new OnServiceCanceled() {							
+				new LockedRoutesWarningService(getActivity(), lockedRoutes,
+						callback, noMoreRoutes, new OnServiceCanceled() {
 							@Override
 							public void onServiceCanceled() {
 								hideWaiting();
@@ -311,8 +339,9 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView{
 
 	@Override
 	public String getIMEI() {
-		return ((TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+		return ((TelephonyManager) getActivity().getSystemService(
+				Context.TELEPHONY_SERVICE)).getDeviceId();
 	}
-	
-	//#endregion
+
+	// #endregion
 }

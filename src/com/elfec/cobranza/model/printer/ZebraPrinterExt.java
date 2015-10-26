@@ -17,29 +17,30 @@ import com.zebra.sdk.printer.PrinterStatus;
 import com.zebra.sdk.printer.ZebraPrinter;
 
 /**
- * Una extensión de una impresora zebra que añade funcionalidad
- * utilizando el principio de orientación a objetos de composición sobre
- * herencia
+ * Una extensión de una impresora zebra que añade funcionalidad utilizando el
+ * principio de orientación a objetos de composición sobre herencia
+ * 
  * @author drodriguez
  *
  */
+@SuppressWarnings("deprecation")
 public class ZebraPrinterExt implements ZebraPrinter {
 
 	/**
-	 * Constante para las impresoras zebras RW 420, para otro tipo de impresora es necesario ver otras constantes
+	 * Constante para las impresoras zebras RW 420, para otro tipo de impresora
+	 * es necesario ver otras constantes
 	 */
 	public static final int ZEBRA_BLUETOOTH_PRINTER = 1664;
 	private ZebraPrinter printer;
-	
+
 	public ZebraPrinterExt(ZebraPrinter printer) {
-		if(printer==null)
+		if (printer == null)
 			throw new IllegalArgumentException("La impresora no puede ser null");
 		this.printer = printer;
 	}
-	
+
 	@Override
-	public void calibrate() throws ConnectionException
-	{
+	public void calibrate() throws ConnectionException {
 		printer.calibrate();
 	}
 
@@ -79,21 +80,22 @@ public class ZebraPrinterExt implements ZebraPrinter {
 	}
 
 	@Override
-	public void printImage(ZebraImageI image, int x, int y, int width, int height,
-			boolean insideFormat) throws ConnectionException {
+	public void printImage(ZebraImageI image, int x, int y, int width,
+			int height, boolean insideFormat) throws ConnectionException {
 		printer.printImage(image, x, y, width, height, insideFormat);
 	}
 
 	@Override
-	public void storeImage(String deviceDriveAndFileName, ZebraImageI image, int width, int height)
-			throws ConnectionException, ZebraIllegalArgumentException {
+	public void storeImage(String deviceDriveAndFileName, ZebraImageI image,
+			int width, int height) throws ConnectionException,
+			ZebraIllegalArgumentException {
 		printer.storeImage(deviceDriveAndFileName, image, width, height);
 	}
 
 	@Override
-	public void storeImage(String deviceDriveAndFileName, String imageFullPath, int width, int height)
-			throws ConnectionException, ZebraIllegalArgumentException,
-			IOException {
+	public void storeImage(String deviceDriveAndFileName, String imageFullPath,
+			int width, int height) throws ConnectionException,
+			ZebraIllegalArgumentException, IOException {
 		printer.storeImage(deviceDriveAndFileName, imageFullPath, width, height);
 	}
 
@@ -109,21 +111,22 @@ public class ZebraPrinterExt implements ZebraPrinter {
 	}
 
 	@Override
-	public void printStoredFormat(String formatPathOnPrinter, Map<Integer, String> vars)
-			throws ConnectionException {
+	public void printStoredFormat(String formatPathOnPrinter,
+			Map<Integer, String> vars) throws ConnectionException {
 		printer.printStoredFormat(formatPathOnPrinter, vars);
 	}
 
 	@Override
-	public void printStoredFormat(String formatPathOnPrinter, String[] vars, String encoding)
-			throws ConnectionException, UnsupportedEncodingException {
+	public void printStoredFormat(String formatPathOnPrinter, String[] vars,
+			String encoding) throws ConnectionException,
+			UnsupportedEncodingException {
 		printer.printStoredFormat(formatPathOnPrinter, vars, encoding);
 	}
 
 	@Override
-	public void printStoredFormat(String formatPathOnPrinter, Map<Integer, String> vars,
-			String encoding) throws ConnectionException,
-			UnsupportedEncodingException {
+	public void printStoredFormat(String formatPathOnPrinter,
+			Map<Integer, String> vars, String encoding)
+			throws ConnectionException, UnsupportedEncodingException {
 		printer.printStoredFormat(formatPathOnPrinter, vars, encoding);
 	}
 
@@ -150,11 +153,13 @@ public class ZebraPrinterExt implements ZebraPrinter {
 
 	@Override
 	public void sendCommand(String command) throws ConnectionException {
-		printer.getConnection().write(EncodingUtils.getBytes(command, "ISO-8859-1"));
+		printer.getConnection().write(
+				EncodingUtils.getBytes(command, "ISO-8859-1"));
 	}
-	
+
 	public void sendCommand(CPCLCommand command) throws ConnectionException {
-		printer.getConnection().write(EncodingUtils.getBytes(command.toString(), "ISO-8859-1"));
+		printer.getConnection().write(
+				EncodingUtils.getBytes(command.toString(), "ISO-8859-1"));
 	}
 
 	@Override
@@ -176,7 +181,5 @@ public class ZebraPrinterExt implements ZebraPrinter {
 	public void setConnection(Connection connection) {
 		printer.setConnection(connection);
 	}
-	
-	
 
 }

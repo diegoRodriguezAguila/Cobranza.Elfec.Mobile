@@ -3,8 +3,8 @@ package com.elfec.cobranza.view;
 import java.util.List;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.ListFragment;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.ListView;
@@ -25,7 +25,7 @@ import com.elfec.cobranza.view.adapters.ZoneAdapter;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ZoneListFragment extends ListFragment implements IZoneListView{
+public class ZoneListFragment extends ListFragment implements IZoneListView {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -65,7 +65,7 @@ public class ZoneListFragment extends ListFragment implements IZoneListView{
 		public void onItemSelected(int id) {
 		}
 	};
-	
+
 	private ZoneListPresenter presenter;
 
 	/**
@@ -94,6 +94,7 @@ public class ZoneListFragment extends ListFragment implements IZoneListView{
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -155,23 +156,25 @@ public class ZoneListFragment extends ListFragment implements IZoneListView{
 
 		mActivatedPosition = position;
 	}
-	
-	//#region Interface Methods
+
+	// #region Interface Methods
 
 	@Override
 	public void setZones(final List<Zone> zones) {
-		getActivity().runOnUiThread(new Runnable() {			
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(zones.size()>0)
-				{
-					setListAdapter(new ZoneAdapter(getActivity(), R.layout.zone_list_item, zones));
-				}
-				else setEmptyText(Html.fromHtml("El usuario <b>"+SessionManager.getLoggedInUsername()+"</b> no tiene ninguna zona asignada!"));
-				
+				if (zones.size() > 0) {
+					setListAdapter(new ZoneAdapter(getActivity(),
+							R.layout.zone_list_item, zones));
+				} else
+					setEmptyText(Html.fromHtml("El usuario <b>"
+							+ SessionManager.getLoggedInUsername()
+							+ "</b> no tiene ninguna zona asignada!"));
+
 			}
 		});
 	}
-	
-	//#endregion
+
+	// #endregion
 }

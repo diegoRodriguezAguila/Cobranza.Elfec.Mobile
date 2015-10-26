@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="libs/ojdbc14.jar"/>
 	<classpathentry kind="lib" path="libs/ZSDK_ANDROID_API.jar"/>
 	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="libs/org.apache.http.legacy.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

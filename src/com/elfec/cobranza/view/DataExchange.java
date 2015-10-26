@@ -12,6 +12,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.view.Menu;
@@ -37,21 +38,22 @@ public class DataExchange extends Activity implements IDataExchangeView {
 	private long lastClickTime = 0;
 	private DataExchangePresenter presenter;
 	private ProgressDialogPro waitingDialog;
-	
+
 	/**
 	 * Indica si la actividad fue destruida o no
 	 */
 	private boolean isDestroyed;
-	
-	private static final int TIME_BETWEEN_CLICKS  = 600;
-	
+
+	private static final int TIME_BETWEEN_CLICKS = 600;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_data_exchange);
 		OracleDatabaseConnector.initializeContext(this);
 		presenter = new DataExchangePresenter(this);
-		((TextView) findViewById(R.id.txt_device_imei)).setText(getIntent().getExtras().getString(IMEI));
+		((TextView) findViewById(R.id.txt_device_imei)).setText(getIntent()
+				.getExtras().getString(IMEI));
 		presenter.setFields();
 		isDestroyed = false;
 	}
@@ -62,156 +64,168 @@ public class DataExchange extends Activity implements IDataExchangeView {
 		getMenuInflater().inflate(R.menu.data_exchange, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int idItem = item.getItemId();
-		switch(idItem)
-		{
-			case (R.id.menu_wipe_all_data):	{
-				new WipeAllDataDialogService(this, new WipeConfirmationListener() {					
-					@Override
-					public void onWipeConfirmed() {
-						presenter.processDataWipe();
-					}
-				}).show();
-				return true;
-			}
-			default:{
-				return true;
-			}
+		switch (idItem) {
+		case (R.id.menu_wipe_all_data): {
+			new WipeAllDataDialogService(this, new WipeConfirmationListener() {
+				@Override
+				public void onWipeConfirmed() {
+					presenter.processDataWipe();
+				}
+			}).show();
+			return true;
+		}
+		default: {
+			return true;
+		}
 		}
 	}
-	
+
 	@Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-	
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+	}
+
 	@Override
 	public void onBackPressed() {
 		presenter.closeCurrentSession();
 	}
-	
+
 	@Override
-	protected void onDestroy()
-	{
+	protected void onDestroy() {
 		super.onDestroy();
 		isDestroyed = true;
 	}
-	
+
 	@Override
-	public void onResume()
-	{
+	public void onResume() {
 		super.onResume();
-		((TextView) findViewById(R.id.txt_date)).setText(TextFormater.capitalize(DateTime.now().toString("dd MMMM yyyy")));
+		((TextView) findViewById(R.id.txt_date)).setText(TextFormater
+				.capitalize(DateTime.now().toString("dd MMMM yyyy")));
 	}
-	
-	public void btnDownloadDataClick(View view)
-	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
+
+	public void btnDownloadDataClick(View view) {
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS) {
 			Intent i = new Intent(DataExchange.this, ZoneListActivity.class);
 			startActivity(i);
-			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+			overridePendingTransition(R.anim.slide_left_in,
+					R.anim.slide_left_out);
 		}
-        lastClickTime = SystemClock.elapsedRealtime();
+		lastClickTime = SystemClock.elapsedRealtime();
 	}
-	
-	public void btnUploadDataClick(View view)
-	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
-			new AlertDialogPro.Builder(this).setTitle(R.string.title_exportation_confirm)
-			.setIcon(R.drawable.export_to_server_d)
-			.setMessage(R.string.msg_exportation_confirm)
-			.setNegativeButton(R.string.btn_cancel, null)
-			.setPositiveButton(R.string.btn_ok, new OnClickListener() {					
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					presenter.handleUpload();
-				}
-			}).show();
+
+	public void btnUploadDataClick(View view) {
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS) {
+			new AlertDialogPro.Builder(this)
+					.setTitle(R.string.title_exportation_confirm)
+					.setIcon(R.drawable.export_to_server_d)
+					.setMessage(R.string.msg_exportation_confirm)
+					.setNegativeButton(R.string.btn_cancel, null)
+					.setPositiveButton(R.string.btn_ok, new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							presenter.handleUpload();
+						}
+					}).show();
 		}
-        lastClickTime = SystemClock.elapsedRealtime();
+		lastClickTime = SystemClock.elapsedRealtime();
 	}
-	
-	public void btnMainMenuClick(View view)
-	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS){
+
+	public void btnMainMenuClick(View view) {
+		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS) {
 			presenter.validateMainMenuOption();
 		}
-        lastClickTime = SystemClock.elapsedRealtime();
+		lastClickTime = SystemClock.elapsedRealtime();
 	}
-	
+
 	/**
 	 * Muestra errores con el titulo indicado
+	 * 
 	 * @param titleId
 	 * @param errors
 	 */
-	public void showErrors(final int titleId, final List<Exception> errors)
-	{
-		if(!isDestroyed && errors.size()>0)
-		{
-			runOnUiThread(new Runnable() {			
+	public void showErrors(final int titleId, final List<Exception> errors) {
+		if (!isDestroyed && errors.size() > 0) {
+			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					new AlertDialogPro.Builder(DataExchange.this).setTitle(titleId)
-					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
-					.setPositiveButton(R.string.btn_ok, null).show();
+					new AlertDialogPro.Builder(DataExchange.this)
+							.setTitle(titleId)
+							.setMessage(
+									MessageListFormatter
+											.fotmatHTMLFromErrors(errors))
+							.setPositiveButton(R.string.btn_ok, null).show();
 				}
 			});
 		}
 	}
+
 	/**
 	 * Notifica al usuario un mensaje
+	 * 
 	 * @param msgId
 	 */
-	public void notifyUser(final int msgId)
-	{
-		runOnUiThread(new Runnable() {			
+	public void notifyUser(final int msgId) {
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Toast.makeText(DataExchange.this, msgId, Toast.LENGTH_LONG).show();
+				Toast.makeText(DataExchange.this, msgId, Toast.LENGTH_LONG)
+						.show();
 			}
 		});
 	}
-	
-	//#region Interface Methods
+
+	// #region Interface Methods
 
 	@Override
 	public void setCurrentUser(String username) {
-		((TextView) findViewById(R.id.txt_username_welcome)).setText(Html.fromHtml("Bienvenido <b>"+username+"</b>!"));
+		((TextView) findViewById(R.id.txt_username_welcome)).setText(Html
+				.fromHtml("Bienvenido <b>" + username + "</b>!"));
 	}
 
 	@Override
 	public void setCashdeskNumber(int cashdeskNumber) {
-		((TextView) findViewById(R.id.txt_cashdesk_number)).setText(""+cashdeskNumber);
+		((TextView) findViewById(R.id.txt_cashdesk_number)).setText(""
+				+ cashdeskNumber);
 	}
 
 	@Override
 	public void notifySessionClosed(final String username) {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Toast.makeText(DataExchange.this, Html.fromHtml("Se finalizó la sesión de <b>"+username+"</b>!"), Toast.LENGTH_LONG).show();
-				finish();//go back to the previous Activity
-				overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
+				Toast.makeText(
+						DataExchange.this,
+						Html.fromHtml("Se finalizó la sesión de <b>" + username
+								+ "</b>!"), Toast.LENGTH_LONG).show();
+				finish();// go back to the previous Activity
+				overridePendingTransition(R.anim.slide_right_in,
+						R.anim.slide_right_out);
 			}
 		});
 	}
 
 	@Override
 	public void showWaiting() {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
-			public void run() {			
-				waitingDialog = new ProgressDialogPro(DataExchange.this, R.style.Theme_FlavoredMaterialLight);
-				waitingDialog.setMessage(getResources().getString(R.string.msg_export_validation));
+			public void run() {
+				waitingDialog = new ProgressDialogPro(DataExchange.this,
+						R.style.Theme_FlavoredMaterialLight);
+				waitingDialog.setMessage(getResources().getString(
+						R.string.msg_export_validation));
 				waitingDialog.setCancelable(false);
 				waitingDialog.setIndeterminate(true);
 				waitingDialog.setIcon(R.drawable.export_to_server_d);
 				waitingDialog.setTitle(R.string.title_upload_waiting);
-				waitingDialog.setProgressDrawable(getResources().getDrawable(R.drawable.progress_horizontal_cobranza));
-				waitingDialog.setProgressStyle(ProgressDialogPro.STYLE_HORIZONTAL);
+				waitingDialog.setProgressDrawable(ContextCompat.getDrawable(
+						DataExchange.this,
+						R.drawable.progress_horizontal_cobranza));
+				waitingDialog
+						.setProgressStyle(ProgressDialogPro.STYLE_HORIZONTAL);
 				waitingDialog.setCanceledOnTouchOutside(false);
 				waitingDialog.show();
 			}
@@ -220,11 +234,10 @@ public class DataExchange extends Activity implements IDataExchangeView {
 
 	@Override
 	public void updateWaiting(final int strId, final int totalData) {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(waitingDialog!=null)
-				{
+				if (waitingDialog != null) {
 					waitingDialog.setIndeterminate(false);
 					waitingDialog.setMax(totalData);
 					waitingDialog.setMessage(getResources().getString(strId));
@@ -235,10 +248,10 @@ public class DataExchange extends Activity implements IDataExchangeView {
 
 	@Override
 	public void hideWaiting() {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(waitingDialog!=null)
+				if (waitingDialog != null)
 					waitingDialog.dismiss();
 			}
 		});
@@ -246,15 +259,15 @@ public class DataExchange extends Activity implements IDataExchangeView {
 
 	@Override
 	public void showExportationErrors(List<Exception> errors) {
-		showErrors(R.string.title_exportation_errors,errors);
+		showErrors(R.string.title_exportation_errors, errors);
 	}
 
 	@Override
 	public void updateProgress(final int dataCount, int totalData) {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(waitingDialog!=null)
+				if (waitingDialog != null)
 					waitingDialog.setProgress(dataCount);
 			}
 		});
@@ -267,35 +280,37 @@ public class DataExchange extends Activity implements IDataExchangeView {
 
 	@Override
 	public void updateWaiting(final int strId) {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(waitingDialog!=null)
-				{
+				if (waitingDialog != null) {
 					waitingDialog.setIndeterminate(true);
 					waitingDialog.setMessage(getResources().getString(strId));
 				}
 			}
 		});
 	}
-	
+
 	@Override
 	public String getIMEI() {
-		return ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+		return ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE))
+				.getDeviceId();
 	}
 
 	@Override
 	public void showWipingDataWait() {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
-			public void run() {		
-			waitingDialog = new ProgressDialogPro(DataExchange.this, R.style.Theme_FlavoredMaterialLight);
-			waitingDialog.setMessage(getResources().getString(R.string.msg_unlocking_remote_routes));
-			waitingDialog.setCancelable(false);
-			waitingDialog.setIcon(R.drawable.wipe_all_data_d);
-			waitingDialog.setTitle(R.string.title_wipe_all_data);
-			waitingDialog.setCanceledOnTouchOutside(false);
-			waitingDialog.show();
+			public void run() {
+				waitingDialog = new ProgressDialogPro(DataExchange.this,
+						R.style.Theme_FlavoredMaterialLight);
+				waitingDialog.setMessage(getResources().getString(
+						R.string.msg_unlocking_remote_routes));
+				waitingDialog.setCancelable(false);
+				waitingDialog.setIcon(R.drawable.wipe_all_data_d);
+				waitingDialog.setTitle(R.string.title_wipe_all_data);
+				waitingDialog.setCanceledOnTouchOutside(false);
+				waitingDialog.show();
 			}
 		});
 	}
@@ -312,30 +327,32 @@ public class DataExchange extends Activity implements IDataExchangeView {
 
 	@Override
 	public void goToMainMenu() {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				Intent i = new Intent(DataExchange.this, MainMenu.class);
 				startActivity(i);
-				overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+				overridePendingTransition(R.anim.slide_left_in,
+						R.anim.slide_left_out);
 			}
 		});
 	}
 
 	@Override
 	public void showMainMenuAccessLocked() {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(DataExchange.this);
+				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+						DataExchange.this);
 				builder.setTitle(R.string.title_main_menu_locked)
-				.setIcon(R.drawable.main_menu_locked)
-				.setMessage(Html.fromHtml(getString(R.string.msg_main_menu_locked)))
-				.setPositiveButton(R.string.btn_ok, null)
-				.show();
+						.setIcon(R.drawable.main_menu_locked)
+						.setMessage(
+								Html.fromHtml(getString(R.string.msg_main_menu_locked)))
+						.setPositiveButton(R.string.btn_ok, null).show();
 			}
 		});
 	}
-	
-	//#endregion
+
+	// #endregion
 }

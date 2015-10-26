@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.widget.ArrayAdapter;
 
 import com.elfec.cobranza.R;
@@ -22,7 +23,8 @@ public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
 
 	@Override
 	public String getActionTitle() {
-		return getContext().getResources().getString(R.string.lbl_collection_annulment);
+		return getContext().getResources().getString(
+				R.string.lbl_collection_annulment);
 	}
 
 	@Override
@@ -37,12 +39,13 @@ public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
 
 	@Override
 	public Drawable getButtonDrawable() {
-		return getContext().getResources().getDrawable(R.drawable.annulate);
+		return ContextCompat.getDrawable(getContext(), R.drawable.annulate);
 	}
 
 	@Override
 	public String getReceiptListTitle() {
-		return getContext().getResources().getString(R.string.lbl_paid_receipt_list_title);
+		return getContext().getResources().getString(
+				R.string.lbl_paid_receipt_list_title);
 	}
 
 	@Override
@@ -57,8 +60,10 @@ public class CollectionAnnulmentAdapter extends CollectionBaseAdapter {
 	}
 
 	@Override
-	public ArrayAdapter<CoopReceipt> getReceiptAdapter(List<CoopReceipt> receipts) {
-		return new AnnulationReceiptAdapter(getContext(), R.layout.receipt_list_item, receipts, 1);
+	public ArrayAdapter<CoopReceipt> getReceiptAdapter(
+			List<CoopReceipt> receipts) {
+		return new AnnulationReceiptAdapter(getContext(),
+				R.layout.receipt_list_item, receipts, 1);
 	}
 
 	@Override
