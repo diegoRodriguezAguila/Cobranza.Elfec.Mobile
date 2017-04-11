@@ -1,9 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.elfec.cobranza.DataExchange" >
-	<item
-        android:id="@+id/menu_wipe_all_data"
-        android:title="@string/menu_wipe_all_data" 
-        android:showAsAction="always"
-        android:icon="@drawable/wipe_all_data_selector"/>
-</menu>

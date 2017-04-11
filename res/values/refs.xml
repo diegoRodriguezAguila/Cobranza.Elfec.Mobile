@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="square_button_text_appererance" type="style">@style/TextAppearance.CustomFont.Semilight</item>
-    <item name="list_item_orientation" type="integer">1</item>
-    <item name="date_picker_scale" type="fraction">0.8</item>
-    <item name="database_settings_dialog_weight_1" type="fraction">0.26</item>
-    <item name="database_settings_dialog_weight_2" type="fraction">0.74</item>
-    <item name="database_settings_dialog_weight_3" type="fraction">0</item>
-</resources>

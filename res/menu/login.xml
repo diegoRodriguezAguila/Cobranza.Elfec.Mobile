@@ -1,9 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.elfec.cobranza.Login" >
-	<item
-        android:id="@+id/menu_config_server"
-        android:title="@string/btn_config_server" 
-        android:showAsAction="always"
-        android:icon="@drawable/config_server_selector"/>
-</menu>
