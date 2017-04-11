@@ -20,7 +20,7 @@ public class UnableToChangeRouteStateException extends Exception {
 	@Override
 	public String getMessage()
 	{
-		return String.format(Locale.getDefault(),"Ocurrió un error al realizar el %sbloqueo remoto de la ruta: <b>%d</b>!",
+		return String.format(Locale.getDefault(),"OcurriÃ³ un error al realizar el %sbloqueo remoto de la ruta: <b>%d</b>!",
 				(mIsLock?"":"des"), mRouteRemoteId);
 	}
 

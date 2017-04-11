@@ -1,10 +1,5 @@
 package com.elfec.cobranza.presenter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import android.bluetooth.BluetoothAdapter;
 
 import com.elfec.cobranza.R;
@@ -21,6 +16,11 @@ import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBl
 import com.elfec.cobranza.presenter.views.IMainMenuView;
 import com.elfec.cobranza.settings.PreferencesManager;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
+
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainMenuPresenter implements BluetoothStateListener {
 	private IMainMenuView view;
@@ -94,7 +94,7 @@ public class MainMenuPresenter implements BluetoothStateListener {
 	}
 	
 	/**
-	 * Llama a los métodos necesarios para imprimir un reporte
+	 * Llama a los mÃ©todos necesarios para imprimir un reporte
 	 * @param generator
 	 */
 	public void printReport(final IReportGenerator generator)

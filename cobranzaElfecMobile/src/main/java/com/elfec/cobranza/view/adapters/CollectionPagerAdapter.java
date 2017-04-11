@@ -13,7 +13,7 @@ import com.elfec.cobranza.view.controls.interfaces.IconTabProvider;
 
 public class CollectionPagerAdapter extends FragmentPagerAdapter implements IconTabProvider{
 	private int PAGE_COUNT = 2;
-    private final String tabTitles[] = new String[] { "BÚSQUEDA", "COBRANZA"};
+    private final String tabTitles[] = new String[] { "BÃšSQUEDA", "COBRANZA"};
     private final int imageResId[] = new int[]{R.drawable.search_supplies_selector, R.drawable.collection_payment_selector};
 	private final Fragment fragments[] = new Fragment[]{new SearchCollectionFragment(), new CollectionActionFragment()};
     @SuppressWarnings("unused")

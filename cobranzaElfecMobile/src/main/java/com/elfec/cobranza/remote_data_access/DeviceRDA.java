@@ -1,11 +1,11 @@
 package com.elfec.cobranza.remote_data_access;
 
+import com.elfec.cobranza.model.enums.DeviceStatus;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import com.elfec.cobranza.model.enums.DeviceStatus;
-import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
  * Se encarga de las conexiones remotas a oracle para realizar tareas sobre el dispositivo
@@ -20,7 +20,7 @@ public class DeviceRDA {
 	 * @param username
 	 * @param password
 	 * @param IMEI
-	 * @return 0 estado de dispositivo inactivo, 1 activo y v·lido par autilizar
+	 * @return 0 estado de dispositivo inactivo, 1 activo y v√°lido par autilizar
 	 * @throws SQLException 
 	 * @throws ConnectException 
 	 */

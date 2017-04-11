@@ -1,12 +1,5 @@
 package com.elfec.cobranza.model;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import org.joda.time.DateTime;
-
 import android.database.Cursor;
 
 import com.activeandroid.Cache;
@@ -20,8 +13,15 @@ import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.model.interfaces.IExportable;
 import com.elfec.cobranza.model.printer.CashDeskResume;
 import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
+
+import org.joda.time.DateTime;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 /**
- * Almacena la información de los COBROS
+ * Almacena la informaciÃ³n de los COBROS
  * @author drodriguez
  *
  */
@@ -36,17 +36,17 @@ public class CollectionPayment extends Model implements IExportable{
 			+ "WHERE CI=%d AND IDCBTE=%d AND ANIO=%d AND NROPER=%d";
 	
 	/**
-	 * CAJA en Oracle Número de caja
+	 * CAJA en Oracle NÃºmero de caja
 	 */
 	@Column(name = "CashDeskNumber", notNull=true)
 	private int cashDeskNumber;
 	/**
-	 * FECHA en Oracle, en la que se realizó el cobro
+	 * FECHA en Oracle, en la que se realizÃ³ el cobro
 	 */
 	@Column(name = "PaymentDate", notNull=true)
 	private DateTime paymentDate;
 	/**
-	 * USUARIO el usuario que realizó el cobro
+	 * USUARIO el usuario que realizÃ³ el cobro
 	 */
 	@Column(name = "User", notNull=true)
 	private String user;
@@ -71,12 +71,12 @@ public class CollectionPayment extends Model implements IExportable{
 	@Column(name = "TransactionNumber", notNull=true)
 	private long transactionNumber;
 	/**
-	 * FECHA_BAJA en Oracle, en la que se anuló un cobro
+	 * FECHA_BAJA en Oracle, en la que se anulÃ³ un cobro
 	 */
 	@Column(name = "AnnulmentDate")
 	private DateTime annulmentDate;
 	/**
-	 * USUARIO_BAJA el usuario que realizó la anulación del cobro
+	 * USUARIO_BAJA el usuario que realizÃ³ la anulaciÃ³n del cobro
 	 */
 	@Column(name = "AnnulmentUser")
 	private String annulmentUser;
@@ -112,12 +112,12 @@ public class CollectionPayment extends Model implements IExportable{
 	@Column(name = "PeriodNumber")
 	private int periodNumber;
 	/**
-	 * DESC_CAJA en Oracle Descripción de caja
+	 * DESC_CAJA en Oracle DescripciÃ³n de caja
 	 */
 	@Column(name = "CashDeskDescription")
 	private String cashDeskDescription;
 	/**
-	 * IDMOTIVO_ANULA en Oracle El id del motivo de la anulación de un cobro
+	 * IDMOTIVO_ANULA en Oracle El id del motivo de la anulaciÃ³n de un cobro
 	 */
 	@Column(name = "AnnulmentReasonId")
 	private Integer annulmentReasonId;
@@ -156,7 +156,7 @@ public class CollectionPayment extends Model implements IExportable{
 
 	/**
 	 * Anula el cobro, poniendo su estado en cero y llenando los campos de
-	 * anulación. <br><b>NOTA.-</b> No lo guarda, es necesario llamar a save()
+	 * anulaciÃ³n. <br><b>NOTA.-</b> No lo guarda, es necesario llamar a save()
 	 * @param annulmentUser
 	 * @param annulmentTransacNum
 	 * @param annulmentReasonId
@@ -171,7 +171,7 @@ public class CollectionPayment extends Model implements IExportable{
 	}
 	
 	/**
-	 * Obtiene todos los cobros válidos, es decir con estado 1, realizados
+	 * Obtiene todos los cobros vÃ¡lidos, es decir con estado 1, realizados
 	 * entre las fechas proporcionadas realizadas por el cajero
 	 * @param startDate fecha inicio (inclusiva)
 	 * @param endDate fecha fin (inclusiva)
@@ -187,7 +187,7 @@ public class CollectionPayment extends Model implements IExportable{
 	/**
 	 * Obtiene todos los cobros realizados
 	 * entre las fechas proporcionadas realizadas por el cajero
-	 * @param status si se pasa -1 se omite esta condición
+	 * @param status si se pasa -1 se omite esta condiciÃ³n
 	 * @param startDate fecha inicio (inclusiva)
 	 * @param endDate fecha fin (inclusiva)
 	 * @param cashDeskNum
@@ -222,7 +222,7 @@ public class CollectionPayment extends Model implements IExportable{
 	}
 	
 	/**
-	 * Obtiene los resúmenes de caja del rango de fechas provisto, de aquellos cobros efectivos , es decir que tienen 
+	 * Obtiene los resÃºmenes de caja del rango de fechas provisto, de aquellos cobros efectivos , es decir que tienen 
 	 * estado 1
 	 * @param startDate
 	 * @param endDate
@@ -236,7 +236,7 @@ public class CollectionPayment extends Model implements IExportable{
 	}
 	
 	/**
-	 * Obtiene los resúmenes de caja del rango de fechas provisto
+	 * Obtiene los resÃºmenes de caja del rango de fechas provisto
 	 * @param concept
 	 * @param startDate
 	 * @param endDate
@@ -276,7 +276,7 @@ public class CollectionPayment extends Model implements IExportable{
 	}
 	
 	/**
-	 * Obtiene todos los COBROS pendientes de exportación
+	 * Obtiene todos los COBROS pendientes de exportaciÃ³n
 	 * @return
 	 */
 	public static List<CollectionPayment> getExportPendingCollections()
@@ -286,7 +286,7 @@ public class CollectionPayment extends Model implements IExportable{
 	}
 	
 	/**
-	 * Obtiene la transacción (WScollection) relacionada con este cobro
+	 * Obtiene la transacciÃ³n (WScollection) relacionada con este cobro
 	 * @return WSCollection
 	 */
 	public WSCollection getRelatedTransaction()
@@ -297,8 +297,8 @@ public class CollectionPayment extends Model implements IExportable{
 	}
 	
 	/**
-	 * Obtiene la transacción (WScollection) de anulación relacionada con este cobro
-	 * @return WSCollection, NULL si es que no existe una anulación
+	 * Obtiene la transacciÃ³n (WScollection) de anulaciÃ³n relacionada con este cobro
+	 * @return WSCollection, NULL si es que no existe una anulaciÃ³n
 	 */
 	public WSCollection getRelatedAnnulmentTransaction()
 	{
@@ -309,7 +309,7 @@ public class CollectionPayment extends Model implements IExportable{
 
 	/**
 	 * Convierte esta transaccion en la consulta INSERT de Oracle asignandole los numeros 
-	 * de transacción remotos respectivos. 
+	 * de transacciÃ³n remotos respectivos. 
 	 * @return INSERT query
 	 */
 	public String toRemoteInsertSQL()
@@ -331,7 +331,7 @@ public class CollectionPayment extends Model implements IExportable{
 	
 	/**
 	 * Convierte esta transaccion en la consulta INSERT de Oracle utilizando los
-	 * números de transaccion de los parámetros
+	 * nÃºmeros de transaccion de los parÃ¡metros
 	 * @param transactionNumber
 	 * @param annulmentTransactionNumber , pasar 0 para NULL
 	 * @return INSERT query
@@ -355,7 +355,7 @@ public class CollectionPayment extends Model implements IExportable{
 	
 	/**
 	 * Convierte esta transaccion en la consulta UPDATE de Oracle,
-	 * se uliliza para obtener la consulta de actualización en caso de anulación
+	 * se uliliza para obtener la consulta de actualizaciÃ³n en caso de anulaciÃ³n
 	 * @return UPDATE query
 	 */
 	public String toUpdateSQL()

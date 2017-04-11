@@ -1,7 +1,7 @@
 package com.elfec.cobranza.model.exceptions;
 
 /**
- * Excepción que se lanza cuando un usuario que intenta logearse proporcionó un password incorrecto
+ * ExcepciÃ³n que se lanza cuando un usuario que intenta logearse proporcionÃ³ un password incorrecto
  * @author drodriguez
  *
  */

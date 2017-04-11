@@ -11,7 +11,7 @@ import com.elfec.cobranza.settings.PreferencesManager;
 public class SessionManager {
 
 	/**
-	 * Inicia o sobreescribe la sesión para el usuario actual
+	 * Inicia o sobreescribe la sesiÃ³n para el usuario actual
 	 * @param user
 	 */
 	public static void startSession(User user)
@@ -22,7 +22,7 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Cierra la sesión, eliminando todas las variables de sesión actuales
+	 * Cierra la sesiÃ³n, eliminando todas las variables de sesiÃ³n actuales
 	 */
 	public static void finishSession()
 	{
@@ -33,7 +33,7 @@ public class SessionManager {
 	
 	/**
 	 * Obtiene el nombre de usuario logeado actual
-	 * @return null si es que ningun usuario inició sesión
+	 * @return null si es que ningun usuario iniciÃ³ sesiÃ³n
 	 */
 	public static String getLoggedInUsername()
 	{
@@ -42,7 +42,7 @@ public class SessionManager {
 	
 	/**
 	 * Obtiene el numero de caja del usuario logeado actual
-	 * @return -1 si es que ningun usuario inició sesión
+	 * @return -1 si es que ningun usuario iniciÃ³ sesiÃ³n
 	 */
 	public static int getLoggedCashdeskNumber()
 	{
@@ -50,8 +50,8 @@ public class SessionManager {
 	}
 
 	/**
-	 * Obtiene la descripción de caja del usuario logeado actual
-	 * @return null si es que ningun usuario inició sesión
+	 * Obtiene la descripciÃ³n de caja del usuario logeado actual
+	 * @return null si es que ningun usuario iniciÃ³ sesiÃ³n
 	 */
 	public static String getLoggedCashdeskDesc()
 	{
@@ -59,7 +59,7 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Vericia si el usuario proporcionado ha iniciado sesión y es el actual
+	 * Vericia si el usuario proporcionado ha iniciado sesiÃ³n y es el actual
 	 * @param username
 	 * @return
 	 */
@@ -71,7 +71,7 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Verifica si es que algún usuario inició sesión
+	 * Verifica si es que algÃºn usuario iniciÃ³ sesiÃ³n
 	 * @return
 	 */
 	public static boolean isSessionStarted()

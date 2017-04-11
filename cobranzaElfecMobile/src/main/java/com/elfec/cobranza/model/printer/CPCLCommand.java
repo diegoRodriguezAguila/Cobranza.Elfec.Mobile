@@ -12,7 +12,7 @@ import java.util.Locale;
  */
 public class CPCLCommand {
 	/**
-	 * Constante de fin de lÌnea
+	 * Constante de fin de l√≠nea
 	 */
 	private static final String ENDL = "\r\n";
 	/**
@@ -32,7 +32,7 @@ public class CPCLCommand {
 	 */
 	private static final String ENDML = "ENDML";
 	/**
-	 * Comando para asignar codificaciÛn
+	 * Comando para asignar codificaci√≥n
 	 */
 	private static final String ENCODING = "ENCODING";
 	/**
@@ -40,11 +40,11 @@ public class CPCLCommand {
 	 */
 	private static final String SETBOLD = "SETBOLD";
 	/**
-	 * Comando de definiciÛn del espacio entre letras
+	 * Comando de definici√≥n del espacio entre letras
 	 */
 	private static final String SPACING = "SETSP";
 	/**
-	 * Comando de impresiÛn
+	 * Comando de impresi√≥n
 	 */
 	private static final String PRINT = "PRINT";
 	/**
@@ -56,15 +56,15 @@ public class CPCLCommand {
 	 */
 	private static final String LINE = "LINE";
 	/**
-	 * Comando de inicio de cÛdigo QR
+	 * Comando de inicio de c√≥digo QR
 	 */
 	private static final String QR = "B QR";
 	/**
-	 * Comando de fin de cÛdigo QR
+	 * Comando de fin de c√≥digo QR
 	 */
 	private static final String ENDQR = "ENDQR";
 	/**
-	 * Comando para impresiÛn de im·gen PCX
+	 * Comando para impresi√≥n de im√°gen PCX
 	 */
 	private static final String IMAGE = "PCX";
 	/**
@@ -89,7 +89,7 @@ public class CPCLCommand {
 		}
 	};
 	/**
-	 * Define los tipos de justificaciÛn
+	 * Define los tipos de justificaci√≥n
 	 * @author drodriguez
 	 *
 	 */
@@ -114,17 +114,17 @@ public class CPCLCommand {
 		}
 	};
 	/**
-	 * Define los tipos de codificaciÛn del texto
+	 * Define los tipos de codificaci√≥n del texto
 	 * @author drodriguez
 	 *
 	 */
 	public enum Encoding{
 		/**
-		 * CodificaciÛn ASCII
+		 * Codificaci√≥n ASCII
 		 */
 		ASCII("ASCII"), 
 		/**
-		 * CodificaciÛn UTF-8
+		 * Codificaci√≥n UTF-8
 		 */
 		UTF_8("UTF-8");
 		private String valueStr;
@@ -136,7 +136,7 @@ public class CPCLCommand {
 	};
 
 	/**
-	 * Define los tipos de calidades de un cÛdigo QR
+	 * Define los tipos de calidades de un c√≥digo QR
 	 * @author drodriguez
 	 *
 	 */
@@ -172,19 +172,19 @@ public class CPCLCommand {
 	 */
 	private String font;
 	/**
-	 * El comando que est· siendo construido
+	 * El comando que est√° siendo construido
 	 */
 	private StringBuilder command;
 	/**
-	 * Define el tamaÒo de la impresiÛn en la unidad deinida
+	 * Define el tama√±o de la impresi√≥n en la unidad deinida
 	 */
 	private double labelHeight;
 	
 	/**
 	 * Inicializa el comando con offset=0 y los valores proporcionados
-	 * @param horizontalRes resoluciÛn en puntos/pulgada
-	 * @param verticalRes resoluciÛn en puntos/pulgada
-	 * @param height resoluciÛn en unidad
+	 * @param horizontalRes resoluci√≥n en puntos/pulgada
+	 * @param verticalRes resoluci√≥n en puntos/pulgada
+	 * @param height resoluci√≥n en unidad
 	 */
 	public CPCLCommand(int horizontalRes, int verticalRes, double height)
 	{
@@ -194,9 +194,9 @@ public class CPCLCommand {
 	/**
 	 * Inicializa el comando con los valores proporcionados
 	 * @param offset margen que todo el label tendra
-	 * @param horizontalRes resoluciÛn en puntos/pulgada
-	 * @param verticalRes resoluciÛn en puntos/pulgada
-	 * @param height resoluciÛn en unidad
+	 * @param horizontalRes resoluci√≥n en puntos/pulgada
+	 * @param verticalRes resoluci√≥n en puntos/pulgada
+	 * @param height resoluci√≥n en unidad
 	 */
 	public CPCLCommand(int offset, int horizontalRes, int verticalRes, double height)
 	{
@@ -206,7 +206,7 @@ public class CPCLCommand {
 	}
 	
 	/**
-	 * Obtiene el tamaÒo del label definido
+	 * Obtiene el tama√±o del label definido
 	 * @return
 	 */
 	public double getLabelHeight() {
@@ -214,7 +214,7 @@ public class CPCLCommand {
 	}
 
 	/**
-	 * Asigna el tamaÒo que tendr· el label , en la unidad definida
+	 * Asigna el tama√±o que tendr√° el label , en la unidad definida
 	 * @param labelHeight
 	 */
 	public void setLabelHeight(double labelHeight) {
@@ -231,7 +231,7 @@ public class CPCLCommand {
 	}
 
 	/**
-	 * Todo lo que venga despues se tratar· en las unidades definidas
+	 * Lo que venga despues se tratar√° en las unidades definidas
 	 * @param unitType
 	 * @return la instancia de este comando
 	 */
@@ -254,7 +254,7 @@ public class CPCLCommand {
 	}
 	
 	/**
-	 * Asigna el tipo de codificaciÛn a utilizar
+	 * Asigna el tipo de codificaci√≥n a utilizar
 	 * @param encodingType
 	 * @return
 	 */
@@ -267,8 +267,8 @@ public class CPCLCommand {
 	/**
 	 * Justifica el texto que provenga despues
 	 * @param justifyType
-	 * @param end el punto donde acaba la justificaciÛn, si es <b>-1</b> 
-	 * se utilizar· el tamaÒo del label por defecto
+	 * @param end el punto donde acaba la justificaci√≥n, si es <b>-1</b> 
+	 * se utilizar√° el tama√±o del label por defecto
 	 * @return la instancia de este comando
 	 */
 	public CPCLCommand justify(Justify justifyType, double end)
@@ -304,8 +304,8 @@ public class CPCLCommand {
 	}
 	
 	/**
-	 * Crea un cuadrado en la posiciÛn especificada. Tome en cuenta que seg˙n la justificaciÛn definida 
-	 * se dibuja el cuadrado en la factura, para coordenadas absolutas llame a la justificaciÛn LEFT, sin par·metros
+	 * Crea un cuadrado en la posici√≥n especificada. Tome en cuenta que seg√∫n la justificaci√≥n definida 
+	 * se dibuja el cuadrado en la factura, para coordenadas absolutas llame a la justificaci√≥n LEFT, sin par√°metros
 	 * antes de definir el cuadrado
 	 * @param leftTopX coordenada X de la punta izquierda superior (en unidad definida)
 	 * @param leftTopY coordenada Y de la punta izquierda superior (en unidad definida)
@@ -322,8 +322,8 @@ public class CPCLCommand {
 	}
 	
 	/**
-	 * Crea una lÌnea en la posiciÛn especificada. Tome en cuenta que seg˙n la justificaciÛn definida 
-	 * se dibuja el cuadrado en la factura, para coordenadas absolutas llame a la justificaciÛn LEFT, sin par·metros
+	 * Crea una l√≠nea en la posici√≥n especificada. Tome en cuenta que seg√∫n la justificaci√≥n definida 
+	 * se dibuja el cuadrado en la factura, para coordenadas absolutas llame a la justificaci√≥n LEFT, sin par√°metros
 	 * antes de definir el cuadrado
 	 * @param startX coordenada X del inicio de la linea (en unidad definida)
 	 * @param startY coordenada Y del inicio de la linea (en unidad definida)
@@ -340,25 +340,25 @@ public class CPCLCommand {
 	}
 	
 	/**
-	 * Agrega un texto para imprimir con la fuente seteada con el mÈtodo setFont()
-	 * @param size tamaÒo de la fuente
-	 * @param x posiciÛn en la factura en la unidad definida
-	 * @param y posiciÛn en la factura en la unidad definida
+	 * Agrega un texto para imprimir con la fuente seteada con el m√©todo setFont()
+	 * @param size tama√±o de la fuente
+	 * @param x posici√≥n en la factura en la unidad definida
+	 * @param y posici√≥n en la factura en la unidad definida
 	 * @param text el texto que se quiere imprimir
 	 * @return la instancia de este comando
 	 */
 	public CPCLCommand text(int size, double x, double y, String text)
 	{
 		if(font==null)
-			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin par·metros de fuente");
+			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin par√°metros de fuente");
 		text(font, size, x, y, text);
 		return this;
 	}
 	
 	/**
-	 * Agrega un texto para imprimir con la fuente seteada con el mÈtodo setFont() usando tamaÒo 0
-	 * @param x posiciÛn en la factura en la unidad definida
-	 * @param y posiciÛn en la factura en la unidad definida
+	 * Agrega un texto para imprimir con la fuente seteada con el m√©todo setFont() usando tama√±o 0
+	 * @param x posici√≥n en la factura en la unidad definida
+	 * @param y posici√≥n en la factura en la unidad definida
 	 * @param text el texto que se quiere imprimir
 	 * @return la instancia de este comando
 	 */
@@ -370,10 +370,10 @@ public class CPCLCommand {
 	
 	/**
 	 * Agrega un texto para imprimir
-	 * @param innerFont la fuente que se usar· para el texto, es una fuente interna de zebra
-	 * @param size tamaÒo de la fuente
-	 * @param x posiciÛn en la factura en la unidad definida
-	 * @param y posiciÛn en la factura en la unidad definida
+	 * @param innerFont la fuente que se usar√° para el texto, es una fuente interna de zebra
+	 * @param size tama√±o de la fuente
+	 * @param x posici√≥n en la factura en la unidad definida
+	 * @param y posici√≥n en la factura en la unidad definida
 	 * @param text el texto que se quiere imprimir
 	 * @return la instancia de este comando
 	 */
@@ -385,11 +385,11 @@ public class CPCLCommand {
 	
 	/**
 	 * Agrega un texto para imprimir
-	 * @param font la fuente que se usar· para el texto, puede ser una fuente interna
+	 * @param font la fuente que se usar√° para el texto, puede ser una fuente interna
 	 * o una externa que se encuentra en la impresora
-	 * @param size tamaÒo de la fuente
-	 * @param x posiciÛn en la factura en la unidad definida
-	 * @param y posiciÛn en la factura en la unidad definida
+	 * @param size tama√±o de la fuente
+	 * @param x posici√≥n en la factura en la unidad definida
+	 * @param y posici√≥n en la factura en la unidad definida
 	 * @param text el texto que se quiere imprimir
 	 * @return la instancia de este comando
 	 */
@@ -403,11 +403,11 @@ public class CPCLCommand {
 	/**
 	 * Agrega un texto para imprimir, con formato de negrilla y extra espaciado definido,
 	 * esto solo afecta a esta linea de texto
-	 * @param font la fuente que se usar· para el texto, puede ser una fuente interna
+	 * @param font la fuente que se usar√° para el texto, puede ser una fuente interna
 	 * o una externa que se encuentra en la impresora
-	 * @param size tamaÒo de la fuente
-	 * @param x posiciÛn en la factura en la unidad definida
-	 * @param y posiciÛn en la factura en la unidad definida
+	 * @param size tama√±o de la fuente
+	 * @param x posici√≥n en la factura en la unidad definida
+	 * @param y posici√≥n en la factura en la unidad definida
 	 * @param boldLevel nivel de bold
 	 * @param extraSpacing espaciado extra entre caracteres
 	 * @param text el texto que se quiere imprimir
@@ -427,9 +427,9 @@ public class CPCLCommand {
 	 * Agrega un texto para imprimir, con formato de negrilla y extra espaciado definido,
 	 * esto solo afecta a esta linea de texto. Utiliza la fuente asignada en setFont()
 	 * o una externa que se encuentra en la impresora
-	 * @param size tamaÒo de la fuente
-	 * @param x posiciÛn en la factura en la unidad definida
-	 * @param y posiciÛn en la factura en la unidad definida
+	 * @param size tama√±o de la fuente
+	 * @param x posici√≥n en la factura en la unidad definida
+	 * @param y posici√≥n en la factura en la unidad definida
 	 * @param boldLevel nivel de bold
 	 * @param extraSpacing espaciado extra entre caracteres
 	 * @param text el texto que se quiere imprimir
@@ -438,20 +438,20 @@ public class CPCLCommand {
 	public CPCLCommand text(int size, double x, double y, double boldLevel, double extraSpacing, String text)
 	{
 		if(font==null)
-			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin par·metros de fuente");
+			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin par√°metros de fuente");
 		text(font, size, x, y, boldLevel, extraSpacing, text);
 		return this;
 	}
 	
 	/**
 	 * Agrega un texto multilinea para imprimir
-	 * @param lineHeight el alto de cada lÌnea en la unidad definida
-	 * @param font la fuente que se usar· para el texto, puede ser una fuente interna
+	 * @param lineHeight el alto de cada l√≠nea en la unidad definida
+	 * @param font la fuente que se usar√° para el texto, puede ser una fuente interna
 	 * o una externa que se encuentra en la impresora
-	 * @param size tamaÒo de la fuente
-	 * @param x posiciÛn en la factura en la unidad definida
-	 * @param y posiciÛn en la factura en las unidad definida
-	 * @param textLines las lÌneas de texto a imprimir
+	 * @param size tama√±o de la fuente
+	 * @param x posici√≥n en la factura en la unidad definida
+	 * @param y posici√≥n en la factura en las unidad definida
+	 * @param textLines las l√≠neas de texto a imprimir
 	 * @return
 	 */
 	public CPCLCommand multilineText(double lineHeight, String font, int size, double x, double y, String... textLines)
@@ -470,26 +470,26 @@ public class CPCLCommand {
 	
 	/**
 	 * Agrega un texto multilinea para imprimir utilizando al fuente seteada con setFont
-	 * @param lineHeight el alto de cada lÌnea en la unidad definida
-	 * @param size tamaÒo de la fuente
-	 * @param x posiciÛn en la factura en la unidad definida
-	 * @param y posiciÛn en la factura en las unidad definida
-	 * @param textLines las lÌneas de texto a imprimir
+	 * @param lineHeight el alto de cada l√≠nea en la unidad definida
+	 * @param size tama√±o de la fuente
+	 * @param x posici√≥n en la factura en la unidad definida
+	 * @param y posici√≥n en la factura en las unidad definida
+	 * @param textLines las l√≠neas de texto a imprimir
 	 * @return
 	 */
 	public CPCLCommand multilineText(double lineHeight, int size, double x, double y, String... textLines)
 	{
 		if(font==null)
-			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin par·metros de fuente");
+			throw new RuntimeException("Debe definir la fuente con setFont() antes de utilizar el comando text() sin par√°metros de fuente");
 		multilineText(lineHeight, font, size, x, y, textLines);
 		return this;
 	}
 	
 	/**
-	 * Grafica un cÛdigo QR
+	 * Grafica un c√≥digo QR
 	 * @param size entre 1 y 32
-	 * @param x la posiciÛn X en la unidad definida
-	 * @param y la posiciÛn Y en la unidad definida
+	 * @param x la posici√≥n X en la unidad definida
+	 * @param y la posici√≥n Y en la unidad definida
 	 * @param text el texto a codificar
 	 * @return la instancia de este comando
 	 */
@@ -502,11 +502,11 @@ public class CPCLCommand {
 	}
 	
 	/**
-	 * Imprime una imagen en la posiciÛn definida
-	 * @param x posiciÛn en la unidad definida
-	 * @param y posiciÛn en la unidad definida
-	 * @param imageName nombre de la imagen, con extensiÛn PCX o sin extensiÛn, en caso de pasarse sin extensiÛn
-	 * se le agregar· la extensiÛn .PCX, si se envÌa con otra extensiÛn se lo tomara como si esta fuera parte del nombre
+	 * Imprime una imagen en la posici√≥n definida
+	 * @param x posici√≥n en la unidad definida
+	 * @param y posici√≥n en la unidad definida
+	 * @param imageName nombre de la imagen, con extensi√≥n PCX o sin extensi√≥n, en caso de pasarse sin extensi√≥n
+	 * se le agregar√° la extensi√≥n .PCX, si se env√≠a con otra extensi√≥n se lo tomara como si esta fuera parte del nombre
 	 * @return la instancia de este comando
 	 */
 	public CPCLCommand image(double x, double y, String imageName)
@@ -519,7 +519,7 @@ public class CPCLCommand {
 	}
 	
 	/**
-	 * AÒade el comando de impresiÛn
+	 * A√±ade el comando de impresi√≥n
 	 * @return la instancia de este comando
 	 */
 	public CPCLCommand print()

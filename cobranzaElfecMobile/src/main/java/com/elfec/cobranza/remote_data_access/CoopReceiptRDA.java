@@ -1,19 +1,19 @@
 package com.elfec.cobranza.remote_data_access;
 
+import com.elfec.cobranza.helpers.text_format.AttributePicker;
+import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
+import com.elfec.cobranza.model.CoopReceipt;
+import com.elfec.cobranza.model.Route;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+
+import org.joda.time.DateTime;
+
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.joda.time.DateTime;
-
-import com.elfec.cobranza.helpers.text_format.AttributePicker;
-import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
-import com.elfec.cobranza.model.CoopReceipt;
-import com.elfec.cobranza.model.Route;
-import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
  * Provee una capa de acceso remoto a la base de datos oracle para operaciones relacionadas con <B>CBTES_COOP</B>
@@ -107,11 +107,11 @@ public class CoopReceiptRDA {
 		return receipt;
 	}
 	/**
-	 * Obtiene la direcci髇 del cliente de la factura
+	 * Obtiene la direcci贸n del cliente de la factura
 	 * @param username
 	 * @param password
 	 * @param receipt
-	 * @return la factura con la direcci髇 del cliente asignada
+	 * @return la factura con la direcci贸n del cliente asignada
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */
@@ -151,11 +151,11 @@ public class CoopReceiptRDA {
 	}
 	
 	/**
-	 * Obtiene la descripci髇 de la autorizaci髇 de la factura
+	 * Obtiene la descripci贸n de la autorizaci贸n de la factura
 	 * @param username
 	 * @param password
 	 * @param receipt
-	 * @return la factura con la descripci髇 de la autorizaci髇 asignada
+	 * @return la factura con la descripci贸n de la autorizaci贸n asignada
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */

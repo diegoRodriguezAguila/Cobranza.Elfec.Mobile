@@ -1,19 +1,19 @@
 package com.elfec.cobranza.view.services;
 
-import java.util.List;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.support.v7.app.AlertDialog;
+import android.text.Html;
+import android.text.Spanned;
 
-import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.events.OnRoutesImportConfirmed;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.text.Html;
-import android.text.Spanned;
+import java.util.List;
 
 /**
  * Es un servicio de dialogo que se encarga de advertir al usuario de rutas bloqueadas por otro dispositivo
@@ -26,7 +26,7 @@ public class LockedRoutesWarningService {
 	private boolean mNoMoreRoutes;
 	private OnServiceCanceled mCancelCallback;
 	
-	private AlertDialogPro.Builder builder;
+	private AlertDialog.Builder builder;
 	
 	/**
 	 * Interfaz que se llama cuando se cancela este servicio
@@ -45,7 +45,7 @@ public class LockedRoutesWarningService {
 		this.mNoMoreRoutes = noMoreRoutes;
 		this.mCancelCallback = cancelCallback;
 		
-		builder = new AlertDialogPro.Builder(context);
+		builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.title_warning_locked_routes)
 		.setMessage(buildMessage(lockedRoutes));
 		evalIfCancelButton(noMoreRoutes, builder);	
@@ -71,7 +71,7 @@ public class LockedRoutesWarningService {
 	 * @param builder
 	 */
 	public void evalIfCancelButton(boolean noMoreRoutes,
-			AlertDialogPro.Builder builder) {
+			AlertDialog.Builder builder) {
 		if(!noMoreRoutes)
 			builder.setNegativeButton(R.string.btn_cancel, new OnClickListener() {						
 				@Override
@@ -89,9 +89,9 @@ public class LockedRoutesWarningService {
 	 */
 	public Spanned buildMessage(List<Route> lockedRoutes) {
 		return Html.fromHtml(String.format(
-				mIsOnlyOne?"La ruta: <b> %s </b> ya fue cargada en otro dispositivo y no se cargará"+
+				mIsOnlyOne?"La ruta: <b> %s </b> ya fue cargada en otro dispositivo y no se cargarï¿½"+
 								(mNoMoreRoutes?"":", desea continuar?"):
-					"Las rutas:<br/><b> %s </b><br/>Ya fueron cargadas en otros dispositivos y no se cargarán"+
+					"Las rutas:<br/><b> %s </b><br/>Ya fueron cargadas en otros dispositivos y no se cargarï¿½n"+
 								(mNoMoreRoutes?"":", desea continuar?")
 				, MessageListFormatter.fotmatHTMLStringFromObjectList(lockedRoutes, 
 						new AttributePicker<String, Route>() {

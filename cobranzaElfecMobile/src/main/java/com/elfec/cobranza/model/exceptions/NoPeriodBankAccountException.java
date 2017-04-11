@@ -13,6 +13,6 @@ public class NoPeriodBankAccountException extends Exception {
 	@Override
 	public String getMessage()
 	{
-		return "El número de caja "+cashDeskNumber+" no tiene asignado ningún periodo de caja, para el día de hoy!";
+		return "El nÃºmero de caja "+cashDeskNumber+" no tiene asignado ningÃºn periodo de caja, para el dÃ­a de hoy!";
 	}
 }

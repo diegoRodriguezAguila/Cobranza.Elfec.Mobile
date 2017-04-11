@@ -1,8 +1,5 @@
 package com.elfec.cobranza.business_logic;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-
 import com.elfec.cobranza.model.User;
 import com.elfec.cobranza.model.enums.DeviceStatus;
 import com.elfec.cobranza.model.enums.UserStatus;
@@ -15,19 +12,22 @@ import com.elfec.cobranza.remote_data_access.DeviceRDA;
 import com.elfec.cobranza.remote_data_access.UserRDA;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
+import java.net.ConnectException;
+import java.sql.SQLException;
+
 /**
- * Se encarga de las operaciones de lógica de negocio sobre el usuario
+ * Se encarga de las operaciones de lÃ³gica de negocio sobre el usuario
  * @author drodriguez
  *
  */
 public class ElfecUserManager {
 
 	/**
-	 * Valida a un usuario, ya sea local o remotamente según el caso
+	 * Valida a un usuario, ya sea local o remotamente segÃºn el caso
 	 * @param username
 	 * @param password
 	 * @param IMEI
-	 * @return El resultado de la validación, que incluye al usuario obtenido y la lista de errores
+	 * @return El resultado de la validaciÃ³n, que incluye al usuario obtenido y la lista de errores
 	 */
 	public static DataAccessResult<User> validateUser(String username, String password, String IMEI)
 	{

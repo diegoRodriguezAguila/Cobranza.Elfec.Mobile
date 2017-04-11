@@ -21,7 +21,7 @@ public class CollectionAnnulmentDialogPresenter {
 	}
 	
 	/**
-	 * Carga los motivos de anulaci髇
+	 * Carga los motivos de anulaci贸n
 	 */
 	public void loadAnnulmentReasons()
 	{
@@ -34,7 +34,7 @@ public class CollectionAnnulmentDialogPresenter {
 	}
 	
 	/**
-	 * Carga la informaci髇 de la factura
+	 * Carga la informaci贸n de la factura
 	 */
 	public void loadReceiptInfo()
 	{
@@ -43,8 +43,8 @@ public class CollectionAnnulmentDialogPresenter {
 	}
 	
 	/**
-	 * Verifica si se cumplieron todos los requisitos para la anulaci髇
-	 * si es que no, muestra mensajes de error, en caso contrario procede con la anulaci髇
+	 * Verifica si se cumplieron todos los requisitos para la anulaci贸n
+	 * si es que no, muestra mensajes de error, en caso contrario procede con la anulaci贸n
 	 */
 	public void verifyAnnulation()
 	{
@@ -63,7 +63,7 @@ public class CollectionAnnulmentDialogPresenter {
 	}
 	
 	/**
-	 * Valida que se haya seleccionado el motivo de anulaci髇
+	 * Valida que se haya seleccionado el motivo de anulaci贸n
 	 * @return
 	 */
 	public boolean validateAnnulmentReason()
@@ -75,7 +75,7 @@ public class CollectionAnnulmentDialogPresenter {
 	}
 	
 	/**
-	 * Valida el c骴igo de control interno
+	 * Valida el c贸digo de control interno
 	 * @return
 	 */
 	public boolean validateInteralControlCode() {
@@ -92,7 +92,7 @@ public class CollectionAnnulmentDialogPresenter {
 	}
 	
 	/**
-	 * Valida y verifica el motivo de anulaci髇 seleccionado
+	 * Valida y verifica el motivo de anulaci贸n seleccionado
 	 */
 	public void processSelectedAnnulmentReason()
 	{

@@ -1,12 +1,12 @@
 package com.elfec.cobranza.presenter.views;
 
-import java.util.List;
-
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 import com.zebra.sdk.printer.discovery.DiscoveryHandler;
 
+import java.util.List;
+
 /**
- * AbstracciÛn del dialogo de selecciÛn de dispositivos
+ * Abstracci√≥n del dialogo de selecci√≥n de dispositivos
  * @author drodriguez
  *
  */
@@ -18,8 +18,8 @@ public interface IBluetoothDevicePickerDialog {
 	 */
 	public void showPairedBluetoothPrinters(List<DiscoveredPrinterBluetooth> printers);
 	/**
-	 * Muestra al usuario una impresora que se descubriÛ en rango, si
-	 * ya habÌa impresoras la agrega a la lista que se muestra actualmente
+	 * Muestra al usuario una impresora que se descubri√≥ en rango, si
+	 * ya hab√≠a impresoras la agrega a la lista que se muestra actualmente
 	 * @param printer
 	 */
 	public void showDiscoveredBluetoothPrinter(DiscoveredPrinterBluetooth printer);
@@ -29,7 +29,7 @@ public interface IBluetoothDevicePickerDialog {
 	 */
 	public void invokeBluetoothDiscoverer(DiscoveryHandler discoveryHandler);
 	/**
-	 * Esconde la informaciÛn de que se est·n buscando impresoras
+	 * Esconde la informaci√≥n de que se est√°n buscando impresoras
 	 */
 	public void hideDiscoveringPrinters();
 }

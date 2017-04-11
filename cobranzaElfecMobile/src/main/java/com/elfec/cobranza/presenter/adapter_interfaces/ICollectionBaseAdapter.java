@@ -1,7 +1,5 @@
 package com.elfec.cobranza.presenter.adapter_interfaces;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.widget.ArrayAdapter;
@@ -10,8 +8,10 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
 
+import java.util.List;
+
 /**
- * Provee de una abstracciÛn del adapter para cobranzas
+ * Provee de una abstracci√≥n del adapter para cobranzas
  * @author drodriguez
  *
  */
@@ -27,7 +27,7 @@ public interface ICollectionBaseAdapter {
 	 */
 	public int getTitleDrawableId();
 	/**
-	 * Obtiene el texto del boton de la acciÛn
+	 * Obtiene el texto del boton de la acci√≥n
 	 * @return texto boton
 	 */
 	public String getButtonText();
@@ -37,23 +37,23 @@ public interface ICollectionBaseAdapter {
 	 */
 	public Drawable getButtonDrawable();
 	/**
-	 * Obtiene el titulo que se utilizar· para la lista de recibos
+	 * Obtiene el titulo que se utilizar√° para la lista de recibos
 	 * @return titulo
 	 */
 	public String getReceiptListTitle();
 	/**
 	 * Obtiene el id de la cadena que se muestra en el titulo de 
-	 * los errores de la acciÛn
+	 * los errores de la acci√≥n
 	 * @return id de la string
 	 */
 	public int getActionErrorsTitleId();
 	/**
-	 * Obtiene el id de la cadena de mensaje de Èxito
+	 * Obtiene el id de la cadena de mensaje de √©xito
 	 * @return string id
 	 */
 	public int getActionSuccessMsgId();
 	/**
-	 * Obtiene el presenter adecuado para la acciÛn de cobranza
+	 * Obtiene el presenter adecuado para la acci√≥n de cobranza
 	 */
 	public CollectionActionPresenter getCollectionPresenter(ICollectionActionView view);
 	/**
@@ -68,7 +68,7 @@ public interface ICollectionBaseAdapter {
 	 */
 	public Context getContext();
 	/**
-	 * Indica si se tiene o no que mostrar la opciÛn del menu de elegir una impresora
+	 * Indica si se tiene o no que mostrar la opci√≥n del menu de elegir una impresora
 	 * @return
 	 */
 	public boolean hasToShowPickPrinter();

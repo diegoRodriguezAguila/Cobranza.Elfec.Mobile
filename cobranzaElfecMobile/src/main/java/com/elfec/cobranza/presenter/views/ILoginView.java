@@ -3,7 +3,7 @@ package com.elfec.cobranza.presenter.views;
 import java.util.List;
 
 /**
- * Abstracción de una vista de login
+ * AbstracciÃ³n de una vista de login
  * @author drodriguez
  *
  */
@@ -25,12 +25,12 @@ public interface ILoginView {
 	 */
 	public String getIMEI();
 	/**
-	 * Obtiene las reglas de validación a nivel de UI para el campo del nombre de usuario
+	 * Obtiene las reglas de validaciÃ³n a nivel de UI para el campo del nombre de usuario
 	 * @return
 	 */
 	public String getUsernameValidationRules();
 	/**
-	 * Obtiene las reglas de validación a nivel de UI para el campo del password
+	 * Obtiene las reglas de validaciÃ³n a nivel de UI para el campo del password
 	 * @return
 	 */
 	public String getPasswordValidationRules();
@@ -40,7 +40,7 @@ public interface ILoginView {
 	 */
 	public void setUsernameFieldErrors(List<String> errors);
 	/**
-	 * Muestra errores en el campo de la contraseña
+	 * Muestra errores en el campo de la contraseÃ±a
 	 * @param errors
 	 */
 	public void setPasswordFieldErrors(List<String> errors);
@@ -65,7 +65,7 @@ public interface ILoginView {
 	 */
 	public void hideWaiting();
 	/**
-	 * Cambia la vista actual al menú principal
+	 * Cambia la vista actual al menÃº principal
 	 */
 	public void goToLoadData();
 	/**

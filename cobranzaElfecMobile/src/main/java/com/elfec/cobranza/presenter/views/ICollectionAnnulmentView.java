@@ -1,18 +1,18 @@
 package com.elfec.cobranza.presenter.views;
 
-import java.util.List;
-
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
 
+import java.util.List;
+
 /**
- * Abstracci髇 de la vista de anulaci髇 cobros
+ * Abstracci贸n de la vista de anulaci贸n cobros
  * @author drodriguez
  *
  */
 public interface ICollectionAnnulmentView extends ICollectionActionView{
 	/**
-	 * Pide al usuario la confirmaci髇 para porceder con la anulaci髇 de un cobro
+	 * Pide al usuario la confirmaci贸n para porceder con la anulaci贸n de un cobro
 	 * @param selectedReceipts
 	 * @param annulmentCallback
 	 */

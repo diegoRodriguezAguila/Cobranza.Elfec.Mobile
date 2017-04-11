@@ -1,11 +1,5 @@
 package com.elfec.cobranza.business_logic.printer;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import org.apache.commons.lang.WordUtils;
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.text_format.ObjectListToSQL;
@@ -14,8 +8,14 @@ import com.elfec.cobranza.model.AnnulmentReason;
 import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
 
+import org.apache.commons.lang.WordUtils;
+import org.joda.time.DateTime;
+
+import java.math.BigDecimal;
+import java.util.List;
+
 /**
- * Clase que se encarga de generar el comando de impresi髇 del reporte
+ * Clase que se encarga de generar el comando de impresi贸n del reporte
  * de cobros anulados
  * @author drodriguez
  *
@@ -27,7 +27,7 @@ public class CollectionAnnulmentRerportGenerator extends DateRangeReportGenerato
 	public static final String REPORT_NAME = "REPORTE DE ANULACION DE COBRANZA";
 	
 	/**
-	 * El c骴igo del reporte
+	 * El c贸digo del reporte
 	 */
 	private final String REPORT_CODE = "GAF-714-02";
 	private final String TOTAL_NUM = "Cantidad anuladas: %d";
@@ -86,7 +86,7 @@ public class CollectionAnnulmentRerportGenerator extends DateRangeReportGenerato
 
 	/**
 	 * Asigna la leyenda de los motivos
-	 * de anulaci髇 que salen en el reporte
+	 * de anulaci贸n que salen en el reporte
 	 */
 	private void assignAnnulmentReasonsLegend() {
 		String inClause = ObjectListToSQL.convertToSQL(collectionAnnulments, "AnnulmentReasonRemoteId", 
@@ -99,7 +99,7 @@ public class CollectionAnnulmentRerportGenerator extends DateRangeReportGenerato
 		double startY = (receiptHeight+=0.65)-0.15;
 		command.setFont("TAHOMA6P.CPF")
 		.justify(Justify.CENTER)
-		.text(0, 0, receiptHeight, 0.015, 0.015, "Motivos de Anulaci髇")
+		.text(0, 0, receiptHeight, 0.015, 0.015, "Motivos de Anulaci贸n")
 		.justify(Justify.LEFT);
 
 		for(AnnulmentReason reason : usedAnnulments)

@@ -1,6 +1,6 @@
 package com.elfec.cobranza.model.exceptions;
 /**
- * Excepción que se lanza cuando ocurrió un error al realizar una acción sobre un cobro
+ * ExcepciÃ³n que se lanza cuando ocurriÃ³ un error al realizar una acciÃ³n sobre un cobro
  * @author drodriguez
  *
  */
@@ -13,7 +13,7 @@ public class CollectionException extends Exception {
 	
 	private int receiptNumber;
 	/**
-	 * Excepción que se lanza cuando ocurrió un error al realizar una acción sobre un cobro
+	 * ExcepciÃ³n que se lanza cuando ocurriÃ³ un error al realizar una acciÃ³n sobre un cobro
 	 * @author drodriguez
 	 *
 	 */
@@ -25,6 +25,6 @@ public class CollectionException extends Exception {
 	@Override
 	public String getMessage()
 	{
-		return "Ocurrió un error al guardar la factura: "+receiptNumber;
+		return "OcurriÃ³ un error al guardar la factura: "+receiptNumber;
 	}
 }

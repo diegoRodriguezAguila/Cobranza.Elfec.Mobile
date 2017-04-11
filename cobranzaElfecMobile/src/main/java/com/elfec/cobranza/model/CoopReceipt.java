@@ -1,16 +1,16 @@
 package com.elfec.cobranza.model;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.elfec.cobranza.business_logic.SupplyStatusSet;
+
+import org.joda.time.DateTime;
+
+import java.math.BigDecimal;
+import java.util.List;
 /**
  * Almacena los CBTES_COOP
  * @author drodriguez
@@ -203,7 +203,7 @@ public class CoopReceipt extends Model {
 	//EXTRA ATTRIBUTES
 	private SupplyStatusSet supplyStatusSet;
 	/**
-	 * Sirve de caché de la consulta, debe actualizarse al realizar una anulación
+	 * Sirve de cachÃ© de la consulta, debe actualizarse al realizar una anulaciÃ³n
 	 */
 	private CollectionPayment collectionPayment;
 	
@@ -314,7 +314,7 @@ public class CoopReceipt extends Model {
 	}
 
 	/**
-	 * Limpia la variable que sirve de caché para la consulta de obtención del cobro  actual activo (estado 1)
+	 * Limpia la variable que sirve de cachÃ© para la consulta de obtenciÃ³n del cobro  actual activo (estado 1)
 	 */
 	public void clearActiveCollectionPayment()
 	{

@@ -20,7 +20,7 @@ public interface IDataExchangeView {
 	 */
 	public String getIMEI();
 	/**
-	 * Notifica al usuario que se cerró la sesión
+	 * Notifica al usuario que se cerrÃ³ la sesiÃ³n
 	 * @param username
 	 */
 	public void notifySessionClosed(String username);
@@ -54,18 +54,18 @@ public interface IDataExchangeView {
 	 */
 	public void hideWaiting();
 	/**
-	 * Muestra al usuario errores en la exportación de datos
+	 * Muestra al usuario errores en la exportaciÃ³n de datos
 	 * @param errors
 	 */
 	public void showExportationErrors(List<Exception> errors);
 	/**
-	 * Muestra al usuario errores en la eliminación de todos los datos
+	 * Muestra al usuario errores en la eliminaciÃ³n de todos los datos
 	 * @param errors
 	 */
 	public void showWipeAllDataErrors(List<Exception> errors);
 	
 	/**
-	 * Informa al usuario que se completó exitosamente la descarga
+	 * Informa al usuario que se completÃ³ exitosamente la descarga
 	 */
 	public void notifySuccessfulDataExportation();
 	
@@ -74,11 +74,11 @@ public interface IDataExchangeView {
 	 */
 	public void notifySuccessfulDataWipe();
 	/**
-	 * Lleva al menú principal
+	 * Lleva al menÃº principal
 	 */
 	public void goToMainMenu();
 	/**
-	 * Indica al usuario que se bloqueó el acceso al menú principal
+	 * Indica al usuario que se bloqueÃ³ el acceso al menÃº principal
 	 * por no haber cargado los datos
 	 */
 	public void showMainMenuAccessLocked();

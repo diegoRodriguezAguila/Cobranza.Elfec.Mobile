@@ -1,6 +1,6 @@
 package com.elfec.cobranza.model.events;
 /**
- * Se llama cuando se confirma la importación de rutas
+ * Se llama cuando se confirma la importaciÃ³n de rutas
  * @author drodriguez
  *
  */

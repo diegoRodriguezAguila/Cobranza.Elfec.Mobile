@@ -1,19 +1,15 @@
 package com.elfec.cobranza.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.model.events.DatePickListener;
@@ -24,6 +20,11 @@ import com.elfec.cobranza.view.adapters.collection.CollectionAdapterFactory;
 import com.elfec.cobranza.view.services.BluetoothDevicePickerService;
 import com.elfec.cobranza.view.services.DatesPickerService;
 import com.elfec.cobranza.view.services.bluetooth.BluetoothStateMonitor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainMenu extends Activity implements IMainMenuView {
 
@@ -170,7 +171,7 @@ public class MainMenu extends Activity implements IMainMenuView {
 			runOnUiThread(new Runnable() {			
 				@Override
 				public void run() {
-					new AlertDialogPro.Builder(MainMenu.this).setTitle(titleId)
+					new AlertDialog.Builder(MainMenu.this).setTitle(titleId)
 					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
 					.setPositiveButton(R.string.btn_ok, null).show();
 				}

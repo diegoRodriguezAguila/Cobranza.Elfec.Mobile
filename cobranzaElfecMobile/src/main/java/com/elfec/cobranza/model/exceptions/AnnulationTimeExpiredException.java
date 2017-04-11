@@ -1,7 +1,7 @@
 package com.elfec.cobranza.model.exceptions;
 
 /**
- * Excepción que se lanza cuando el tiempo limite para la anulación de una factura expiró
+ * ExcepciÃ³n que se lanza cuando el tiempo limite para la anulaciÃ³n de una factura expirÃ³
  * @author drodriguez
  *
  */
@@ -22,6 +22,6 @@ public class AnnulationTimeExpiredException extends Exception {
 	@Override
 	public String getMessage()
 	{
-		return "No se puede anular la factura N°: "+receiptNumber+"/"+internalControlCode+" porque se venció su plazo de anulación";
+		return "No se puede anular la factura NÂ°: "+receiptNumber+"/"+internalControlCode+" porque se venciÃ³ su plazo de anulaciÃ³n";
 	}
 }

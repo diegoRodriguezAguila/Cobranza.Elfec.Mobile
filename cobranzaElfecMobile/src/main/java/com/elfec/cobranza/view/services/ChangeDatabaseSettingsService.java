@@ -1,7 +1,5 @@
 package com.elfec.cobranza.view.services;
 
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +8,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -18,11 +17,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.presenter.services.ChangeDatabaseSettingsPresenter;
 import com.elfec.cobranza.presenter.views.IChangeDatabaseSettingsDialog;
+
+import java.util.List;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
@@ -36,8 +36,8 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 public class ChangeDatabaseSettingsService implements
 		IChangeDatabaseSettingsDialog {
 
-	private AlertDialogPro.Builder dialogBuilder;
-	private AlertDialogPro dialog;
+	private AlertDialog.Builder dialogBuilder;
+	private AlertDialog dialog;
 	private Context context;
 	private Handler mHandler;
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
@@ -76,7 +76,7 @@ public class ChangeDatabaseSettingsService implements
 		setFocusChangedListeners();
 		presenter.loadCurrentSettings();
 
-		dialogBuilder = new AlertDialogPro.Builder(context);
+		dialogBuilder = new AlertDialog.Builder(context);
 		dialogBuilder.setTitle(R.string.title_change_database_settings)
 				.setIcon(R.drawable.config_server_d).setView(dialogView)
 				.setNegativeButton(R.string.btn_cancel, new OnClickListener() {
@@ -132,13 +132,13 @@ public class ChangeDatabaseSettingsService implements
 	}
 
 	/**
-	 * Muestra el di·logo construido
+	 * Muestra el di√°logo construido
 	 */
 	public void show() {
 		dialog = dialogBuilder.create();
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
-		dialog.getButton(AlertDialogPro.BUTTON_POSITIVE).setOnClickListener(
+		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {

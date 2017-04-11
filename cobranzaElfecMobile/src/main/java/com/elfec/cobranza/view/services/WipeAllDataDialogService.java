@@ -3,21 +3,21 @@ package com.elfec.cobranza.view.services;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.support.v7.app.AlertDialog;
 
-import com.alertdialogpro.AlertDialogPro.Builder;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.presenter.services.WipeAllDataServicePresenter;
 import com.elfec.cobranza.presenter.services.WipeAllDataServicePresenter.WipeConfirmationListener;
 import com.elfec.cobranza.presenter.views.IWipeAllDataDialog;
 
 /**
- * Un servicio de dialogo para eliminar toda la información local de la aplicación en el dispositivo
+ * Un servicio de dialogo para eliminar toda la informaciÃ³n local de la aplicaciÃ³n en el dispositivo
  * @author drodriguez
  *
  */
 public class WipeAllDataDialogService implements IWipeAllDataDialog {
 
-	private Builder builder;
+	private AlertDialog.Builder builder;
 	private WipeAllDataServicePresenter presenter;
 	private WipeConfirmationListener wipeConfirmationListener;
 	
@@ -25,7 +25,7 @@ public class WipeAllDataDialogService implements IWipeAllDataDialog {
 	{
 		presenter = new WipeAllDataServicePresenter(this);
 		this.wipeConfirmationListener = wipeConfirmationListener;
-		builder = new Builder(context).setIcon(R.drawable.wipe_all_data_d)
+		builder = new AlertDialog.Builder(context).setIcon(R.drawable.wipe_all_data_d)
 		.setTitle(R.string.title_wipe_all_data);
 		presenter.defineDialogType();
 	}

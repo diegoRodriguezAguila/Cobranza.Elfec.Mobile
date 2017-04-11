@@ -1,31 +1,31 @@
 package com.elfec.cobranza.model.enums;
 
 /**
- * Se utiliza para las llaves de los par醡etros de la configuraci髇 de
- * conexi髇 a la base de datos
+ * Se utiliza para las llaves de los par谩metros de la configuraci贸n de
+ * conexi贸n a la base de datos
  * @author drodriguez
  *
  */
 public enum ConnectionParam
 {
 	/**
-	 * Ip del host de conexi髇
+	 * Ip del host de conexi贸n
 	 */
 	IP("ip"),
 	/**
-	 * Puerto de conexi髇
+	 * Puerto de conexi贸n
 	 */
 	PORT("port"),
 	/**
-	 * Servicio Oracle de conexi髇
+	 * Servicio Oracle de conexi贸n
 	 */
 	SERVICE("service"),
 	/**
-	 * Rol que debe habilitar la aplicaci髇
+	 * Rol que debe habilitar la aplicaci贸n
 	 */
 	ROLE("role"),
 	/**
-	 * La contrase馻 del rol 
+	 * La contrase帽a del rol 
 	 */
 	PASSWORD("password");
 	private String value;

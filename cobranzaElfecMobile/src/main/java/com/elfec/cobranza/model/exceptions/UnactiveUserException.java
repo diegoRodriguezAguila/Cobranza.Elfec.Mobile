@@ -1,6 +1,6 @@
 package com.elfec.cobranza.model.exceptions;
 /**
- * Excepción que se lanza cuando un usuario en estado de baja intenta ingresar al sistema
+ * ExcepciÃ³n que se lanza cuando un usuario en estado de baja intenta ingresar al sistema
  * @author drodriguez
  *
  */

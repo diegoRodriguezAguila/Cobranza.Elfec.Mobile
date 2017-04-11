@@ -1,7 +1,5 @@
 package com.elfec.cobranza.presenter;
 
-import java.util.List;
-
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.business_logic.AnnulmentReasonManager;
 import com.elfec.cobranza.business_logic.BankAccountManager;
@@ -11,8 +9,8 @@ import com.elfec.cobranza.business_logic.ConceptManager;
 import com.elfec.cobranza.business_logic.CoopReceiptManager;
 import com.elfec.cobranza.business_logic.DataExchangeControlManager;
 import com.elfec.cobranza.business_logic.FineBonusManager;
-import com.elfec.cobranza.business_logic.ReceiptConceptManager;
 import com.elfec.cobranza.business_logic.PrinterImagesManager;
+import com.elfec.cobranza.business_logic.ReceiptConceptManager;
 import com.elfec.cobranza.business_logic.RoleAccessManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.business_logic.SupplyCategoryTypeManager;
@@ -40,6 +38,8 @@ import com.elfec.cobranza.presenter.views.IZoneRoutesView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 import com.elfec.cobranza.settings.PreferencesManager;
 
+import java.util.List;
+
 public class ZoneRoutesPresenter {
 
 	private IZoneRoutesView view;
@@ -59,7 +59,7 @@ public class ZoneRoutesPresenter {
 	}
 	
 	/**
-	 * Carga las rutas de la zona seg鷑 su id remoto
+	 * Carga las rutas de la zona seg煤n su id remoto
 	 * @param zoneRemoteId
 	 */
 	public void loadZoneRoutes(final int zoneRemoteId)
@@ -76,7 +76,7 @@ public class ZoneRoutesPresenter {
 	}
 	
 	/**
-	 * Invoca a los metodos necesarios para importar la informaci髇 de las rutas
+	 * Invoca a los metodos necesarios para importar la informaci贸n de las rutas
 	 * @param selectedRoutes
 	 */
 	public void starDataImportation(final List<Route> selectedRoutes)
@@ -116,7 +116,7 @@ public class ZoneRoutesPresenter {
 	}
 	
 	/**
-	 * Llama a los m閠odos necesarios para habilitar el rol de MOVIL_COBRANZA
+	 * Llama a los m茅todos necesarios para habilitar el rol de MOVIL_COBRANZA
 	 * @param result
 	 * @return Resultado del acceso a datos
 	 */
@@ -166,7 +166,7 @@ public class ZoneRoutesPresenter {
 	}
 
 	/**
-	 * Inicializa los atributos para la importaci髇 de datos
+	 * Inicializa los atributos para la importaci贸n de datos
 	 * @param selectedRoutes
 	 */
 	private void initializeDataImport(final List<Route> selectedRoutes) {
@@ -180,7 +180,7 @@ public class ZoneRoutesPresenter {
 	}
 	
 	/**
-	 * Importa la informaci髇 que solo se requiere una vez
+	 * Importa la informaci贸n que solo se requiere una vez
 	 * @return
 	 */
 	private DataAccessResult<?> importAllOnceRequiredData(DataAccessResult<?> result) {
@@ -305,7 +305,7 @@ public class ZoneRoutesPresenter {
 	}
 	
 	/**
-	 * Importa toda la informaci髇 de la ruta actual
+	 * Importa toda la informaci贸n de la ruta actual
 	 * @param result
 	 * @param importCallback
 	 */
@@ -361,7 +361,7 @@ public class ZoneRoutesPresenter {
 	}
 
 	/**
-	 * Llama a la importaci髇 de SUMINISTROS en un hilo aparte
+	 * Llama a la importaci贸n de SUMINISTROS en un hilo aparte
 	 * @param importCallback
 	 */
 	private void threadedImportSupplies(final OnImportFinished importCallback) {
@@ -381,7 +381,7 @@ public class ZoneRoutesPresenter {
 		}, "ImportSupplies").start();
 	}
 	/**
-	 * Llama a la importaci髇 de SUMIN_ESTADOS en un hilo aparte
+	 * Llama a la importaci贸n de SUMIN_ESTADOS en un hilo aparte
 	 * @param importCallback
 	 */
 	private void threadedImportSupplyStatuses(final OnImportFinished importCallback) {
@@ -401,7 +401,7 @@ public class ZoneRoutesPresenter {
 		}, "ImportSupplyStatuses").start();
 	}
 	/**
-	 * Llama a la importaci髇 de CBTES_CPTOS en un hilo aparte
+	 * Llama a la importaci贸n de CBTES_CPTOS en un hilo aparte
 	 * @param importCallback
 	 */
 	private void threadedImportReceiptConcepts(final OnImportFinished importCallback) {
@@ -421,7 +421,7 @@ public class ZoneRoutesPresenter {
 		}, "ImportReceiptConcepts").start();
 	}
 	/**
-	 * Llama a la importaci髇 de BONIF_MULTAS en un hilo aparte
+	 * Llama a la importaci贸n de BONIF_MULTAS en un hilo aparte
 	 * @param importCallback
 	 */
 	private void threadedImportFineBonuses(final OnImportFinished importCallback) {
@@ -442,7 +442,7 @@ public class ZoneRoutesPresenter {
 	}
 
 	/**
-	 * Llama a los m閠odos para realizar una importaci髇 y tambi閚 actualiza el mensaje de espera 
+	 * Llama a los m茅todos para realizar una importaci贸n y tambi茅n actualiza el mensaje de espera 
 	 * y muestra los errores en caso de haber sucedido
 	 * @param lastResult
 	 * @param loadingMessageResId
@@ -468,7 +468,7 @@ public class ZoneRoutesPresenter {
 	}
 	
 	/**
-	 * Llama a los m閠odos para realizar una importaci髇 y tambi閚 actualiza el mensaje de espera
+	 * Llama a los m茅todos para realizar una importaci贸n y tambi茅n actualiza el mensaje de espera
 	 * @param loadingMessageResId
 	 * @param caller
 	 * @return

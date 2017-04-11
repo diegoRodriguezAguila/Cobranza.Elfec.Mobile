@@ -1,22 +1,22 @@
 package com.elfec.cobranza.business_logic.data_exchange;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.elfec.cobranza.model.results.DataAccessResult;
 
+import java.net.ConnectException;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
- * Se encarga de importar cualquier tipo de informaci髇
+ * Se encarga de importar cualquier tipo de informaci贸n
  * @author drodriguez
  *
  */
 public class DataImporter {
 	
 	/**
-	 * Importa cualquier tipo de informaci髇 que debe ser importada una sola vez
+	 * Importa cualquier tipo de informaci贸n que debe ser importada una sola vez
 	 * @param importSource
 	 * @return
 	 */
@@ -48,7 +48,7 @@ public class DataImporter {
 	}
 	
 	/**
-	 * Importa cualquier tipo de informaci髇
+	 * Importa cualquier tipo de informaci贸n
 	 * @param importSpecs
 	 * @return
 	 */
@@ -89,7 +89,7 @@ public class DataImporter {
 	public static interface ImportSource<T extends Model>
 	{
 		/**
-		 * Obtiene la informaci髇
+		 * Obtiene la informaci贸n
 		 * @return Lista de tipo T
 		 * @throws ConnectException
 		 * @throws SQLException
@@ -97,7 +97,7 @@ public class DataImporter {
 		public List<T> requestData() throws ConnectException, SQLException;
 	}
 	/**
-	 * Interfaz que utiliza DataImporter para determinar la fuente de los datos que se quieren importar y tambi閚 c髆o se interpretar醤 
+	 * Interfaz que utiliza DataImporter para determinar la fuente de los datos que se quieren importar y tambi茅n c贸mo se interpretar谩n 
 	 * los datos obtenidos
 	 * @author drodriguez
 	 *

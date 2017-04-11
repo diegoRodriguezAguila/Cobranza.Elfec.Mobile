@@ -1,5 +1,15 @@
 package com.elfec.cobranza.settings.remote_data_access;
 
+import android.content.Context;
+import android.nfc.FormatException;
+
+import com.elfec.cobranza.helpers.FileManager;
+import com.elfec.cobranza.model.enums.ConnectionParam;
+import com.elfec.cobranza.model.results.ManagerProcessResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,28 +18,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.content.Context;
-import android.nfc.FormatException;
-
-import com.elfec.cobranza.helpers.FileManager;
-import com.elfec.cobranza.model.enums.ConnectionParam;
-import com.elfec.cobranza.model.results.ManagerProcessResult;
-
 /**
- * Es un objeto est·tico que sirve para poder obtener y escribir el archivo de configuraciÛn que est· en JSON bajo la carpeta
+ * Es un objeto est√°tico que sirve para poder obtener y escribir el archivo de configuraci√≥n que est√° en JSON bajo la carpeta
  * de assets, el nombre del archivo es <b>config_bd.json</b>.
  * @author drodriguez
  *
  */
 public class OracleDatabaseSettings {
-	/** Define el nombre del archivo de configuraciÛn. **/
+	/** Define el nombre del archivo de configuraci√≥n. **/
 	private static final String SETTINGS_FILE="db_settings.json";
 	
 	/**
-	 * Sobre escribe las configuraciÛn de conexiÛn actual
+	 * Sobre escribe las configuraci√≥n de conexi√≥n actual
 	 * @param settings
 	 */
 	public static ManagerProcessResult overwriteConnectionSettings(Context context, Map<String, String> settings)
@@ -48,10 +48,10 @@ public class OracleDatabaseSettings {
 			os.close();
 		} catch (JSONException e) {
 			e.printStackTrace();
-			result.addError(new FormatException("Los par·metros de la configuraciÛn tienen un formato incorrecto"));
+			result.addError(new FormatException("Los par√°metros de la configuraci√≥n tienen un formato incorrecto"));
 		} catch (IOException e) {
 			e.printStackTrace();
-			result.addError(new IOException("OcurriÛ un error al escribir en el archivo de configuraciÛn, revise el estado de la memoria"));
+			result.addError(new IOException("Ocurri√≥ un error al escribir en el archivo de configuraci√≥n, revise el estado de la memoria"));
 		}
 		return result;
 	}
@@ -59,7 +59,7 @@ public class OracleDatabaseSettings {
 	/**
 	 * Obtiene las configuraciones de conexion en un mapa
 	 * @param context
-	 * @return configuraciones de conexiÛn
+	 * @return configuraciones de conexi√≥n
 	 */
 	public static Map<String, String> getConnectionSettings(Context context)
 	{
@@ -80,9 +80,9 @@ public class OracleDatabaseSettings {
 	}
 	
 	/**
-	 * Obtiene la cadena de conexiÛn de las configuraciones
+	 * Obtiene la cadena de conexi√≥n de las configuraciones
 	 * @param context
-	 * @return cadena de conexiÛn JDBC <i>ej. jdbc:oracle:thin:@//iphost:port/service</i>
+	 * @return cadena de conexi√≥n JDBC <i>ej. jdbc:oracle:thin:@//iphost:port/service</i>
 	 */
 	public static String getConnectionString(Context context)
 	{
@@ -122,9 +122,9 @@ public class OracleDatabaseSettings {
 	}
 	
 	/**
-	 * Obtiene una cadena de conexiÛn a partir de una configuraciÛn json
+	 * Obtiene una cadena de conexi√≥n a partir de una configuraci√≥n json
 	 * @param dbSettings
-	 * @return Cadena de conexiÛn JDBC
+	 * @return Cadena de conexi√≥n JDBC
 	 * @throws JSONException
 	 */
 	public static String getConnectionStringFromJSON(JSONObject dbSettings) throws JSONException

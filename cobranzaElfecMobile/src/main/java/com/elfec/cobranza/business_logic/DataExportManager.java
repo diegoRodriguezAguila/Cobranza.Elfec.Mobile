@@ -1,7 +1,5 @@
 package com.elfec.cobranza.business_logic;
 
-import java.io.File;
-
 import android.database.sqlite.SQLiteDatabase;
 
 import com.activeandroid.ActiveAndroid;
@@ -13,16 +11,18 @@ import com.elfec.cobranza.model.exceptions.NoPendingExportDataException;
 import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.elfec.cobranza.settings.PreferencesManager;
 
+import java.io.File;
+
 /**
- * Capa de lógica de negocio para la exportación de datos
+ * Capa de lÃ³gica de negocio para la exportaciÃ³n de datos
  * @author drodriguez
  *
  */
 public class DataExportManager {
 	
 	/**
-	 * Valida las condiciones de negocio para la exportación de los cobros
-	 * @return resultado de la validación
+	 * Valida las condiciones de negocio para la exportaciÃ³n de los cobros
+	 * @return resultado de la validaciÃ³n
 	 */
 	public static ManagerProcessResult validateExportation()
 	{
@@ -45,7 +45,7 @@ public class DataExportManager {
 	}
 	
 	/**
-	 * Elimina toda la información de la aplicación que se debe eliminar del dispositivo
+	 * Elimina toda la informaciÃ³n de la aplicaciÃ³n que se debe eliminar del dispositivo
 	 * @return
 	 */
 	public static ManagerProcessResult wipeAllData()
@@ -61,8 +61,8 @@ public class DataExportManager {
 		}
 		catch(Exception e)
 		{
-			result.addError(new RuntimeException("Ocurrió un error al eliminar la información local! "
-					+ "Es probable que la información se haya corrompido, porfavor elimine los datos desde el "
+			result.addError(new RuntimeException("OcurriÃ³ un error al eliminar la informaciÃ³n local! "
+					+ "Es probable que la informaciÃ³n se haya corrompido, porfavor elimine los datos desde el "
 					+ "administrador de aplicaciones de Android! Info. adicional: "+e.getMessage()));
 		}
 		

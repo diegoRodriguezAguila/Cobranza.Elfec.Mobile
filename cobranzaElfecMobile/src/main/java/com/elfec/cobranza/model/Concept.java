@@ -1,9 +1,5 @@
 package com.elfec.cobranza.model;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.database.Cursor;
 
 import com.activeandroid.Cache;
@@ -14,6 +10,10 @@ import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.model.printer.PrintConceptQuerier;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Almacena los CONCEPTOS
@@ -74,7 +74,7 @@ public class Concept extends Model {
 	private int IVAColumn;
 	/**
 	 * IMPRESION_AREA en Oracle
-	 * Area de impresi髇
+	 * Area de impresi贸n
 	 */
 	@Column(name = "PrintArea")
 	private short printArea;
@@ -115,7 +115,7 @@ public class Concept extends Model {
 	}
 	
 	/**
-	 * Obtiene el concepto de consumo total para impresi髇
+	 * Obtiene el concepto de consumo total para impresi贸n
 	 * @param receiptId
 	 * @return concepto TOTAL CONSUMO
 	 */
@@ -126,9 +126,9 @@ public class Concept extends Model {
 	}
 	
 	/**
-	 * Obtiene los conceptos del consumo total para impresi髇
+	 * Obtiene los conceptos del consumo total para impresi贸n
 	 * @param receiptId
-	 * @return Lista de conceptos del 醨ea de TOTAL CONSUMO
+	 * @return Lista de conceptos del 谩rea de TOTAL CONSUMO
 	 */
 	public static List<PrintConcept> getTotalConsumeAreaConcepts(int receiptId)
 	{
@@ -136,7 +136,7 @@ public class Concept extends Model {
 	}
 	
 	/**
-	 * Obtiene el concepto de total suministro para impresi髇
+	 * Obtiene el concepto de total suministro para impresi贸n
 	 * @param receiptId
 	 * @return concepto TOTAL SUMINISTRO
 	 */
@@ -146,9 +146,9 @@ public class Concept extends Model {
 	}
 	
 	/**
-	 * Obtiene los conceptos del consumo total para impresi髇
+	 * Obtiene los conceptos del consumo total para impresi贸n
 	 * @param receiptId
-	 * @return Lista de conceptos del 醨ea de TOTAL SUMINISTRO
+	 * @return Lista de conceptos del 谩rea de TOTAL SUMINISTRO
 	 */
 	public static List<PrintConcept> getTotalSupplyAreaConcepts(int receiptId)
 	{
@@ -156,7 +156,7 @@ public class Concept extends Model {
 	}
 	
 	/**
-	 * Obtiene el concepto del total de la factura para impresi髇
+	 * Obtiene el concepto del total de la factura para impresi贸n
 	 * @param receiptId
 	 * @return Concepto de TOTAL FACTURA
 	 */
@@ -172,13 +172,13 @@ public class Concept extends Model {
 	 */
 	public static PrintConcept getSubjectToTaxCreditConcept(int receiptId)
 	{
-		return (new PrintConceptQuerier(receiptId, 1, 2).setDescription("IMPORTE BASE PARA CR蒁ITO FISCAL").execute()).get(0);
+		return (new PrintConceptQuerier(receiptId, 1, 2).setDescription("IMPORTE BASE PARA CR脡DITO FISCAL").execute()).get(0);
 	}
 	
 	/**
 	 * Obtiene los conceptos de devoluciones y bonificaciones de multas
 	 * @param receiptId
-	 * @return Lista de conceptos del 醨ea de Bonificaciones y devoluciones
+	 * @return Lista de conceptos del 谩rea de Bonificaciones y devoluciones
 	 */
 	public static List<PrintConcept> getFineBonusConcepts(int receiptId)
 	{
@@ -199,9 +199,9 @@ public class Concept extends Model {
 	}
 	
 	/**
-	 * Obtiene el concepto de IMPORTE NO SUJETO A CR蒁ITO FISCAL
+	 * Obtiene el concepto de IMPORTE NO SUJETO A CR脡DITO FISCAL
 	 * @param receiptId
-	 * @return concepto IMPORTE NO SUJETO A CR蒁ITO FISCAL
+	 * @return concepto IMPORTE NO SUJETO A CR脡DITO FISCAL
 	 */
 	public static PrintConcept getNotSubjectToTaxCreditConcept(int receiptId)
 	{

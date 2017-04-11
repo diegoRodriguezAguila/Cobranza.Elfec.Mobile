@@ -1,16 +1,16 @@
 package com.elfec.cobranza.business_logic;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Locale;
-
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.helpers.FileManager;
 import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.WSCollection;
 import com.elfec.cobranza.settings.PreferencesManager;
+
+import org.joda.time.DateTime;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Locale;
 
 /**
  * Clase de logica de negocio que se encarga de realizar un backup de cualquier cobro que se realize
@@ -43,12 +43,12 @@ public class CollectionBackupManager {
 	}
 	
 	/**
-	 * Inserta el backup del pago o la anulación de un cobro, en el archivo de backup de todas las memorias externas.
+	 * Inserta el backup del pago o la anulaciÃ³n de un cobro, en el archivo de backup de todas las memorias externas.
 	 * <i>Este proceso accede multiples veces a distintos almacenamientos de disco duro, por lo que siempre se ejecuta en un
 	 * hilo aparte</i>
 	 * @param collection
 	 * @param transaction
-	 * @param isPayment true si es que es un pago, caso contrario se la toma como anulación
+	 * @param isPayment true si es que es un pago, caso contrario se la toma como anulaciÃ³n
 	 */
 	public static void backupCollecionAction(final CollectionPayment collection, final WSCollection transaction, final boolean isPayment)
 	{

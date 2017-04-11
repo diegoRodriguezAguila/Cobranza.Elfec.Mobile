@@ -1,14 +1,12 @@
 package com.elfec.cobranza.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -21,8 +19,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.alertdialogpro.AlertDialogPro;
-import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.model.Route;
@@ -32,6 +28,10 @@ import com.elfec.cobranza.presenter.views.IZoneRoutesView;
 import com.elfec.cobranza.view.adapters.RouteAdapter;
 import com.elfec.cobranza.view.services.LockedRoutesWarningService;
 import com.elfec.cobranza.view.services.LockedRoutesWarningService.OnServiceCanceled;
+import com.elfec.cobranza.view.services.ProgressDialogService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
@@ -61,7 +61,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView {
 	private ListView listViewZoneRoutes;
 	private Button btnSelectAllRoutes;
 	private Button btnDownloadRoutes;
-	private ProgressDialogPro waitingDialog;
+	private ProgressDialogService waitingDialog;
 	private Handler mHandler;
 	private List<String> waitingMessages;
 
@@ -226,8 +226,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView {
 						.getWindow()
 						.addFlags(
 								android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-				waitingDialog = new ProgressDialogPro(getActivity(),
-						R.style.Theme_FlavoredMaterialLight);
+				waitingDialog = new ProgressDialogService(getActivity());
 				waitingDialog.setMessage(getResources().getString(
 						R.string.msg_waiting));
 				waitingDialog.setTitle(R.string.title_waiting);
@@ -260,7 +259,7 @@ public class ZoneRoutesFragment extends Fragment implements IZoneRoutesView {
 			@Override
 			public void run() {
 				if (errors.size() > 0) {
-					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+					AlertDialog.Builder builder = new AlertDialog.Builder(
 							getActivity());
 					builder.setTitle(R.string.title_download_errors)
 							.setMessage(

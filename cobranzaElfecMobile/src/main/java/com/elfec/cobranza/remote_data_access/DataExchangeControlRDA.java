@@ -1,15 +1,15 @@
 package com.elfec.cobranza.remote_data_access;
 
+import com.elfec.cobranza.model.data_exchange.DataExchangeControl;
+import com.elfec.cobranza.model.enums.DataExchangeStatus;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+
+import org.joda.time.DateTime;
+
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import org.joda.time.DateTime;
-
-import com.elfec.cobranza.model.data_exchange.DataExchangeControl;
-import com.elfec.cobranza.model.enums.DataExchangeStatus;
-import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
  * Provee una capa de acceso remoto a la base de datos oracle para operaciones relacionadas con <B>MOVILES.COBRA_RUTAS_ESTADOS</B>
@@ -75,9 +75,9 @@ public class DataExchangeControlRDA {
 	 * Actualiza remotamente el registro MOVILES.COBRA_RUTAS_ESTADOS de oracle
 	 * @param username
 	 * @param password
-	 * @param dataExchangeControlId eL Id remoto del control de exportación de rutas
+	 * @param dataExchangeControlId eL Id remoto del control de exportaciÃ³n de rutas
 	 * @param dataExportControl
-	 * @return 0 si es que no se actualizó correctamente 
+	 * @return 0 si es que no se actualizÃ³ correctamente 
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */

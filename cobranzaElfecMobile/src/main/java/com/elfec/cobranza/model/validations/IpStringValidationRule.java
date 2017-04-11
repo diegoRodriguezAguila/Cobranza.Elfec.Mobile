@@ -10,7 +10,7 @@ public class IpStringValidationRule implements IValidationRule<String> {
 
 	@Override
 	public String getErrorMessage(String fieldName, boolean isMaleGender) {
-		return (isMaleGender?"El ":"La ")+fieldName+" tiene que ser una IPv4 v·lid"+(isMaleGender?"o":"a");
+		return (isMaleGender?"El ":"La ")+fieldName+" tiene que ser una IPv4 v√°lid"+(isMaleGender?"o":"a");
 	}
 
 }

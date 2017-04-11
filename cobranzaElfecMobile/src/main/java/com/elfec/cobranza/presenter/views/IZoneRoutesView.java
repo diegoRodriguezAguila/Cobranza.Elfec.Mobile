@@ -1,12 +1,12 @@
 package com.elfec.cobranza.presenter.views;
 
-import java.util.List;
-
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.events.OnRoutesImportConfirmed;
 
+import java.util.List;
+
 /**
- * AbstracciÛn de una vista de las rutas de una zona
+ * Abstracci√≥n de una vista de las rutas de una zona
  * @author drodriguez
  *
  */
@@ -28,7 +28,7 @@ public interface IZoneRoutesView {
 	 */
 	public void addWaitingMessage(int messageResource, boolean replaceAll);
 	/**
-	 * Indica dejar de mostrar un mensaje especÌfico de espera
+	 * Indica dejar de mostrar un mensaje espec√≠fico de espera
 	 * @param messageResource
 	 */
 	public void deleteWaitingMessage(int messageResource);
@@ -37,7 +37,7 @@ public interface IZoneRoutesView {
 	 */
 	public void hideWaiting();
 	/**
-	 * Muestra los errores en la importaciÛn
+	 * Muestra los errores en la importaci√≥n
 	 * @param errors
 	 */
 	public void showImportErrors(List<Exception> errors);
@@ -48,14 +48,14 @@ public interface IZoneRoutesView {
 	public String getIMEI();
 	/**
 	 * Advierte al usuario que existen rutas que fueron cargadas en otros dispositivos y pide
-	 * su confirmaciÛn para continuar
+	 * su confirmaci√≥n para continuar
 	 * @param lockedRoutes
 	 * @param noMoreRoutes indica si es que hay mas rutas para descargar aparte de las que
-	 * se omitir·n en caso de continuar
+	 * se omitir√°n en caso de continuar
 	 */
 	public void warnLockedRoutes(List<Route> lockedRoutes, OnRoutesImportConfirmed callback, boolean noMoreRoutes);
 	/**
-	 * Indica al usuario que la importaciÛn fuÈ exitosa
+	 * Indica al usuario que la importaci√≥n fu√© exitosa
 	 */
 	public void successfullyImportation();
 }

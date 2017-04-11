@@ -1,31 +1,31 @@
 package com.elfec.cobranza.presenter.views;
 
-import java.util.List;
-
 import com.elfec.cobranza.model.AnnulmentReason;
 
+import java.util.List;
+
 /**
- * Abstracci髇 del dialogo de confirmaci髇 de una anulaci髇
+ * Abstracci贸n del dialogo de confirmaci贸n de una anulaci贸n
  * @author drodriguez
  *
  */
 public interface ICollectionAnnulmentDialog {
 	/**
-	 * Asigna los motivos de anulaci髇 que se mostrar醤
+	 * Asigna los motivos de anulaci贸n que se mostrar谩n
 	 * @param annulmentReasons
 	 */
 	public void setAnnulmentReasons(List<AnnulmentReason> annulmentReasons);
 	/**
-	 * Obtiene el c骴igo de control interno
+	 * Obtiene el c贸digo de control interno
 	 * @return string, codigo de control interno
 	 */
 	public String getInternalControlCode();
 	/**
-	 * Asigna el c骴igo de control interno
+	 * Asigna el c贸digo de control interno
 	 */
 	public void setInternalControlCode(long internalControlCode);
 	/**
-	 * Muestra un error en el c骴igo de control interno
+	 * Muestra un error en el c贸digo de control interno
 	 * @param strErrorId
 	 */
 	public void setInternalControlCodeError(int strErrorId);
@@ -34,12 +34,12 @@ public interface ICollectionAnnulmentDialog {
 	 */
 	public void closeView();
 	/**
-	 * Retorna el Id del motivo de anulaci髇 seleccionado
+	 * Retorna el Id del motivo de anulaci贸n seleccionado
 	 * @return Id
 	 */
 	public int getSelectedAnnulmentReasonId();
 	/**
-	 * Muestra un error en el m髏ivo de anulaci髇
+	 * Muestra un error en el m贸tivo de anulaci贸n
 	 * @param strErrorId
 	 */
 	public void setAnnulmentReasonError(int strErrorId);
@@ -50,7 +50,7 @@ public interface ICollectionAnnulmentDialog {
 	 */
 	public void setPeriod(int year, int month);
 	/**
-	 * Asigna los datos del n鷐ero de factura
+	 * Asigna los datos del n煤mero de factura
 	 * @param receiptNumber
 	 */
 	public void setReceiptNumber(String receiptNumber);

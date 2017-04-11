@@ -1,15 +1,12 @@
 package com.elfec.cobranza.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +14,6 @@ import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.alertdialogpro.AlertDialogPro;
-import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.model.Supply;
@@ -30,6 +25,12 @@ import com.elfec.cobranza.view.animations.HeightAnimation;
 import com.elfec.cobranza.view.controls.SlidingTabLayout;
 import com.elfec.cobranza.view.controls.SlidingTabLayout.TabColorizer;
 import com.elfec.cobranza.view.services.BluetoothDevicePickerService;
+import com.elfec.cobranza.view.services.ProgressDialogService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CollectionAction extends FragmentActivity implements
 		SearchCollectionFragment.Callbacks {
@@ -40,7 +41,7 @@ public class CollectionAction extends FragmentActivity implements
 	private CollectionPagerAdapter adapter;
 	private ViewPager viewPager;
 	private SlidingTabLayout slidingTabLayout;
-	private ProgressDialogPro waitingDialog;
+	private ProgressDialogService waitingDialog;
 	private Fragment fSearchCollection;
 
 	private boolean mIsTwoPane;
@@ -160,9 +161,7 @@ public class CollectionAction extends FragmentActivity implements
 					paymentView.hideNoSearchedSupplies();
 					paymentView.showSearchingMessage();
 				} else {
-					waitingDialog = new ProgressDialogPro(
-							CollectionAction.this,
-							R.style.Theme_FlavoredMaterialLight);
+					waitingDialog = new ProgressDialogService(CollectionAction.this);
 					waitingDialog.setMessage(getResources().getString(
 							R.string.msg_searching));
 					waitingDialog.show();
@@ -198,7 +197,7 @@ public class CollectionAction extends FragmentActivity implements
 				if (mIsTwoPane) {
 					paymentView.showSearchErrors(errors);
 				} else {
-					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+					AlertDialog.Builder builder = new AlertDialog.Builder(
 							CollectionAction.this);
 					builder.setMessage(
 							MessageListFormatter.fotmatHTMLFromErrors(errors))
@@ -223,7 +222,7 @@ public class CollectionAction extends FragmentActivity implements
 	// #endregion
 
 	/**
-	 * Esconde el fragmento de búsqueda
+	 * Esconde el fragmento de bï¿½squeda
 	 */
 	private void collapseSearchFragment() {
 		searchCollectionCollapsed = true;
@@ -237,7 +236,7 @@ public class CollectionAction extends FragmentActivity implements
 	}
 
 	/**
-	 * muestra el fragmento de búsqueda
+	 * muestra el fragmento de bï¿½squeda
 	 */
 	private void expandSearchFragment() {
 		searchCollectionCollapsed = false;

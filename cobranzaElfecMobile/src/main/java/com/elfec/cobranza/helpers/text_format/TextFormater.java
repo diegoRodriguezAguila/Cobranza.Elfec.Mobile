@@ -10,8 +10,8 @@ import java.util.Locale;
 public class TextFormater {
 
 	/**
-	 * Convierte una cadena a su versión con la primera mayuscula y luego minúsculas para cada palabra,
-	 * las palabras tienen que tener el tamaño minimo para ser formateadas, caso contrario
+	 * Convierte una cadena a su versiÃ³n con la primera mayuscula y luego minÃºsculas para cada palabra,
+	 * las palabras tienen que tener el tamaÃ±o minimo para ser formateadas, caso contrario
 	 * se las ignora
 	 * @param line
 	 * @param minSize
@@ -61,7 +61,7 @@ public class TextFormater {
 	}
 	
 	/**
-	 * Convierte una cadena a su versión con la primera mayuscula y luego minúsculas para cada palabra, sin importar su tamaño
+	 * Convierte una cadena a su versiÃ³n con la primera mayuscula y luego minÃºsculas para cada palabra, sin importar su tamaÃ±o
 	 * se las ignora
 	 * @param line
 	 * @return cadena formateada

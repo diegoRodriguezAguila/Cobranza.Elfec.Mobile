@@ -26,7 +26,7 @@ import com.elfec.cobranza.view.services.SupplyResultPickerService;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 /**
- * Fragment que representa solamente la pantalla de búsqueda de cobranzas
+ * Fragment que representa solamente la pantalla de bÃºsqueda de cobranzas
  * 
  * @author drodriguez
  *
@@ -40,7 +40,7 @@ public class SearchCollectionFragment extends Fragment implements
 	 */
 	public interface Callbacks {
 		/**
-		 * Evento que se ejecuta cuando el usuario presionó el boton de búsqueda
+		 * Evento que se ejecuta cuando el usuario presionÃ³ el boton de bÃºsqueda
 		 */
 		public void onSearchStarted();
 
@@ -50,14 +50,14 @@ public class SearchCollectionFragment extends Fragment implements
 		public void onSupplyFound(Supply supply);
 
 		/**
-		 * Callback para cuando existieron errores en una búsqueda realizada
+		 * Callback para cuando existieron errores en una bÃºsqueda realizada
 		 * 
 		 * @param errors
 		 */
 		public void onSearchErrors(List<Exception> errors);
 
 		/**
-		 * Callback para cuando se canceló la búsqueda realizada
+		 * Callback para cuando se cancelÃ³ la bÃºsqueda realizada
 		 */
 		public void onSearchCanceled();
 	}

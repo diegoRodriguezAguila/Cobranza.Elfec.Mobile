@@ -1,8 +1,8 @@
 package com.elfec.cobranza.model.data_exchange;
 
-import java.net.URL;
-
 import android.graphics.Bitmap;
+
+import java.net.URL;
 
 /**
  * Clase utilizada por el descargador de imagenes, representa un bitmap descargado donde se tiene su URL 
@@ -32,7 +32,7 @@ public class DownloadedBitmap {
 	}
 	
 	/**
-	 * Obtiene el nombre de la imagen con su extensión
+	 * Obtiene el nombre de la imagen con su extensiÃ³n
 	 * @return
 	 */
 	public String getImageName()

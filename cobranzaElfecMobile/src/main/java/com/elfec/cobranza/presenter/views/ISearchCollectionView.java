@@ -1,12 +1,12 @@
 package com.elfec.cobranza.presenter.views;
 
-import java.util.List;
-
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.model.events.SupplyResultPickedListener;
 
+import java.util.List;
+
 /**
- * Abstracción de la vista de busqueda de facturas
+ * AbstracciÃ³n de la vista de busqueda de facturas
  * @author drodriguez
  *
  */
@@ -33,11 +33,11 @@ public interface ISearchCollectionView {
 	 */
 	public String getNIT();
 	/**
-	 * Notifica al usuario que debe al menos poner un término de búsqueda
+	 * Notifica al usuario que debe al menos poner un tÃ©rmino de bÃºsqueda
 	 */
 	public void notifyAtleastOneField();
 	/**
-	 * Notifica a la vista que se inició la búsqueda
+	 * Notifica a la vista que se iniciÃ³ la bÃºsqueda
 	 */
 	public void notifySearchStarted();
 	/**
@@ -52,7 +52,7 @@ public interface ISearchCollectionView {
 	 */
 	public void showFoundSupply(Supply foundSupply);
 	/**
-	 * Muestra los errores que podrían haber ocurrido durante la búsqueda
+	 * Muestra los errores que podrÃ­an haber ocurrido durante la bÃºsqueda
 	 * @param errors
 	 */
 	public void showSearchErrors(List<Exception> errors);

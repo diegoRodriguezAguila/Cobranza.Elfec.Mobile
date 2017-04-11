@@ -1,11 +1,5 @@
 package com.elfec.cobranza.business_logic.data_exchange;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -15,15 +9,21 @@ import com.elfec.cobranza.model.data_exchange.DownloadedBitmap;
 import com.elfec.cobranza.model.events.OnImageDownloadFinished;
 import com.elfec.cobranza.settings.PreferencesManager;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Descarga una o m·s im·genes de internet y las guarda en la memoria interna
- * con el mismo nombre que tenÌa remotamente
+ * Descarga una o m√°s im√°genes de internet y las guarda en la memoria interna
+ * con el mismo nombre que ten√≠a remotamente
  * @author drodriguez
  *
  */
 public class ImageDownloader extends AsyncTask<String, Void, List<DownloadedBitmap>> {
 	/**
-	 * Evento que se llama al finalizar la descarga de im·genes
+	 * Evento que se llama al finalizar la descarga de im√°genes
 	 */
 	private OnImageDownloadFinished imageDownloadCallback;
 	

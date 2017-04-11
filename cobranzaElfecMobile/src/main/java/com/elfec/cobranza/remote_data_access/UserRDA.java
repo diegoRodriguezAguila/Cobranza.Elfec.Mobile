@@ -1,11 +1,11 @@
 package com.elfec.cobranza.remote_data_access;
 
+import com.elfec.cobranza.model.User;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import com.elfec.cobranza.model.User;
-import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
  * Provee una capa de acceso remoto a la base de datos oracle
@@ -15,7 +15,7 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 public class UserRDA {
 
 	/**
-	 * Obtiene remotamente el usuario especificado, se requiere password y nombre de usuario para la conexión
+	 * Obtiene remotamente el usuario especificado, se requiere password y nombre de usuario para la conexiÃ³n
 	 * @param username
 	 * @param password
 	 * @return
@@ -39,11 +39,11 @@ public class UserRDA {
 	
 	/**
 	 * Obtiene remotamente el numero de caja del usuario especificado, se requiere password
-	 * y nombre de usuario para la conexión
+	 * y nombre de usuario para la conexiÃ³n
 	 * @param username
 	 * @param password
 	 * @param cashierId , este es el IDEMPLEADO en SEG_USER
-	 * @return numero de caja, -1 si es que no se encontró al usuario en la tabla COBRANZA.CAJERO_CAJA
+	 * @return numero de caja, -1 si es que no se encontrÃ³ al usuario en la tabla COBRANZA.CAJERO_CAJA
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */
@@ -61,12 +61,12 @@ public class UserRDA {
 	}
 	
 	/**
-	 * Obtiene remotamente la descripción de caja del usuario especificado, se requiere password
-	 * y nombre de usuario para la conexión
+	 * Obtiene remotamente la descripciÃ³n de caja del usuario especificado, se requiere password
+	 * y nombre de usuario para la conexiÃ³n
 	 * @param username
 	 * @param password
 	 * @param cashierId , este es el IDEMPLEADO en SEG_USER
-	 * @return descripción de caja
+	 * @return descripciÃ³n de caja
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */

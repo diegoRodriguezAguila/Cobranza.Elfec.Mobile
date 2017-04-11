@@ -52,7 +52,7 @@ public class DataExchangePresenter {
 	}
 	
 	/**
-	 * Valida si es que se puede exportar la información al servidor y
+	 * Valida si es que se puede exportar la informaciÃ³n al servidor y
 	 * en el caso de que todo sea correcto la exporta
 	 */
 	public void handleUpload()
@@ -65,7 +65,7 @@ public class DataExchangePresenter {
 				ManagerProcessResult result = DataExportManager.validateExportation();
 				result = enableRole(result);
 				result = exportWSCollections(result);/* NECESARIO primero llamar a ws 
-				para que se asignen los números de transacción remotos */
+				para que se asignen los nÃºmeros de transacciÃ³n remotos */
 				result = exportCollectionPayments(result);				
 				result = unlockRemoteRoutes(result, DataExchangeStatus.EXPORTED);
 				result = wipeAllData(result);
@@ -107,8 +107,8 @@ public class DataExchangePresenter {
 	 * Invoca a los metodos necesarios para desbloquear
 	 * remotamente las rutas descargadas
 	 * @param result
-	 * @param unlockType el tipo de desbloqueo si por eliminación o descarga, no se 
-	 * puede enviar {@link DataExchangeStatus}.IMPORTED da excepción
+	 * @param unlockType el tipo de desbloqueo si por eliminaciÃ³n o descarga, no se 
+	 * puede enviar {@link DataExchangeStatus}.IMPORTED da excepciÃ³n
 	 * @return resultado del manejador
 	 */
 	protected ManagerProcessResult unlockRemoteRoutes(
@@ -134,7 +134,7 @@ public class DataExchangePresenter {
 	}
 
 	/**
-	 * Invoca a los metodos necesarios para la exportación de COBROS
+	 * Invoca a los metodos necesarios para la exportaciÃ³n de COBROS
 	 */
 	protected ManagerProcessResult exportCollectionPayments(ManagerProcessResult result) {
 		if(!result.hasErrors())
@@ -157,7 +157,7 @@ public class DataExchangePresenter {
 	}
 	
 	/**
-	 * Invoca a los metodos necesarios para la exportación de COB_WS
+	 * Invoca a los metodos necesarios para la exportaciÃ³n de COB_WS
 	 */
 	protected ManagerProcessResult exportWSCollections(ManagerProcessResult result) {
 		if(!result.hasErrors())
@@ -180,7 +180,7 @@ public class DataExchangePresenter {
 	}
 	
 	/**
-	 * Llama a los metodos necesarios para eliminar toda la información
+	 * Llama a los metodos necesarios para eliminar toda la informaciÃ³n
 	 * @param result
 	 * @return result
 	 */
@@ -195,7 +195,7 @@ public class DataExchangePresenter {
 	}
 	
 	/**
-	 * Se utiliza en la opción de eliminación de datos
+	 * Se utiliza en la opciÃ³n de eliminaciÃ³n de datos
 	 * toma las acciones necesarias de la interfaz para realizarlo
 	 */
 	public void processDataWipe()
@@ -221,7 +221,7 @@ public class DataExchangePresenter {
 	}
 	
 	/**
-	 * Valida si es que se puede ingresar al menú principal
+	 * Valida si es que se puede ingresar al menÃº principal
 	 */
 	public void validateMainMenuOption()
 	{

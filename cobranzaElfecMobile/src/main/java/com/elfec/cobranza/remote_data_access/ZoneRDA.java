@@ -1,14 +1,14 @@
 package com.elfec.cobranza.remote_data_access;
 
+import com.elfec.cobranza.model.User;
+import com.elfec.cobranza.model.Zone;
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+
 import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.elfec.cobranza.model.User;
-import com.elfec.cobranza.model.Zone;
-import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
 /**
  * Provee una capa de acceso remoto a la base de datos oracle para operaciones relacionadas con zonas
@@ -20,7 +20,7 @@ public class ZoneRDA {
 	/**
 	 *  Obtiene todas las zonas de un usuario que correspondan a su IDEMPLEADO
 	 * @param ownerUser el usuario del que se quiere obtener las zonas
-	 * @param password para la conexión
+	 * @param password para la conexiÃ³n
 	 * @return Lista de zonas que le fueron asignadas al usuario
 	 * @throws ConnectException
 	 * @throws SQLException

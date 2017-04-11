@@ -10,8 +10,8 @@ import com.elfec.cobranza.model.results.DataAccessResult;
 public interface ImportCaller {
 
 	/**
-	 * Llama al metodo de importación adecuado
-	 * @return resultado importación
+	 * Llama al metodo de importaciÃ³n adecuado
+	 * @return resultado importaciÃ³n
 	 */
 	public DataAccessResult<?> callImport();
 }

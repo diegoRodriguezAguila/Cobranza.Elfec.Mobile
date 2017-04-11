@@ -2,18 +2,18 @@ package com.elfec.cobranza.model.interfaces;
 
 /**
  * Interfaz que sirve para llamar a los diferentes importers de la
- * información que solo se requiere una vez
+ * informaciÃ³n que solo se requiere una vez
  * @author drodriguez
  *
  */
 public interface OnceRequiredDataImportCaller extends ImportCaller{
 	/**
-	 * Función que indica si la información solicitada ya se había importado
+	 * FunciÃ³n que indica si la informaciÃ³n solicitada ya se habÃ­a importado
 	 * @return
 	 */
 	public boolean isAlreadyImported();
 	/**
-	 * Asigna si es que se importó correctamente la información
+	 * Asigna si es que se importÃ³ correctamente la informaciÃ³n
 	 * @param successfullyImport
 	 */
 	public void setImportationResult(boolean successfullyImport);

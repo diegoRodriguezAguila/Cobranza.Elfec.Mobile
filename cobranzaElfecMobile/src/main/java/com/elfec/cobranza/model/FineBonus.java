@@ -1,11 +1,11 @@
 package com.elfec.cobranza.model;
 
-import java.math.BigDecimal;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
+
+import java.math.BigDecimal;
 
 /**
  * Almacena las BONIF_MULTAS y BONIF_MULTAS_IT
@@ -36,7 +36,7 @@ public class FineBonus extends Model {
 	private BigDecimal amount;	
 	/**
 	 * IMPRESION_AREA en Oracle
-	 * Area de impresión
+	 * Area de impresiÃ³n
 	 */
 	@Column(name = "PrintArea")
 	private short printArea;

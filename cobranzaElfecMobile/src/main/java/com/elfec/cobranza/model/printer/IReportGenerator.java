@@ -2,7 +2,7 @@ package com.elfec.cobranza.model.printer;
 
 
 /**
- * Interfaz que define genéricamente un reporte
+ * Interfaz que define genÃ©ricamente un reporte
  * @author drodriguez
  *
  */
@@ -13,7 +13,7 @@ public interface IReportGenerator {
 	 */
 	public String getReportName();
 	/**
-	 * Genera el comando cpcl para impresión
+	 * Genera el comando cpcl para impresiÃ³n
 	 * @return comando cpcl
 	 */
 	public CPCLCommand generateCommand();

@@ -1,11 +1,5 @@
 package com.elfec.cobranza.business_logic;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.business_logic.data_exchange.DataExporter;
 import com.elfec.cobranza.business_logic.data_exchange.DataExporter.ExportSpecs;
 import com.elfec.cobranza.model.CoopReceipt;
@@ -17,6 +11,12 @@ import com.elfec.cobranza.model.events.DataExportListener;
 import com.elfec.cobranza.model.exceptions.NoPeriodBankAccountException;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.WSCollectionRDA;
+
+import org.joda.time.DateTime;
+
+import java.net.ConnectException;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Maneja las operaciones de negocio de COB_WS
@@ -66,11 +66,11 @@ public class WSCollectionManager {
 	}
 	
 	/**
-	 * Solicita y asigna un numero de transacción remoto para el WSCollection
+	 * Solicita y asigna un numero de transacciÃ³n remoto para el WSCollection
 	 * @param username
 	 * @param password
 	 * @param wSCollection
-	 * @return la misma instancia del wSCollection con el numero de transacción remoto asignado
+	 * @return la misma instancia del wSCollection con el numero de transacciÃ³n remoto asignado
 	 * @throws ConnectException
 	 * @throws SQLException
 	 */

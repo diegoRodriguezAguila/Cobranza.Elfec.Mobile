@@ -1,9 +1,5 @@
 package com.elfec.cobranza.model.printer;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.database.Cursor;
 
 import com.activeandroid.Cache;
@@ -14,8 +10,12 @@ import com.elfec.cobranza.model.ConceptCalculationBase;
 import com.elfec.cobranza.model.PrintCalculationBase;
 import com.elfec.cobranza.model.ReceiptConcept;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Ayuda a obtener las queries para la obtención de conceptos de impresión
+ * Ayuda a obtener las queries para la obtenciÃ³n de conceptos de impresiÃ³n
  * @author drodriguez
  *
  */
@@ -51,7 +51,7 @@ public class PrintConceptQuerier {
 	}
 	
 	/**
-	 * Le asigna una descripción al texto del select
+	 * Le asigna una descripciÃ³n al texto del select
 	 * @param description
 	 * @return la instancia de este querier
 	 */
@@ -84,7 +84,7 @@ public class PrintConceptQuerier {
 	}
 	
 	/**
-	 * Convierte las areas de impresión en una cadena
+	 * Convierte las areas de impresiÃ³n en una cadena
 	 * @return
 	 */
 	private String getPrintAreasString()
@@ -100,8 +100,8 @@ public class PrintConceptQuerier {
 	
 	
 	/**
-	 * Ejecuta la query preparada, si no se llamó a build(), lo llama
-	 * @return lista de conceptos de impresión
+	 * Ejecuta la query preparada, si no se llamÃ³ a build(), lo llama
+	 * @return lista de conceptos de impresiÃ³n
 	 */
 	public List<PrintConcept> execute()
 	{

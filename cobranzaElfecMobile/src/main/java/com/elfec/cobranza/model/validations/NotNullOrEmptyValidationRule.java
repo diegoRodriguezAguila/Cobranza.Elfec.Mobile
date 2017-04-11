@@ -10,7 +10,7 @@ public class NotNullOrEmptyValidationRule implements IValidationRule<String> {
 
 	@Override
 	public String getErrorMessage(String fieldName, boolean isMaleGender) {
-		return (isMaleGender?"El ":"La ")+fieldName+" no puede estar "+(isMaleGender?"vacío.":"vacía.");
+		return (isMaleGender?"El ":"La ")+fieldName+" no puede estar "+(isMaleGender?"vacÃ­o.":"vacÃ­a.");
 	}
 
 }

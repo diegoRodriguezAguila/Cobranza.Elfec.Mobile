@@ -1,18 +1,18 @@
 package com.elfec.cobranza.business_logic.printer;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.CollectionPayment;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
 
+import org.joda.time.DateTime;
+
+import java.math.BigDecimal;
+import java.util.List;
+
 /**
- * Clase que se encarga de generar el comando de impresión del reporte
+ * Clase que se encarga de generar el comando de impresiÃ³n del reporte
  * de detalle de cobranzas
  * @author drodriguez
  *
@@ -24,7 +24,7 @@ public class CollectionDetailReportGenerator extends DateRangeReportGenerator {
 	public static final String REPORT_NAME = "REPORTE DETALLE DE COBRANZA";
 	
 	/**
-	 * El código del reporte
+	 * El cÃ³digo del reporte
 	 */
 	private final String REPORT_CODE = "GAF-714-03";
 	

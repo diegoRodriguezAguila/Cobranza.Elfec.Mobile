@@ -1,5 +1,7 @@
 package com.elfec.cobranza.helpers.security;
 
+import android.util.Base64;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,11 +10,9 @@ import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import android.util.Base64;
-
 /**
  * Clase que se encarga de encriptar y desencriptar con AES como algoritmo de
- * encriptación
+ * encriptaciÃ³n
  * @author drodriguez
  *
  */

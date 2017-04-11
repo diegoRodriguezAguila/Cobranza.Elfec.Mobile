@@ -1,9 +1,5 @@
 package com.elfec.cobranza.business_logic;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.activeandroid.ActiveAndroid;
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.User;
@@ -15,8 +11,12 @@ import com.elfec.cobranza.model.results.ManagerProcessResult;
 import com.elfec.cobranza.remote_data_access.RouteRDA;
 import com.elfec.cobranza.remote_data_access.ZoneRDA;
 
+import java.net.ConnectException;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
- * Se encarga de las operaciones de lógica de negocio de zonas 
+ * Se encarga de las operaciones de lÃ³gica de negocio de zonas 
  * @author drodriguez
  *
  */
@@ -82,8 +82,8 @@ public class ZonesManager {
 	 * @param password
 	 * @param IMEI
 	 * @param exportListener
-	 * @param unlockType el tipo de desbloqueo si por eliminación o descarga, no se 
-	 * puede enviar {@link DataExchangeStatus}.IMPORTED da excepción
+	 * @param unlockType el tipo de desbloqueo si por eliminaciÃ³n o descarga, no se 
+	 * puede enviar {@link DataExchangeStatus}.IMPORTED da excepciÃ³n
 	 * @return resultado de acceso a datos
 	 */
 	public static ManagerProcessResult setRemoteZoneRoutesUnlocked(String username, String password, 

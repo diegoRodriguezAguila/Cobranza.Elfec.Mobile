@@ -1,9 +1,5 @@
 package com.elfec.cobranza.view.adapters;
 
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +11,10 @@ import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.CoopReceipt;
+
+import org.joda.time.DateTime;
+
+import java.util.List;
 
 public class ReceiptAdapter extends ArrayAdapter<CoopReceipt> {
 	private List<CoopReceipt> receipts;
@@ -67,8 +67,8 @@ public class ReceiptAdapter extends ArrayAdapter<CoopReceipt> {
 			.setText(TextFormater.capitalize(date.toString("yyyy MMMM")));
 		((TextView)convertView.findViewById(R.id.txt_issue_date)).setText(receipt.getIssueDate().toString("dd/MM/yyyy"));
 		((TextView)convertView.findViewById(R.id.txt_expiration_date)).setText(receipt.getExpirationDate().toString("dd/MM/yyyy"));
-		((TextView)convertView.findViewById(R.id.txt_receipt_number)).setText("N°: "+receipt.getReceiptNumber());
-		((TextView)convertView.findViewById(R.id.txt_category)).setText("Categoría: "+receipt.getCategoryId());
+		((TextView)convertView.findViewById(R.id.txt_receipt_number)).setText("NÂ°: "+receipt.getReceiptNumber());
+		((TextView)convertView.findViewById(R.id.txt_category)).setText("CategorÃ­a: "+receipt.getCategoryId());
 		((TextView)convertView.findViewById(R.id.txt_consume)).setText(AmountsCounter.formatInteger(receipt.getSupplyStatusSet().getBilledConsume()));
 		return convertView;
 	}

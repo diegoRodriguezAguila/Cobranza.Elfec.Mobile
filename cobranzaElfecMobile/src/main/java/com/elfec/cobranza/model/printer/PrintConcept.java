@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Concepto para impresión
+ * Concepto para impresiÃ³n
  * @author drodriguez
  *
  */

@@ -1,12 +1,12 @@
 package com.elfec.cobranza.model;
 
-import java.math.BigDecimal;
-
-import org.joda.time.DateTime;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+
+import org.joda.time.DateTime;
+
+import java.math.BigDecimal;
 /**
  * Almacena los BAN_CTAS
  * @author drodriguez
@@ -85,7 +85,7 @@ public class BankAccount extends Model{
 	@Column(name = "CashDeskTypeId")
 	private int cashDeskTypeId;
 	/**
-	 * NROCAJA_EXT en Oracle Número de caja
+	 * NROCAJA_EXT en Oracle NÃºmero de caja
 	 */
 	@Column(name = "CashDeskNumber")
 	private int cashDeskNumber;

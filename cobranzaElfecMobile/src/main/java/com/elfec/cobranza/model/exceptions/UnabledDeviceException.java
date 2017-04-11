@@ -1,6 +1,6 @@
 package com.elfec.cobranza.model.exceptions;
 /**
- * Excepción que se lanza cuando un dispositivo cuyo IMEI no fue habilitado intenta ingresar al sistema
+ * ExcepciÃ³n que se lanza cuando un dispositivo cuyo IMEI no fue habilitado intenta ingresar al sistema
  * @author drodriguez
  *
  */

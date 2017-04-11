@@ -1,9 +1,5 @@
 package com.elfec.cobranza.presenter.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 
@@ -13,6 +9,10 @@ import com.elfec.cobranza.settings.PreferencesManager;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinter;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 import com.zebra.sdk.printer.discovery.DiscoveryHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 
 public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
@@ -49,7 +49,7 @@ public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
 	}
 	
 	/**
-	 * Carga los dispositivos que est·n apareados con este dispositivo
+	 * Carga los dispositivos que est√°n apareados con este dispositivo
 	 */
 	public void loadPairedDevices()
 	{
@@ -106,7 +106,7 @@ public class BluetoothDevicePickerPresenter implements DiscoveryHandler {
 	}
 	
 	/**
-	 * Verifica si el dispostivo ya est· en la lista de dispositivos vinculados
+	 * Verifica si el dispostivo ya est√° en la lista de dispositivos vinculados
 	 * @param printer
 	 * @return true/false
 	 */

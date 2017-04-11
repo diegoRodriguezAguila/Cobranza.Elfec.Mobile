@@ -1,5 +1,12 @@
 package com.elfec.cobranza.helpers;
 
+import android.content.Context;
+import android.os.Build;
+import android.os.Environment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.os.EnvironmentCompat;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,27 +18,20 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.os.Build;
-import android.os.Environment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.os.EnvironmentCompat;
-import android.util.Log;
-
 /**
- * Clase que sirve para acceder a los archivos de la aplicaciÛn, ya sean del almacenamiento interno u externo
+ * Clase que sirve para acceder a los archivos de la aplicaci√≥n, ya sean del almacenamiento interno u externo
  * @author drodriguez
  *
  */
 public class FileManager {
 
 	/**
-	 * Nombre del directorio de la aplicaciÛn
+	 * Nombre del directorio de la aplicaci√≥n
 	 */
-	public static final String APP_DIR = "Elfec Cobranza MÛvil";
+	public static final String APP_DIR = "Elfec Cobranza M√≥vil";
 	
 	/**
-	 * Obtiene el directorio de almacenamiento externo, por defecto el que est· disponible vÌa USB
+	 * Obtiene el directorio de almacenamiento externo, por defecto el que est√° disponible v√≠a USB
 	 * @return File
 	 */
 	public static File getExternalAppDirectory()
@@ -151,7 +151,7 @@ public class FileManager {
 	
 	/**
 	 * Obtiene el File del archivo solicitado del almacenamiento externo proporcionado como extAppDirectory
-	 * @param extAppDirectory el almacenamiento externo donde se abrir· el archivo
+	 * @param extAppDirectory el almacenamiento externo donde se abrir√° el archivo
 	 * @param fileName
 	 * @param createIfNotExists true si se debe crear si no existe el archivo
 	 * @return el FileputStream del archivo solicitado, si no existe null o el archivo vacio
@@ -221,7 +221,7 @@ public class FileManager {
 	/**
 	 * Obtiene el output stream
 	 * @param file
-	 * @param append indica si se debe escribir a continuaciÛn en el archivo (true) o si se debe sobreescribir (false)
+	 * @param append indica si se debe escribir a continuaci√≥n en el archivo (true) o si se debe sobreescribir (false)
 	 * @return FileOutputStream
 	 */
 	public static FileOutputStream getFileOutputStream(File file, boolean append)

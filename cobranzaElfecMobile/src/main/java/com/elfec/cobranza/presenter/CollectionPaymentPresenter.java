@@ -1,8 +1,5 @@
 package com.elfec.cobranza.presenter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.bluetooth.BluetoothAdapter;
 
 import com.elfec.cobranza.business_logic.CollectionManager;
@@ -17,6 +14,9 @@ import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBl
 import com.elfec.cobranza.presenter.views.ICollectionPaymentView;
 import com.elfec.cobranza.settings.PreferencesManager;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CollectionPaymentPresenter extends CollectionActionPresenter implements BluetoothStateListener {
 
@@ -69,7 +69,7 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 	}
 	
 	/**
-	 * Evalua el estado del suministro y si es que se debe proceder a su reconexión
+	 * Evalua el estado del suministro y si es que se debe proceder a su reconexiÃ³n
 	 */
 	private void evaluateSupplyStatus()
 	{
@@ -80,7 +80,7 @@ public class CollectionPaymentPresenter extends CollectionActionPresenter implem
 	}
 	
 	/**
-	 * Invoca a los métodos necesarios para realizar la impresión de las facturas
+	 * Invoca a los mÃ©todos necesarios para realizar la impresiÃ³n de las facturas
 	 * @param registeredReceipts
 	 */
 	private void printReceipts(final List<Long> controlCodes, final List<CoopReceipt> registeredReceipts) {

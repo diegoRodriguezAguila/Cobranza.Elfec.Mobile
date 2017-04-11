@@ -1,7 +1,5 @@
 package com.elfec.cobranza.business_logic.printer;
 
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.business_logic.CollectionManager;
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
@@ -10,8 +8,10 @@ import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
 import com.elfec.cobranza.model.printer.CashDeskDailyResume;
 import com.elfec.cobranza.model.printer.CashDeskResume;
 
+import org.joda.time.DateTime;
+
 /**
- * Clase que se encarga de generar el comando de impresión del reporte de resumen DIARIO de caja
+ * Clase que se encarga de generar el comando de impresiÃ³n del reporte de resumen DIARIO de caja
  * @author drodriguez
  *
  */
@@ -23,7 +23,7 @@ public class CashDeskDailyReportGenerator extends BaseReportGenerator{
 	public static final String REPORT_NAME = "REPORTE RESUMEN DIARIO";
 	
 	/**
-	 * El código del reporte
+	 * El cÃ³digo del reporte
 	 */
 	private final String REPORT_CODE = "GAF-714-01";
 

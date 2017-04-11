@@ -1,12 +1,5 @@
 package com.elfec.cobranza.business_logic;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter;
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter.ImportSpecs;
 import com.elfec.cobranza.model.CoopReceipt;
@@ -16,6 +9,13 @@ import com.elfec.cobranza.model.enums.EnergySupplyStatus;
 import com.elfec.cobranza.model.exceptions.SupplyNotFoundException;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.SupplyRDA;
+
+import org.joda.time.DateTime;
+
+import java.net.ConnectException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Se encarga de las operaciones de negocio de <b>SUMINISTROS</b> 
@@ -47,10 +47,10 @@ public class SupplyManager {
 	
 	/**
 	 * Obtiene el suministro que coincide con el nus o el numero de cuenta proporcionados, o ambos
-	 * TambiÈn verifica que la ruta a la que pertenece el suministro se haya cargado
+	 * Tambi√©n verifica que la ruta a la que pertenece el suministro se haya cargado
 	 * @param nus
 	 * @param accountNumber
-	 * @return Suministros que coinicidan con los par·metros
+	 * @return Suministros que coinicidan con los par√°metros
 	 * @throws SupplyNotFoundException 
 	 */
 	public static List<Supply> searchSupply(String nus, String accountNumber, String clientName, String nit) throws SupplyNotFoundException

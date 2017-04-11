@@ -1,14 +1,14 @@
 package com.elfec.cobranza.helpers.text_format;
 
 /**
- * Clase con métodos para formatear una número cuenta
+ * Clase con mÃ©todos para formatear una nÃºmero cuenta
  * @author drodriguez
  *
  */
 public class AccountFormatter {
 
 	/**
-	 * Formatea una cuenta sin guiones a una con guiones con tamaño de 10 digitos fijo
+	 * Formatea una cuenta sin guiones a una con guiones con tamaÃ±o de 10 digitos fijo
 	 * @param accountNumber ej. 530048208
 	 * @return ej. 05-300-582-08
 	 */
@@ -28,7 +28,7 @@ public class AccountFormatter {
 		return account.toString();
 	}
 	/**
-	 * Desformatea una cuenta con guiones de tamaño fijo de 10 digitos a 
+	 * Desformatea una cuenta con guiones de tamaÃ±o fijo de 10 digitos a 
 	 * una cadena de numeros sin ceros por delante
 	 * @param accountNumber ej. 01-235-668-24
 	 * @return ej 123566824

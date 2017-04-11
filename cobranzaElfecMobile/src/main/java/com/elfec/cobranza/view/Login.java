@@ -1,9 +1,5 @@
 package com.elfec.cobranza.view;
 
-import java.util.List;
-import java.util.Locale;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +8,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,16 +17,19 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.alertdialogpro.AlertDialogPro;
-import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.presenter.LoginPresenter;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 import com.elfec.cobranza.view.services.ChangeDatabaseSettingsService;
+import com.elfec.cobranza.view.services.ProgressDialogService;
+
+import java.util.List;
+import java.util.Locale;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Login extends Activity implements ILoginView {
 
@@ -40,7 +40,7 @@ public class Login extends Activity implements ILoginView {
 
 	private EditText txtUsername;
 	private EditText txtPassword;
-	private ProgressDialogPro waitingDialog;
+	private ProgressDialogService waitingDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -200,8 +200,7 @@ public class Login extends Activity implements ILoginView {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				waitingDialog = new ProgressDialogPro(Login.this,
-						R.style.Theme_FlavoredMaterialLight);
+				waitingDialog = new ProgressDialogService(Login.this);
 				waitingDialog.setMessage(getResources().getString(
 						R.string.msg_login_waiting));
 				waitingDialog.setCancelable(false);
@@ -242,7 +241,7 @@ public class Login extends Activity implements ILoginView {
 			@Override
 			public void run() {
 				if (validationErrors.size() > 0) {
-					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+					AlertDialog.Builder builder = new AlertDialog.Builder(
 							Login.this);
 					builder.setTitle(R.string.title_login_errors)
 							.setMessage(

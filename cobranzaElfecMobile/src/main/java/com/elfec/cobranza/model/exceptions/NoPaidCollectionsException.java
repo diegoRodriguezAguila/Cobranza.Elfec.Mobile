@@ -1,7 +1,7 @@
 package com.elfec.cobranza.model.exceptions;
 
 /**
- * Excepción que se lanza cuando no existen cobros descargados al dispositivo
+ * ExcepciÃ³n que se lanza cuando no existen cobros descargados al dispositivo
  * @author drodriguez
  *
  */
@@ -14,6 +14,6 @@ public class NoPaidCollectionsException extends Exception{
 	@Override
 	public String getMessage()
 	{
-		return "No se realizó ningún cobro, asegurese de haber cargado datos al teléfono y realizado cobros antes de intentar descargar al servidor!";
+		return "No se realizÃ³ ningÃºn cobro, asegurese de haber cargado datos al telÃ©fono y realizado cobros antes de intentar descargar al servidor!";
 	}
 }

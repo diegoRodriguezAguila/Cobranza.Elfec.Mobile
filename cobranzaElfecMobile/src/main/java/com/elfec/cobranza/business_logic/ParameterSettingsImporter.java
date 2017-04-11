@@ -1,9 +1,5 @@
 package com.elfec.cobranza.business_logic;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter;
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter.ImportSource;
 import com.elfec.cobranza.model.User;
@@ -12,6 +8,10 @@ import com.elfec.cobranza.model.settings.ParameterSetting;
 import com.elfec.cobranza.remote_data_access.ParameterSettingsRDA;
 import com.elfec.cobranza.settings.ParameterSettingsManager;
 
+import java.net.ConnectException;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  * Se encarga de importar las configuraciones parametrizables
  * @author drodriguez
@@ -19,7 +19,7 @@ import com.elfec.cobranza.settings.ParameterSettingsManager;
  */
 public class ParameterSettingsImporter {
 	/**
-	 * Importa la tabla de par·metros COBRANZA.COBRANZA_MOVIL_PARAM
+	 * Importa la tabla de par√°metros COBRANZA.COBRANZA_MOVIL_PARAM
 	 * @param user
 	 * @param password
 	 * @return resultado del acceso remoto

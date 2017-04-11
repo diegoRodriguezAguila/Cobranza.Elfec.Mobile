@@ -1,8 +1,5 @@
 package com.elfec.cobranza.presenter.services;
 
-import java.util.List;
-import java.util.Map;
-
 import com.elfec.cobranza.business_logic.FieldValidator;
 import com.elfec.cobranza.model.enums.ConnectionParam;
 import com.elfec.cobranza.model.results.ManagerProcessResult;
@@ -10,6 +7,9 @@ import com.elfec.cobranza.presenter.views.IChangeDatabaseSettingsDialog;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 import com.elfec.cobranza.settings.PreferencesManager;
 import com.elfec.cobranza.settings.remote_data_access.OracleDatabaseSettings;
+
+import java.util.List;
+import java.util.Map;
 
 public class ChangeDatabaseSettingsPresenter {
 	private IChangeDatabaseSettingsDialog view;
@@ -21,7 +21,7 @@ public class ChangeDatabaseSettingsPresenter {
 	}
 	
 	/**
-	 * Procesa el cambio de configuración en la conexión de base de datos
+	 * Procesa el cambio de configuraciÃ³n en la conexiÃ³n de base de datos
 	 */
 	public void processDatabaseSettings() {
 		boolean isIpValid = validateIpField();

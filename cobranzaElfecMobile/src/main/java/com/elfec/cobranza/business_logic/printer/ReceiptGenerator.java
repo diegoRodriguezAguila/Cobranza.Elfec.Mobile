@@ -1,12 +1,5 @@
 package com.elfec.cobranza.business_logic.printer;
 
-import java.util.List;
-import java.util.Locale;
-
-import org.apache.commons.lang.WordUtils;
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-
 import com.elfec.cobranza.business_logic.ConceptManager;
 import com.elfec.cobranza.business_logic.PrinterImagesManager;
 import com.elfec.cobranza.business_logic.SessionManager;
@@ -26,8 +19,15 @@ import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.settings.ParameterSettingsManager;
 import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;
 
+import org.apache.commons.lang.WordUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+import java.util.List;
+import java.util.Locale;
+
 /**
- * Clase que se encarga de generar el comando de impresión de una factura
+ * Clase que se encarga de generar el comando de impresiÃ³n de una factura
  * @author drodriguez
  *
  */
@@ -37,19 +37,19 @@ public class ReceiptGenerator {
 	 */
 	private static final double SP_FACTOR = 0.37;
 	/**
-	 * Define el tamaño máximo de caracteres que puede ocupar una línea de texto
+	 * Define el tamaÃ±o mÃ¡ximo de caracteres que puede ocupar una lÃ­nea de texto
 	 */
 	private static final int WRAP_LIMIT = 30;
 	/**
-	 * El limite de tamaño de un concepto
+	 * El limite de tamaÃ±o de un concepto
 	 */
 	private static final int CONCEPT_WRAP_LIMIT = 34;
 	/**
-	 * Define el tamaño máximo de caracteres que puede ocupar una línea de texto del literal de la factura
+	 * Define el tamaÃ±o mÃ¡ximo de caracteres que puede ocupar una lÃ­nea de texto del literal de la factura
 	 */
 	private static final int LITERAL_WRAP_LIMIT = 66;
 	/**
-	 * Define el tamaño máximo de caracteres que puede ocupar una línea de texto del footer
+	 * Define el tamaÃ±o mÃ¡ximo de caracteres que puede ocupar una lÃ­nea de texto del footer
 	 */
 	private static final int FOOTER_WRAP_LIMIT = 42;
 	/**
@@ -58,12 +58,12 @@ public class ReceiptGenerator {
 	private static final String ELFEC_NIT = "1023213028";
 	
 	/**
-	 * El espacio extra en la información de la factura
+	 * El espacio extra en la informaciÃ³n de la factura
 	 */
 	private static double rcptDataExtraSpacing;
 	
 	/**
-	 * El tamaño de la factura en cm
+	 * El tamaÃ±o de la factura en cm
 	 */
 	private static double receiptHeight;
 	
@@ -74,7 +74,7 @@ public class ReceiptGenerator {
 	
 	
 	/**
-	 * Genera el comando cpcl de impresión del recibo
+	 * Genera el comando cpcl de impresiÃ³n del recibo
 	 * @param receipt
 	 * @return
 	 */
@@ -96,7 +96,7 @@ public class ReceiptGenerator {
 	}
 
 	/**
-	 * Asigna la información de la factura a la cabecera en el comando de la impresora
+	 * Asigna la informaciÃ³n de la factura a la cabecera en el comando de la impresora
 	 * @param command
 	 */
 	private static void assignHeaderData(CPCLCommand command, CoopReceipt receipt)
@@ -109,16 +109,16 @@ public class ReceiptGenerator {
 		double boxStartY = receiptHeight += (isNewFormat?0.75:SP_FACTOR);
 		command.setFont("TAHOMA11.CPF")
 		.multilineText(0.44, 0, 0, receiptHeight+=0.15, "NIT: "+ELFEC_NIT, "FACTURA No.: "+receipt.getReceiptNumber(),
-				"AUTORIZACIÓN: "+receipt.getAuthorizationNumber())
+				"AUTORIZACIÃ“N: "+receipt.getAuthorizationNumber())
 		.setFont("TAHOMA8P.CPF")
-	    .text( 0, 0, receiptHeight+=1.5, 0.025, 0.025, "Actividad Económica:")
-		.text( 0, 0, receiptHeight+=0.35, "Venta de Energía Eléctrica")
+	    .text( 0, 0, receiptHeight+=1.5, 0.025, 0.025, "Actividad EconÃ³mica:")
+		.text( 0, 0, receiptHeight+=0.35, "Venta de EnergÃ­a ElÃ©ctrica")
 		.justify(Justify.LEFT)
 		.box(0.4, boxStartY, 10.05, receiptHeight+=0.55, 0.02);
 	}
 	
 	/**
-	 * Asigna la información de la factura al segundo sector de la factura en el comando de la impresora
+	 * Asigna la informaciÃ³n de la factura al segundo sector de la factura en el comando de la impresora
 	 * @param command
 	 */
 	private static void assignReceiptData(CPCLCommand command, CoopReceipt receipt)
@@ -134,18 +134,18 @@ public class ReceiptGenerator {
 	
 
 	/**
-	 * Asigna la información de la columna izquierda de la factura al segundo sector de la factura en el comando de la impresora
+	 * Asigna la informaciÃ³n de la columna izquierda de la factura al segundo sector de la factura en el comando de la impresora
 	 * @param command
 	 */
 	private static void assignReceiptLeftData(CPCLCommand command, CoopReceipt receipt)
 	{
 		String clientName = wrapName(Supply.findSupplyByNUS(receipt.getSupplyId()).getClientName());
-		String clientAddress = wrapAddress("DIRECCIÓN: "+receipt.getClientAddress());
+		String clientAddress = wrapAddress("DIRECCIÃ“N: "+receipt.getClientAddress());
 		double extraSpacing = ((clientName.split("\r\n").length-1)*SP_FACTOR);
 		
 		command.justify(Justify.LEFT, 3)
 		.setFont("TAHOMA8P.CPF")
-		.text(0, 0.6, receiptHeight, 0.03, 0.03, "FECHA EMISIÓN:")
+		.text(0, 0.6, receiptHeight, 0.03, 0.03, "FECHA EMISIÃ“N:")
 		.text(0, 3.3, receiptHeight, receipt.getIssueDate().toString("dd/MM/yyyy"))
 		.text("TAHOMA11.CPF", 0, 0.6, receiptHeight+=0.35, 0.035, 0.035, "NUS:")
 		.text("TAHOMA11.CPF", 0, 1.6, receiptHeight, 0.035, 0.035, ""+receipt.getSupplyId())
@@ -155,14 +155,14 @@ public class ReceiptGenerator {
 		.multilineText(SP_FACTOR, 0, 2.05, receiptHeight, clientName)
 		.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=(0.35+extraSpacing), "NIT/CI: "+receipt.getNIT(), 
 				clientAddress,
-				"CATEGORÍA: "+Category.getFullCategoryDesc(receipt.getCategoryId()),
+				"CATEGORÃA: "+Category.getFullCategoryDesc(receipt.getCategoryId()),
 				"MEDIDOR: "+receipt.getMeterNumber());
 		extraSpacing = (extraSpacing + ((clientAddress.split("\r\n").length-1)*SP_FACTOR))-(2*SP_FACTOR);
 		rcptDataExtraSpacing = extraSpacing>0?extraSpacing:0;
 	}
 	
 	/**
-	 * Asigna la información de la columna derecha de la factura al 
+	 * Asigna la informaciÃ³n de la columna derecha de la factura al 
 	 * segundo sector de la factura en el comando de la impresora
 	 * @param command
 	 * @return extraSpacing
@@ -188,7 +188,7 @@ public class ReceiptGenerator {
 				"FECHA PAGO: "+((payment==null?DateTime.now(): payment.getPaymentDate()).toString("dd/MM/yyyy HH:mm")),
 				"VENCIMIENTO: "+receipt.getExpirationDate().toString("dd/MM/yyyy"),
 				"DIAS MOROSIDAD: "+(daysPastDue<0?0:daysPastDue),
-				"PRÓXIMA EMISIÓN: "+receipt.getIssueDate().plusDays(33).toString("dd/MM/yyyy"));
+				"PRÃ“XIMA EMISIÃ“N: "+receipt.getIssueDate().plusDays(33).toString("dd/MM/yyyy"));
 		return extraSpacing;
 	}
 	
@@ -343,7 +343,7 @@ public class ReceiptGenerator {
 	}
 	
 	/**
-	 * Asigna la información del final de la factura
+	 * Asigna la informaciÃ³n del final de la factura
 	 * @param command
 	 * @param receipt
 	 */
@@ -361,8 +361,8 @@ public class ReceiptGenerator {
 		.multilineText(SP_FACTOR, 0, 1.4, receiptHeight, literal);
 		int spaces = (literal.split("\r\n").length);
 		command.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*spaces)+0.1), 
-				("CÓDIGO DE CONTROL: "+receipt.getControlCode()),
-				("FECHA LÍMITE DE EMISIÓN: "+receipt.getAuthExpirationDate().toString("dd/MM/yyyy")))
+				("CÃ“DIGO DE CONTROL: "+receipt.getControlCode()),
+				("FECHA LÃMITE DE EMISIÃ“N: "+receipt.getAuthExpirationDate().toString("dd/MM/yyyy")))
 				.text(0, 7.3, receiptHeight, 0.03, 0.03, "CAJA/"+SessionManager.getLoggedCashdeskNumber()+":"+internalControlCode)
 				.justify(Justify.CENTER, 7.3)
 				.multilineText(SP_FACTOR, 0, 0.6, receiptHeight+=((SP_FACTOR*2)+0.05), enterpriseMsg);
@@ -378,7 +378,7 @@ public class ReceiptGenerator {
 	}
 
 	/**
-	 * Genera el código QR de la factura
+	 * Genera el cÃ³digo QR de la factura
 	 * @param command
 	 * @param receipt
 	 */
@@ -438,7 +438,7 @@ public class ReceiptGenerator {
 	}
 	
 	/**
-	 * Si es necesario parte la dirección en pedazos para que se impriman de forma
+	 * Si es necesario parte la direcciÃ³n en pedazos para que se impriman de forma
 	 * subsecuente
 	 * @param fullAddress
 	 * @return la cadena con lineas de salto respentando el WRAP_LIMIT
@@ -449,7 +449,7 @@ public class ReceiptGenerator {
 	}
 	
 	/**
-	 * Arma los arrays imprimibles tomando en cuenta el wrap del texto del tamaño limite
+	 * Arma los arrays imprimibles tomando en cuenta el wrap del texto del tamaÃ±o limite
 	 * @param concepts la lista de conceptos de la que se quieren armar sus arrays imprimibles
 	 * @param conceptDescs el array de descripciones con las filas formateadas
 	 * @param conceptAmounts el array de importes con las filas formateadas

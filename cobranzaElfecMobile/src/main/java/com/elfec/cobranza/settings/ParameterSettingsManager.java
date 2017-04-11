@@ -1,20 +1,20 @@
 package com.elfec.cobranza.settings;
 
+import com.elfec.cobranza.model.settings.ParameterSetting;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.elfec.cobranza.model.settings.ParameterSetting;
-
 /**
- * Controla los parámetros que se descargan de la tabla de parámetros
+ * Controla los parÃ¡metros que se descargan de la tabla de parÃ¡metros
  * @author drodriguez
  *
  */
 public class ParameterSettingsManager {
 	
 	/**
-	 * Los parámetros cargados en memoria
+	 * Los parÃ¡metros cargados en memoria
 	 */
 	private static Map<String, ParameterSetting> parametersTable;
 
@@ -25,7 +25,7 @@ public class ParameterSettingsManager {
 	}
 	
 	/**
-	 * Carga los parámetros de la tabla de parámetros
+	 * Carga los parÃ¡metros de la tabla de parÃ¡metros
 	 */
 	public static void loadParameters(List<ParameterSetting> parameters)
 	{
@@ -49,7 +49,7 @@ public class ParameterSettingsManager {
 	}
 	
 	/**
-	 * Define las llaves para acceder a la tabla de parámetros
+	 * Define las llaves para acceder a la tabla de parÃ¡metros
 	 * @author drodriguez
 	 *
 	 */
@@ -60,23 +60,23 @@ public class ParameterSettingsManager {
 		 */
 		SFV_DATE("FECHA_SFV"),
 		/**
-		 * Fecha de actualización de imagen del header de las facturas
+		 * Fecha de actualizaciÃ³n de imagen del header de las facturas
 		 */
 		HEADER_IMG_DATE("FECHA_HEADER_IMG"),
 		/**
-		 * Fecha de actualización de imagen del footer de las facturas
+		 * Fecha de actualizaciÃ³n de imagen del footer de las facturas
 		 */
 		FOOTER_IMG_DATE("FECHA_FOOTER_IMG"),
 		/**
-		 * Dirección del servidor de donde deben sacarse las imágenes
+		 * DirecciÃ³n del servidor de donde deben sacarse las imÃ¡genes
 		 */
 		IMAGES_SERVER("SERVIDOR_IMAGENES"),
 		/**
-		 * Dirección del servidor de web services
+		 * DirecciÃ³n del servidor de web services
 		 */
 		WS_SERVER("SERVIDOR_WS"),
 		/**
-		 * Tiempo máximo que el usuario tiene para eliminar una factura en horas
+		 * Tiempo mÃ¡ximo que el usuario tiene para eliminar una factura en horas
 		 */
 		ANNULMENT_HOURS_LIMIT("TIEMPO_ANULACION_HORAS"),
 		/**

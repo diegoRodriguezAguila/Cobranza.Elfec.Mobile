@@ -21,12 +21,8 @@
         android:drawable="@drawable/cobranza_btn_default_disabled_holo_dark" />
     <item android:state_pressed="true" 
         android:drawable="@drawable/cobranza_btn_default_pressed_holo_dark" />
-    <item android:state_focused="true" android:state_enabled="true"
-        android:drawable="@drawable/cobranza_btn_default_focused_holo_dark" />
     <item android:state_enabled="true"
         android:drawable="@drawable/cobranza_btn_default_normal_holo_dark" />
-    <item android:state_focused="true"
-        android:drawable="@drawable/cobranza_btn_default_disabled_focused_holo_dark" />
     <item
          android:drawable="@drawable/cobranza_btn_default_disabled_holo_dark" />
 </selector>

@@ -1,14 +1,14 @@
 package com.elfec.cobranza.model.settings;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+
 /**
- * Define una configuraciÛn de la tabla de par·metros
+ * Define una configuraci√≥n de la tabla de par√°metros
  * @author drodriguez
  *
  */

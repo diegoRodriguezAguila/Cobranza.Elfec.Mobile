@@ -1,10 +1,5 @@
 package com.elfec.cobranza.view;
 
-import java.util.List;
-
-import org.joda.time.DateTime;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,7 +7,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.view.Menu;
@@ -21,8 +16,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alertdialogpro.AlertDialogPro;
-import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.MessageListFormatter;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
@@ -30,14 +23,21 @@ import com.elfec.cobranza.presenter.DataExchangePresenter;
 import com.elfec.cobranza.presenter.services.WipeAllDataServicePresenter.WipeConfirmationListener;
 import com.elfec.cobranza.presenter.views.IDataExchangeView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+import com.elfec.cobranza.view.services.ProgressDialogService;
 import com.elfec.cobranza.view.services.WipeAllDataDialogService;
+
+import org.joda.time.DateTime;
+
+import java.util.List;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DataExchange extends Activity implements IDataExchangeView {
 
 	public static final String IMEI = "IMEI";
 	private long lastClickTime = 0;
 	private DataExchangePresenter presenter;
-	private ProgressDialogPro waitingDialog;
+	private ProgressDialogService waitingDialog;
 
 	/**
 	 * Indica si la actividad fue destruida o no
@@ -119,7 +119,7 @@ public class DataExchange extends Activity implements IDataExchangeView {
 
 	public void btnUploadDataClick(View view) {
 		if (SystemClock.elapsedRealtime() - lastClickTime > TIME_BETWEEN_CLICKS) {
-			new AlertDialogPro.Builder(this)
+			new AlertDialog.Builder(this)
 					.setTitle(R.string.title_exportation_confirm)
 					.setIcon(R.drawable.export_to_server_d)
 					.setMessage(R.string.msg_exportation_confirm)
@@ -152,7 +152,7 @@ public class DataExchange extends Activity implements IDataExchangeView {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					new AlertDialogPro.Builder(DataExchange.this)
+					new AlertDialog.Builder(DataExchange.this)
 							.setTitle(titleId)
 							.setMessage(
 									MessageListFormatter
@@ -199,7 +199,7 @@ public class DataExchange extends Activity implements IDataExchangeView {
 			public void run() {
 				Toast.makeText(
 						DataExchange.this,
-						Html.fromHtml("Se finalizó la sesión de <b>" + username
+						Html.fromHtml("Se finalizÃ³ la sesiÃ³n de <b>" + username
 								+ "</b>!"), Toast.LENGTH_LONG).show();
 				finish();// go back to the previous Activity
 				overridePendingTransition(R.anim.slide_right_in,
@@ -213,19 +213,13 @@ public class DataExchange extends Activity implements IDataExchangeView {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				waitingDialog = new ProgressDialogPro(DataExchange.this,
-						R.style.Theme_FlavoredMaterialLight);
+				waitingDialog = new ProgressDialogService(DataExchange.this);
 				waitingDialog.setMessage(getResources().getString(
 						R.string.msg_export_validation));
 				waitingDialog.setCancelable(false);
 				waitingDialog.setIndeterminate(true);
 				waitingDialog.setIcon(R.drawable.export_to_server_d);
 				waitingDialog.setTitle(R.string.title_upload_waiting);
-				waitingDialog.setProgressDrawable(ContextCompat.getDrawable(
-						DataExchange.this,
-						R.drawable.progress_horizontal_cobranza));
-				waitingDialog
-						.setProgressStyle(ProgressDialogPro.STYLE_HORIZONTAL);
 				waitingDialog.setCanceledOnTouchOutside(false);
 				waitingDialog.show();
 			}
@@ -302,8 +296,7 @@ public class DataExchange extends Activity implements IDataExchangeView {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				waitingDialog = new ProgressDialogPro(DataExchange.this,
-						R.style.Theme_FlavoredMaterialLight);
+				waitingDialog = new ProgressDialogService(DataExchange.this);
 				waitingDialog.setMessage(getResources().getString(
 						R.string.msg_unlocking_remote_routes));
 				waitingDialog.setCancelable(false);
@@ -343,7 +336,7 @@ public class DataExchange extends Activity implements IDataExchangeView {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+				AlertDialog.Builder builder = new AlertDialog.Builder(
 						DataExchange.this);
 				builder.setTitle(R.string.title_main_menu_locked)
 						.setIcon(R.drawable.main_menu_locked)

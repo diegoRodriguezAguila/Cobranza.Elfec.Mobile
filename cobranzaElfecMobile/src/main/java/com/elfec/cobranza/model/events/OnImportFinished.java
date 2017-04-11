@@ -3,14 +3,14 @@ package com.elfec.cobranza.model.events;
 import com.elfec.cobranza.model.results.DataAccessResult;
 
 /**
- * Evento que se llama cuando se finalizó una importación
+ * Evento que se llama cuando se finalizÃ³ una importaciÃ³n
  * @author drodriguez
  *
  */
 public interface OnImportFinished {
 
 	/**
-	 * La función que se llama cuando finalizó un evento de importación de datos
+	 * La funciÃ³n que se llama cuando finalizÃ³ un evento de importaciÃ³n de datos
 	 * @param result
 	 */
 	public void importCallback(DataAccessResult<?> result);

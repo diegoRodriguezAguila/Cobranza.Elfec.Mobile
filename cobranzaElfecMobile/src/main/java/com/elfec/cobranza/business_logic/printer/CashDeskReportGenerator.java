@@ -1,19 +1,19 @@
 package com.elfec.cobranza.business_logic.printer;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.business_logic.SessionManager;
 import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.CollectionPayment;
-import com.elfec.cobranza.model.printer.CashDeskResume;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
+import com.elfec.cobranza.model.printer.CashDeskResume;
+
+import org.joda.time.DateTime;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
- * Clase que se encarga de generar el comando de impresión del reporte de resumen de caja
+ * Clase que se encarga de generar el comando de impresiÃ³n del reporte de resumen de caja
  * @author drodriguez
  *
  */
@@ -25,9 +25,9 @@ public class CashDeskReportGenerator extends DateRangeReportGenerator {
 	public static final String REPORT_NAME = "REPORTE RESUMEN DE CAJA";
 	
 	/**
-	 * El código del reporte
+	 * El cÃ³digo del reporte
 	 */
-	private final String REPORT_CODE = "Sin código.";
+	private final String REPORT_CODE = "Sin cÃ³digo.";
 	
 	private final String TOTAL_NUM = "Cantidad de facturas cobradas: %d";
 	private final String TOTAL_AMOUNT = "Total cobrado: %s";

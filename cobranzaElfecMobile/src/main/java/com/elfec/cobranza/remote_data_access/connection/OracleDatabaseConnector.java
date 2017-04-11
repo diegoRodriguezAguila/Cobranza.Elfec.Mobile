@@ -1,15 +1,15 @@
 package com.elfec.cobranza.remote_data_access.connection;
 
+import android.content.Context;
+
+import com.elfec.cobranza.settings.remote_data_access.OracleDatabaseSettings;
+
 import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import android.content.Context;
-
-import com.elfec.cobranza.settings.remote_data_access.OracleDatabaseSettings;
 
 /**
  * Se encarga de conectar remotamente a la base de datos oracle de la empresa
@@ -33,11 +33,11 @@ public class OracleDatabaseConnector {
 	}
 	
 	/**
-	 * Instancia u obtiene la instancia única del conector de base de datos oracle
+	 * Instancia u obtiene la instancia Ãºnica del conector de base de datos oracle
 	 * @param context
 	 * @param user
 	 * @param password
-	 * @return la instancia del conector, null si es que no se pudo lograr la conexión
+	 * @return la instancia del conector, null si es que no se pudo lograr la conexiÃ³n
 	 * @throws ConnectException 
 	 */
 	public static OracleDatabaseConnector instance(Context context, String user, String password) throws ConnectException
@@ -47,19 +47,19 @@ public class OracleDatabaseConnector {
 				dbConnectorInstance = new OracleDatabaseConnector(
 						OracleDatabaseSettings.getConnectionString(context), user, password);
 			} catch (ClassNotFoundException e) {
-				throw new ConnectException("No se pudo establecer conexión con el servidor, revise su nombre de usuario y contraseña");
+				throw new ConnectException("No se pudo establecer conexiÃ³n con el servidor, revise su nombre de usuario y contraseÃ±a");
 			} catch (SQLException e) {
-				throw new ConnectException("No se pudo establecer conexión con el servidor, revise su nombre de usuario y contraseña");
+				throw new ConnectException("No se pudo establecer conexiÃ³n con el servidor, revise su nombre de usuario y contraseÃ±a");
 			}
 		return dbConnectorInstance;
 	}
 	
 	/**
-	 * Obtiene la instancia única del conector de base de datos oracle, si es que no se definió un context o si no 
-	 * se instanció previamente tira IllegalStateException
+	 * Obtiene la instancia Ãºnica del conector de base de datos oracle, si es que no se definiÃ³ un context o si no 
+	 * se instanciÃ³ previamente tira IllegalStateException
 	 * @param user
 	 * @param password
-	 * @return la instancia del conector, null si es que no se pudo lograr la conexión
+	 * @return la instancia del conector, null si es que no se pudo lograr la conexiÃ³n
 	 * @throws ConnectException 
 	 */
 	public static OracleDatabaseConnector instance( String user, String password) throws ConnectException
@@ -68,20 +68,20 @@ public class OracleDatabaseConnector {
 		{
 			try {
 				if(context==null)
-					throw new IllegalStateException("Debe llamar a instance() pasandole los parámetros por lo menos una vez");
+					throw new IllegalStateException("Debe llamar a instance() pasandole los parÃ¡metros por lo menos una vez");
 				else dbConnectorInstance =  new OracleDatabaseConnector(
 						OracleDatabaseSettings.getConnectionString(context), user, password);
 			} catch (ClassNotFoundException e) {
-				throw new ConnectException("No se pudo establecer conexión con el servidor, revise su nombre de usuario y contraseña. ¡Asegurese que esté conectado a la red de la empresa!");
+				throw new ConnectException("No se pudo establecer conexiÃ³n con el servidor, revise su nombre de usuario y contraseÃ±a. Â¡Asegurese que estÃ© conectado a la red de la empresa!");
 			} catch (SQLException e) {
-				throw new ConnectException("No se pudo establecer conexión con el servidor, revise su nombre de usuario y contraseña. ¡Asegurese que esté conectado a la red de la empresa!");
+				throw new ConnectException("No se pudo establecer conexiÃ³n con el servidor, revise su nombre de usuario y contraseÃ±a. Â¡Asegurese que estÃ© conectado a la red de la empresa!");
 			}
 		}
 		return dbConnectorInstance;
 	}
 	
 	/**
-	 * Asigna el conext para la instanciación del objeto
+	 * Asigna el conext para la instanciaciÃ³n del objeto
 	 * @param context
 	 */
 	public static void initializeContext(Context context)

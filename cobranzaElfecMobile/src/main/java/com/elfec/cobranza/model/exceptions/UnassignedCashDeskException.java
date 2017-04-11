@@ -1,7 +1,7 @@
 package com.elfec.cobranza.model.exceptions;
 
 /**
- * Excepción que se lanza cuando un usuario que itenta logearse no tiene una caja asignada
+ * ExcepciÃ³n que se lanza cuando un usuario que itenta logearse no tiene una caja asignada
  * @author drodriguez
  *
  */

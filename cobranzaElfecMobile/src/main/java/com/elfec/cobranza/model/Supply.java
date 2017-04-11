@@ -1,9 +1,5 @@
 package com.elfec.cobranza.model;
 
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -12,8 +8,12 @@ import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.elfec.cobranza.model.enums.EnergySupplyStatus;
 import com.elfec.cobranza.model.serializers.JodaDateTimeSerializer;
+
+import org.joda.time.DateTime;
+
+import java.util.List;
 /**
- * Contiene la información del suministro, cliente y medidor
+ * Contiene la informaciÃ³n del suministro, cliente y medidor
  * @author drodriguez
  *
  */
@@ -85,10 +85,10 @@ public class Supply extends Model {
 		this.status = status;
 	}
 	/**
-	 * Busca al suministro que coincida con alguno de los parámetros
+	 * Busca al suministro que coincida con alguno de los parÃ¡metros
 	 * @param nus
 	 * @param accountNumber
-	 * @return lista de suministros que coinciden con los términos de búsqueda
+	 * @return lista de suministros que coinciden con los tÃ©rminos de bÃºsqueda
 	 */
 	public static List<Supply> findSupply(int nus, String accountNumber, String clientName, long nit)
 	{
@@ -106,9 +106,9 @@ public class Supply extends Model {
 	}
 	
 	/**
-	 * Busca un suministro por nus y número de cuenta
+	 * Busca un suministro por nus y nÃºmero de cuenta
 	 * @param nus
-	 * @return el suministro encontrado / null si no se encontró
+	 * @return el suministro encontrado / null si no se encontrÃ³
 	 */
 	public static Supply findSupplyByNUS(int nus) {
 		List<Supply> foundSupplies = findSupply(nus, null, null, -1);
@@ -156,7 +156,7 @@ public class Supply extends Model {
 	
 	/**
 	 * Obtiene todas las facturas pendientes del suministro cuya fecha
-	 * de vencimiento es más antigua a la fecha actual
+	 * de vencimiento es mÃ¡s antigua a la fecha actual
 	 * @return lista de comprobantes
 	 */
 	public List<CoopReceipt> getExpiredPendingReceipts()

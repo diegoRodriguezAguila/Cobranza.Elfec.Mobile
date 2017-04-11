@@ -1,18 +1,18 @@
 package com.elfec.cobranza.business_logic;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.model.Route;
 import com.elfec.cobranza.model.data_exchange.DataExchangeControl;
 import com.elfec.cobranza.model.enums.DataExchangeStatus;
 import com.elfec.cobranza.model.exceptions.UnableToChangeRouteStateException;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.DataExchangeControlRDA;
+
+import org.joda.time.DateTime;
+
+import java.net.ConnectException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Se encarga de las operaciones de negocio de <b>MOVILES.COBRA_RUTAS_ESTADOS</b>
@@ -47,7 +47,7 @@ public class DataExchangeControlManager {
 	}
 	
 	/**
-	 * Verifica si es que una ruta está bloqueada de carga
+	 * Verifica si es que una ruta estÃ¡ bloqueada de carga
 	 * @param username
 	 * @param password
 	 * @param route
@@ -73,7 +73,7 @@ public class DataExchangeControlManager {
 	}
 
 	/**
-	 * Bloquea una ruta para que ningún otro dispositivo la pueda cargar
+	 * Bloquea una ruta para que ningÃºn otro dispositivo la pueda cargar
 	 * @param username
 	 * @param password
 	 * @param IMEI
@@ -101,13 +101,13 @@ public class DataExchangeControlManager {
 	}
 	
 	/**
-	 * Desbloquea una ruta para que ningún otro dispositivo la pueda cargar
+	 * Desbloquea una ruta para que ningÃºn otro dispositivo la pueda cargar
 	 * @param username
 	 * @param password
 	 * @param IMEI
 	 * @param route
-	 * @param unlockType el tipo de desbloqueo si por eliminación o descarga, no se 
-	 * puede enviar {@link DataExchangeStatus}.IMPORTED da excepción
+	 * @param unlockType el tipo de desbloqueo si por eliminaciÃ³n o descarga, no se 
+	 * puede enviar {@link DataExchangeStatus}.IMPORTED da excepciÃ³n
 	 * @return resultado del acceso remoto a datos
 	 */
 	public static DataAccessResult<Void> unlockRoute(String username,
@@ -116,7 +116,7 @@ public class DataExchangeControlManager {
 		DataAccessResult<Void> result = new DataAccessResult<Void>(true);
 		try {
 			if(unlockType==DataExchangeStatus.IMPORTED)
-				throw new IllegalArgumentException("No se puede pasar el parámetro de estado "
+				throw new IllegalArgumentException("No se puede pasar el parÃ¡metro de estado "
 						+ "importada (DataExchangeStatus.IMPORTED) para desbloquear remotamente una ruta");
 			DataExchangeControlRDA.registerDataExportControl(
 					username, password, route.getLockRemoteId(),

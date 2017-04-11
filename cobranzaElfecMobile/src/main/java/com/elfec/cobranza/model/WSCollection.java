@@ -1,10 +1,5 @@
 package com.elfec.cobranza.model;
 
-import java.util.List;
-import java.util.Locale;
-
-import org.joda.time.DateTime;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -12,6 +7,11 @@ import com.activeandroid.query.Select;
 import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.model.enums.TransactionAction;
 import com.elfec.cobranza.model.interfaces.IExportable;
+
+import org.joda.time.DateTime;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Contiene los datos de la tabla COB_WS
@@ -33,7 +33,7 @@ public class WSCollection extends Model implements IExportable{
 	@Column(name = "ReceiptId", notNull=true)
 	private int receiptId;
 	/**
-	 * ESTADO 'P' pendiente, cobro que no fué procesado
+	 * ESTADO 'P' pendiente, cobro que no fuÃ© procesado
 	 */
 	@Column(name = "Status")
 	private String status;
@@ -53,7 +53,7 @@ public class WSCollection extends Model implements IExportable{
 	@Column(name = "PeriodNumber")
 	private int periodNumber;	
 	/**
-	 * FECHA_COBRO en Oracle, en la que se realizó el cobro
+	 * FECHA_COBRO en Oracle, en la que se realizÃ³ el cobro
 	 */
 	@Column(name = "PaymentDate", notNull=true)
 	private DateTime paymentDate;
@@ -63,7 +63,7 @@ public class WSCollection extends Model implements IExportable{
 	private short exportStatus;
 	
 	/**
-	 * El numero de transacción obtenido remotamente con la secuencia
+	 * El numero de transacciÃ³n obtenido remotamente con la secuencia
 	 * COBRANZA.SEQ_COB_WS
 	 */
 	@Column(name = "RemoteTransactionNumber", index=true)
@@ -97,7 +97,7 @@ public class WSCollection extends Model implements IExportable{
 	
 	/**
 	 * Convierte esta transaccion en la consulta INSERT de Oracle, utilizando el parametro de transactionNumber
-	 * como número de transacción en la consulta INSERT
+	 * como nÃºmero de transacciÃ³n en la consulta INSERT
 	 * @param trNumber
 	 * @return INSERT query
 	 */
@@ -111,7 +111,7 @@ public class WSCollection extends Model implements IExportable{
 	
 	/**
 	 * Convierte esta transaccion en la consulta INSERT de Oracle, utilizando el remoteTransactionNumber
-	 * como número de transacción en la consulta INSERT
+	 * como nÃºmero de transacciÃ³n en la consulta INSERT
 	 * @return INSERT query
 	 */
 	public String toRemoteInsertSQL()
@@ -120,7 +120,7 @@ public class WSCollection extends Model implements IExportable{
 	}
 	
 	/**
-	 * Obtiene todos los COB_WS pendientes de exportación
+	 * Obtiene todos los COB_WS pendientes de exportaciÃ³n
 	 * @return
 	 */
 	public static List<WSCollection> getExportPendingWSCollections()
@@ -205,7 +205,7 @@ public class WSCollection extends Model implements IExportable{
 
 	@Override
 	public String getRegistryResume() {
-		return "COB_WS - Transación No.: "+getId()+", IDCBTE: "+receiptId;
+		return "COB_WS - TransaciÃ³n No.: "+getId()+", IDCBTE: "+receiptId;
 	}
 	
 	//#endregion

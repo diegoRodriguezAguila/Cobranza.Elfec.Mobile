@@ -1,11 +1,11 @@
 package com.elfec.cobranza.business_logic;
 
-import java.util.Collections;
-import java.util.List;
+import com.elfec.cobranza.model.SupplyStatus;
 
 import org.joda.time.DateTime;
 
-import com.elfec.cobranza.model.SupplyStatus;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Maneja las operaciones de multiples SUMIN_ESTADOS de un suministro
@@ -37,7 +37,7 @@ public class SupplyStatusSet {
 	}
 	
 	/**
-	 * Obtiene la fecha de la última lectura
+	 * Obtiene la fecha de la Ãºltima lectura
 	 * @return the lastReadingDate
 	 */
 	public DateTime getLastReadingDate()
@@ -48,7 +48,7 @@ public class SupplyStatusSet {
 	}
 	
 	/**
-	 * Obtiene la fecha de la lectura más reciente
+	 * Obtiene la fecha de la lectura mÃ¡s reciente
 	 * @return the currentReadingDate
 	 */
 	public DateTime getDate()
@@ -60,7 +60,7 @@ public class SupplyStatusSet {
 	}
 	
 	/**
-	 * Obtiene la lista de SUMIN_ESTADOS de este set. La lista es inmodificable, si se realiza algún cambio se lanza una excepción
+	 * Obtiene la lista de SUMIN_ESTADOS de este set. La lista es inmodificable, si se realiza algÃºn cambio se lanza una excepciÃ³n
 	 * @return lista de SUMIN_ESTADOS
 	 */
 	public List<SupplyStatus> getSupplyStatusList()

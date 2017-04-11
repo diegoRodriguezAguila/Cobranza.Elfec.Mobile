@@ -1,32 +1,32 @@
 package com.elfec.cobranza.view.services;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.AttributePicker;
 import com.elfec.cobranza.helpers.utils.AmountsCounter;
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.presenter.CollectionPaymentPresenter.OnPaymentConfirmedCallback;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 /**
-* Esta clase provee de un servicio para mostrar un di·logo para la confirmaciÛn de un pago
+* Esta clase provee de un servicio para mostrar un di√°logo para la confirmaci√≥n de un pago
 * @author Diego
 *
 */
 public class PaymentConfirmationDialogService {
 	
-	private AlertDialogPro.Builder dialogBuilder;
+	private AlertDialog.Builder dialogBuilder;
 	private OnPaymentConfirmedCallback paymentConfirmedCallback;
 	
 	//components
@@ -48,7 +48,7 @@ public class PaymentConfirmationDialogService {
 		
 		setViewInfo(context, paymentReceipts);
 		
-		dialogBuilder = new AlertDialogPro.Builder(context);
+		dialogBuilder = new AlertDialog.Builder(context);
 		dialogBuilder.setTitle(R.string.title_payment_confirmation).setIcon(R.drawable.collection_payment_pressed)
 			.setView(confirmationView)
 			.setNegativeButton(R.string.btn_cancel, null)
@@ -82,7 +82,7 @@ public class PaymentConfirmationDialogService {
 	}
 	
 	/**
-	 * Muestra el di·logo construido
+	 * Muestra el di√°logo construido
 	 */
 	public void show()
 	{

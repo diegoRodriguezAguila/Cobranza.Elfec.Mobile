@@ -10,7 +10,7 @@ import com.elfec.cobranza.model.enums.ExportStatus;
  */
 public interface IExportable {
 	/**
-	 * Asigna el estado de exportación
+	 * Asigna el estado de exportaciÃ³n
 	 * 
 	 * @param exportStatus
 	 */

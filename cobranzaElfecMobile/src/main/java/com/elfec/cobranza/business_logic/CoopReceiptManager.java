@@ -1,10 +1,5 @@
 package com.elfec.cobranza.business_logic;
 
-import java.io.IOException;
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter;
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter.ImportSpecs;
 import com.elfec.cobranza.business_logic.printer.ReceiptGenerator;
@@ -21,6 +16,11 @@ import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 import com.zebra.sdk.settings.SettingsException;
+
+import java.io.IOException;
+import java.net.ConnectException;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Se encarga de las operaciones de negocio de <b>CBTES_COOP</b> 
@@ -53,7 +53,7 @@ public class CoopReceiptManager {
 	
 	/**
 	 * Manda a imprimir multiples facturas, se DEBE llamar de un hilo
-	 * sino detendr· el hilo principal multiples veces
+	 * sino detendr√° el hilo principal multiples veces
 	 * @param internalControlCodes
 	 * @param receipts
 	 * @param printerDevice
@@ -100,18 +100,18 @@ public class CoopReceiptManager {
 			conn.close();
 		} catch (ConnectionException e) {
 			e.printStackTrace();
-			result.addError(new ConnectionException("No se pudo establecer conexiÛn con la impresora, "
-					+ "asegurese de que estÈ encendida y que haya seleccionado la impresora correcta en la aplicaciÛn!"));
+			result.addError(new ConnectionException("No se pudo establecer conexi√≥n con la impresora, "
+					+ "asegurese de que est√© encendida y que haya seleccionado la impresora correcta en la aplicaci√≥n!"));
 		} catch (ZebraPrinterLanguageUnknownException e) {
 			e.printStackTrace();
-			result.addError(new SettingsException("La impresora no est· configurada adecuadamente para ser utilizada por la aplicaciÛn!"));
+			result.addError(new SettingsException("La impresora no est√° configurada adecuadamente para ser utilizada por la aplicaci√≥n!"));
 		} catch (ZebraIllegalArgumentException e) {
 			e.printStackTrace();
 		}catch (Exception e) {
 			e.printStackTrace();
 			if(e instanceof IOException)
 				result.addError(new ConnectionException("Error al conectar con la impresora, "
-					+ "asegurese de que estÈ encendida o que no se encuentre imprimiendo actualmente!"));
+					+ "asegurese de que est√© encendida o que no se encuentre imprimiendo actualmente!"));
 			else result.addError(e);
 		}
 		return result;

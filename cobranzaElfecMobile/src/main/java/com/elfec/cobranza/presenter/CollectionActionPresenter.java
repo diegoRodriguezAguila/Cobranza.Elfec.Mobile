@@ -1,10 +1,10 @@
 package com.elfec.cobranza.presenter;
 
-import java.util.List;
-
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.views.ICollectionActionView;
+
+import java.util.List;
 
 public abstract class CollectionActionPresenter {
 	
@@ -22,7 +22,7 @@ public abstract class CollectionActionPresenter {
 	public abstract void loadSupplyReceipts(Supply supply);
 	
 	/**
-	 * Procesa la acción con el comportamiento definido actual
+	 * Procesa la acciÃ³n con el comportamiento definido actual
 	 * @param selectedReceipts
 	 */
 	public abstract void processAction(final List<CoopReceipt> selectedReceipts);

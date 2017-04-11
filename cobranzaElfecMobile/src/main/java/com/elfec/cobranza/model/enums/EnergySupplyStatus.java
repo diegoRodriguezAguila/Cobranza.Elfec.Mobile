@@ -11,20 +11,20 @@ public enum EnergySupplyStatus {
 	 */
 	NORMAL("Normal"),
 	/**
-	 * <b>2</b> Estado que indica que el tramite para conexión del suministro
+	 * <b>2</b> Estado que indica que el tramite para conexiÃ³n del suministro
 	 * ya fue hecho
 	 */
-	CONNECTION_PENDING("Pendiente de conexión"),
+	CONNECTION_PENDING("Pendiente de conexiÃ³n"),
 	/**
-	 * <b>3</b> Estado que indica que se va a desconectar el suministro de energía
+	 * <b>3</b> Estado que indica que se va a desconectar el suministro de energÃ­a
 	 */
-	DISCONNECTION_PENDING("Pendiente de desconexión"),
+	DISCONNECTION_PENDING("Pendiente de desconexiÃ³n"),
 	/**
-	 * <b>4</b> Estado de que se cortó el suministro de energía por falta de pago
+	 * <b>4</b> Estado de que se cortÃ³ el suministro de energÃ­a por falta de pago
 	 */
 	SUSPENDED("Suspendido"),
 	/**
-	 * <b>5</b> Estado que indica que el suministro se dió de baja
+	 * <b>5</b> Estado que indica que el suministro se diÃ³ de baja
 	 */
 	DISMISSED("Dado de baja"),
 	/**
@@ -32,7 +32,7 @@ public enum EnergySupplyStatus {
 	 */
 	IRRECOVERABLE("Incobrable"),
 	/**
-	 * <b>7</b> Estado de que se desconectó el suministro
+	 * <b>7</b> Estado de que se desconectÃ³ el suministro
 	 */
 	DISCONNECTED("Cortado por mora");
 	

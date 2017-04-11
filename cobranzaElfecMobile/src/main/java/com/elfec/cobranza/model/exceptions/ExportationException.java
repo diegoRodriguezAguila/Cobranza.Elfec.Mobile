@@ -1,6 +1,6 @@
 package com.elfec.cobranza.model.exceptions;
 /**
- * Excepción que se lanza cuando ocurrió un error al realizar la exportación de información
+ * ExcepciÃ³n que se lanza cuando ocurriÃ³ un error al realizar la exportaciÃ³n de informaciÃ³n
  * @author drodriguez
  *
  */
@@ -18,7 +18,7 @@ public class ExportationException extends Exception {
 	@Override
 	public String getMessage()
 	{
-		return "Ocurrió un error al exportar uno de los registros! Información extra: "+registryInfo;
+		return "OcurriÃ³ un error al exportar uno de los registros! InformaciÃ³n extra: "+registryInfo;
 	}
 
 }

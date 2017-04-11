@@ -1,11 +1,6 @@
 package com.elfec.cobranza.business_logic;
 
-import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.DateTime;
-import org.joda.time.Hours;
+import android.database.SQLException;
 
 import com.elfec.cobranza.business_logic.data_exchange.DataExporter;
 import com.elfec.cobranza.business_logic.data_exchange.DataExporter.ExportSpecs;
@@ -24,7 +19,12 @@ import com.elfec.cobranza.remote_data_access.CollectionPaymentRDA;
 import com.elfec.cobranza.settings.ParameterSettingsManager;
 import com.elfec.cobranza.settings.ParameterSettingsManager.ParamKey;
 
-import android.database.SQLException;
+import org.joda.time.DateTime;
+import org.joda.time.Hours;
+
+import java.net.ConnectException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Maneja las operaciones de negocio de COBROS
@@ -57,7 +57,7 @@ public class CollectionManager {
 	/**
 	 * Registra el cobro de una factura
 	 * @param receipt
-	 * @return Resultado del acceso a datos, donde el resultado es el id que se le asignó al comprobante
+	 * @return Resultado del acceso a datos, donde el resultado es el id que se le asignÃ³ al comprobante
 	 */
 	public static DataAccessResult<Long> payCollection(CoopReceipt receipt){
 		DataAccessResult<Long> result = new DataAccessResult<Long>();
@@ -84,7 +84,7 @@ public class CollectionManager {
 		return result;
 	}
 	/**
-	 * Realiza la anulación de múltiples cobros
+	 * Realiza la anulaciÃ³n de mÃºltiples cobros
 	 * @param receipts
 	 * @return
 	 */
@@ -105,7 +105,7 @@ public class CollectionManager {
 	/**
 	 * Anula el cobro de una factura
 	 * @param receipt
-	 * @return Resultado del acceso a datos, donde el resultado es el id que se le asignó al comprobante
+	 * @return Resultado del acceso a datos, donde el resultado es el id que se le asignÃ³ al comprobante
 	 */
 	public static DataAccessResult<Void> annulateCollection(CoopReceipt receipt, int annulmentReasonId){
 		DataAccessResult<Void> result = new DataAccessResult<Void>();

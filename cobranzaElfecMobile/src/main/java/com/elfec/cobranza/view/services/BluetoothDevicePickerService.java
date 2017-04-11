@@ -1,12 +1,10 @@
 package com.elfec.cobranza.view.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter;
 import com.elfec.cobranza.presenter.services.BluetoothDevicePickerPresenter.OnBluetoothDevicePicked;
@@ -28,8 +25,11 @@ import com.elfec.cobranza.view.services.bluetooth.BluetoothPrinterDiscoverer;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 import com.zebra.sdk.printer.discovery.DiscoveryHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Provee el servicio de dialogo para la selección de un dispositivo de bluetooth
+ * Provee el servicio de dialogo para la selecciÃ³n de un dispositivo de bluetooth
  * @author drodriguez
  *
  */
@@ -37,8 +37,8 @@ public class BluetoothDevicePickerService implements IBluetoothDevicePickerDialo
 	public static final int REQUEST_ENABLE_BT = 1;
 	private BluetoothDevicePickerPresenter presenter;
 	
-	private AlertDialogPro.Builder dialogBuilder;
-	private AlertDialogPro dialog; 
+	private AlertDialog.Builder dialogBuilder;
+	private AlertDialog dialog; 
 	private Handler mHandler;
 	private Context context;
 	
@@ -73,7 +73,7 @@ public class BluetoothDevicePickerService implements IBluetoothDevicePickerDialo
 		presenter.loadPairedDevices();
 		presenter.searchBluetoothDevices();
 		
-		dialogBuilder = new AlertDialogPro.Builder(context);
+		dialogBuilder = new AlertDialog.Builder(context);
 		dialogBuilder.setTitle(R.string.title_bluetooth_device_picker).setIcon(R.drawable.printer_picker)
 			.setView(rootView)
 			.setNegativeButton(R.string.btn_cancel, null)
@@ -99,7 +99,7 @@ public class BluetoothDevicePickerService implements IBluetoothDevicePickerDialo
 	}
 
 	/**
-	 * Muestra el diálogo construido
+	 * Muestra el diÃ¡logo construido
 	 */
 	public void show()
 	{
@@ -147,7 +147,7 @@ public class BluetoothDevicePickerService implements IBluetoothDevicePickerDialo
 			@Override
 			public void run() {
 				layoutDiscoveringDevices.setVisibility(View.GONE);
-				if(listDiscoveredDevices.getAdapter()==null) //no se encontró ningún dispositivo
+				if(listDiscoveredDevices.getAdapter()==null) //no se encontrÃ³ ningÃºn dispositivo
 					lblDiscoveredPrinters.setText(R.string.lbl_no_devices_found);
 			}
 		});

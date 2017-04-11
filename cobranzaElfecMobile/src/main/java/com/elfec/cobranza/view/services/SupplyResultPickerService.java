@@ -1,33 +1,32 @@
 package com.elfec.cobranza.view.services;
 
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.alertdialogpro.AlertDialogPro;
-import com.alertdialogpro.AlertDialogPro.Builder;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.model.events.SupplyResultPickedListener;
 import com.elfec.cobranza.view.adapters.SupplyAdapter;
 
+import java.util.List;
+
 /**
- * Provee el servicio de dialogo para la selección de resultados de una búsqueda de suministros
+ * Provee el servicio de dialogo para la selecciï¿½n de resultados de una bï¿½squeda de suministros
  * @author drodriguez
  *
  */
 public class SupplyResultPickerService {
 	
-	private Builder dialogBuilder;
-	private AlertDialogPro dialog; 
+	private AlertDialog.Builder dialogBuilder;
+	private AlertDialog dialog;
 	private ListView listSuppliesFound;
 	
 	private SupplyResultPickedListener supplyResultPickedListener;
@@ -57,7 +56,7 @@ public class SupplyResultPickerService {
 			}
 		});
 		
-		dialogBuilder = new AlertDialogPro.Builder(context);
+		dialogBuilder = new AlertDialog.Builder(context);
 		dialogBuilder.setTitle(R.string.title_select_supply_search_result).setIcon(R.drawable.search_supplies_pressed)
 			.setView(rootView)
 			.setNegativeButton(R.string.btn_cancel, new OnClickListener() {			
@@ -70,7 +69,7 @@ public class SupplyResultPickerService {
 	}
 	
 	/**
-	 * Muestra el diálogo construido
+	 * Muestra el diï¿½logo construido
 	 */
 	public void show()
 	{

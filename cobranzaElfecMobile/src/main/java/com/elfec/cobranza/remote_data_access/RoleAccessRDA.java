@@ -1,13 +1,13 @@
 package com.elfec.cobranza.remote_data_access;
 
+import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+
 import java.net.ConnectException;
 import java.sql.SQLException;
 
-import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
-
 
 /**
- * Provee de una capa de acceso a datos remota para la activación de roles
+ * Provee de una capa de acceso a datos remota para la activaciÃ³n de roles
  * @author drodriguez
  *
  */
@@ -18,8 +18,8 @@ public class RoleAccessRDA {
 	 * @param username
 	 * @param password
 	 * @param rolename nombre del rol a habilitar
-	 * @param rolepassword contraseña del rol a habilitar, puede ser nulo o vacio si es que
-	 * el rol no requiere de una contraseña
+	 * @param rolepassword contraseÃ±a del rol a habilitar, puede ser nulo o vacio si es que
+	 * el rol no requiere de una contraseÃ±a
 	 * @throws SQLException 
 	 * @throws ConnectException 
 	 */

@@ -1,12 +1,12 @@
 package com.elfec.cobranza.presenter.views;
 
-import java.util.List;
-
 import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.Supply;
 import com.elfec.cobranza.presenter.CollectionActionPresenter;
 import com.elfec.cobranza.presenter.CollectionAnnulmentPresenter.OnCollectionAnnulmentCallback;
 import com.elfec.cobranza.presenter.adapter_interfaces.ICollectionBaseAdapter;
+
+import java.util.List;
 
 public interface ICollectionActionView {
 	/**
@@ -15,28 +15,28 @@ public interface ICollectionActionView {
 	 */
 	public CollectionActionPresenter getPresenter();
 	/**
-	 * Esconde el mensaje de que no se realizó ninguna búsqueda
+	 * Esconde el mensaje de que no se realizÃ³ ninguna bÃºsqueda
 	 */
 	public void hideNoSearchedSupplies();
 	/**
-	 * Muestra el mensaje de que no se realizó ninguna búsqueda
+	 * Muestra el mensaje de que no se realizÃ³ ninguna bÃºsqueda
 	 */
 	public void showNoSearchedSupplies();
 	/**
-	 * Muestra un mensaje de espera de búsqueda
+	 * Muestra un mensaje de espera de bÃºsqueda
 	 */
 	public void showSearchingMessage();
 	/**
-	 * Oculta el mensaje de espera de búsqueda
+	 * Oculta el mensaje de espera de bÃºsqueda
 	 */
 	public void hideSearchingMessage();
 	/**
-	 * Muestra los errores que podrían haber ocurrido durante la búsqueda
+	 * Muestra los errores que podrÃ­an haber ocurrido durante la bÃºsqueda
 	 * @param errors
 	 */
 	public void showSearchErrors(List<Exception> errors);
 	/**
-	 * Muestra la información del suministro
+	 * Muestra la informaciÃ³n del suministro
 	 * @param supply
 	 */
 	public void showSupplyInfo(Supply supply);
@@ -51,17 +51,17 @@ public interface ICollectionActionView {
 	 */
 	public void setCollectionAdapter(ICollectionBaseAdapter collectionAdapter);
 	/**
-	 * Informa al usuario que se completó la acción exitosamente
+	 * Informa al usuario que se completÃ³ la acciÃ³n exitosamente
 	 */
 	public void informActionSuccessfullyFinished();
 	/**
-	 * Muestra los errores ocurridos en la acción
+	 * Muestra los errores ocurridos en la acciÃ³n
 	 * @param errors
 	 */
 	public void showActionErrors(List<Exception> errors);
 
 	/**
-	 * Pide al usuario la confirmación para porceder con la anulación de un cobro
+	 * Pide al usuario la confirmaciÃ³n para porceder con la anulaciÃ³n de un cobro
 	 * @param selectedReceipts
 	 * @param annulmentCallback
 	 */

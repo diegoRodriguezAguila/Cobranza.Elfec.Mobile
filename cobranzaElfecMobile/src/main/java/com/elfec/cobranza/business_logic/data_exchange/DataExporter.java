@@ -1,9 +1,5 @@
 package com.elfec.cobranza.business_logic.data_exchange;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.activeandroid.Model;
 import com.elfec.cobranza.model.enums.ExportStatus;
 import com.elfec.cobranza.model.events.DataExportListener;
@@ -11,15 +7,19 @@ import com.elfec.cobranza.model.exceptions.ExportationException;
 import com.elfec.cobranza.model.interfaces.IExportable;
 import com.elfec.cobranza.model.results.DataAccessResult;
 
+import java.net.ConnectException;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
- * Se encarga de exportar cualquier tipo de informaciÛn
+ * Se encarga de exportar cualquier tipo de informaci√≥n
  * @author drodriguez
  *
  */
 public class DataExporter {
 
 	/**
-	 * Importa cualquier tipo de informaciÛn que debe ser importada una sola vez
+	 * Importa cualquier tipo de informaci√≥n que debe ser importada una sola vez
 	 * @param exportSpecs
 	 * @param exportListener
 	 * @return Resultado del acceso remoto a datos
@@ -45,7 +45,7 @@ public class DataExporter {
 				for(T data : dataList)
 				{
 					rowRes = exportSpecs.exportData(data);
-					if(rowRes==1) //se insertÛ existosamente
+					if(rowRes==1) //se insert√≥ existosamente
 					{
 						data.setExportStatus(ExportStatus.EXPORTED);
 						data.save();
@@ -70,7 +70,7 @@ public class DataExporter {
 	
 	/**
 	 * Interfaz que utiliza DataExporter para determinar la fuente de los datos que se quieren exportar
-	 * y el mÈtodo de exportaciÛn
+	 * y el m√©todo de exportaci√≥n
 	 * @author drodriguez
 	 *
 	 * @param <T>
@@ -78,13 +78,13 @@ public class DataExporter {
 	public interface ExportSpecs<T extends Model & IExportable>
 	{
 		/**
-		 * Obtiene la informaciÛn que se exportar·
+		 * Obtiene la informaci√≥n que se exportar√°
 		 * @return Lista
 		 */
 		public List<T> requestExportData();
 		/**
-		 * MÈtodo que se llama para exportar la informaciÛn
-		 * @return el numero de filas exportadas exitosamente, deberÌa ser 1
+		 * M√©todo que se llama para exportar la informaci√≥n
+		 * @return el numero de filas exportadas exitosamente, deber√≠a ser 1
 		 */
 		public int exportData(T data) throws ConnectException, SQLException;
 	}

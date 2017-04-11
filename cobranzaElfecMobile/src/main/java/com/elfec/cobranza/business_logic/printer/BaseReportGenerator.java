@@ -1,12 +1,12 @@
 package com.elfec.cobranza.business_logic.printer;
 
-import org.joda.time.DateTime;
-
 import com.elfec.cobranza.business_logic.PrinterImagesManager;
 import com.elfec.cobranza.model.printer.CPCLCommand;
-import com.elfec.cobranza.model.printer.IReportGenerator;
 import com.elfec.cobranza.model.printer.CPCLCommand.Justify;
 import com.elfec.cobranza.model.printer.CPCLCommand.Unit;
+import com.elfec.cobranza.model.printer.IReportGenerator;
+
+import org.joda.time.DateTime;
 
 public abstract class BaseReportGenerator implements IReportGenerator{
 	/**
@@ -15,17 +15,17 @@ public abstract class BaseReportGenerator implements IReportGenerator{
 	protected final double SP_FACTOR = 0.37;
 
 	/**
-	 * El tamaÒo mÌnimo del reporte
+	 * El tama√±o m√≠nimo del reporte
 	 */
 	protected final double MIN_SIZE = 15;
 
 	/**
-	 * El tamaÒo del reporte en cm
+	 * El tama√±o del reporte en cm
 	 */
 	protected double receiptHeight;
 	
 	/**
-	 * El comando que se est· generando
+	 * El comando que se est√° generando
 	 */
 	protected CPCLCommand command;
 	
@@ -36,7 +36,7 @@ public abstract class BaseReportGenerator implements IReportGenerator{
 	}
 	
 	/**
-	 * Genera el comando cpcl de impresiÛn del reporte
+	 * Genera el comando cpcl de impresi√≥n del reporte
 	 * @return el comando cpcl generado
 	 */
 	@Override
@@ -84,7 +84,7 @@ public abstract class BaseReportGenerator implements IReportGenerator{
 	 */
 	public abstract String getReportName();
 	/**
-	 * El cÛdigo del reporte
+	 * El c√≥digo del reporte
 	 */
 	protected abstract String getReportCode();
 

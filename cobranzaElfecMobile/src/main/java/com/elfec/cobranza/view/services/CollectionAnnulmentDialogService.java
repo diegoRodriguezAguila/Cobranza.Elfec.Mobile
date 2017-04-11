@@ -1,15 +1,12 @@
 package com.elfec.cobranza.view.services;
 
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.TextFormater;
 import com.elfec.cobranza.model.AnnulmentReason;
@@ -30,14 +26,18 @@ import com.elfec.cobranza.presenter.services.CollectionAnnulmentDialogPresenter;
 import com.elfec.cobranza.presenter.views.ICollectionAnnulmentDialog;
 import com.elfec.cobranza.view.adapters.AnnulmentReasonAdapter;
 
+import org.joda.time.DateTime;
+
+import java.util.List;
+
 /**
- * Esta clase provee de un servicio de dialogo para confirmar y realizar la anulación de un cobro
+ * Esta clase provee de un servicio de dialogo para confirmar y realizar la anulaciÃ³n de un cobro
  * @author drodriguez
  */
 public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDialog {
 	
-	private AlertDialogPro.Builder dialogBuilder;
-	private AlertDialogPro dialog;
+	private AlertDialog.Builder dialogBuilder;
+	private AlertDialog dialog;
 	private Context context;
 	private Handler mHandler;
 	private AnnulmentReasonAdapter adapter;
@@ -52,8 +52,8 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 	public CollectionAnnulmentDialogService(Context context, List<CoopReceipt> annulmentReceipts, OnCollectionAnnulmentCallback annulmentCallback)
 	{
 		if(annulmentReceipts.size()>1)
-			throw new UnsupportedOperationException("Si bien la implementación para anulación de múltiples facturas existe,"
-					+ "no se implementó el dialogo de anulación para múltiples facturas!");
+			throw new UnsupportedOperationException("Si bien la implementaciÃ³n para anulaciÃ³n de mÃºltiples facturas existe,"
+					+ "no se implementÃ³ el dialogo de anulaciÃ³n para mÃºltiples facturas!");
 		presenter = new CollectionAnnulmentDialogPresenter(this, annulmentCallback, annulmentReceipts.get(0));
 		this.context = context;
 		mHandler = new Handler(Looper.getMainLooper());
@@ -66,7 +66,7 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 		
 		presenter.loadReceiptInfo();
 		
-		dialogBuilder = new AlertDialogPro.Builder(context);
+		dialogBuilder = new AlertDialog.Builder(context);
 		dialogBuilder.setTitle(R.string.title_collection_annulment).setIcon(R.drawable.collection_annulment_pressed)
 			.setView(annulmentView)
 			.setNegativeButton(R.string.btn_cancel, new OnClickListener() {				
@@ -95,14 +95,14 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 	}
 
 	/**
-	 * Muestra el diálogo construido
+	 * Muestra el diÃ¡logo construido
 	 */
 	public void show()
 	{
 		dialog = dialogBuilder.create();
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
-		dialog.getButton(AlertDialogPro.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
 	      {            
 	          @Override
 	          public void onClick(View v) {
@@ -183,7 +183,7 @@ public class CollectionAnnulmentDialogService implements ICollectionAnnulmentDia
 	@Override
 	public void setReceiptNumber(String receiptNumber) {
 		((TextView)annulmentView.findViewById(R.id.txt_receipt_number))
-		.setText("N°: "+receiptNumber);
+		.setText("NÂ°: "+receiptNumber);
 	}
 
 

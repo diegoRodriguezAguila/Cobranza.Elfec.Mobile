@@ -1,6 +1,6 @@
 package com.elfec.cobranza.model.exceptions;
 /**
- * Excepción que se lanza cuando se intentó importar una ruta que no tiene facturas pendientes
+ * ExcepciÃ³n que se lanza cuando se intentÃ³ importar una ruta que no tiene facturas pendientes
  * @author drodriguez
  *
  */

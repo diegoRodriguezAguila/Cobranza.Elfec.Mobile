@@ -2,64 +2,60 @@
 
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Alert Dialog AppCompat -->
+    <style name="Theme.Cobranza.AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/cobranza_color</item>
+        <item name="colorPrimaryDark">@color/cobranza_color_pressed</item>
+        <item name="colorAccent">@color/cobranza_color</item>
+        <item name="colorControlActivated">@color/cobranza_color</item>
+        <item name="android:windowTitleStyle">@style/TextAppearance.Cobranza.AlertDialog.Title
+        </item>
+    </style>
 
-  <style name="Cobranza" parent="android:Theme.Holo.Light.DarkActionBar">
-	<item name="windowActionBar">false</item> 
-    <!-- Alert Dialog Pro -->
-    <item name="colorPrimary">@color/cobranza_color</item>
-    <item name="colorPrimaryDark">@color/cobranza_color_pressed</item>
-    <item name="colorAccent">@color/cobranza_color</item>
-    <item name="colorControlActivated">@color/cobranza_color</item>
-    <item name="alertDialogProTheme">@style/Theme.FlavoredMaterialLight</item>
-      
-    <!-- Actionbar theme -->
-    <item name="android:actionBarItemBackground">@drawable/selectable_background_cobranza</item>
-    <item name="android:popupMenuStyle">@style/PopupMenu.Cobranza</item>
-    <item name="android:dropDownListViewStyle">@style/DropDownListView.Cobranza</item>
-    <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Cobranza</item>
-    <item name="android:actionDropDownStyle">@style/DropDownNav.Cobranza</item>
-    <item name="android:actionBarStyle">@style/ActionBar.Solid.Cobranza</item>
-    <item name="android:actionModeBackground">@drawable/cab_background_top_cobranza</item>
-    <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_cobranza</item>
-    <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Cobranza</item>
-    
-    <!-- End Actionbar -->
-      
-    <item name="android:textViewStyle">@style/TextView.Cobranza</item>  
-    <item name="android:windowIsTranslucent">true</item>
-    <item name="android:windowContentOverlay">@null</item>
-    <item name="android:windowBackground">@color/background_soft_gray</item>
-    <item name="android:editTextStyle">@style/EditText.Cobranza</item>
+    <style name="Theme.Cobranza" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <!-- Alert Dialog Pro -->
+        <item name="colorPrimary">@color/cobranza_color</item>
+        <item name="colorPrimaryDark">@color/cobranza_color_pressed</item>
+        <item name="colorAccent">@color/cobranza_color</item>
+        <item name="colorControlActivated">@color/cobranza_color</item>
 
-    <item name="android:textColorHighlight">#992574a9</item>
-    <item name="android:textSelectHandleLeft">@drawable/cobranza_text_select_handle_left</item>
-    <item name="android:textSelectHandleRight">@drawable/cobranza_text_select_handle_right</item>
-    <item name="android:textSelectHandle">@drawable/cobranza_text_select_handle_middle</item>
+        <!-- Actionbar theme -->
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_cobranza</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Cobranza</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Cobranza</item>
 
-    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewCobranza</item>
+        <item name="alertDialogTheme">@style/Theme.Cobranza.AlertDialog</item>
+        <!-- End Actionbar -->
 
-    <item name="android:listChoiceIndicatorMultiple">@drawable/cobranza_btn_check_holo_dark</item>
+        <item name="android:textViewStyle">@style/TextView.Cobranza</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/background_soft_gray</item>
+        <item name="android:editTextStyle">@style/EditText.Cobranza</item>
 
-    <item name="android:listChoiceIndicatorSingle">@drawable/cobranza_btn_radio_holo_dark</item>
+        <item name="android:textColorHighlight">#992574a9</item>
+        <item name="android:textSelectHandleLeft">@drawable/cobranza_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/cobranza_text_select_handle_right
+        </item>
+        <item name="android:textSelectHandle">@drawable/cobranza_text_select_handle_middle</item>
 
-    <item name="android:buttonStyle">@style/ButtonCobranza</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewCobranza</item>
 
-    <item name="android:imageButtonStyle">@style/ImageButtonCobranza</item>
+        <item name="android:buttonStyle">@style/ButtonCobranza</item>
 
-    <item name="android:dropDownSpinnerStyle">@style/SpinnerCobranza</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonCobranza</item>
 
-    <item name="android:progressBarStyleHorizontal">@style/ProgressBarCobranza</item>
+        <item name="android:listChoiceBackgroundIndicator">
+            @drawable/cobranza_list_selector_holo_dark
+        </item>
 
-    <item name="android:seekBarStyle">@style/SeekBarCobranza</item>
+        <item name="android:activatedBackgroundIndicator">
+            @drawable/cobranza_activated_background_holo_dark
+        </item>
 
-    <item name="android:buttonStyleToggle">@style/ToggleCobranza</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/cobranza_fastscroll_thumb_holo</item>
 
-    <item name="android:listChoiceBackgroundIndicator">@drawable/cobranza_list_selector_holo_dark</item>
-
-    <item name="android:activatedBackgroundIndicator">@drawable/cobranza_activated_background_holo_dark</item>
-
-    <item name="android:fastScrollThumbDrawable">@drawable/cobranza_fastscroll_thumb_holo</item>
-
-  </style>
+    </style>
 
 </resources>

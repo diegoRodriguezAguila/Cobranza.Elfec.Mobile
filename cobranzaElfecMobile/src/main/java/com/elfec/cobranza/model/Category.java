@@ -1,7 +1,5 @@
 package com.elfec.cobranza.model;
 
-import java.math.BigDecimal;
-
 import android.database.Cursor;
 
 import com.activeandroid.Cache;
@@ -10,6 +8,8 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
+
+import java.math.BigDecimal;
 /**
  * Almacena las CATEGORIAS
  * @author drodriguez
@@ -51,7 +51,7 @@ public class Category extends Model {
 	private short statusId;		
 	/**
 	 * CLASIF en Oracle
-	 * Clasificación de la categoría
+	 * ClasificaciÃ³n de la categorÃ­a
 	 */
 	@Column(name = "Classification")
 	private String classification;	
@@ -102,7 +102,7 @@ public class Category extends Model {
 	}
 	
 	/**
-	 * Obtiene la cadena para mostrar de la categoría
+	 * Obtiene la cadena para mostrar de la categorÃ­a
 	 * @param categoryId
 	 * @return la cadena en formato DOMICILIARIA/PDBTR1
 	 */
@@ -120,7 +120,7 @@ public class Category extends Model {
 			cursor.moveToFirst();
 			return cursor.getString(0);
 		}
-		return categoryId;//retorna el mismo id como categoría en caso de no encontrarse
+		return categoryId;//retorna el mismo id como categorÃ­a en caso de no encontrarse
 	}
 
 	//#region Getters y Setters

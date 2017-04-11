@@ -1,16 +1,12 @@
 package com.elfec.cobranza.view;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -26,7 +22,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.helpers.text_format.AccountFormatter;
 import com.elfec.cobranza.helpers.text_format.AttributePicker;
@@ -47,6 +42,11 @@ import com.elfec.cobranza.view.services.BluetoothDevicePickerService;
 import com.elfec.cobranza.view.services.CollectionAnnulmentDialogService;
 import com.elfec.cobranza.view.services.PaymentConfirmationDialogService;
 import com.elfec.cobranza.view.services.bluetooth.BluetoothStateMonitor;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
@@ -414,7 +414,7 @@ public class CollectionActionFragment extends Fragment implements
 				@Override
 				public void run() {
 					if (errors.size() > 0) {
-						AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+						AlertDialog.Builder builder = new AlertDialog.Builder(
 								getActivity());
 						builder.setTitle(
 								collectionAdapter.getActionErrorsTitleId())
@@ -466,7 +466,7 @@ public class CollectionActionFragment extends Fragment implements
 				@Override
 				public void run() {
 					if (errors.size() > 0) {
-						AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+						AlertDialog.Builder builder = new AlertDialog.Builder(
 								getActivity());
 						builder.setTitle(R.string.title_print_errors)
 								.setMessage(
@@ -485,7 +485,7 @@ public class CollectionActionFragment extends Fragment implements
 			@Override
 			public void run() {
 				if (errors.size() > 0) {
-					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+					AlertDialog.Builder builder = new AlertDialog.Builder(
 							getActivity());
 					builder.setTitle(R.string.title_bluetooth_errors)
 							.setMessage(
@@ -502,7 +502,7 @@ public class CollectionActionFragment extends Fragment implements
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(
+				AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
 				builder.setTitle(R.string.title_inform_reconnection)
 						.setIcon(R.drawable.reconnection_info)

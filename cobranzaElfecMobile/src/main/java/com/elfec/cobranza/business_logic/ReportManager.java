@@ -13,7 +13,7 @@ import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 import com.zebra.sdk.settings.SettingsException;
 
 /**
- * Se encarga de las operaciones de lÛgica de negocio de los reportes
+ * Se encarga de las operaciones de l√≥gica de negocio de los reportes
  * @author drodriguez
  *
  */
@@ -38,11 +38,11 @@ public class ReportManager {
 			conn.close();
 		} catch (ConnectionException e) {
 			e.printStackTrace();
-			result.addError(new ConnectionException("No se pudo establecer conexiÛn con la impresora, "
-					+ "asegurese de que estÈ encendida y que haya seleccionado la impresora correcta en la aplicaciÛn!"));
+			result.addError(new ConnectionException("No se pudo establecer conexi√≥n con la impresora, "
+					+ "asegurese de que est√© encendida y que haya seleccionado la impresora correcta en la aplicaci√≥n!"));
 		} catch (ZebraPrinterLanguageUnknownException e) {
 			e.printStackTrace();
-			result.addError(new SettingsException("La impresora no est· configurada adecuadamente para ser utilizada por la aplicaciÛn!"));
+			result.addError(new SettingsException("La impresora no est√° configurada adecuadamente para ser utilizada por la aplicaci√≥n!"));
 		} catch (ZebraIllegalArgumentException e) {
 			e.printStackTrace();
 		}

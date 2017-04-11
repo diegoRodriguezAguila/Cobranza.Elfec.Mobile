@@ -1,10 +1,5 @@
 package com.elfec.cobranza.business_logic;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter;
 import com.elfec.cobranza.business_logic.data_exchange.DataImporter.ImportSource;
 import com.elfec.cobranza.model.Concept;
@@ -12,6 +7,11 @@ import com.elfec.cobranza.model.CoopReceipt;
 import com.elfec.cobranza.model.printer.PrintConcept;
 import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.remote_data_access.ConceptRDA;
+
+import java.net.ConnectException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Se encarga de las operaciones de negocio de <b>CONCEPTOS</b> 
@@ -38,7 +38,7 @@ public class ConceptManager {
 	/**
 	 * Obtiene los conceptos para imprimir, del TOTAL CONSUMO
 	 * @param receiptId
-	 * @return lista de conceptos de impresión
+	 * @return lista de conceptos de impresiÃ³n
 	 */
 	public static List<PrintConcept> getAllTotalConsumeConcepts(int receiptId)
 	{
@@ -51,7 +51,7 @@ public class ConceptManager {
 	/**
 	 * Obtiene los conceptos para imprimir, del TOTAL SUMINISTRO
 	 * @param receiptId
-	 * @return lista de conceptos de impresión
+	 * @return lista de conceptos de impresiÃ³n
 	 */
 	public static List<PrintConcept> getAllTotalSupplyConcepts(int receiptId)
 	{
@@ -64,7 +64,7 @@ public class ConceptManager {
 	/**
 	 * Obtiene los conceptos para imprimir, del TOTAL FACTURA
 	 * @param receipt
-	 * @return lista de conceptos de impresión
+	 * @return lista de conceptos de impresiÃ³n
 	 */
 	public static List<PrintConcept> getAllTotalReceiptConcepts(CoopReceipt receipt)
 	{

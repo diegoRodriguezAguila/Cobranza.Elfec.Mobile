@@ -1,11 +1,5 @@
 package com.elfec.cobranza.business_logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-
 import android.graphics.Bitmap;
 
 import com.elfec.cobranza.business_logic.data_exchange.ImageDownloader;
@@ -19,10 +13,16 @@ import com.zebra.sdk.device.ZebraIllegalArgumentException;
 import com.zebra.sdk.graphics.internal.ZebraImageAndroid;
 import com.zebra.sdk.printer.ZebraPrinter;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Maneja las operaciones de negocio relacionadas con las im·genes para las
+ * Maneja las operaciones de negocio relacionadas con las im√°genes para las
  * facturas y reportes
- * la de encabezado y la de piÈ
+ * la de encabezado y la de pi√©
  * @author drodriguez
  *
  */
@@ -33,7 +33,7 @@ public class PrinterImagesManager {
 	 */
 	public static final String HEADER_IMAGE_NAME = "factura_logo.png";
 	/**
-	 * El nombre con el que se guardÛ la imagen de encabezado en la impresora
+	 * El nombre con el que se guard√≥ la imagen de encabezado en la impresora
 	 */
 	public static final String HEADER_IMAGE_IN_PRINTER_NAME = "HEADER.PCX";
 	
@@ -45,7 +45,7 @@ public class PrinterImagesManager {
 	 */
 	public static final String FOOTER_IMAGE_NAME = "banner_pie.png";
 	/**
-	 * El nombre con el que se guardÛ la imagen de pie en la impresora
+	 * El nombre con el que se guard√≥ la imagen de pie en la impresora
 	 */
 	public static final String FOOTER_IMAGE_IN_PRINTER_NAME = "FOOTER.PCX";
 	
@@ -65,7 +65,7 @@ public class PrinterImagesManager {
 	private static final int repLogoHeight = 42;
 	
 	/**
-	 * Importa las imagenes para la cebecera y el piÈ de la factura, solo si es necesario importarlos
+	 * Importa las imagenes para la cebecera y el pi√© de la factura, solo si es necesario importarlos
 	 */
 	public static void importReceiptImages()
 	{
@@ -174,7 +174,7 @@ public class PrinterImagesManager {
 	}
 	
 	/**
-	 * Realiza las validaciones necesarias y si es necesario envÌa a la impresora
+	 * Realiza las validaciones necesarias y si es necesario env√≠a a la impresora
 	 * @param printer
 	 * @throws ZebraIllegalArgumentException 
 	 * @throws ConnectionException 
@@ -192,7 +192,7 @@ public class PrinterImagesManager {
 	
 	/**
 	 * Realiza las validaciones necesarias de fecha de la imagen de encabezado
-	 * y si es necesario la envÌa a la impresora pasada en los par·metros
+	 * y si es necesario la env√≠a a la impresora pasada en los par√°metros
 	 * @param printer
 	 * @throws ZebraIllegalArgumentException 
 	 * @throws ConnectionException 
@@ -212,7 +212,7 @@ public class PrinterImagesManager {
 	
 	/**
 	 * Realiza las validaciones necesarias de fecha de la imagen de pie
-	 * y si es necesario la envÌa a la impresora pasada en los par·metros
+	 * y si es necesario la env√≠a a la impresora pasada en los par√°metros
 	 * @param printer
 	 * @throws ZebraIllegalArgumentException 
 	 * @throws ConnectionException 

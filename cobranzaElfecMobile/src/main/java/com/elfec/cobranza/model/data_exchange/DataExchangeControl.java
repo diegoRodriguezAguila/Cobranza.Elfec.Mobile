@@ -1,13 +1,13 @@
 package com.elfec.cobranza.model.data_exchange;
 
-import java.util.Locale;
+import com.elfec.cobranza.model.enums.DataExchangeStatus;
 
 import org.joda.time.DateTime;
 
-import com.elfec.cobranza.model.enums.DataExchangeStatus;
+import java.util.Locale;
 
 /**
- * Modelo para el control de cargas y descargas en los móviles 
+ * Modelo para el control de cargas y descargas en los mÃ³viles 
  * tabla en Oracle: <b>MOVILES.COBRA_RUTAS_ESTADOS</b>
  * @author drodriguez
  *

@@ -1,11 +1,5 @@
 package com.elfec.cobranza.model.printer;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
-
-import org.apache.http.util.EncodingUtils;
-
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.device.ProgressMonitor;
@@ -16,9 +10,15 @@ import com.zebra.sdk.printer.PrinterLanguage;
 import com.zebra.sdk.printer.PrinterStatus;
 import com.zebra.sdk.printer.ZebraPrinter;
 
+import org.apache.http.util.EncodingUtils;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
+
 /**
- * Una extensión de una impresora zebra que añade funcionalidad utilizando el
- * principio de orientación a objetos de composición sobre herencia
+ * Una extensiÃ³n de una impresora zebra que aÃ±ade funcionalidad utilizando el
+ * principio de orientaciÃ³n a objetos de composiciÃ³n sobre herencia
  * 
  * @author drodriguez
  *

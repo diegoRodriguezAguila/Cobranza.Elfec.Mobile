@@ -1,20 +1,20 @@
 package com.elfec.cobranza.model.enums;
 /**
- * Define los estados de la exportación de datos
+ * Define los estados de la exportaciÃ³n de datos
  * @author drodriguez
  *
  */
 public enum ExportStatus {
 	/**
-	 * Estado de que NO se realizó la exportación
+	 * Estado de que NO se realizÃ³ la exportaciÃ³n
 	 */
 	NOT_EXPORTED,
 	/**
-	 * Estado de que si se exportó
+	 * Estado de que si se exportÃ³
 	 */
 	EXPORTED;
 	/**
-	 * Obtiene el estado de exportación, equivalente al short provisto
+	 * Obtiene el estado de exportaciÃ³n, equivalente al short provisto
 	 * @param status
 	 * @return
 	 */
@@ -24,7 +24,7 @@ public enum ExportStatus {
 	}
 	
 	/**
-	 * Convierte el estado de exportación a su short equivalente
+	 * Convierte el estado de exportaciÃ³n a su short equivalente
 	 * @return Short equivalente al estado
 	 */
 	public short toShort()

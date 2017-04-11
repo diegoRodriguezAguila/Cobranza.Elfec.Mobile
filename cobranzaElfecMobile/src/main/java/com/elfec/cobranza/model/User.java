@@ -1,17 +1,17 @@
 package com.elfec.cobranza.model;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.elfec.cobranza.helpers.security.AES;
 import com.elfec.cobranza.model.enums.UserStatus;
+
+import org.joda.time.DateTime;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Se guardan los usuarios localmente
@@ -36,12 +36,12 @@ public class User extends Model{
 	@Column(name = "AssignationNumber", notNull=true)
 	private int assignationNumber;
 	/**
-	 * Número de caja
+	 * NÃºmero de caja
 	 */
 	@Column(name = "CashDeskNumber", notNull=true)
 	private int cashDeskNumber;
 	/**
-	 * Descripción de caja
+	 * DescripciÃ³n de caja
 	 */
 	@Column(name = "CashDeskDesc")
 	private String cashDeskDesc;
@@ -149,7 +149,7 @@ public class User extends Model{
 	
 	/**
 	 * Sincroniza a un usuario, encripta su password, lo guarda localmente y le asigna
-	 * una fecha de sincronización
+	 * una fecha de sincronizaciÃ³n
 	 * @param password (el password sin encriptar)
 	 * @return el usuario sincronizado
 	 */
@@ -189,7 +189,7 @@ public class User extends Model{
 	
 	/**
 	 * Genera la clave correspondiente a este usuario, utiliza la fecha
-	 * de sincronización y el nombre de usuario para crearla, así que esta ya deberían estar asignados
+	 * de sincronizaciÃ³n y el nombre de usuario para crearla, asÃ­ que esta ya deberÃ­an estar asignados
 	 * @return
 	 */
 	public final String generateUserKey()

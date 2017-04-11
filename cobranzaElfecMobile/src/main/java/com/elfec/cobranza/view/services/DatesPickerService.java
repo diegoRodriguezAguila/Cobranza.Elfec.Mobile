@@ -1,26 +1,26 @@
 package com.elfec.cobranza.view.services;
 
-import org.joda.time.DateTime;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 
-import com.alertdialogpro.AlertDialogPro;
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.model.events.DatePickListener;
 
+import org.joda.time.DateTime;
+
 /**
- * Provee el servicio de dialogo para la selecciÛn de fechas
+ * Provee el servicio de dialogo para la selecci√≥n de fechas
  * @author drodriguez
  *
  */
 public class DatesPickerService {
-	private AlertDialogPro.Builder dialogBuilder;
+	private AlertDialog.Builder dialogBuilder;
 	
 	private DatePickListener listener;
 	
@@ -38,7 +38,7 @@ public class DatesPickerService {
 		if(isDateRange)
 			dateEnd = (DatePicker) rootView.findViewById(R.id.end_date);
 		
-		dialogBuilder = new AlertDialogPro.Builder(context);
+		dialogBuilder = new AlertDialog.Builder(context);
 		dialogBuilder.setTitle(title).setIcon(iconId)
 			.setView(rootView)
 			.setNegativeButton(R.string.btn_cancel, null)
@@ -56,7 +56,7 @@ public class DatesPickerService {
 	}
 	
 	/**
-	 * Muestra el di·logo construido
+	 * Muestra el di√°logo construido
 	 */
 	public void show()
 	{

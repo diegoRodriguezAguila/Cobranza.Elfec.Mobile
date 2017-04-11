@@ -1,7 +1,5 @@
 package com.elfec.cobranza.presenter;
 
-import java.util.List;
-
 import android.os.Looper;
 
 import com.elfec.cobranza.R;
@@ -15,6 +13,8 @@ import com.elfec.cobranza.model.results.DataAccessResult;
 import com.elfec.cobranza.presenter.views.ILoginView;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
 
+import java.util.List;
+
 public class LoginPresenter {
 
 	private ILoginView view;
@@ -24,7 +24,7 @@ public class LoginPresenter {
 	}
 	
 	/**
-	 * Intenta logear al usuario con la informaciÛn proporcionada
+	 * Intenta logear al usuario con la informaci√≥n proporcionada
 	 */
 	public void login()
 	{
@@ -65,7 +65,7 @@ public class LoginPresenter {
 	}
 
 	/**
-	 * Llama a los mÈtodos necesarios para importar la tabla de par·metros si es necesario hacerlo
+	 * Llama a los m√©todos necesarios para importar la tabla de par√°metros si es necesario hacerlo
 	 * @param password
 	 * @param result
 	 * @return
@@ -81,7 +81,7 @@ public class LoginPresenter {
 	}
 
 	/**
-	 * Llama a los mÈtodos necesarios para importar las zonas del usuario si es que es necesario hacerlo
+	 * Llama a los m√©todos necesarios para importar las zonas del usuario si es que es necesario hacerlo
 	 * @param password
 	 * @param result
 	 * @return
@@ -106,11 +106,11 @@ public class LoginPresenter {
 	}
 	
 	/**
-	 * Valida el campo del nombre de la contraseÒa, si hay errores se le mostraran al usuario
+	 * Valida el campo del nombre de la contrase√±a, si hay errores se le mostraran al usuario
 	 */
 	public boolean validatePasswordField()
 	{
-		List<String> validationErrors = FieldValidator.validate("contraseÒa", false, view.getPassword(), view.getPasswordValidationRules());
+		List<String> validationErrors = FieldValidator.validate("contrase√±a", false, view.getPassword(), view.getPasswordValidationRules());
 		view.setPasswordFieldErrors(validationErrors);
 		return validationErrors.size()==0;
 	}

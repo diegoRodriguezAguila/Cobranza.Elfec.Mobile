@@ -2,7 +2,7 @@ package com.elfec.cobranza.presenter.views;
 
 import java.util.List;
 /**
- * Abstracción del dialogo de configuración de conexión a la base de datos
+ * AbstracciÃ³n del dialogo de configuraciÃ³n de conexiÃ³n a la base de datos
  * @author drodriguez
  *
  */

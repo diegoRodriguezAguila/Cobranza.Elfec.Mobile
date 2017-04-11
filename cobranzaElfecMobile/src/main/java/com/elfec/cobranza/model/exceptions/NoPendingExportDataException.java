@@ -1,6 +1,6 @@
 package com.elfec.cobranza.model.exceptions;
 /**
- * Excepción que se lanza cuando ya no existe información pendiente para exportar
+ * ExcepciÃ³n que se lanza cuando ya no existe informaciÃ³n pendiente para exportar
  * @author drodriguez
  *
  */
@@ -13,6 +13,6 @@ public class NoPendingExportDataException extends Exception{
 	@Override
 	public String getMessage()
 	{
-		return "No existe información pendiente para descargar al servidor!";
+		return "No existe informaciÃ³n pendiente para descargar al servidor!";
 	}
 }

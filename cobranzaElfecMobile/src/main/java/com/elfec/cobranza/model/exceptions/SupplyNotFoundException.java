@@ -24,7 +24,7 @@ public class SupplyNotFoundException extends Exception{
 	@Override
 	public String getMessage()
 	{
-		StringBuilder str = new StringBuilder("No se encontró ningún suministro con");
+		StringBuilder str = new StringBuilder("No se encontrÃ³ ningÃºn suministro con");
 		if(nus!=null && !nus.isEmpty())
 			str.append(" NUS: <b>").append(nus).append("</b>,");
 		if(accountNumber!=null && !accountNumber.isEmpty())
