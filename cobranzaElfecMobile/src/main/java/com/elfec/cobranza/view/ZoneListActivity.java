@@ -1,13 +1,14 @@
 package com.elfec.cobranza.view;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.elfec.cobranza.R;
 import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * An activity representing a list of Routes. This activity has different
@@ -24,7 +25,7 @@ import com.elfec.cobranza.remote_data_access.connection.OracleDatabaseConnector;
  * This activity also implements the required {@link ZoneListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class ZoneListActivity extends Activity implements
+public class ZoneListActivity extends AppCompatActivity implements
 		ZoneListFragment.Callbacks {
 
 	/**
@@ -44,11 +45,11 @@ public class ZoneListActivity extends Activity implements
 			// res/values-sw600dp). If this view is present, then the
 			// activity should be in two-pane mode.
 			mTwoPane = true;
-			getActionBar().setTitle(R.string.title_zone_routes);
+			getSupportActionBar().setTitle(R.string.title_zone_routes);
 
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
-			((ZoneListFragment) getFragmentManager().findFragmentById(
+			((ZoneListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.zone_list)).setActivateOnItemClick(true);
 		}
 
@@ -81,7 +82,7 @@ public class ZoneListActivity extends Activity implements
 			arguments.putBoolean(ZoneRoutesFragment.IS_TWO_PANE, mTwoPane);
 			ZoneRoutesFragment fragment = new ZoneRoutesFragment();
 			fragment.setArguments(arguments);
-			getFragmentManager().beginTransaction()
+			getSupportFragmentManager().beginTransaction()
 			.setCustomAnimations(R.anim.slide_left_in_fragment, R.anim.slide_left_out_fragment)
 					.replace(R.id.zone_detail_container, fragment).commit();
 

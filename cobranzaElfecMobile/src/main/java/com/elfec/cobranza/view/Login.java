@@ -1,6 +1,5 @@
 package com.elfec.cobranza.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -9,6 +8,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +31,7 @@ import java.util.Locale;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class Login extends Activity implements ILoginView {
+public class Login extends AppCompatActivity implements ILoginView {
 
 	private long lastClickTime = 0;
 	private LoginPresenter presenter;
@@ -50,7 +50,7 @@ public class Login extends Activity implements ILoginView {
 		txtUsername = (EditText) findViewById(R.id.txt_username);
 		txtPassword = (EditText) findViewById(R.id.txt_password);
 		OracleDatabaseConnector.initializeContext(this);
-		getActionBar().setTitle(R.string.title_activity_login);
+		getSupportActionBar().setTitle(R.string.title_activity_login);
 		croutonStyle = new de.keyboardsurfer.android.widget.crouton.Style.Builder()
 				.setFontName("fonts/segoe_ui_semilight.ttf")
 				.setTextSize(16)

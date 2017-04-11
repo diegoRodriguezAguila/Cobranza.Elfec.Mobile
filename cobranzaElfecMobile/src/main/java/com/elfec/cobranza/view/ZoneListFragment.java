@@ -1,10 +1,8 @@
 package com.elfec.cobranza.view;
 
-import java.util.List;
-
 import android.app.Activity;
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.text.Html;
 import android.view.View;
 import android.widget.ListView;
@@ -15,6 +13,8 @@ import com.elfec.cobranza.model.Zone;
 import com.elfec.cobranza.presenter.ZoneListPresenter;
 import com.elfec.cobranza.presenter.views.IZoneListView;
 import com.elfec.cobranza.view.adapters.ZoneAdapter;
+
+import java.util.List;
 
 /**
  * A list fragment representing a list of Routes. This fragment also supports

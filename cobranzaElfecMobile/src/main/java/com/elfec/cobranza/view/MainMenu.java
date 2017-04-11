@@ -1,11 +1,11 @@
 package com.elfec.cobranza.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +26,7 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainMenu extends Activity implements IMainMenuView {
+public class MainMenu extends AppCompatActivity implements IMainMenuView {
 
 	private long lastClickTime = 0;
 	private MainMenuPresenter presenter;

@@ -1,6 +1,5 @@
 package com.elfec.cobranza.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -8,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.view.Menu;
@@ -32,7 +32,7 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class DataExchange extends Activity implements IDataExchangeView {
+public class DataExchange extends AppCompatActivity implements IDataExchangeView {
 
 	public static final String IMEI = "IMEI";
 	private long lastClickTime = 0;

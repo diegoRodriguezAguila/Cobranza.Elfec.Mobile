@@ -1,11 +1,12 @@
 package com.elfec.cobranza.view;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.elfec.cobranza.R;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * An activity representing a single Zone detail screen. This activity is only
@@ -15,7 +16,7 @@ import com.elfec.cobranza.R;
  * This activity is mostly just a 'shell' activity containing nothing more than
  * a {@link ZoneRoutesFragment}.
  */
-public class ZoneRoutesActivity extends Activity {
+public class ZoneRoutesActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class ZoneRoutesActivity extends Activity {
 					.getIntExtra(ZoneRoutesFragment.ARG_ITEM_ID, -1));
 			ZoneRoutesFragment fragment = new ZoneRoutesFragment();
 			fragment.setArguments(arguments);
-			getFragmentManager().beginTransaction()
+			getSupportFragmentManager().beginTransaction()
 					.add(R.id.zone_detail_container, fragment).commit();
 		}
 	}

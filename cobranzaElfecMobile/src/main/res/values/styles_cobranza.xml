@@ -46,11 +46,12 @@
         <item name="contentInsetStart">12dp</item>
         <item name="elevation">0dp</item>
         <item name="displayOptions">useLogo|showHome|showTitle</item>
-        <item name="titleTextStyle">@style/actionbar_title_style</item>
+        <item name="android:titleTextStyle">@style/actionbar_title_style</item>
     </style>
 
     <style name="actionbar_title_style" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/txt_size_action_bar</item>
         <item name="fontPath">fonts/segoe_ui_light.ttf</item>
     </style>
 
@@ -70,8 +71,16 @@
         <item name="android:minHeight">40dip</item>
         <item name="android:paddingBottom">2dp</item>
         <item name="android:paddingTop">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Cobranza.CustomFont.Button</item>
+    </style>
+
+    <style name="TextAppearance.Cobranza.CustomFont.Button"
+           parent="TextAppearance.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">15sp</item>
         <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
     </style>
+
 
     <style name="ImageButtonCobranza" parent="android:Widget.Holo.ImageButton">
         <item name="android:background">@drawable/cobranza_btn_default_holo_dark</item>
