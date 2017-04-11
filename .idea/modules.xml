@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Cobranza.Elfec.Mobile.iml" filepath="$PROJECT_DIR$/Cobranza.Elfec.Mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/alertdialogpro/alertdialogpro.iml" filepath="$PROJECT_DIR$/alertdialogpro/alertdialogpro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/calligraphy/calligraphy.iml" filepath="$PROJECT_DIR$/calligraphy/calligraphy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cobranzaElfecMobile/cobranzaElfecMobile.iml" filepath="$PROJECT_DIR$/cobranzaElfecMobile/cobranzaElfecMobile.iml" />
+    </modules>
+  </component>
+</project>

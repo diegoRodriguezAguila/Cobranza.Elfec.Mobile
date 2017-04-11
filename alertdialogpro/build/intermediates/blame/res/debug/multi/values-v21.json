@@ -1,0 +1,125 @@
+[
+    {
+        "outputFile": "D:\\StudioProjects\\Cobranza.Elfec.Mobile\\alertdialogpro\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v21\\values-v21.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 109,
+                    "endOffset": 160
+                },
+                "from": {
+                    "file": "D:\\StudioProjects\\Cobranza.Elfec.Mobile\\alertdialogpro\\src\\main\\res\\values-v21\\adp_mtrl_styles.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 826,
+                        "endColumn": 116,
+                        "endOffset": 938
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 165,
+                    "endColumn": 97,
+                    "endOffset": 258
+                },
+                "from": {
+                    "file": "D:\\StudioProjects\\Cobranza.Elfec.Mobile\\alertdialogpro\\src\\main\\res\\values-v21\\adp_mtrl_styles.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 382,
+                        "endColumn": 104,
+                        "endOffset": 482
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 263,
+                    "endLine": 8,
+                    "endColumn": 12,
+                    "endOffset": 583
+                },
+                "from": {
+                    "file": "D:\\StudioProjects\\Cobranza.Elfec.Mobile\\alertdialogpro\\src\\main\\res\\values-v21\\adp_mtrl_styles.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 56,
+                        "endLine": 7,
+                        "endColumn": 12,
+                        "endOffset": 376
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 588,
+                    "endLine": 13,
+                    "endColumn": 12,
+                    "endOffset": 920
+                },
+                "from": {
+                    "file": "D:\\StudioProjects\\Cobranza.Elfec.Mobile\\alertdialogpro\\src\\main\\res\\values-v21\\adp_mtrl_styles.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 488,
+                        "endLine": 15,
+                        "endColumn": 12,
+                        "endOffset": 820
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 925,
+                    "endColumn": 93,
+                    "endOffset": 1014
+                },
+                "from": {
+                    "file": "D:\\StudioProjects\\Cobranza.Elfec.Mobile\\alertdialogpro\\src\\main\\res\\values-v21\\adp_mtrl_themes.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 56,
+                        "endColumn": 100,
+                        "endOffset": 152
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 1019,
+                    "endColumn": 105,
+                    "endOffset": 1120
+                },
+                "from": {
+                    "file": "D:\\StudioProjects\\Cobranza.Elfec.Mobile\\alertdialogpro\\src\\main\\res\\values-v21\\adp_mtrl_themes.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 158,
+                        "endColumn": 112,
+                        "endOffset": 266
+                    }
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_top_margin"
+    tools:ignore="PxUsage" >
+
+    <TextView
+        android:id="@+id/lbl_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_search"
+        android:gravity="center_vertical"
+        android:background="@drawable/selectable_background_cobranza"
+        android:clickable="true"
+        android:onClick="lblSearchClicked"
+        android:drawableLeft="@drawable/search_supplies_pressed"
+        android:drawableStart="@drawable/search_supplies_pressed"
+        android:textAppearance="@style/TextAppearance.CustomFont.Light"
+        android:paddingBottom="5dp"
+        android:textSize="22sp" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/cobranza_color" />
+    
+    <fragment
+    android:id="@+id/f_search_collection"
+    android:name="com.elfec.cobranza.view.SearchCollectionFragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="20dp"
+    tools:context="com.elfec.cobranza.view.PaymentCollection"
+    tools:layout="@layout/fragment_search_payment_collection" />
+    
+     <TextView
+        android:id="@+id/lbl_action_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_collection_payment"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/collection_payment_selector"
+        android:drawableStart="@drawable/collection_payment_selector"
+        android:textAppearance="@style/TextAppearance.CustomFont.Light"
+        android:textSize="22sp" />
+
+    <View
+        android:id="@+id/separator2"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginTop="5dp"
+        android:background="@color/cobranza_color" />
+    <fragment
+    android:id="@+id/f_payment_collection"
+    android:name="com.elfec.cobranza.view.CollectionActionFragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    tools:context="com.elfec.cobranza.view.PaymentCollection"
+    tools:layout="@layout/fragment_collection_action" />
+
+</LinearLayout>

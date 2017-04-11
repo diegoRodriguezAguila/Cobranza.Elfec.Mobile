@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Elfec Cobranza</string>
+    <string name="app_full_name">Elfec Cobranza Móvil v. %s</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Login -->
+    <string name="title_activity_login">Ingreso al sistema</string>
+    <string name="btn_login">Ingresar</string>
+    <string name="hint_user">Usuario</string>
+    <string name="hint_password">●●●●●●●●</string>
+    <string name="errors_in_fields">Los campos tienen errores, reviselos para poder continuar</string>
+    <string name="msg_login_waiting">Validando la información del usuario, espere por favor&#8230;</string>
+    <string name="msg_login_sync_zones">Sincronizando zonas y rutas del usuario&#8230;</string>
+    <string name="msg_login_sync_param_settings">Sincronizando configuraciones parametrizables&#8230;</string>
+    <string name="title_login_errors">ERROR DE INGRESO AL SISTEMA</string>
+
+    <!-- Data Exchange -->
+    <string name="title_activity_data_exchange">Inicio</string>
+    <string name="btn_main_menu">Menú principal</string>
+    <string name="lbl_main_menu_info">Presione menu principal para ingresar a las opciones de cobranza</string>
+    <string name="msg_exportation_finished_successfully">Se descargó la información al servidor exitosamente!</string>
+    <string name="btn_download_data">Cargar datos</string>
+    <string name="btn_upload_data">Descargar datos</string>
+    <string name="title_main_menu_locked">MENÚ PRINCIPAL NO DISPONIBLE</string>
+    <string name="msg_main_menu_locked"><![CDATA[No puede acceder a las opciones del menú principal, debido a que aún no cargó ninguna ruta al dispositivo. 
+        Utilize la opción de <b>Cargar datos</b> para cargar rutas.]]></string>
+    	<!-- Data Wipe -->
+	    <string name="menu_wipe_all_data">Eliminar todos los datos</string>
+	    <string name="title_wipe_all_data">ELIMINAR TODOS LOS DATOS</string>
+	    <string name="msg_wipe_all_data_confirm">Se procederá a eliminar toda la información local y se cerrará su sesión, confirme si desea continuar!</string>
+	    <string name="msg_cannot_wipe_all_data">No puede eliminar la información porque ya se realizaron cobros!</string>
+    	<string name="title_wipe_all_data_errors">ERROR EN LA ELIMINACIÓN DE DATOS</string>
+    	<string name="msg_all_data_wiped_successfully">Se eliminaron todos los datos locales exitosamente!</string>
+    	<!-- Data upload -->
+    	<string name="title_exportation_confirm">CONFIRMACIÓN DE DESCARGA</string>
+    	<string name="msg_exportation_confirm">Se procederá a realizar la descarga de los cobros y las transacciones realizadas, 
+    	    luego se eliminará toda la información local y se cerrará su sesión!</string>
+    	<string name="title_upload_waiting">DESCARGANDO DATOS</string>
+    	<string name="title_exportation_errors">ERROR EN LA DESCARGA DE DATOS</string>
+    	<string name="msg_export_validation">Validando requisitos para la exportación de datos&#8230;</string>
+    	<string name="msg_uploading_collection_payments">Descargando cobros (COBROS)&#8230;</string>
+    	<string name="msg_uploading_ws_collections">Descargando transacciones (COB_WS)&#8230;</string>
+    	<string name="msg_unlocking_remote_routes">Desbloqueando rutas remotamente&#8230;</string>
+    	<string name="msg_wiping_all_data">Eliminando toda la información local&#8230;</string>
+
+    <!-- Dialog Buttons -->
+    <string name="btn_save">Guardar</string>
+    <string name="btn_ok">Aceptar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_yes">Si</string>
+    <string name="btn_no">No</string>
+    <string name="btn_confirm">Confirmar</string>
+
+    <!-- Zone and Routes -->
+    <string name="title_zone_list">Zonas</string>
+    <string name="title_zone_routes">Zonas y rutas</string>
+    <string name="title_zone_detail">Rutas</string>
+    <string name="btn_download_routes">Cargar rutas</string>
+    <string name="btn_select_all_routes">Seleccionar todas</string>
+    <string name="btn_unselect_all_routes">Desmarcar todas</string>
+    <string name="msg_routes_downloaded_successfully">Rutas cargadas exitosamente!</string>
+    <string name="msg_no_routes_selected">Porfavor seleccione por lo menos una ruta para realizar la carga de datos</string>
+    <string name="title_waiting">CARGANDO DATOS</string>
+    <string name="title_download_errors">ERROR EN LA CARGA DE DATOS</string>
+    <string name="msg_waiting">Inicializando la carga de datos&#8230;</string>
+    <string name="msg_downloading_supply_category_types">Cargando tipos de categorias de suministros (TIPOS_CATEG_SUM)&#8230;</string>
+    <string name="msg_downloading_cpt_calculation_bases">Cargando conceptos de bases de calculo (GBASES_CALC_CPTOS)&#8230;</string>
+    <string name="msg_downloading_prnt_calculation_bases">Cargando impresión de bases de calculo (GBASES_CALC_IMP)&#8230;</string>
+    <string name="msg_downloading_categories">Cargando categorias (CATEGORIAS)&#8230;</string>
+    <string name="msg_downloading_concepts">Cargando conceptos (CONCEPTOS)&#8230;</string>
+    <string name="msg_downloading_bank_accounts">Cargando cuentas de banco (BAN_CTAS)&#8230;</string>
+    <string name="msg_downloading_period_bank_accounts">Cargando periodos de cuentas de banco (BAN_CTAS_PER)&#8230;</string>
+    <string name="msg_downloading_annulment_reasons">Cargando motivos de anulación (MOTIVOS_ANULACION)&#8230;</string>
+    <string name="msg_verifying_route_availability">Verificando disponibilidad de rutas&#8230;</string>
+    <string name="msg_downloading_coop_receipts">Cargando comprobantes (CBTES_COOP)&#8230;</string>
+    <string name="msg_downloading_supplies">Cargando suministros (SUMINISTROS)&#8230;</string>
+    <string name="msg_downloading_supply_status">Cargando estados suministros (SUMIN_ESTADOS)&#8230;</string>
+    <string name="msg_downloading_receipt_concepts">Cargando conceptos de comprobantes (CBTES_CPTOS)&#8230;</string>
+    <string name="msg_downloading_fine_bonusess">Cargando bonificaciones de multas (BONIF_MULTAS y BONIF_MULTAS_IT)&#8230;</string>
+    <string name="msg_download_finished">Finalizando la carga de datos&#8230;</string>
+    <string name="title_warning_locked_routes">ADVERTENCIA RUTAS BLOQUEADAS</string>
+
+    <!-- Main Menu -->
+    <string name="title_activity_main_menu">Menú principal</string>
+    <string name="btn_collection">Cobranza</string>
+    <string name="btn_annulment">Anulación</string>
+    <string name="btn_details_report">Detalle de cobranzas</string>
+    <string name="btn_annuleds_report">Reporte de anulados</string>
+    <string name="btn_daily_summary">Resumen diario</string>
+    <string name="btn_cashdesk_summary">Resumen de caja</string>
+    	<!-- MainMenu: DatePickerDialog -->
+    	<string name="lbl_pick_dates">Seleccione un rango de fechas para el reporte:</string>
+    	<string name="lbl_start_date">Fecha inicio:</string>
+    	<string name="lbl_end_date">Fecha fin:</string>
+    	<string name="lbl_pick_single_date">Seleccione la fecha para el reporte:</string>
+    
+    <!-- Collection -->
+    <string name="title_activity_collection">Cobranza</string>
+    
+    	<!-- Search -->
+    	<string name="lbl_search">Búsqueda</string>
+    	<string name="hint_nus">ej. 261724</string>
+    	<string name="desc_nus">NUS del suministro</string>
+    	<string name="hint_account_number">ej. 34&#8211;453&#8211;321&#8211;65</string>
+    	<string name="hint_client_name">ej. Pedro Suarez</string>
+    	<string name="hint_nit">ej. 4537563</string>
+    	<string name="desc_account_number">Número de cuenta del suministro</string>
+    	<string name="mask_account_number">##-###-###-##</string>
+		<string name="btn_search">Buscar</string>
+		<string name="msg_atleast_one_filed">Debe proporcionar al menos un término de búsqueda!</string>
+		<string name="msg_searching">Buscando suministro&#8230;</string>
+		<string name="msg_no_supplies_found">Actualmente no se buscó ningún suministro o las búsquedas realizadas no produjeron ningún resultado</string>		
+		<string name="title_select_supply_search_result">RESULTADOS DE LA BÚSQUEDA</string>
+		<string name="msg_select_supply_search_result">Se encontrarón los siguientes suministros que coinciden con los términos de búsqueda. Seleccione uno para proceder: </string>
+		
+		<!-- Collection Payment -->
+		<string name="lbl_collection_payment">Cobranza</string>
+		<string name="btn_collect">Cobrar</string>
+		<string name="lbl_pending_receipt_list_title">Facturas pendientes</string>
+		<string name="lbl_total_amount">Total:</string>
+		<string name="title_payment_errors">ERROR AL REALIZAR COBRO</string>
+		<string name="title_payment_confirmation">CONFIRMACIÓN DE COBRO</string>
+		<string name="lbl_payment_confirmation">Se procederá a realizar el cobro al suministro %1$s, por el monto de:</string>
+		<string name="lbl_payment_count">y se imprimirá%1$s %2$s factura%3$s</string>
+		<string name="msg_succesfull_payment">El cobro se realizó exitosamente!</string>
+		<string name="title_print_errors">ERROR AL IMPRIMIR</string>
+		<string name="title_menu_item_pick_printer">Seleccionar impresora</string>
+		<string name="msg_no_receipts_selected">Seleccione por lo menos una factura para proceder!</string>
+		
+		<string name="title_bluetooth_errors">ERROR DE BLUETOOTH</string>
+		
+		<string name="title_inform_reconnection">RECONEXIÓN DE SUMINISTRO</string>
+		<string name="msg_inform_reconnection">¡El suministro %s ya no tiene deudas pendientes y se debe proceder a su reconexión!</string>
+		
+		<!-- Collection Annulment -->
+		<string name="lbl_collection_annulment">Anulación</string>
+		<string name="btn_annulate">Anular</string>	
+		<string name="lbl_paid_receipt_list_title">Facturas cobradas anulables</string>
+		<string name="title_annulment_errors">ERROR AL ANULAR COBRO</string>
+		<string name="title_collection_annulment">ANULACIÓN DE COBRO</string>
+		<string name="lbl_annulment_confirmation">Se procederá con la anulación de la factura:</string>
+		<string name="lbl_select_annulment_reason">Seleccione el motivo de anulación:</string>
+		<string name="lbl_internal_control_code">N° Control interno:</string>
+		<string name="hint_internal_control_code">ej. 23</string>
+		<string name="error_empty_internal_control_code">El número de control interno no puede estar vacio!</string>
+		<string name="error_internal_control_code">El número de control interno no coincide con el de la factura!</string>
+		<string name="lbl_no_annulment_reason_selected">[No se selecionó el motivo de anulación]</string>
+		<string name="msg_succesfull_annulment">El cobro y su factura se anularon exitosamente!</string>
+		
+			<!-- ListItems Receipts -->
+			<string name="lbl_currency">Bs.</string>
+			<string name="lbl_issue">Emisión:</string>
+			<string name="lbl_expiration">Vencimiento:</string>
+			<string name="lbl_kwh">(kWh)</string>
+	
+	<!-- Bluetooth Device Picker -->
+	<string name="title_bluetooth_device_picker">SELECCIONE UNA IMPRESORA</string>
+	<string name="lbl_paired_printers">Impresoras vinculadas:</string>
+	<string name="lbl_discovered_printers">Dispositivos encontrados:</string>
+	<string name="lbl_no_paired_printers">No existen impresoras vinculadas</string>
+	<string name="lbl_no_devices_found">No se encontraron más dispositivos</string>
+	<string name="lbl_discovering_printers">Buscando dispositivos&#8230;</string>
+	
+	<!-- Change Database Settings -->
+	<string name="title_change_database_settings">CONFIGURAR SERVIDOR DE BASE DE DATOS</string>
+	<string name="btn_config_server">Configurar servidor de base de datos</string>
+	<string name="lbl_ip">Ip:</string>
+	<string name="lbl_port">Puerto:</string>
+	<string name="lbl_service">Servicio:</string>
+	<string name="lbl_role">Rol:</string>
+	<string name="lbl_role_password">Contraseña rol:</string>
+	<string name="lbl_role_password_info">Si no desea cambiar la contraseña del rol deje en blanco este campo</string>
+	<string name="msg_settings_saved_successully">Se guardó exitosamente la configuración de conexión al servidor de base
+	    de datos!</string>
+		
+	<!-- Samples -->
+    <string name="sample_welcome_user">Bienvenido <b>drodriguezd</b>!</string>
+    <string name="sample_date">25 Mar 2015</string>
+    <string name="sample_device_imei">331235343553633</string>
+    <string name="sample_cashdesk_number">523</string>
+    <string name="sample_zone_id">5002</string>
+    <string name="sample_zone_desc">M - Mizque</string>
+    <string name="sample_route_id">84009</string>
+    <string name="sample_route_desc">84&#8211;009   Totora Fase II</string>
+	<!-- Samples -->
+	<string name="sample_name">Alarcon Rodriguez Dionicia</string>
+	<string name="sample_nus">412781</string>
+	<string name="sample_account_number">91&#8211;002&#8211;321&#8211;00</string>
+	<string name="sample_address">Zn Andino S-N</string>
+	<string name="sample_short_date">25/11/2014</string>
+	<string name="sample_year_month">2014 Diciembre</string>
+	<string name="sample_amount">1.323</string>
+	<string name="sample_amount_decimal">30</string>
+	<string name="sample_receipt_number">N°: 327828</string>
+	<string name="sample_consume">145.252</string>
+	<string name="sample_category">Categoría: RE2PB</string>
+	<string name="sample_printer_name">IMP-22</string>
+	<string name="sample_printer_mac">00:22:58:39:A4:38</string>
+	
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cobranza_color">#2574a9</color>
+    <color name="cobranza_color_highlight">#2487C1</color>
+    <color name="cobranza_color_pressed">#145881</color>
+    <color name="light_text_color">#2196F3</color>
+    <color name="light_text_color_pressed">#007EB0</color>
+    <color name="background_soft_gray">#E7E8EA</color>
+    <color name="text_gray_color">#757575</color>
+    <color name="text_blue_color">#133D5D</color>
+    <color name="dark_gray">#4C5656</color>
+    <color name="btn_pressed_gray">#D5D5D5</color>
+    <color name="gray_contrast_color">#3C4646</color>
+    <color name="background_selected_gray" >#CDCFD0</color>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/lbl_search_result_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_select_supply_search_result"       
+        android:textColor="@color/text_gray_color"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <ListView
+        android:id="@+id/list_supplies_found"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_list_height" 
+        android:fastScrollEnabled="true"/>
+
+</LinearLayout>
