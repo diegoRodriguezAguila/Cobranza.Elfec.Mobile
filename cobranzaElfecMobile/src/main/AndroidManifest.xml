@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.elfec.cobranza" >
+<manifest package="com.elfec.cobranza"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
- 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.BLUETOOTH"/>
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <application
         android:name=".ElfecApp"
@@ -15,45 +15,58 @@
         android:icon="@mipmap/ic_launcher"
         android:installLocation="preferExternal"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Cobranza" >
+        android:theme="@style/Theme.Cobranza">
         <meta-data
             android:name="AA_DB_NAME"
-            android:value="CobranzaDesarrollo.db" />
+            android:value="CobranzaDesarrollo.db"/>
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="15" />
+            android:value="16"/>
         <meta-data
             android:name="AA_SERIALIZERS"
-            android:value="com.elfec.cobranza.model.serializers.JodaDateTimeSerializer" />
+            android:value="com.elfec.cobranza.model.serializers.JodaDateTimeSerializer"/>
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.elfec.cobranza.model.AnnulmentReason,
+            com.elfec.cobranza.model.BankAccount,com.elfec.cobranza.model.Category,
+            com.elfec.cobranza.model.Debt,com.elfec.cobranza.model.CollectionPayment,
+            com.elfec.cobranza.model.Concept,com.elfec.cobranza.model.ConceptCalculationBase,
+            com.elfec.cobranza.model.CoopReceipt,com.elfec.cobranza.model.FineBonus,
+            com.elfec.cobranza.model.PeriodBankAccount,com.elfec.cobranza.model.PrintCalculationBase,
+            com.elfec.cobranza.model.ReceiptConcept,com.elfec.cobranza.model.Route,
+            com.elfec.cobranza.model.Supply,com.elfec.cobranza.model.SupplyCategoryType,
+            com.elfec.cobranza.model.SupplyStatus,com.elfec.cobranza.model.User,
+            com.elfec.cobranza.model.WSCollection,com.elfec.cobranza.model.Zone,
+            com.elfec.cobranza.model.ParameterSetting"/>
 
         <activity
             android:name=".view.Login"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".view.DataExchange"
-            android:label="@string/title_activity_data_exchange" >
+            android:label="@string/title_activity_data_exchange">
         </activity>
         <activity
             android:name=".view.ZoneListActivity"
-            android:label="@string/title_zone_list" >
+            android:label="@string/title_zone_list">
         </activity>
         <activity
             android:name=".view.ZoneRoutesActivity"
-            android:label="@string/title_zone_detail" >
+            android:label="@string/title_zone_detail">
         </activity>
         <activity
             android:name=".view.MainMenu"
-            android:label="@string/title_activity_main_menu" >
+            android:label="@string/title_activity_main_menu">
         </activity>
         <activity
             android:name="com.elfec.cobranza.view.CollectionAction"
-            android:label="@string/title_activity_collection" >
+            android:label="@string/title_activity_collection">
         </activity>
     </application>
 
